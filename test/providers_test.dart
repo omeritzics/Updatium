@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 
@@ -289,6 +290,15 @@ void main() {
       final filtered = filterApks(apks, 'arm64', true);
       expect(filtered.length, equals(1));
       expect(filtered.first.key, contains('x86'));
+    });
+  });
+
+  group('Notification Tests', () {
+    test('Update notifications can be built with no apps', () {
+      // Used to grab notification IDs for cancellation after an install
+      expect(() => UpdateNotification([]), returnsNormally);
+      expect(() => SilentUpdateNotification([], true), returnsNormally);
+      expect(() => SilentUpdateAttemptNotification([], id: 1), returnsNormally);
     });
   });
 }

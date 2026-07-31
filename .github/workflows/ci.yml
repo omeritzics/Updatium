@@ -66,8 +66,10 @@ jobs:
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
-          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
-          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
+          # The 'c' prefix is required: an Android package segment cannot start with a
+          # digit, and short SHAs often do
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.c${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.c${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
           # Build the debug APK for the normal flavor
           flutter build apk --debug --flavor normal --no-pub --tree-shake-icons
