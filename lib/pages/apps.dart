@@ -673,9 +673,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             child: getAppIcon(index),
                           ),
                           if (app.pinned)
-                            Positioned(
+                            PositionedDirectional(
                               top: -4,
-                              left: -4,
+                              start: -4,
                               child: Semantics(
                                 label: 'pinned'.t(),
                                 child: Icon(
@@ -811,7 +811,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsetsDirectional.only(start: 8),
                     child: Semantics(
                       label: 'pinned'.t(),
                       child: Icon(
