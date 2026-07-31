@@ -7,11 +7,11 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
-import 'package:updatium/pages/settings.dart';
 import 'package:updatium/pages/import_export.dart';
+import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
-import '../providers/settings_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
@@ -755,7 +755,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       bool userPickedTrackOnly, {
       bool ignoreHideSetting = false,
     }) async {
-      var useTrackOnly = userPickedTrackOnly;
+      var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
         // ignore: use_build_context_synchronously
@@ -958,7 +958,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   if (prefilledApp!.additionalSettings[item.key] != null) {
                     item.defaultValue =
                         prefilledApp!.additionalSettings[item.key];
-                  } else if (item.key == 'appAuthor') {
+                  } else if (item.key == 'author') {
                     item.defaultValue = prefilledApp!.author;
                   } else if (item.key == 'appId') {
                     item.defaultValue = prefilledApp!.id;

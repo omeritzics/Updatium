@@ -602,10 +602,10 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: "5bc9a9daac5ccfbd6a758377600b9f7fdce13d93f26e8012a8941014a5d978d1"
+      sha256: f038e58b4dc2c9037f50e233175086337e0b305e356d28211bf55f21c504cbd3
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   jni_flutter:
     dependency: transitive
     description:
@@ -682,10 +682,10 @@ packages:
     dependency: "direct main"
     description:
       name: m3_floating_toolbar
-      sha256: "8fc99c82d1e1b9b73521f2865f5bea384a19ccf6c7a28ddf1c0fabbd852bb5ae"
+      sha256: "0cbfc5a6f869117a7fb8546243190ef607bfee19993834bfcaad62c566a4ed42"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.1"
   m3e_buttons:
     dependency: "direct main"
     description:

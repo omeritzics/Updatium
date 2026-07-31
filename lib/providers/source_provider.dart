@@ -43,7 +43,6 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
@@ -259,12 +258,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
-        json['appAuthor'] == 'Signal' &&
+        json['author'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://updates.signal.org/android/latest.json';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -277,12 +275,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // WhatsApp from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://whatsapp.com' &&
         json['id'] == 'com.whatsapp' &&
-        json['appAuthor'] == 'Meta' &&
+        json['author'] == 'Meta' &&
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://whatsapp.com/android';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -294,12 +291,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // VLC from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://videolan.org' &&
         json['id'] == 'org.videolan.vlc' &&
-        json['appAuthor'] == 'VideoLAN' &&
+        json['author'] == 'VideoLAN' &&
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://www.videolan.org/vlc/download-android.html';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -410,8 +406,8 @@ class App {
   }
 
   String? get overrideAuthor =>
-      additionalSettings['appAuthor']?.toString().trim().isNotEmpty == true
-      ? additionalSettings['appAuthor']
+      additionalSettings['author']?.toString().trim().isNotEmpty == true
+      ? additionalSettings['author']
       : null;
 
   String get finalAuthor {
@@ -467,7 +463,7 @@ class App {
     return App(
       json['id']?.toString() ?? '',
       json['url']?.toString() ?? '',
-      json['appAuthor']?.toString() ?? '',
+      json['author']?.toString() ?? '',
       json['name']?.toString() ?? '',
       json['installedVersion']?.toString(),
       (json['latestVersion'] ?? 'unknown'.t()).toString(),
@@ -503,7 +499,7 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'appAuthor': author,
+    'author': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
@@ -877,13 +873,7 @@ abstract class AppSource {
       ),
     ],
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: 'appAuthor'.t(),
-        required: false,
-      ),
-    ],
+    [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
     [
       GeneratedFormTextField(
         'appSourceURL',
@@ -1589,8 +1579,11 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          ((additionalSettings['appId'] != null)
-              ? additionalSettings['appId']
+          // The 'appId' form field defaults to an empty string, which must not
+          // be mistaken for a user-provided ID
+          ((additionalSettings['appId'] is String &&
+                  (additionalSettings['appId'] as String).trim().isNotEmpty)
+              ? (additionalSettings['appId'] as String).trim()
               : null) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
@@ -1638,29 +1631,21 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
-
-    // Get existing apps to check for duplicates
-    final appsProvider = AppsProvider();
-    final existingUrls = appsProvider
-        .getAppValues()
-        .map((e) => e.app.url)
-        .toList();
-    final urlsToCheck = List<String>.from(alreadyAddedUrls)
-      ..addAll(existingUrls);
     for (var url in urls) {
       try {
-        if (urlsToCheck.contains(url)) {
+        var source = sourceOverride ?? getSource(url);
+        if (alreadyAddedUrls.contains(url) ||
+            alreadyAddedUrls.contains(source.standardizeUrl(url))) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
-        var source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,
             url,
-            sourceIsOverriden: sourceOverride != null,
             getDefaultValuesFromFormItems(
               source.combinedAppSpecificSettingFormItems,
             ),
+            sourceIsOverriden: sourceOverride != null,
           ),
         );
       } catch (e) {
