@@ -1296,6 +1296,18 @@ String? intValidator(String? value, {bool positive = false}) {
   return null;
 }
 
+/// The user-provided app ID, or null when it was left blank.
+/// The 'appId' form field defaults to an empty string, which must not be
+/// mistaken for a real ID.
+String? customAppIdFromSettings(Map<String, dynamic> additionalSettings) {
+  var appId = additionalSettings['appId'];
+  if (appId is! String) {
+    return null;
+  }
+  var trimmed = appId.trim();
+  return trimmed.isEmpty ? null : trimmed;
+}
+
 bool isTempId(App app) {
   // return app.id == generateTempID(app.url, app.additionalSettings);
   return RegExp('^[0-9]+\$').hasMatch(app.id);
@@ -1599,9 +1611,7 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          ((additionalSettings['appId'] != null)
-              ? additionalSettings['appId']
-              : null) ??
+          customAppIdFromSettings(additionalSettings) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
                       (source.appIdInferIsOptional && inferAppIdIfOptional))
@@ -1648,7 +1658,27 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
-
+    for (var url in urls) {
+      try {
+        var source = sourceOverride ?? getSource(url);
+        if (alreadyAddedUrls.contains(url) ||
+            alreadyAddedUrls.contains(source.standardizeUrl(url))) {
+          throw UpdatiumError('appAlreadyAdded'.t());
+        }
+        apps.add(
+          await getApp(
+            source,
+            url,
+            getDefaultValuesFromFormItems(
+              source.combinedAppSpecificSettingFormItems,
+            ),
+            sourceIsOverriden: sourceOverride != null,
+          ),
+        );
+      } catch (e) {
+        errors.addAll(<String, dynamic>{url: e});
+      }
+    }
     return [apps, errors];
   }
 }

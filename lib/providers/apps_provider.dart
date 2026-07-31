@@ -2351,6 +2351,10 @@ class AppsProvider with ChangeNotifier {
                 }
               }
             }
+            if (app != null && app.id.trim().isEmpty) {
+              logs.add('Ignoring App with an empty ID: ${item.path}');
+              app = null;
+            }
             if (app != null) {
               // Save the app to the in-memory list without grabbing any OS info first
               apps.update(
