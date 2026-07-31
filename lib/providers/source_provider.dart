@@ -258,8 +258,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://updates.signal.org/android/latest.json';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -276,8 +275,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://whatsapp.com/android';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -293,8 +291,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://www.videolan.org/vlc/download-android.html';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -1602,8 +1599,11 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          ((additionalSettings['appId'] != null)
-              ? additionalSettings['appId']
+          // The 'appId' form field defaults to an empty string, which must not
+          // be mistaken for a user-provided ID
+          ((additionalSettings['appId'] is String &&
+                  (additionalSettings['appId'] as String).trim().isNotEmpty)
+              ? (additionalSettings['appId'] as String).trim()
               : null) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
@@ -1651,7 +1651,27 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
-
+    for (var url in urls) {
+      try {
+        var source = sourceOverride ?? getSource(url);
+        if (alreadyAddedUrls.contains(url) ||
+            alreadyAddedUrls.contains(source.standardizeUrl(url))) {
+          throw UpdatiumError('appAlreadyAdded'.t());
+        }
+        apps.add(
+          await getApp(
+            source,
+            url,
+            getDefaultValuesFromFormItems(
+              source.combinedAppSpecificSettingFormItems,
+            ),
+            sourceIsOverriden: sourceOverride != null,
+          ),
+        );
+      } catch (e) {
+        errors.addAll(<String, dynamic>{url: e});
+      }
+    }
     return [apps, errors];
   }
 }
