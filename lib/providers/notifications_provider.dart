@@ -71,7 +71,9 @@ class SilentUpdateNotification extends UpdatiumNotification {
         'appsUpdatedNotifDescription'.t(),
         Importance.defaultImportance,
       ) {
-    message = updates.length == 1
+    message = updates.isEmpty
+        ? ''
+        : updates.length == 1
         ? t(
             succeeded ? 'xWasUpdatedToY' : 'xWasNotUpdatedToY',
             args: [updates[0].finalName, updates[0].latestVersion],
@@ -95,7 +97,9 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
         'appsPossiblyUpdatedNotifDescription'.t(),
         Importance.defaultImportance,
       ) {
-    message = updates.length == 1
+    message = updates.isEmpty
+        ? ''
+        : updates.length == 1
         ? t(
             'xWasPossiblyUpdatedToY',
             args: [updates[0].finalName, updates[0].latestVersion],
