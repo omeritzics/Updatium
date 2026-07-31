@@ -127,7 +127,7 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-//' -e 's/-normal-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-${arch}.apk"
           done
-          for apk in build/app/outputs/flutter-apk/app-fdroid-*-release.apk; do
+          for apk in build/app/outputs/flutter-apk/app-*-fdroid-release.apk; do
             arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
           done
