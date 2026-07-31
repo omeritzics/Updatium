@@ -682,10 +682,10 @@ packages:
     dependency: "direct main"
     description:
       name: m3_floating_toolbar
-      sha256: "8fc99c82d1e1b9b73521f2865f5bea384a19ccf6c7a28ddf1c0fabbd852bb5ae"
+      sha256: "0cbfc5a6f869117a7fb8546243190ef607bfee19993834bfcaad62c566a4ed42"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.1"
   m3e_buttons:
     dependency: "direct main"
     description:
