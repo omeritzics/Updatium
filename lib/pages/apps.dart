@@ -946,12 +946,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           .floor()
                           .clamp(1, count);
                 final remainder = count % tilesPerRow;
-                final phantomCount = remainder == 0
+                final phantomCount = count < 3 || remainder == 0
                     ? 0
                     : tilesPerRow - remainder;
 
                 return Wrap(
-                  alignment: WrapAlignment.spaceBetween,
+                  // Spreading 1-2 tiles across the full width looks broken
+                  alignment: count < 3
+                      ? WrapAlignment.start
+                      : WrapAlignment.spaceBetween,
+                  spacing: count < 3 ? 3 : 0,
                   runSpacing: 8,
                   children: [
                     ...filteredEntries.map((entry) {
@@ -1543,12 +1547,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             .floor()
                             .clamp(1, count);
                   final remainder = count % tilesPerRow;
-                  final phantomCount = remainder == 0
+                  final phantomCount = count < 3 || remainder == 0
                       ? 0
                       : tilesPerRow - remainder;
 
                   return Wrap(
-                    alignment: WrapAlignment.spaceBetween,
+                    // Spreading 1-2 tiles across the full width looks broken
+                    alignment: count < 3
+                        ? WrapAlignment.start
+                        : WrapAlignment.spaceBetween,
+                    spacing: count < 3 ? 3 : 0,
                     runSpacing: 8,
                     children: [
                       ...listedApps.asMap().entries.map((entry) {
