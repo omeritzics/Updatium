@@ -472,61 +472,64 @@ class _SettingsPageState extends State<SettingsPage> {
         final columnContent = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              e.name,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            gap16,
-            ...e.sourceConfigSettingFormItems.map((formItem) {
-              if (formItem is GeneratedFormSwitch) {
-                // Switch type
-                final bool currentValue =
-                    settingsProvider.getSettingBool(formItem.key) ?? false;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: M3ECardColumn(
-                    children: [
-                      SwitchListTile(
+            M3ECardColumn(
+              children: [
+                Text(
+                  e.name,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                gap16,
+                ...e.sourceConfigSettingFormItems.map((formItem) {
+                  if (formItem is GeneratedFormSwitch) {
+                    // Switch type
+                    final bool currentValue =
+                        settingsProvider.getSettingBool(formItem.key) ?? false;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: SwitchListTile(
                         title: Text(formItem.label),
                         value: currentValue,
                         onChanged: (value) {
                           settingsProvider.setSettingBool(formItem.key, value);
                         },
                       ),
-                    ],
-                  ),
-                );
-              } else {
-                // Text field type
-                final String currentValue =
-                    settingsProvider.getSettingString(formItem.key) ?? '';
-                if (!_textControllers.containsKey(formItem.key)) {
-                  _textControllers[formItem.key] = TextEditingController(
-                    text: currentValue,
-                  );
-                  _focusNodes[formItem.key] = FocusNode();
-                } else if (_textControllers[formItem.key]!.text !=
-                    currentValue) {
-                  // Only update if not focused to avoid overwriting user input
-                  if (!_focusNodes[formItem.key]!.hasFocus) {
-                    _textControllers[formItem.key]!.text = currentValue;
+                    );
+                  } else {
+                    // Text field type
+                    final String currentValue =
+                        settingsProvider.getSettingString(formItem.key) ?? '';
+                    if (!_textControllers.containsKey(formItem.key)) {
+                      _textControllers[formItem.key] = TextEditingController(
+                        text: currentValue,
+                      );
+                      _focusNodes[formItem.key] = FocusNode();
+                    } else if (_textControllers[formItem.key]!.text !=
+                        currentValue) {
+                      // Only update if not focused to avoid overwriting user input
+                      if (!_focusNodes[formItem.key]!.hasFocus) {
+                        _textControllers[formItem.key]!.text = currentValue;
+                      }
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: TextField(
+                        controller: _textControllers[formItem.key],
+                        focusNode: _focusNodes[formItem.key],
+                        decoration: InputDecoration(labelText: formItem.label),
+                        onChanged: (value) {
+                          settingsProvider.setSettingString(
+                            formItem.key,
+                            value,
+                          );
+                        },
+                      ),
+                    );
                   }
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: TextField(
-                    controller: _textControllers[formItem.key],
-                    focusNode: _focusNodes[formItem.key],
-                    decoration: InputDecoration(labelText: formItem.label),
-                    onChanged: (value) {
-                      settingsProvider.setSettingString(formItem.key, value);
-                    },
-                  ),
-                );
-              }
-            }),
+                }),
+              ],
+            ),
           ],
         );
         return columnContent;
