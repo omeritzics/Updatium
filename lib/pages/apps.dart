@@ -379,6 +379,30 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     var existingUpdates = appsProvider.findExistingUpdates(installedOnly: true);
 
+    if (settingsProvider.pinUpdates) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (existingUpdates.contains(sa.app.id)) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...temp, ...listedApps];
+    }
+
+    if (settingsProvider.buryNonInstalled) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (sa.app.installedVersion == null) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...listedApps, ...temp];
+    }
+
     var existingUpdateIdsAllOrSelected = existingUpdates
         .where(
           (element) => selectedAppIds.isEmpty
@@ -410,6 +434,17 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     newInstallIdsAllOrSelected = newInstallIdsAllOrSelected
         .where(isNotTrackOnly)
         .toList();
+
+    var tempPinned = [];
+    var tempNotPinned = [];
+    for (var a in listedApps) {
+      if (a.app.pinned) {
+        tempPinned.add(a);
+      } else {
+        tempNotPinned.add(a);
+      }
+    }
+    listedApps = [...tempPinned, ...tempNotPinned];
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(

@@ -615,9 +615,9 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue =
                             app.app.additionalSettings[item.key];
                       } else if (item.key == 'author') {
-                        item.defaultValue = app.app.finalAuthor;
+                        item.defaultValue = app.author;
                       } else if (item.key == 'appName') {
-                        item.defaultValue = app.app.finalName;
+                        item.defaultValue = app.name;
                       } else if (item.key == 'appSourceURL') {
                         item.defaultValue = app.app.url;
                       }
