@@ -67,7 +67,7 @@ jobs:
           # Generate version: YY.M.0 format (semantic versioning)
           YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
-          VERSION="$YEAR.$MONTH.0"
+          VERSION="$YEAR.$MONTH"
           
           # Generate build number: YYMMDDHH format
           BUILD_NUMBER=$(date +'%y%m%d%H')
@@ -127,7 +127,7 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-//' -e 's/-normal-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-${arch}.apk"
           done
-          for apk in build/app/outputs/flutter-apk/app-fdroid-*-release.apk; do
+          for apk in build/app/outputs/flutter-apk/app-*-fdroid-release.apk; do
             arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
           done
@@ -147,7 +147,7 @@ jobs:
         if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{ steps.version.outputs.tag }}
+          tag_name: Qama-${{ steps.version.outputs.tag }}
           name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == 'true' }}
           draft: true

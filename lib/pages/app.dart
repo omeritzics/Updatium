@@ -605,26 +605,29 @@ class _AppPageState extends State<AppPage> {
         context: context,
         builder: (BuildContext ctx) {
           Map<String, dynamic> localValues = {};
-          var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
-            row,
-          ) {
-            row = row.map((e) {
-              var item = e.clone();
-              if (app.app.additionalSettings[item.key] != null) {
-                item.defaultValue = app.app.additionalSettings[item.key];
-              } else if (item.key == 'author') {
-                item.defaultValue = app.app.author;
-              } else if (item.key == 'appId') {
-                item.defaultValue = app.app.id;
-              } else if (item.key == 'appName') {
-                item.defaultValue = app.app.name;
-              } else if (item.key == 'appSourceURL') {
-                item.defaultValue = app.app.url;
-              }
-              return item;
-            }).toList();
-            return row;
-          }).toList();
+          var items = (source?.combinedAppSpecificSettingFormItems ?? [])
+              .map((row) {
+                row = row
+                    .where((e) => e.key != 'appId') // id is not user-editable
+                    .map((e) {
+                      var item = e.clone();
+                      if (app.app.additionalSettings[item.key] != null) {
+                        item.defaultValue =
+                            app.app.additionalSettings[item.key];
+                      } else if (item.key == 'author') {
+                        item.defaultValue = app.app.finalAuthor;
+                      } else if (item.key == 'appName') {
+                        item.defaultValue = app.app.finalName;
+                      } else if (item.key == 'appSourceURL') {
+                        item.defaultValue = app.app.url;
+                      }
+                      return item;
+                    })
+                    .toList();
+                return row;
+              })
+              .where((row) => row.isNotEmpty)
+              .toList();
 
           return Dialog.fullscreen(
             child: Scaffold(
@@ -689,21 +692,11 @@ class _AppPageState extends State<AppPage> {
 
     handleAdditionalOptionChanges(Map<String, dynamic>? values) {
       if (values != null) {
-        // Handle basic app info changes
-        if (values['appName'] != null) {
-          app.app.name = values['appName'];
-        }
-        if (values['author'] != null) {
-          app.app.author = values['author'];
-        }
-        if (values['appId'] != null && values['appId'] != app.app.id) {
-          // ID change requires special handling - need to update the map key
-          var newId = values['appId'] as String;
-          if (!appsProvider.apps.containsKey(newId)) {
-            app.app.id = newId;
-            app.app.allowIdChange = true;
-          }
-        }
+        // appName/author are overrides — handled by the generic settings
+        // loop below (written into additionalSettings), NOT the raw
+        // app.app.name/author fields, which get silently overwritten by
+        // the source's reported values on every update check.
+        // appId is intentionally not user-editable.
         if (values['appSourceURL'] != null) {
           app.app.url = values['appSourceURL'];
         }

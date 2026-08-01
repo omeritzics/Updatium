@@ -37,6 +37,15 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
+// Tiles keep a uniform size and stretch to fill the row, with identical gaps
+// between them regardless of screen width
+const appGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
+  maxCrossAxisExtent: 128,
+  crossAxisSpacing: 3,
+  mainAxisSpacing: 3,
+  mainAxisExtent: 200,
+);
+
 Color preserveTransparency(Color color, double opacity) {
   return color.withValues(alpha: opacity);
 }
@@ -673,9 +682,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             child: getAppIcon(index),
                           ),
                           if (app.pinned)
-                            Positioned(
+                            PositionedDirectional(
                               top: -4,
-                              left: -4,
+                              start: -4,
                               child: Semantics(
                                 label: 'pinned'.t(),
                                 child: Icon(
@@ -811,7 +820,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsetsDirectional.only(start: 8),
                     child: Semantics(
                       label: 'pinned'.t(),
                       child: Icon(
@@ -935,42 +944,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
           tilePadding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                const tileWidth = 128.0;
-                const spacing = 8.0;
-                final count = filteredEntries.length;
-                final tilesPerRow = count == 0
-                    ? 1
-                    : ((constraints.maxWidth + spacing) / (tileWidth + spacing))
-                          .floor()
-                          .clamp(1, count);
-                final remainder = count % tilesPerRow;
-                final phantomCount = remainder == 0
-                    ? 0
-                    : tilesPerRow - remainder;
-
-                return Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 8,
-                  children: [
-                    ...filteredEntries.map((entry) {
-                      final appIndex = entry.key;
-                      if (appIndex >= 0 && appIndex < listedApps.length) {
-                        return SizedBox(
-                          width: tileWidth,
-                          height: 200,
-                          child: getSingleAppGridTile(appIndex),
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    }),
-                    ...List.generate(
-                      phantomCount,
-                      (_) => const SizedBox(width: tileWidth, height: 0),
-                    ),
-                  ],
-                );
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              gridDelegate: appGridDelegate,
+              itemCount: filteredEntries.length,
+              itemBuilder: (BuildContext context, int index) {
+                final appIndex = filteredEntries[index].key;
+                if (appIndex >= 0 && appIndex < listedApps.length) {
+                  return getSingleAppGridTile(appIndex);
+                }
+                return const SizedBox.shrink();
               },
             ),
           ],
@@ -1528,44 +1513,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         }
       } else {
         if (settingsProvider.useGridView) {
-          return SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  const tileWidth = 128.0;
-                  const spacing = 8.0;
-                  final count = listedApps.length;
-                  final tilesPerRow = count == 0
-                      ? 1
-                      : ((constraints.maxWidth + spacing) /
-                                (tileWidth + spacing))
-                            .floor()
-                            .clamp(1, count);
-                  final remainder = count % tilesPerRow;
-                  final phantomCount = remainder == 0
-                      ? 0
-                      : tilesPerRow - remainder;
-
-                  return Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    runSpacing: 8,
-                    children: [
-                      ...listedApps.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        return SizedBox(
-                          width: tileWidth,
-                          height: 200,
-                          child: getSingleAppGridTile(index),
-                        );
-                      }),
-                      ...List.generate(
-                        phantomCount,
-                        (_) => const SizedBox(width: tileWidth, height: 0),
-                      ),
-                    ],
-                  );
-                },
+          return SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            sliver: SliverGrid(
+              gridDelegate: appGridDelegate,
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) =>
+                    getSingleAppGridTile(index),
+                childCount: listedApps.length,
               ),
             ),
           );
