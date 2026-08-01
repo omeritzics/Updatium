@@ -61,7 +61,7 @@ class GitHub extends AppSource {
                 throw true;
               }
               if (value != null) {
-                Uri.parse('https://${value}/api.github.com');
+                Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
               return 'invalidInput'.t();
@@ -813,7 +813,7 @@ class GitHub extends AppSource {
     }
   }
 
-  undoGHProxyMod(
+  String undoGHProxyMod(
     String reqUrl,
     Map<String, String> sourceConfigSettingValues,
   ) => reqUrl.replaceFirst(
