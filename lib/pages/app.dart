@@ -615,9 +615,9 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue =
                             app.app.additionalSettings[item.key];
                       } else if (item.key == 'author') {
-                        item.defaultValue = app.author;
+                        item.defaultValue = app.app.author;
                       } else if (item.key == 'appName') {
-                        item.defaultValue = app.name;
+                        item.defaultValue = app.app.name;
                       } else if (item.key == 'appSourceURL') {
                         item.defaultValue = app.app.url;
                       }
@@ -901,9 +901,9 @@ class _AppPageState extends State<AppPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(app.name),
+                              Text(app.app.name),
                               Text(
-                                t('byX', args: [app.author]),
+                                t('byX', args: [app.app.author]),
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
                                       color: Theme.of(
