@@ -43,7 +43,6 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
@@ -255,6 +254,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
+        json['author'] == 'Signal' &&
         json['author'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
@@ -1616,7 +1616,6 @@ class SourceProvider {
         if (alreadyAddedUrls.contains(url)) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
-        var source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,

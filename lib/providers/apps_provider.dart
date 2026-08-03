@@ -41,6 +41,7 @@ import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as path;
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
