@@ -25,7 +25,7 @@ class GitHub extends AppSource {
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        'githubPATLabel'.t(),
+        'github-creds',
         label: 'githubPATLabel'.t(),
         password: true,
         required: false,
@@ -50,9 +50,9 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        t('GHReqPrefix'),
+        'GHReqPrefix'.t(),
         label: t('GHReqPrefix'),
-        hint: 'gh-proxy.org',
+        hint: 'gh-proxy.com',
         required: false,
         additionalValidators: [
           (value) {
@@ -64,7 +64,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
-              return t('invalidInput');
+              return 'invalidInput'.t();
             }
             return null;
           },
@@ -79,7 +79,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              t('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -90,13 +90,84 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormSwitch(
-        t('checkRepoRename'),
-        label: t('repoRenamedCheck'),
+        'checkRepoRename'.t(),
+        label: 'repoRenamedCheck'.t(),
         defaultValue: false,
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [];
+    additionalSourceAppSpecificSettingFormItems = [
+      [
+        GeneratedFormSwitch(
+          'includePrereleases',
+          label: tr('includePrereleases'),
+          defaultValue: false,
+        ),
+      ],
+      [
+        GeneratedFormSwitch(
+          'fallbackToOlderReleases',
+          label: tr('fallbackToOlderReleases'),
+          defaultValue: true,
+        ),
+      ],
+      [
+        GeneratedFormTextField(
+          'filterReleaseTitlesByRegEx',
+          label: tr('filterReleaseTitlesByRegEx'),
+          required: false,
+          additionalValidators: [
+            (value) {
+              return regExValidator(value);
+            },
+          ],
+        ),
+      ],
+      [
+        GeneratedFormTextField(
+          'filterReleaseNotesByRegEx',
+          label: tr('filterReleaseNotesByRegEx'),
+          required: false,
+          additionalValidators: [
+            (value) {
+              return regExValidator(value);
+            },
+          ],
+        ),
+      ],
+      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+      [
+        GeneratedFormDropdown(
+          'sortMethodChoice',
+          [
+            MapEntry('date', tr('releaseDate')),
+            MapEntry('smartname', tr('smartname')),
+            MapEntry('none', tr('none')),
+            MapEntry(
+              'smartname-datefallback',
+              '${tr('smartname')} x ${tr('releaseDate')}',
+            ),
+            MapEntry('name', tr('name')),
+          ],
+          label: tr('sortMethod'),
+          defaultValue: 'date',
+        ),
+      ],
+      [
+        GeneratedFormSwitch(
+          'useLatestAssetDateAsReleaseDate',
+          label: tr('useLatestAssetDateAsReleaseDate'),
+          defaultValue: false,
+        ),
+      ],
+      [
+        GeneratedFormSwitch(
+          'releaseTitleAsVersion'.t(),
+          label: 'releaseTitleAsVersion'.t(),
+          defaultValue: false,
+        ),
+      ],
+    ];
 
     canSearch = true;
     searchQuerySettingFormItems = [
@@ -126,6 +197,8 @@ class GitHub extends AppSource {
     var lower = name.toLowerCase();
     return lower.endsWith('.apk') ||
         lower.endsWith('.xapk') ||
+        lower.endsWith('.apkm') ||
+        lower.endsWith('.apks') ||
         (includeZips && lower.endsWith('.zip')) ||
         (includeTarballs &&
             (lower.endsWith('.tar.gz') ||
@@ -196,7 +269,7 @@ class GitHub extends AppSource {
           }
         }
       } catch (err) {
-        return null;
+        // Ignore - ID will be extracted from the APK
       }
     }
     return null;
@@ -204,11 +277,15 @@ class GitHub extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    return SourceProvider().standardizeUrlWithRegex(
-      url,
+    RegExp standardUrlRegEx = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+/[^/]+',
-      sourceName: name,
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   @override
@@ -239,7 +316,10 @@ class GitHub extends AppSource {
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['githubPATLabel'];
+    String? creds = sourceConfig['github-creds'];
+    if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
+      creds = null;
+    }
     if (creds != null) {
       var userNameEndIndex = creds.indexOf(':');
       if (userNameEndIndex > 0) {
@@ -256,7 +336,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${'githubSourceNote'.t()} ${hostChanged ? 'addInfoBelow'.t() : 'addInfoInSettings'.t()}';
+      return '${tr('githubSourceNote')} ${hostChanged ? tr('addInfoBelow') : tr('addInfoInSettings')}';
     }
     return null;
   }
@@ -266,6 +346,10 @@ class GitHub extends AppSource {
     String reqUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
+    if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
+      var uri = Uri.parse(reqUrl);
+      return 'https://${additionalSettings['GHReqPrefix']}/${uri.toString().substring('https://'.length)}';
+    }
     return reqUrl;
   }
 
@@ -340,10 +424,16 @@ class GitHub extends AppSource {
     Map<String, dynamic> additionalSettings, {
     Function(Response)? onHttpErrorCode,
   }) async {
+    SettingsProvider settingsProvider = SettingsProvider();
+    await settingsProvider.initializeSettings();
+    var sourceConfigSettingValues = await getSourceConfigValues(
+      additionalSettings,
+      settingsProvider,
+    );
     await checkForRepositoryRename(
       standardUrl,
       additionalSettings,
-      await getSourceConfigValues(additionalSettings, SettingsProvider()),
+      sourceConfigSettingValues,
     );
     bool includePrereleases = additionalSettings['includePrereleases'] == true;
     bool fallbackToOlderReleases =
@@ -399,7 +489,7 @@ class GitHub extends AppSource {
 
       findReleaseAssetUrls(dynamic release) =>
           (release['assets'] as List<dynamic>?)?.map((e) {
-            var name = '.${e['name'].toString()}';
+            var name = e['name'].toString();
             var url =
                 !isApkContainer(
                   name,
@@ -408,6 +498,7 @@ class GitHub extends AppSource {
                 )
                 ? (e['browser_download_url'] ?? e['url'])
                 : (e['url'] ?? e['browser_download_url']);
+            url = undoGHProxyMod(url, sourceConfigSettingValues);
             e['final_url'] = (e['name'] != null) && (url != null)
                 ? MapEntry(e['name'] as String, url as String)
                 : const MapEntry('', '');
@@ -586,7 +677,10 @@ class GitHub extends AppSource {
           allAssetUrls.add(
             MapEntry(
               (targetRelease['version'] ?? 'source') + '.tar.gz',
-              targetRelease['tarball_url'],
+              undoGHProxyMod(
+                targetRelease['tarball_url'],
+                sourceConfigSettingValues,
+              ),
             ),
           );
         }
@@ -594,7 +688,10 @@ class GitHub extends AppSource {
           allAssetUrls.add(
             MapEntry(
               (targetRelease['version'] ?? 'source') + '.zip',
-              targetRelease['zipball_url'],
+              undoGHProxyMod(
+                targetRelease['zipball_url'],
+                sourceConfigSettingValues,
+              ),
             ),
           );
         }
@@ -676,7 +773,9 @@ class GitHub extends AppSource {
   }
 
   AppNames getAppNames(String standardUrl) {
-    return SourceProvider().getAppNamesFromUrl(standardUrl, nameIndex: null);
+    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
+    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
+    return AppNames(names[0], names.sublist(1).join('/'));
   }
 
   Future<Map<String, List<String>>> searchCommon(
@@ -700,7 +799,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : 'noDescription'.t())),
+                      : tr('noDescription'))),
             ],
           });
         }
@@ -714,11 +813,22 @@ class GitHub extends AppSource {
     }
   }
 
+  String undoGHProxyMod(
+    String reqUrl,
+    Map<String, String> sourceConfigSettingValues,
+  ) => reqUrl.replaceFirst(
+    'https://${sourceConfigSettingValues['GHReqPrefix']}/',
+    '',
+  );
+
   @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
+    var sourceConfigSettingValues = await getSourceConfigValues({}, sp);
     var results = await searchCommon(
       query,
       '${await getAPIHost({})}/search/repositories?q=${Uri.encodeQueryComponent(query)}&per_page=100',
@@ -728,50 +838,15 @@ class GitHub extends AppSource {
       },
       querySettings: querySettings,
     );
-
-    SettingsProvider settingsProvider = SettingsProvider();
-    await settingsProvider.initializeSettings();
-    var sourceConfig = await getSourceConfigValues({}, settingsProvider);
-    bool filterReleases = sourceConfig['filterGitHubReleases'] == 'true';
-
-    if (filterReleases) {
-      Map<String, List<String>> filteredResults = {};
-
-      var verificationTasks = results.entries.map((entry) async {
-        String url = entry.key;
-        // Extract owner/repo from https://github.com/owner/repo
-        String repoFullName = url
-            .substring('https://${hosts[0]}'.length)
-            .split('?')[0]
-            .split('#')[0];
-
-        try {
-          Response res = await sourceRequest(
-            '${await getAPIHost({})}/repos/$repoFullName/releases',
-            {},
-          );
-          if (res.statusCode == 200) {
-            var releases = jsonDecode(res.body) as List<dynamic>;
-            if (releases.isNotEmpty) {
-              return entry;
-            }
-          }
-        } catch (e) {
-          // Ignore errors and filter out
-        }
-        return null;
+    if ((sourceConfigSettingValues['GHReqPrefix'] ?? '').isNotEmpty) {
+      Map<String, List<String>> results2 = {};
+      results.forEach((k, v) {
+        results2[undoGHProxyMod(k, sourceConfigSettingValues)] = v;
       });
-
-      var verifiedEntries = await Future.wait(verificationTasks);
-      for (var entry in verifiedEntries) {
-        if (entry != null) {
-          filteredResults[entry.key] = entry.value;
-        }
-      }
-      return filteredResults;
+      return results2;
+    } else {
+      return results;
     }
-
-    return results;
   }
 
   void rateLimitErrorCheck(Response res) {

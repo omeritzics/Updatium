@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:html/dom.dart' hide Text;
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
@@ -43,6 +43,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
@@ -354,7 +355,7 @@ class App {
   late Map<String, dynamic> additionalSettings;
   late DateTime? lastUpdateCheck;
   bool pinned = false;
-  List<String>? categories;
+  List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
@@ -443,29 +444,20 @@ class App {
         'Error running JSON compat modifiers: ${e.toString()}: ${originalJSON.toString()}',
       );
     }
-    // Parse apkUrls first so we can safely clamp the index against the real
-    // list length. When appJSONCompatibilityModifiers throws (above) we fall
-    // back to originalJSON whose preferredApkIndex may be -1 (field absent) or
-    // a value that exceeds the current URL count — both cause RangeError on the
-    // very first list access before any of the runtime guards can fire.
-    final List<MapEntry<String, String>> parsedApkUrls =
-        assumed2DlistToStringMapList(
-          jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
-        );
-    final int rawIndex = (json['preferredApkIndex'] ?? -1) as int;
-    final int safeIndex = parsedApkUrls.isEmpty
-        ? 0
-        : rawIndex.clamp(0, parsedApkUrls.length - 1);
     return App(
-      json['id']?.toString() ?? '',
-      json['url']?.toString() ?? '',
-      json['author']?.toString() ?? '',
-      json['name']?.toString() ?? '',
-      json['installedVersion']?.toString(),
-      (json['latestVersion'] ?? 'unknown'.t()).toString(),
-      parsedApkUrls,
-      safeIndex,
-      jsonDecode(json['additionalSettings'] ?? '{}') as Map<String, dynamic>,
+      json['id'] as String,
+      json['url'] as String,
+      json['author'] as String,
+      json['name'] as String,
+      json['installedVersion'] == null
+          ? null
+          : json['installedVersion'] as String,
+      (json['latestVersion'] ?? tr('unknown')) as String,
+      assumed2DlistToStringMapList(
+        jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
+      ),
+      (json['preferredApkIndex'] ?? -1) as int,
+      jsonDecode(json['additionalSettings']) as Map<String, dynamic>,
       json['lastUpdateCheck'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['lastUpdateCheck']),
@@ -476,13 +468,15 @@ class App {
                 .map((e) => e.toString())
                 .toList()
           : json['category'] != null
-          ? [json['category']?.toString() ?? '']
+          ? [json['category'] as String]
           : [],
       releaseDate: json['releaseDate'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
-      changeLog: json['changeLog']?.toString(),
-      remoteIconUrl: json['remoteIconUrl']?.toString(),
+      changeLog: json['changeLog'] == null ? null : json['changeLog'] as String,
+      remoteIconUrl: json['remoteIconUrl'] == null
+          ? null
+          : json['remoteIconUrl'] as String,
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(
@@ -527,29 +521,25 @@ String preStandardizeUrl(String url) {
     url = 'https://$url';
   }
   var uri = Uri.tryParse(url);
-  if (uri == null) {
-    return url;
-  }
-
-  // Clean up duplicate/empty slashes in the path segment only, leaving query parameters/fragment intact
-  var pathSegments = uri.pathSegments.where((s) => s.isNotEmpty).toList();
   var trailingSlash =
-      ((uri.path.endsWith('/') || (uri.path.isEmpty && url.endsWith('/'))) &&
-      uri.queryParameters.isEmpty);
+      ((uri?.path.endsWith('/') ?? false) ||
+          ((uri?.path.isEmpty ?? false) && url.endsWith('/'))) &&
+      (uri?.queryParameters.isEmpty ?? false);
 
-  var cleanedUri = uri.replace(pathSegments: pathSegments);
-
-  var result = cleanedUri.toString();
-  if (trailingSlash && !result.endsWith('/')) {
-    result = '$result/';
-  }
-  return result;
+  url =
+      url
+          .split('/')
+          .where((e) => e.isNotEmpty)
+          .join('/')
+          .replaceFirst(':/', '://') +
+      (trailingSlash ? '/' : '');
+  return url;
 }
 
-String noAPKFound = 'noAPKFound'.t();
+String noAPKFound = tr('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
-  dom.Document dom,
+  Document dom,
   RegExp hrefPattern,
   String prependToLinks,
 ) => dom
@@ -584,20 +574,8 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
   if (apkUrls.length > 1) {
     var abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
     for (var abi in abis) {
-      // More precise matching: look for ABI as a separate component in filename
-      // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
-      var suffix = '';
-      if (abi.toLowerCase() == 'x86') {
-        suffix = r'(?!_?64)';
-      } else if (abi.toLowerCase() == 'armeabi') {
-        suffix = r'(?!-?v7a)';
-      }
-      var abiPattern = RegExp(
-        r'(^|[-_\.])' + RegExp.escape(abi) + suffix + r'($|[-_\.])',
-        caseSensitive: false,
-      );
       var urls2 = apkUrls
-          .where((element) => abiPattern.hasMatch(element.key))
+          .where((element) => RegExp('.*$abi.*').hasMatch(element.key))
           .toList();
       if (urls2.isNotEmpty && urls2.length < apkUrls.length) {
         apkUrls = urls2;
@@ -799,9 +777,10 @@ abstract class AppSource {
       additionalSettingsPlusSourceConfig,
     );
     var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders =
-        await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
-
+    var requestHeaders = await getRequestHeaders(
+      additionalSettingsPlusSourceConfig,
+      url,
+    );
     var streamedResponseUrlWithResponseAndClient =
         await sourceRequestStreamResponse(
           method,
@@ -812,38 +791,12 @@ abstract class AppSource {
           postBody: postBody,
         );
 
-    var response = await httpClientResponseStreamToFinalResponse(
+    return await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
       method,
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
-
-    // Handle 304 Not Modified - return cached response, or transparently
-    // retry without the conditional header if our cache no longer has it
-    // (expired/evicted/app restarted). Falling through with the raw 304
-    // hands callers an empty body, which breaks JSON/HTML parsing and
-    // APK-ID extraction downstream ("Could not get ID from APK", RangeError
-    // on empty lists, etc.) until the user manually refreshes.
-    if (response.statusCode == 304) {
-      var retryHeaders = Map<String, String>.from(requestHeaders);
-      retryHeaders.remove('If-None-Match');
-      var retryStreamed = await sourceRequestStreamResponse(
-        method,
-        url,
-        retryHeaders,
-        additionalSettingsPlusSourceConfig,
-        followRedirects: followRedirects,
-        postBody: postBody,
-      );
-      response = await httpClientResponseStreamToFinalResponse(
-        retryStreamed.value.key,
-        method,
-        retryStreamed.key.toString(),
-        retryStreamed.value.value,
-      );
-    }
-    return response;
   }
 
   void runOnAddAppInputChange(String inputUrl) {
@@ -868,6 +821,7 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormTextField(
         'appId',
@@ -932,7 +886,11 @@ abstract class AppSource {
         'apkFilterRegEx',
         label: 'filterAPKsByRegEx'.t(),
         required: false,
-        additionalValidators: [(value) => regExValidator(value)],
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
       ),
     ],
     [
@@ -949,6 +907,8 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -977,6 +937,7 @@ abstract class AppSource {
         defaultValue: true,
       ),
     ],
+    [GeneratedFormTextField('about', label: tr('about'), required: false)],
     [
       GeneratedFormSwitch(
         'fallbackToOlderReleases',
@@ -1088,25 +1049,38 @@ abstract class AppSource {
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
-    var agnosticItems = cloneFormItems(
-      additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
-    );
-
-    final versionDetectionIdx = agnosticItems.indexWhere(
-      (row) => row.any((item) => item.key == 'versionDetection'),
-    );
-    if (showReleaseDateAsVersionToggle &&
-        versionDetectionIdx >= 0 &&
-        !agnosticItems.any(
-          (row) => row.any((item) => item.key == 'releaseDateAsVersion'),
-        )) {
-      agnosticItems.insert(versionDetectionIdx + 1, [
-        GeneratedFormSwitch(
-          'releaseDateAsVersion',
-          label: '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
-          defaultValue: false,
-        ),
-      ]);
+    if (showReleaseDateAsVersionToggle == true) {
+      if (additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+              .indexWhere(
+                (List<GeneratedFormItem> e) =>
+                    e.indexWhere(
+                      (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
+                    ) >=
+                    0,
+              ) <
+          0) {
+        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+            .insert(
+              additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+                      .indexWhere(
+                        (List<GeneratedFormItem> e) =>
+                            e.indexWhere(
+                              (GeneratedFormItem i) =>
+                                  i.key == 'versionDetection',
+                            ) >=
+                            0,
+                      ) +
+                  1,
+              [
+                GeneratedFormSwitch(
+                  'releaseDateAsVersion',
+                  label:
+                      '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
+                  defaultValue: false,
+                ),
+              ],
+            );
+      }
     }
     additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
         additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
@@ -1182,7 +1156,7 @@ abstract class AppSource {
 
     return [
       ...additionalSourceAppSpecificSettingFormItems,
-      ...agnosticItems,
+      ...additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
       ...moreConditionalItems,
     ];
   }
@@ -1199,13 +1173,8 @@ abstract class AppSource {
       var val = hostChanged && !hostIdenticalDespiteAnyChange
           ? additionalSettings[e.key]
           : additionalSettings[e.key] ??
-                (e.runtimeType == GeneratedFormSwitch
-                    ? settingsProvider.getSettingBool(e.key).toString()
-                    : settingsProvider.getSettingString(e.key));
+                settingsProvider.getSettingString(e.key);
       if (val != null) {
-        if (e.runtimeType == GeneratedFormSwitch) {
-          val = val.toString();
-        }
         results[e.key] = val;
       }
     }
@@ -1302,29 +1271,32 @@ bool isTempId(App app) {
 }
 
 String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
-  if (RegExp(r'^\d+$').hasMatch(matchGroupString)) {
+  if (RegExp('^\\d+\$').hasMatch(matchGroupString)) {
     matchGroupString = '\$$matchGroupString';
   }
-  final pattern = RegExp(r'(\\)?\$(\d+)');
-  if (!pattern.hasMatch(matchGroupString)) {
+  // Regular expression to match numbers in the input string
+  final numberRegex = RegExp(r'\$\d+');
+  // Extract all numbers from the input string
+  final numbers = numberRegex.allMatches(matchGroupString);
+  if (numbers.isEmpty) {
+    // If no numbers found, return the original string
     return null;
   }
-  return matchGroupString.replaceAllMapped(pattern, (m) {
-    final backslash = m.group(1);
-    final groupIndexStr = m.group(2)!;
-    final groupIndex = int.parse(groupIndexStr);
-
-    if (backslash != null) {
-      // Escaped, e.g., \$1 -> return $1
-      return '\$$groupIndexStr';
+  // Replace numbers with corresponding match groups
+  var outputString = matchGroupString;
+  for (final numberMatch in numbers) {
+    final number = numberMatch.group(0)!;
+    final matchGroup = match.group(int.parse(number.substring(1))) ?? '';
+    // Check if the number is preceded by a single backslash
+    final isEscaped = outputString.contains('\\$number');
+    // Replace the number with the corresponding match group
+    if (!isEscaped) {
+      outputString = outputString.replaceAll(number, matchGroup);
     } else {
-      // Not escaped, replace with match group if in range
-      if (groupIndex <= match.groupCount) {
-        return match.group(groupIndex) ?? '';
-      }
-      return '';
+      outputString = outputString.replaceAll('\\$number', number);
     }
-  });
+  }
+  return outputString;
 }
 
 String? extractVersion(
@@ -1407,7 +1379,7 @@ class SourceProvider {
     DirectAPKLink(),
     Signal(),
     VLC(),
-    HTML(), // This should ALWAYS be the last option
+    HTML(), // This should ALWAYS be the last option as they are tried in order
   ];
 
   // Add more mass url source classes here so they are available via the service
@@ -1540,24 +1512,14 @@ class SourceProvider {
     bool sourceIsOverriden = false,
     bool inferAppIdIfOptional = false,
   }) async {
+    if (trackOnlyOverride || source.enforceTrackOnly) {
+      additionalSettings['trackOnly'] = true;
+    }
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
-
-    // Apply fallback for includePrereleases from global setting if not explicitly set
-    var mergedAdditionalSettings = Map<String, dynamic>.from(
-      additionalSettings,
-    );
-    SettingsProvider? sp;
-    if (mergedAdditionalSettings['includePrereleases'] == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-      mergedAdditionalSettings['includePrereleases'] =
-          sp.includePrereleasesByDefault;
-    }
-
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
-      mergedAdditionalSettings,
+      additionalSettings,
     );
 
     if (source.runtimeType !=
@@ -1588,22 +1550,12 @@ class SourceProvider {
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
     }
-    if (sp == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-    }
-    if (sp.preferApkOverXapk) {
-      apk.apkUrls = preferApkOverXapk(apk.apkUrls);
-    }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          // The 'appId' form field defaults to an empty string, which must not
-          // be mistaken for a user-provided ID
-          ((additionalSettings['appId'] is String &&
-                  (additionalSettings['appId'] as String).trim().isNotEmpty)
-              ? (additionalSettings['appId'] as String).trim()
+          ((additionalSettings['appId'] != null)
+              ? additionalSettings['appId']
               : null) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
@@ -1651,21 +1603,28 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
+
+    // Get existing apps to check for duplicates
+    final appsProvider = AppsProvider();
+    final existingUrls = appsProvider
+        .getAppValues()
+        .map((e) => e.app.url)
+        .toList();
+    alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
-        var source = sourceOverride ?? getSource(url);
-        if (alreadyAddedUrls.contains(url) ||
-            alreadyAddedUrls.contains(source.standardizeUrl(url))) {
+        if (alreadyAddedUrls.contains(url)) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
+        var source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,
             url,
+            sourceIsOverriden: sourceOverride != null,
             getDefaultValuesFromFormItems(
               source.combinedAppSpecificSettingFormItems,
             ),
-            sourceIsOverriden: sourceOverride != null,
           ),
         );
       } catch (e) {

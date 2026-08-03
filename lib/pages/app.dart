@@ -589,14 +589,12 @@ class _AppPageState extends State<AppPage> {
         gap24,
         CategorySelector(
           alignment: WrapAlignment.start,
-          preselected: app.app.categories?.toSet() ?? {},
+          preselected: app.app.categories.toSet(),
           onSelected: (categories) {
             app.app.categories = categories;
             appsProvider.saveApps([app.app]);
           },
         ),
-        // Extra bottom padding to clear the docked toolbar
-        const SizedBox(height: 96),
       ],
     );
 
@@ -615,9 +613,9 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue =
                             app.app.additionalSettings[item.key];
                       } else if (item.key == 'author') {
-                        item.defaultValue = app.app.finalAuthor;
+                        item.defaultValue = app.app.author;
                       } else if (item.key == 'appName') {
-                        item.defaultValue = app.app.finalName;
+                        item.defaultValue = app.app.name;
                       } else if (item.key == 'appSourceURL') {
                         item.defaultValue = app.app.url;
                       }
@@ -676,7 +674,7 @@ class _AppPageState extends State<AppPage> {
                     gap16,
                     CategorySelector(
                       alignment: WrapAlignment.start,
-                      preselected: app.app.categories?.toSet() ?? {},
+                      preselected: app.app.categories.toSet(),
                       onSelected: (categories) {
                         localValues['categories'] = categories;
                       },
@@ -901,9 +899,9 @@ class _AppPageState extends State<AppPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(app.name),
+                              Text(app.app.name),
                               Text(
-                                t('byX', args: [app.author]),
+                                t('byX', args: [app.app.author]),
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
                                       color: Theme.of(
@@ -945,6 +943,8 @@ class _AppPageState extends State<AppPage> {
                               ),
                             ),
                           ),
+                        // Extra bottom padding to clear the docked toolbar
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),
