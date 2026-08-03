@@ -320,7 +320,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
       if (filter.categoryFilter.isNotEmpty &&
           filter.categoryFilter
-              .intersection(app.app.categories?.toSet() ?? <String>{})
+              .intersection(app.app.categories.toSet())
               .isEmpty) {
         return false;
       }
@@ -449,7 +449,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     List<String?> getListedCategories() {
       var temp = listedApps.map(
         (e) =>
-            e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
+            e.app.categories.isNotEmpty == true ? e.app.categories : [null],
       );
       return temp.isNotEmpty
           ? {
@@ -930,9 +930,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           .entries
           .where(
             (e) =>
-                e.value.app.categories?.contains(listedCategories[index]) ==
+                e.value.app.categories.contains(listedCategories[index]) ==
                     true ||
-                e.value.app.categories?.isEmpty == true &&
+                e.value.app.categories.isEmpty == true &&
                     listedCategories[index] == null,
           )
           .toList();
@@ -1147,7 +1147,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           Set<String>? preselected;
           var showPrompt = false;
           for (var element in selectedApps) {
-            var currentCats = element.categories?.toSet() ?? <String>{};
+            var currentCats = element.categories.toSet();
             if (preselected == null) {
               preselected = currentCats;
             } else {
@@ -1488,11 +1488,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   .entries
                   .where(
                     (e) =>
-                        e.value.app.categories?.contains(
+                        e.value.app.categories.contains(
                               listedCategories[index],
                             ) ==
                             true ||
-                        e.value.app.categories?.isEmpty == true &&
+                        e.value.app.categories.isEmpty == true &&
                             listedCategories[index] == null,
                   )
                   .toList();
