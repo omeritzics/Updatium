@@ -595,8 +595,6 @@ class _AppPageState extends State<AppPage> {
             appsProvider.saveApps([app.app]);
           },
         ),
-        // Extra bottom padding to clear the docked toolbar
-        const SizedBox(height: 96),
       ],
     );
 
@@ -945,6 +943,8 @@ class _AppPageState extends State<AppPage> {
                               ),
                             ),
                           ),
+                        // Extra bottom padding to clear the docked toolbar
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),
