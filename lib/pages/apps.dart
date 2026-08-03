@@ -448,8 +448,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
-        (e) =>
-            e.app.categories.isNotEmpty == true ? e.app.categories : [null],
+        (e) => e.app.categories.isNotEmpty == true ? e.app.categories : [null],
       );
       return temp.isNotEmpty
           ? {
