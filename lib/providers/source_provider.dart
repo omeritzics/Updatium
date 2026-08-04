@@ -789,7 +789,6 @@ abstract class AppSource {
   }) async {
     var sp = SettingsProvider();
     await sp.initializeSettings();
-    getSourceConfigValues(additionalSettings, sp);
     var additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
