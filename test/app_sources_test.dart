@@ -42,61 +42,77 @@ void main() {
       expect(github.combinedAppSpecificSettingFormItems, isNotEmpty);
     });
 
-    test('GitHub PAT from settings is used when hostChanged is false', () async {
-      SharedPreferences.setMockInitialValues({
-        'githubPATLabel': 'test_token_123',
-      });
-      final prefs = await SharedPreferences.getInstance();
-      final settingsProvider = SettingsProvider();
-      settingsProvider.prefs = prefs;
+    test(
+      'GitHub PAT from settings is used when hostChanged is false',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'githubPATLabel': 'test_token_123',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final settingsProvider = SettingsProvider();
+        settingsProvider.prefs = prefs;
 
-      final sourceConfig = await github.getSourceConfigValues({}, settingsProvider);
-      expect(sourceConfig['githubPATLabel'], equals('test_token_123'));
-    });
+        final sourceConfig = await github.getSourceConfigValues(
+          {},
+          settingsProvider,
+        );
+        expect(sourceConfig['githubPATLabel'], equals('test_token_123'));
+      },
+    );
 
-    test('GitHub PAT from settings is ignored when hostChanged is true', () async {
-      SharedPreferences.setMockInitialValues({
-        'githubPATLabel': 'settings_token',
-      });
-      final prefs = await SharedPreferences.getInstance();
-      final settingsProvider = SettingsProvider();
-      settingsProvider.prefs = prefs;
+    test(
+      'GitHub PAT from settings is ignored when hostChanged is true',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'githubPATLabel': 'settings_token',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final settingsProvider = SettingsProvider();
+        settingsProvider.prefs = prefs;
 
-      final githubOverridden = GitHub(hostChanged: true);
-      final sourceConfig = await githubOverridden.getSourceConfigValues({}, settingsProvider);
-      expect(sourceConfig['githubPATLabel'], isNull);
-    });
+        final githubOverridden = GitHub(hostChanged: true);
+        final sourceConfig = await githubOverridden.getSourceConfigValues(
+          {},
+          settingsProvider,
+        );
+        expect(sourceConfig['githubPATLabel'], isNull);
+      },
+    );
 
-    test('GitHub PAT from additionalSettings is used when hostChanged is true', () async {
-      SharedPreferences.setMockInitialValues({
-        'githubPATLabel': 'settings_token',
-      });
-      final prefs = await SharedPreferences.getInstance();
-      final settingsProvider = SettingsProvider();
-      settingsProvider.prefs = prefs;
+    test(
+      'GitHub PAT from additionalSettings is used when hostChanged is true',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'githubPATLabel': 'settings_token',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final settingsProvider = SettingsProvider();
+        settingsProvider.prefs = prefs;
 
-      final githubOverridden = GitHub(hostChanged: true);
-      final sourceConfig = await githubOverridden.getSourceConfigValues(
-        {'githubPATLabel': 'override_token'},
-        settingsProvider,
-      );
-      expect(sourceConfig['githubPATLabel'], equals('override_token'));
-    });
+        final githubOverridden = GitHub(hostChanged: true);
+        final sourceConfig = await githubOverridden.getSourceConfigValues({
+          'githubPATLabel': 'override_token',
+        }, settingsProvider);
+        expect(sourceConfig['githubPATLabel'], equals('override_token'));
+      },
+    );
 
-    test('GitHub PAT from additionalSettings takes precedence over settings', () async {
-      SharedPreferences.setMockInitialValues({
-        'githubPATLabel': 'settings_token',
-      });
-      final prefs = await SharedPreferences.getInstance();
-      final settingsProvider = SettingsProvider();
-      settingsProvider.prefs = prefs;
+    test(
+      'GitHub PAT from additionalSettings takes precedence over settings',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'githubPATLabel': 'settings_token',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final settingsProvider = SettingsProvider();
+        settingsProvider.prefs = prefs;
 
-      final sourceConfig = await github.getSourceConfigValues(
-        {'githubPATLabel': 'override_token'},
-        settingsProvider,
-      );
-      expect(sourceConfig['githubPATLabel'], equals('override_token'));
-    });
+        final sourceConfig = await github.getSourceConfigValues({
+          'githubPATLabel': 'override_token',
+        }, settingsProvider);
+        expect(sourceConfig['githubPATLabel'], equals('override_token'));
+      },
+    );
   });
 
   group('GitLab Source Tests', () {
