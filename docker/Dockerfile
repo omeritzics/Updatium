@@ -24,6 +24,7 @@ RUN \
         git-lfs \
         openssl \
         wget
+RUN rm -rf /var/lib/apt/lists/*
 
 # Build prereqs
 RUN \
@@ -32,6 +33,7 @@ RUN \
         cmake ninja-build build-essential libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev clang pkg-config libgtk-3-dev \
         liblzma-dev libmount-dev libblkid-dev libgcrypt20-dev libgpg-error-dev libssl-dev libpng-dev libjpeg-dev \
         libtiff-dev libgif-dev libgtk-3-dev
+RUN rm -rf /var/lib/apt/lists/*
 
 # Android SDK prequisites
 # https://developer.android.com/studio#command-tools
@@ -42,6 +44,7 @@ RUN \
         openssl \
         wget \
         unzip
+RUN rm -rf /var/lib/apt/lists/*
 
 # Android SDK
 RUN \
@@ -54,6 +57,7 @@ RUN \
     apt-get install -y --no-install-recommends openjdk-21-jdk openjdk-21-jre &&\
     yes | sdkmanager --licenses &&\
     sdkmanager --update
+RUN rm -rf /var/lib/apt/lists/*
 
     # Platform tools
 # Get latest with sdkmanager --list

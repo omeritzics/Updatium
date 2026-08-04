@@ -110,18 +110,6 @@ Future<void> loadTranslations() async {
 }
 
 @pragma('vm:entry-point')
-void backgroundFetchHeadlessTask(HeadlessEvent task) async {
-  String taskId = task.taskId;
-  bool isTimeout = task.timeout;
-  if (isTimeout) {
-    debugPrint('BG update task timed out.');
-    BackgroundFetch.finish(taskId);
-    return;
-  }
-  await bgUpdateCheck(taskId, null);
-  BackgroundFetch.finish(taskId);
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -938,23 +926,6 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansArabic',
                   ],
                 ),
-              ),
-
-              // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
-              sliderTheme: SliderThemeData(
-                // ignore: deprecated_member_use
-                year2023: false,
-                valueIndicatorTextStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'GoogleSans',
-                    'NotoSansCJK',
-                    'NotoSansArabic',
-                  ],
-                ).copyWith(color: scheme.onPrimary),
-                showValueIndicator: ShowValueIndicator.onDrag,
               ),
 
               // Dialog Theme for AMOLED black theme compatibility
