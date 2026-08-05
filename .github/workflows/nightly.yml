@@ -6,9 +6,8 @@ permissions:
   attestations: write
 
 on:
-  push:
-    branches:
-      - main 
+  schedule:
+    - cron: '45 * * * *'
   workflow_dispatch:
 
 jobs:
