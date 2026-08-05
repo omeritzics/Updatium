@@ -48,9 +48,6 @@ jobs:
 
       - name: Code analyze
         run: flutter analyze --no-fatal-infos
-          
-      - name: Run tests
-        run: flutter test
 
       - name: Upgrade existing dependencies
         run: flutter pub upgrade
@@ -61,3 +58,6 @@ jobs:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
           push_options: --force
+          
+      - name: Run tests
+        run: flutter test
