@@ -11,6 +11,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.check.outputs.should_build }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Check for new commits since last nightly tag
+        id: check
+        run: |
+          if git rev-parse nightly >/dev/null 2>&1; then
+            DIFF=$(git diff nightly..HEAD)
+            if [ -z "$DIFF" ]; then
+              echo "No changes since last nightly build - skipping"
+              echo "should_build=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_build=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "No previous nightly tag found - building"
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
     runs-on: ubuntu-latest
 
