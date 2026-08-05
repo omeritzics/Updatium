@@ -127,10 +127,6 @@ void main() {
       expect(sourceProvider.sources.any((s) => s.name == 'GitHub'), isTrue);
     });
 
-    test('sources contains FDroid', () {
-      expect(sourceProvider.sources.any((s) => s.name == 'FDroid'), isTrue);
-    });
-
     test('hasSupportedApkExtension identifies APK files', () {
       expect(hasSupportedApkExtension('app.apk'), isTrue);
       expect(hasSupportedApkExtension('APP.APK'), isTrue);

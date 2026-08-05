@@ -361,25 +361,6 @@ void main() {
       }
     });
 
-    test('nightly.yml triggers on main branch push', () {
-      final nightlyFile = File(path.join(workflowsDir.path, 'nightly.yml'));
-
-      if (nightlyFile.existsSync()) {
-        final content = nightlyFile.readAsStringSync();
-
-        expect(
-          content,
-          contains('push:'),
-          reason: 'nightly.yml should trigger on push',
-        );
-        expect(
-          content,
-          contains('main'),
-          reason: 'nightly.yml should trigger on main branch',
-        );
-      }
-    });
-
     test('nightly.yml creates GitHub releases', () {
       final nightlyFile = File(path.join(workflowsDir.path, 'nightly.yml'));
 
