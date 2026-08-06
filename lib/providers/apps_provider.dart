@@ -2705,7 +2705,7 @@ class AppsProvider with ChangeNotifier {
   void addMissingCategories(SettingsProvider settingsProvider) {
     var cats = settingsProvider.categories;
     apps.forEach((key, value) {
-      for (var c in value.app.categories ?? []) {
+      for (var c in value.app.categories) {
         if (!cats.containsKey(c)) {
           cats[c] = settingsProvider.themeColor.toARGB32();
         }

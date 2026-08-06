@@ -589,7 +589,7 @@ class _AppPageState extends State<AppPage> {
         gap24,
         CategorySelector(
           alignment: WrapAlignment.start,
-          preselected: app.app.categories?.toSet() ?? {},
+          preselected: app.app.categories.toSet(),
           onSelected: (categories) {
             app.app.categories = categories;
             appsProvider.saveApps([app.app]);
@@ -664,7 +664,7 @@ class _AppPageState extends State<AppPage> {
                     gap16,
                     CategorySelector(
                       alignment: WrapAlignment.start,
-                      preselected: app.app.categories?.toSet() ?? {},
+                      preselected: app.app.categories.toSet(),
                       onSelected: (categories) {
                         localValues['categories'] = categories;
                       },

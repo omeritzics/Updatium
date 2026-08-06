@@ -354,7 +354,7 @@ class App {
   late Map<String, dynamic> additionalSettings;
   late DateTime? lastUpdateCheck;
   bool pinned = false;
-  List<String>? categories;
+  List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
@@ -787,6 +787,7 @@ abstract class AppSource {
   }) async {
     var sp = SettingsProvider();
     await sp.initializeSettings();
+    getSourceConfigValues(additionalSettings, sp);
     var additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
@@ -867,6 +868,7 @@ abstract class AppSource {
   additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
+    [GeneratedFormTextField('appURL', label: 'appURL'.t(), required: false)],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(
@@ -1278,6 +1280,7 @@ String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
   if (RegExp(r'^\d+$').hasMatch(matchGroupString)) {
     matchGroupString = '\$$matchGroupString';
   }
+  // Regular expression to match numbers in the input string
   final pattern = RegExp(r'(\\)?\$(\d+)');
   if (!pattern.hasMatch(matchGroupString)) {
     return null;
@@ -1380,7 +1383,7 @@ class SourceProvider {
     DirectAPKLink(),
     Signal(),
     VLC(),
-    HTML(), // This should ALWAYS be the last option
+    HTML(), // This should ALWAYS be the last option as they were tried in order
   ];
 
   // Add more mass url source classes here so they are available via the service
@@ -1513,6 +1516,9 @@ class SourceProvider {
     bool sourceIsOverriden = false,
     bool inferAppIdIfOptional = false,
   }) async {
+    if (trackOnlyOverride || source.enforceTrackOnly) {
+      additionalSettings['trackOnly'] = true;
+    }
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
 

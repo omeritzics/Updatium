@@ -280,12 +280,11 @@ class SettingsProvider with ChangeNotifier {
       List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            if (!(a.app.categories?.any((c) => !cats.keys.contains(c)) ??
-                false)) {
+            if (!(a.app.categories.any((c) => !cats.keys.contains(c)))) {
               return null;
             }
             var app = a.app.deepCopy();
-            app.categories?.removeWhere((c) => !cats.keys.contains(c));
+            app.categories.removeWhere((c) => !cats.keys.contains(c));
             return app;
           })
           .where((element) => element != null)
@@ -314,10 +313,10 @@ class SettingsProvider with ChangeNotifier {
     // Propagate the rename to every app that has the old category name
     final List<App> changedApps = appsProvider
         .getAppValues()
-        .where((a) => a.app.categories?.contains(oldName) == true)
+        .where((a) => a.app.categories.contains(oldName) == true)
         .map((a) {
-          final idx = a.app.categories!.indexOf(oldName);
-          a.app.categories![idx] = newName;
+          final idx = a.app.categories.indexOf(oldName);
+          a.app.categories[idx] = newName;
           return a.app;
         })
         .toList();
