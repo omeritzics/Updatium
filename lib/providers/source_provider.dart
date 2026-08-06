@@ -1635,10 +1635,10 @@ class SourceProvider {
           await getApp(
             source,
             url,
+            sourceIsOverriden: sourceOverride != null,
             getDefaultValuesFromFormItems(
               source.combinedAppSpecificSettingFormItems,
             ),
-            sourceIsOverriden: sourceOverride != null,
           ),
         );
       } catch (e) {
