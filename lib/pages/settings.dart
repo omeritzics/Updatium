@@ -477,7 +477,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
-            gap16,
+            gap12,
             ...e.sourceConfigSettingFormItems.map((formItem) {
               if (formItem is GeneratedFormSwitch) {
                 // Switch type
@@ -563,7 +563,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             //intervalDropdown,
-                            gap16,
+                            gap12,
                             if (showIntervalLabel)
                               SizedBox(
                                 child: Text(
@@ -571,7 +571,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               )
                             else
-                              gap16,
+                              gap12,
                             intervalSlider,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -654,7 +654,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               future: DeviceInfoPlugin().androidInfo,
                             ),
-                            gap16,
+                            gap12,
                             if (!settingsProvider.safeMode)
                               SwitchListTile(
                                 title: Text('safeMode'.t()),
@@ -706,7 +706,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ],
                               ),
-                            gap16,
+                            gap12,
                             if (settingsProvider.safeMode)
                               Row(
                                 mainAxisAlignment:
@@ -999,7 +999,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        gap24,
+                        gap16,
                         ExpansionTile(
                           leading: Icon(Icons.cloud_download),
                           title: Text(
@@ -1015,7 +1015,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(8),
                           children: [...sourceSpecificFields],
                         ),
-                        gap24,
+                        gap16,
                         ExpansionTile(
                           leading: Icon(Icons.palette_rounded),
                           title: Text(
@@ -1031,7 +1031,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            gap16,
+                            gap12,
                             GeneratedForm(
                               items: [
                                 [
@@ -1065,7 +1065,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap8,
                             if (settingsProvider.theme == ThemeSettings.system)
                               followSystemThemeExplanation,
-                            gap16,
+                            gap12,
                             if (settingsProvider.theme != ThemeSettings.light)
                               SwitchListTile(
                                 title: Text('useBlackTheme'.t()),
@@ -1077,9 +1077,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
                             gap8,
                             useMaterialThemeSwitch,
-                            gap16,
+                            gap8,
                             if (!settingsProvider.useMaterialYou) colorPicker,
-                            gap16,
+                            gap12,
                             localeDropdown,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -1158,7 +1158,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        gap24,
+                        gap16,
                         ExpansionTile(
                           leading: Icon(Icons.list_rounded),
                           title: Text(
@@ -1209,7 +1209,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        gap24,
+                        gap16,
                         ExpansionTile(
                           leading: Icon(Icons.more_horiz),
                           title: Text(
@@ -1223,7 +1223,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            gap16,
+                            gap12,
                             SwitchListTile(
                               title: Text('showConfetti'.t()),
                               value: settingsProvider.showConfetti,
@@ -1233,7 +1233,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        gap24,
+                        gap16,
                         ExpansionTile(
                           leading: Icon(Icons.category_rounded),
                           title: Text(
@@ -1249,7 +1249,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            gap16,
+                            gap12,
                             CategoryTagEditor(showLabelWhenNotEmpty: false),
                           ],
                         ),
@@ -1837,7 +1837,7 @@ class _AboutDialogState extends State<AboutDialog> {
                       width: 72,
                       height: 72,
                     ),
-                    gap16,
+                    gap12,
                     Text(
                       'Updatium',
                       style: Theme.of(context).textTheme.headlineSmall
@@ -1893,7 +1893,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   padding: EdgeInsets.zero,
                 ),
               ),
-              gap16,
+              gap12,
               Text(
                 'sourceCode'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
@@ -1913,7 +1913,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   padding: EdgeInsets.zero,
                 ),
               ),
-              gap16,
+              gap12,
               Text(
                 'license'.t(),
                 style: Theme.of(context).textTheme.titleSmall,

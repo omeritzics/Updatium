@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
-import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -648,15 +648,6 @@ class AppsProvider with ChangeNotifier {
       APKDir = Directory('${(await getAppStorageDir()).path}/apks');
       if (!APKDir.existsSync()) {
         APKDir.createSync();
-      }
-      // Clean up unused icon cache directory
-      var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
-      if (iconCacheDir.existsSync()) {
-        try {
-          iconCacheDir.deleteSync(recursive: true);
-        } catch (e) {
-          // Ignore deletion errors
-        }
       }
       // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
@@ -2478,23 +2469,6 @@ class AppsProvider with ChangeNotifier {
         );
       }
     }
-  }
-
-  /// Get icon for an app
-  Future<Uint8List?> getIcon(
-    String appId,
-    String? remoteIconUrl, {
-    bool forceRefresh = false,
-    Uint8List? fallbackIcon,
-  }) async {
-    // Try to get from installed app
-    final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
-        ?.getAppIcon();
-    if (installedIcon != null) {
-      return installedIcon;
-    }
-
-    return fallbackIcon;
   }
 
   Future<void> saveApps(

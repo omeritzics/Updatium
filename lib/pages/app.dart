@@ -609,16 +609,6 @@ class _AppPageState extends State<AppPage> {
                     .where((e) => e.key != 'appId') // id is not user-editable
                     .map((e) {
                       var item = e.clone();
-                      if (app.app.additionalSettings[item.key] != null) {
-                        item.defaultValue =
-                            app.app.additionalSettings[item.key];
-                      } else if (item.key == 'author') {
-                        item.defaultValue = app.app.author;
-                      } else if (item.key == 'appName') {
-                        item.defaultValue = app.app.name;
-                      } else if (item.key == 'appSourceURL') {
-                        item.defaultValue = app.app.url;
-                      }
                       return item;
                     })
                     .toList();
@@ -694,10 +684,6 @@ class _AppPageState extends State<AppPage> {
         // loop below (written into additionalSettings), NOT the raw
         // app.app.name/author fields, which get silently overwritten by
         // the source's reported values on every update check.
-        // appId is intentionally not user-editable.
-        if (values['appSourceURL'] != null) {
-          app.app.url = values['appSourceURL'];
-        }
         if (values['pinned'] != null) {
           app.app.pinned = values['pinned'] == true;
         }
@@ -818,27 +804,16 @@ class _AppPageState extends State<AppPage> {
                       children: [
                         Consumer<AppsProvider>(
                           builder: (ctx, appsProvider, child) {
-                            final appInMemory = appsProvider.apps[app.app.id];
-
-                            if (appInMemory?.icon != null) {
+                            if (app.icon != null) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8.0,
                                 ),
                                 child: Image.memory(
-                                  appInMemory!.icon!,
-                                  width: 48,
-                                  height: 48,
+                                  app.icon!,
+                                  width: 52,
+                                  height: 52,
                                   gaplessPlayback: true,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(
-                                      Icons.apps,
-                                      size: 48,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    );
-                                  },
                                 ),
                               );
                             }
@@ -899,9 +874,9 @@ class _AppPageState extends State<AppPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(app.app.name),
+                              Text(app.name),
                               Text(
-                                t('byX', args: [app.app.author]),
+                                t('byX', args: [app.author]),
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
                                       color: Theme.of(

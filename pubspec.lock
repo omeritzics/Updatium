@@ -1068,7 +1068,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: fef24431f01bc12657a55cce9683713c5aef990b
+      resolved-ref: bd370b84b4cfd78d53e7f07f71cd159b311a2956
       url: "https://github.com/omeritzics/simple_localization"
     source: git
     version: "3.0.9"
@@ -1297,10 +1297,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: ba6f4bba816c8d7e3c1580e170f3786d216951cc6b94babc3b814c08d2cb2738
+      sha256: a0b93865d5644f11cf6a8c3f6db909f1ec168958b5805f6cc684adea957cd63d
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.4.0"
   win32_registry:
     dependency: transitive
     description:

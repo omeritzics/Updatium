@@ -17,7 +17,7 @@ import 'package:updatium/app_sources/bitbucket.dart';
 import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
-import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/app_sources/gitea.dart';
@@ -746,19 +746,17 @@ abstract class AppSource {
     bool disabled = true,
     bool defaultValue = true,
   }) {
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly.map(
-          (e) {
-            return e.map((e2) {
-              if (e2.key == key) {
-                var item = e2 as GeneratedFormSwitch;
-                item.disabled = disabled;
-                item.defaultValue = defaultValue;
-              }
-              return e2;
-            }).toList();
-          },
-        ).toList();
+    additionalAppSpecificSettingsNeverUseDirectly =
+        additionalAppSpecificSettingsNeverUseDirectly.map((e) {
+          return e.map((e2) {
+            if (e2.key == key) {
+              var item = e2 as GeneratedFormSwitch;
+              item.disabled = disabled;
+              item.defaultValue = defaultValue;
+            }
+            return e2;
+          }).toList();
+        }).toList();
   }
 
   String standardizeUrl(String url) {
@@ -866,37 +864,9 @@ abstract class AppSource {
 
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
-  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
+  additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appSourceURL',
-        label: 'appSourceURL'.t(),
-        required: false,
-      ),
-    ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(
@@ -905,6 +875,15 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+
+    [
+      GeneratedFormSwitch(
+        'refreshBeforeDownload',
+        label: 'refreshBeforeDownload'.t(),
+        defaultValue: true,
+      ),
+    ],
+
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -941,6 +920,7 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+
     [
       GeneratedFormSwitch(
         'exemptFromBackgroundUpdates',
@@ -948,6 +928,28 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+    [
+      GeneratedFormSwitch(
+        'skipUpdateNotifications',
+        label: 'skipUpdateNotifications'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: 'includePrereleases'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: 'stayOneVersionBehind'.t(),
+        defaultValue: false,
+      ),
+    ],
+
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -964,20 +966,6 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: 'skipUpdateNotifications'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: 'refreshBeforeDownload'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
         'fallbackToOlderReleases',
         label: 'fallbackToOlderReleases'.t(),
         defaultValue: true,
@@ -988,20 +976,6 @@ abstract class AppSource {
         'trySelectingSuggestedVersionCode',
         label: 'trySelectingSuggestedVersionCode'.t(),
         defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: 'includePrereleases'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: 'stayOneVersionBehind'.t(),
-        defaultValue: false,
       ),
     ],
     [
@@ -1054,7 +1028,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: t('matchGroupToUseForX', args: ['trimVersionString'.t()]),
+        label: 'matchGroupToUseForX'.t(args: ['trimVersionString'.t()]),
         required: false,
         hint: '\$0',
       ),
@@ -1088,7 +1062,7 @@ abstract class AppSource {
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
-      additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+      additionalAppSpecificSettingsNeverUseDirectly,
     );
 
     final versionDetectionIdx = agnosticItems.indexWhere(
@@ -1107,8 +1081,8 @@ abstract class AppSource {
         ),
       ]);
     }
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+    additionalAppSpecificSettingsNeverUseDirectly =
+        additionalAppSpecificSettingsNeverUseDirectly
             .map(
               (e) => e
                   .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
@@ -1130,7 +1104,7 @@ abstract class AppSource {
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: t('zippedApkFilterRegEx'),
+            label: 'zippedApkFilterRegEx'.t(),
             required: false,
             additionalValidators: [
               (value) {
@@ -1147,7 +1121,7 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeTarballs',
-            label: t('includeTarballs'),
+            label: 'includeTarballs'.t(),
             defaultValue: false,
           ),
         ],
