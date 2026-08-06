@@ -184,21 +184,21 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       horizontalGap16,
-          M3EFilledButton.tonal(
-              onPressed: pickedSource == null
-                  ? null
-                  : () {
-                      settingsProvider.selectionClick();
-                      showDialog(
-                        context: context,
-                        builder: (context) => AddAppConfirmationPage(
-                          initialUrl: userInput,
-                          initialSourceOverride: pickedSourceOverride,
-                        ),
-                      );
-                    },
-              child: Text('continue'.t()),
-            ),
+      M3EFilledButton.tonal(
+        onPressed: pickedSource == null
+            ? null
+            : () {
+                settingsProvider.selectionClick();
+                showDialog(
+                  context: context,
+                  builder: (context) => AddAppConfirmationPage(
+                    initialUrl: userInput,
+                    initialSourceOverride: pickedSourceOverride,
+                  ),
+                );
+              },
+        child: Text('continue'.t()),
+      ),
     ],
   );
 
@@ -583,9 +583,7 @@ class AddAppPageState extends State<AddAppPage> {
             pinned: true,
             title: Text('addApp'.t()),
             bottom:
-                (pickedSource != null ||
-                    searching ||
-                    searchQuery.isNotEmpty)
+                (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
