@@ -1523,21 +1523,9 @@ class SourceProvider {
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
 
-    // Apply fallback for includePrereleases from global setting if not explicitly set
-    var mergedAdditionalSettings = Map<String, dynamic>.from(
-      additionalSettings,
-    );
-    SettingsProvider? sp;
-    if (mergedAdditionalSettings['includePrereleases'] == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-      mergedAdditionalSettings['includePrereleases'] =
-          sp.includePrereleasesByDefault;
-    }
-
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
-      mergedAdditionalSettings,
+      additionalSettings,
     );
 
     if (source.runtimeType !=
@@ -1568,10 +1556,8 @@ class SourceProvider {
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
     }
-    if (sp == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-    }
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
     if (sp.preferApkOverXapk) {
       apk.apkUrls = preferApkOverXapk(apk.apkUrls);
     }
