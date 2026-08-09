@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
-import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -40,6 +40,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/services/slang_converter.dart';
+import 'package:path/path.dart' as path;
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -648,15 +649,6 @@ class AppsProvider with ChangeNotifier {
       if (!APKDir.existsSync()) {
         APKDir.createSync();
       }
-      // Clean up unused icon cache directory
-      var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
-      if (iconCacheDir.existsSync()) {
-        try {
-          iconCacheDir.deleteSync(recursive: true);
-        } catch (e) {
-          // Ignore deletion errors
-        }
-      }
       // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
       if (cacheDirs?.isNotEmpty ?? false) {
@@ -1222,13 +1214,47 @@ class AppsProvider with ChangeNotifier {
     if (!destDir.existsSync()) {
       destDir.createSync(recursive: true);
     }
+    // Resolve the canonical destination path once, to check every entry against.
+    final destCanonical = path.canonicalize(destDir.absolute.path);
     for (final file in tarArchive.files) {
-      if (file.isFile) {
-        final outPath = '${destDir.path}/${file.name}';
-        final outFile = File(outPath);
-        outFile.createSync(recursive: true);
-        outFile.writeAsBytesSync(file.content as List<int>);
+      // Reject symlinks/hardlinks outright - never follow or materialize them,
+      // since a link target is an independent traversal vector on top of the
+      // entry name itself.
+      if (file.isSymbolicLink) {
+        logs.add(
+          'Rejected tarball entry (symlink, not supported): ${file.name}',
+        );
+        continue;
       }
+      if (!file.isFile) {
+        continue;
+      }
+
+      // Reject absolute paths and drive-letter paths outright - a legitimate
+      // archive entry should always be relative.
+      if (path.isAbsolute(file.name) ||
+          RegExp(r'^[A-Za-z]:').hasMatch(file.name)) {
+        logs.add('Rejected tarball entry (absolute/drive path): ${file.name}');
+        continue;
+      }
+
+      // Join and normalize, then re-verify the resolved path is still inside
+      // destDir. normalize() alone only collapses '..' segments syntactically;
+      // it does not guarantee the result stays within destDir, so the
+      // isWithin check (against the canonicalized paths) is the real guard.
+      final joinedPath = path.join(destDir.path, file.name);
+      final outCanonical = path.canonicalize(path.normalize(joinedPath));
+      if (!path.isWithin(destCanonical, outCanonical) &&
+          outCanonical != destCanonical) {
+        logs.add(
+          'Rejected tarball entry (path traversal attempt): ${file.name}',
+        );
+        continue;
+      }
+
+      final outFile = File(outCanonical);
+      await outFile.create(recursive: true);
+      await outFile.writeAsBytes(file.content as List<int>);
     }
   }
 
@@ -1639,12 +1665,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<String> getStorageRootPath() async {
-    // sublist(0, 3) throws RangeError when the storage path has fewer than 3
-    // segments (emulators, restricted profiles, some OEM configurations).
-    // Use min(3, length) so we never request more elements than exist.
-    final segments = (await getAppStorageDir()).uri.pathSegments;
-    final take = segments.length < 3 ? segments.length : 3;
-    return '/${segments.sublist(0, take).join('/')}';
+    return '/${(await getAppStorageDir()).uri.pathSegments.sublist(0, 3).join('/')}';
   }
 
   Future<void> moveObbFile(File file, String appId) async {
@@ -1694,29 +1715,11 @@ class AppsProvider with ChangeNotifier {
     if (pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...app.otherAssetUrls];
     }
-    // If the App has more than one APK, the user should pick one (if context provided).
-    // Clamp the stored preferredApkIndex to the current list length to prevent a
-    // RangeError when a new release has fewer APK variants than the previous one.
-    final safeApkIndex = urlsToSelectFrom.isEmpty
-        ? 0
-        : app.preferredApkIndex.clamp(0, urlsToSelectFrom.length - 1);
-    MapEntry<String, String>? appFileUrl = urlsToSelectFrom.isEmpty
-        ? null
-        : urlsToSelectFrom[safeApkIndex];
-    // When picking any asset, use the APK filter regex to pre-select the best matching
-    // asset by default, without hiding other assets from the user.
-    if (pickAnyAsset &&
-        app.additionalSettings['apkFilterRegEx'] is String &&
-        (app.additionalSettings['apkFilterRegEx'] as String).isNotEmpty) {
-      var matching = filterApks(
-        urlsToSelectFrom,
-        app.additionalSettings['apkFilterRegEx'],
-        app.additionalSettings['invertAPKFilter'] == true,
-      );
-      if (matching.isNotEmpty) {
-        appFileUrl = matching.first;
-      }
-    }
+    // If the App has more than one APK, the user should pick one (if context provided)
+    MapEntry<String, String>? appFileUrl =
+        urlsToSelectFrom[app.preferredApkIndex >= 0
+            ? app.preferredApkIndex
+            : 0];
     // get device supported architecture
     List<String> archs = (await DeviceInfoPlugin().androidInfo).supportedAbis;
 
@@ -2339,6 +2342,10 @@ class AppsProvider with ChangeNotifier {
                 }
               }
             }
+            if (app != null && app.id.trim().isEmpty) {
+              logs.add('Ignoring App with an empty ID: ${item.path}');
+              app = null;
+            }
             if (app != null) {
               // Save the app to the in-memory list without grabbing any OS info first
               apps.update(
@@ -2462,23 +2469,6 @@ class AppsProvider with ChangeNotifier {
         );
       }
     }
-  }
-
-  /// Get icon for an app
-  Future<Uint8List?> getIcon(
-    String appId,
-    String? remoteIconUrl, {
-    bool forceRefresh = false,
-    Uint8List? fallbackIcon,
-  }) async {
-    // Try to get from installed app
-    final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
-        ?.getAppIcon();
-    if (installedIcon != null) {
-      return installedIcon;
-    }
-
-    return fallbackIcon;
   }
 
   Future<void> saveApps(
@@ -2715,7 +2705,7 @@ class AppsProvider with ChangeNotifier {
   void addMissingCategories(SettingsProvider settingsProvider) {
     var cats = settingsProvider.categories;
     apps.forEach((key, value) {
-      for (var c in value.app.categories ?? []) {
+      for (var c in value.app.categories) {
         if (!cats.containsKey(c)) {
           cats[c] = settingsProvider.themeColor.toARGB32();
         }
@@ -2740,14 +2730,9 @@ class AppsProvider with ChangeNotifier {
       currentApp.additionalSettings,
       currentApp: currentApp,
     );
-    // Clamp the preserved user preference to the new list length.
-    // When a new release has fewer APK variants than the previous one the old
-    // index would be out of bounds; .clamp() handles both shrinkage and the
-    // empty-list edge-case in one shot.
-    newApp.preferredApkIndex = currentApp.preferredApkIndex.clamp(
-      0,
-      newApp.apkUrls.isEmpty ? 0 : newApp.apkUrls.length - 1,
-    );
+    if (currentApp.preferredApkIndex < newApp.apkUrls.length) {
+      newApp.preferredApkIndex = currentApp.preferredApkIndex;
+    }
     await saveApps([newApp]);
     return newApp.latestVersion != currentApp.latestVersion ? newApp : null;
   }
@@ -3079,8 +3064,9 @@ class AppsProvider with ChangeNotifier {
     List<App> pps = results[0];
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
-      if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: 'appAlreadyAdded'.t()});
+      var alreadyExists = apps.values.any((e) => e.app.url == app.url);
+      if (alreadyExists) {
+        errorsMap.addAll({app.id: t('appAlreadyAdded')});
       } else {
         await saveApps([app], onlyIfExists: false);
       }

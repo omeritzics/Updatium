@@ -37,6 +37,15 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
+// Tiles keep a uniform size and stretch to fill the row, with identical gaps
+// between them regardless of screen width
+const appGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
+  maxCrossAxisExtent: 128,
+  crossAxisSpacing: 3,
+  mainAxisSpacing: 3,
+  mainAxisExtent: 200,
+);
+
 Color preserveTransparency(Color color, double opacity) {
   return color.withValues(alpha: opacity);
 }
@@ -311,7 +320,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
       if (filter.categoryFilter.isNotEmpty &&
           filter.categoryFilter
-              .intersection(app.app.categories?.toSet() ?? <String>{})
+              .intersection(app.app.categories.toSet())
               .isEmpty) {
         return false;
       }
@@ -370,6 +379,30 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     var existingUpdates = appsProvider.findExistingUpdates(installedOnly: true);
 
+    if (settingsProvider.pinUpdates) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (existingUpdates.contains(sa.app.id)) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...temp, ...listedApps];
+    }
+
+    if (settingsProvider.buryNonInstalled) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (sa.app.installedVersion == null) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...listedApps, ...temp];
+    }
+
     var existingUpdateIdsAllOrSelected = existingUpdates
         .where(
           (element) => selectedAppIds.isEmpty
@@ -402,10 +435,20 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         .where(isNotTrackOnly)
         .toList();
 
+    var tempPinned = [];
+    var tempNotPinned = [];
+    for (var a in listedApps) {
+      if (a.app.pinned) {
+        tempPinned.add(a);
+      } else {
+        tempNotPinned.add(a);
+      }
+    }
+    listedApps = [...tempPinned, ...tempNotPinned];
+
     List<String?> getListedCategories() {
       var temp = listedApps.map(
-        (e) =>
-            e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
+        (e) => e.app.categories.isNotEmpty == true ? e.app.categories : [null],
       );
       return temp.isNotEmpty
           ? {
@@ -673,9 +716,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             child: getAppIcon(index),
                           ),
                           if (app.pinned)
-                            Positioned(
+                            PositionedDirectional(
                               top: -4,
-                              left: -4,
+                              start: -4,
                               child: Semantics(
                                 label: 'pinned'.t(),
                                 child: Icon(
@@ -811,7 +854,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsetsDirectional.only(start: 8),
                     child: Semantics(
                       label: 'pinned'.t(),
                       child: Icon(
@@ -886,9 +929,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           .entries
           .where(
             (e) =>
-                e.value.app.categories?.contains(listedCategories[index]) ==
+                e.value.app.categories.contains(listedCategories[index]) ==
                     true ||
-                e.value.app.categories?.isEmpty == true &&
+                e.value.app.categories.isEmpty == true &&
                     listedCategories[index] == null,
           )
           .toList();
@@ -935,42 +978,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
           tilePadding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                const tileWidth = 128.0;
-                const spacing = 8.0;
-                final count = filteredEntries.length;
-                final tilesPerRow = count == 0
-                    ? 1
-                    : ((constraints.maxWidth + spacing) / (tileWidth + spacing))
-                          .floor()
-                          .clamp(1, count);
-                final remainder = count % tilesPerRow;
-                final phantomCount = remainder == 0
-                    ? 0
-                    : tilesPerRow - remainder;
-
-                return Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: 8,
-                  children: [
-                    ...filteredEntries.map((entry) {
-                      final appIndex = entry.key;
-                      if (appIndex >= 0 && appIndex < listedApps.length) {
-                        return SizedBox(
-                          width: tileWidth,
-                          height: 200,
-                          child: getSingleAppGridTile(appIndex),
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    }),
-                    ...List.generate(
-                      phantomCount,
-                      (_) => const SizedBox(width: tileWidth, height: 0),
-                    ),
-                  ],
-                );
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              gridDelegate: appGridDelegate,
+              itemCount: filteredEntries.length,
+              itemBuilder: (BuildContext context, int index) {
+                final appIndex = filteredEntries[index].key;
+                if (appIndex >= 0 && appIndex < listedApps.length) {
+                  return getSingleAppGridTile(appIndex);
+                }
+                return const SizedBox.shrink();
               },
             ),
           ],
@@ -1127,7 +1146,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           Set<String>? preselected;
           var showPrompt = false;
           for (var element in selectedApps) {
-            var currentCats = element.categories?.toSet() ?? <String>{};
+            var currentCats = element.categories.toSet();
             if (preselected == null) {
               preselected = currentCats;
             } else {
@@ -1357,10 +1376,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ],
                     [
                       GeneratedFormTextField(
-                        'appAuthor',
-                        label: 'appAuthor'.t(),
+                        'author',
+                        label: 'author'.t(),
                         required: false,
-                        defaultValue: localValues['appAuthor'],
+                        defaultValue: localValues['author'],
                       ),
                     ],
                     [
@@ -1468,11 +1487,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   .entries
                   .where(
                     (e) =>
-                        e.value.app.categories?.contains(
+                        e.value.app.categories.contains(
                               listedCategories[index],
                             ) ==
                             true ||
-                        e.value.app.categories?.isEmpty == true &&
+                        e.value.app.categories.isEmpty == true &&
                             listedCategories[index] == null,
                   )
                   .toList();
@@ -1528,44 +1547,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         }
       } else {
         if (settingsProvider.useGridView) {
-          return SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  const tileWidth = 128.0;
-                  const spacing = 8.0;
-                  final count = listedApps.length;
-                  final tilesPerRow = count == 0
-                      ? 1
-                      : ((constraints.maxWidth + spacing) /
-                                (tileWidth + spacing))
-                            .floor()
-                            .clamp(1, count);
-                  final remainder = count % tilesPerRow;
-                  final phantomCount = remainder == 0
-                      ? 0
-                      : tilesPerRow - remainder;
-
-                  return Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    runSpacing: 8,
-                    children: [
-                      ...listedApps.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        return SizedBox(
-                          width: tileWidth,
-                          height: 200,
-                          child: getSingleAppGridTile(index),
-                        );
-                      }),
-                      ...List.generate(
-                        phantomCount,
-                        (_) => const SizedBox(width: tileWidth, height: 0),
-                      ),
-                    ],
-                  );
-                },
+          return SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            sliver: SliverGrid(
+              gridDelegate: appGridDelegate,
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) =>
+                    getSingleAppGridTile(index),
+                childCount: listedApps.length,
               ),
             ),
           );
@@ -1944,7 +1933,7 @@ class AppsFilter {
   Map<String, dynamic> toFormValuesMap() {
     return {
       'appName': nameFilter,
-      'appAuthor': authorFilter,
+      'author': authorFilter,
       'appId': idFilter,
       'description': descriptionFilter,
       'upToDateApps': includeUptodate,
@@ -1956,7 +1945,7 @@ class AppsFilter {
 
   void setFormValuesFromMap(Map<String, dynamic> values) {
     nameFilter = values['appName']!;
-    authorFilter = values['appAuthor']!;
+    authorFilter = values['author']!;
     idFilter = values['appId']!;
     descriptionFilter = values['description']!;
     includeUptodate = values['upToDateApps'];

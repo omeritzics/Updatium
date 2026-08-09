@@ -589,14 +589,12 @@ class _AppPageState extends State<AppPage> {
         gap24,
         CategorySelector(
           alignment: WrapAlignment.start,
-          preselected: app.app.categories?.toSet() ?? {},
+          preselected: app.app.categories.toSet(),
           onSelected: (categories) {
             app.app.categories = categories;
             appsProvider.saveApps([app.app]);
           },
         ),
-        // Extra bottom padding to clear the docked toolbar
-        const SizedBox(height: 96),
       ],
     );
 
@@ -605,26 +603,19 @@ class _AppPageState extends State<AppPage> {
         context: context,
         builder: (BuildContext ctx) {
           Map<String, dynamic> localValues = {};
-          var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
-            row,
-          ) {
-            row = row.map((e) {
-              var item = e.clone();
-              if (app.app.additionalSettings[item.key] != null) {
-                item.defaultValue = app.app.additionalSettings[item.key];
-              } else if (item.key == 'appAuthor') {
-                item.defaultValue = app.app.author;
-              } else if (item.key == 'appId') {
-                item.defaultValue = app.app.id;
-              } else if (item.key == 'appName') {
-                item.defaultValue = app.app.name;
-              } else if (item.key == 'appSourceURL') {
-                item.defaultValue = app.app.url;
-              }
-              return item;
-            }).toList();
-            return row;
-          }).toList();
+          var items = (source?.combinedAppSpecificSettingFormItems ?? [])
+              .map((row) {
+                row = row
+                    .where((e) => e.key != 'appId') // id is not user-editable
+                    .map((e) {
+                      var item = e.clone();
+                      return item;
+                    })
+                    .toList();
+                return row;
+              })
+              .where((row) => row.isNotEmpty)
+              .toList();
 
           return Dialog.fullscreen(
             child: Scaffold(
@@ -673,7 +664,7 @@ class _AppPageState extends State<AppPage> {
                     gap16,
                     CategorySelector(
                       alignment: WrapAlignment.start,
-                      preselected: app.app.categories?.toSet() ?? {},
+                      preselected: app.app.categories.toSet(),
                       onSelected: (categories) {
                         localValues['categories'] = categories;
                       },
@@ -689,24 +680,10 @@ class _AppPageState extends State<AppPage> {
 
     handleAdditionalOptionChanges(Map<String, dynamic>? values) {
       if (values != null) {
-        // Handle basic app info changes
-        if (values['appName'] != null) {
-          app.app.name = values['appName'];
-        }
-        if (values['appAuthor'] != null) {
-          app.app.author = values['appAuthor'];
-        }
-        if (values['appId'] != null && values['appId'] != app.app.id) {
-          // ID change requires special handling - need to update the map key
-          var newId = values['appId'] as String;
-          if (!appsProvider.apps.containsKey(newId)) {
-            app.app.id = newId;
-            app.app.allowIdChange = true;
-          }
-        }
-        if (values['appSourceURL'] != null) {
-          app.app.url = values['appSourceURL'];
-        }
+        // appName/author are overrides — handled by the generic settings
+        // loop below (written into additionalSettings), NOT the raw
+        // app.app.name/author fields, which get silently overwritten by
+        // the source's reported values on every update check.
         if (values['pinned'] != null) {
           app.app.pinned = values['pinned'] == true;
         }
@@ -827,27 +804,16 @@ class _AppPageState extends State<AppPage> {
                       children: [
                         Consumer<AppsProvider>(
                           builder: (ctx, appsProvider, child) {
-                            final appInMemory = appsProvider.apps[app.app.id];
-
-                            if (appInMemory?.icon != null) {
+                            if (app.icon != null) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8.0,
                                 ),
                                 child: Image.memory(
-                                  appInMemory!.icon!,
-                                  width: 48,
-                                  height: 48,
+                                  app.icon!,
+                                  width: 52,
+                                  height: 52,
                                   gaplessPlayback: true,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(
-                                      Icons.apps,
-                                      size: 48,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    );
-                                  },
                                 ),
                               );
                             }
@@ -952,6 +918,8 @@ class _AppPageState extends State<AppPage> {
                               ),
                             ),
                           ),
+                        // Extra bottom padding to clear the docked toolbar
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),

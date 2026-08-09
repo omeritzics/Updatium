@@ -7,11 +7,11 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
-import 'package:updatium/pages/settings.dart';
 import 'package:updatium/pages/import_export.dart';
+import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
-import '../providers/settings_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
@@ -56,8 +56,8 @@ class AddAppPage extends StatefulWidget {
 }
 
 class AddAppPageState extends State<AddAppPage> {
-  bool isSearchLoading = false;
-  bool isUrlLoading = false;
+  // bool gettingAppInfo;
+  bool searching = false;
   String userInput = '';
   String searchQuery = '';
   int searchBarKey = 0;
@@ -184,23 +184,21 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       horizontalGap16,
-      isUrlLoading
-          ? const LoadingIndicatorM3E()
-          : M3EFilledButton.tonal(
-              onPressed: isUrlLoading || pickedSource == null
-                  ? null
-                  : () {
-                      settingsProvider.selectionClick();
-                      showDialog(
-                        context: context,
-                        builder: (context) => AddAppConfirmationPage(
-                          initialUrl: userInput,
-                          initialSourceOverride: pickedSourceOverride,
-                        ),
-                      );
-                    },
-              child: Text('continue'.t()),
-            ),
+      M3EFilledButton.tonal(
+        onPressed: pickedSource == null
+            ? null
+            : () {
+                settingsProvider.selectionClick();
+                showDialog(
+                  context: context,
+                  builder: (context) => AddAppConfirmationPage(
+                    initialUrl: userInput,
+                    initialSourceOverride: pickedSourceOverride,
+                  ),
+                );
+              },
+        child: Text('continue'.t()),
+      ),
     ],
   );
 
@@ -229,10 +227,10 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       horizontalGap16,
-      isSearchLoading
+      searching
           ? const LoadingIndicatorM3E()
           : M3EFilledButton.tonal(
-              onPressed: searchQuery.isEmpty || isSearchLoading
+              onPressed: searchQuery.isEmpty || searching
                   ? null
                   : () {
                       runSearch();
@@ -357,11 +355,11 @@ class AddAppPageState extends State<AddAppPage> {
       TextButton.icon(
         onPressed: () async {
           setState(() {
-            isSearchLoading = true;
+            searching = true;
           });
           final installedApps = await getAllInstalledInfo();
           setState(() {
-            isSearchLoading = false;
+            searching = false;
           });
           if (!mounted) return;
 
@@ -395,7 +393,7 @@ class AddAppPageState extends State<AddAppPage> {
 
   Future<void> runSearch({bool filtered = true}) async {
     setState(() {
-      isSearchLoading = true;
+      searching = true;
     });
     var sourceStrings = <String, List<String>>{};
     sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
@@ -571,7 +569,7 @@ class AddAppPageState extends State<AddAppPage> {
       showError(e, context);
     } finally {
       setState(() {
-        isSearchLoading = false;
+        searching = false;
       });
     }
   }
@@ -585,10 +583,7 @@ class AddAppPageState extends State<AddAppPage> {
             pinned: true,
             title: Text('addApp'.t()),
             bottom:
-                (pickedSource != null ||
-                    isSearchLoading ||
-                    isUrlLoading ||
-                    searchQuery.isNotEmpty)
+                (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
@@ -663,7 +658,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   late ConfettiController _confettiController;
   Future<String?>? _sourceNoteFuture;
 
-  App? prefilledApp;
   int prefillVersion = 0;
 
   String userInput = '';
@@ -727,7 +721,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       );
       if (mounted) {
         setState(() {
-          prefilledApp = app;
           additionalSettings = Map.from(app.additionalSettings);
           prefillVersion++;
         });
@@ -755,7 +748,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       bool userPickedTrackOnly, {
       bool ignoreHideSetting = false,
     }) async {
-      var useTrackOnly = userPickedTrackOnly;
+      var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
         // ignore: use_build_context_synchronously
@@ -954,20 +947,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
                 var item = e.clone();
-                if (prefilledApp != null) {
-                  if (prefilledApp!.additionalSettings[item.key] != null) {
-                    item.defaultValue =
-                        prefilledApp!.additionalSettings[item.key];
-                  } else if (item.key == 'appAuthor') {
-                    item.defaultValue = prefilledApp!.author;
-                  } else if (item.key == 'appId') {
-                    item.defaultValue = prefilledApp!.id;
-                  } else if (item.key == 'appName') {
-                    item.defaultValue = prefilledApp!.name;
-                  } else if (item.key == 'appSourceURL') {
-                    item.defaultValue = prefilledApp!.url;
-                  }
-                }
                 return item;
               }).toList();
             }),
@@ -1073,13 +1052,12 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           ConfettiWidget(
             confettiController: _confettiController,
             blastDirectionality: BlastDirectionality.explosive,
-            colors: const [
-              Colors.green,
+            colors: [
+              Theme.of(context).colorScheme.primary,
               Colors.blue,
-              Colors.pink,
-              Colors.orange,
+              Colors.green,
+              Colors.red,
               Colors.purple,
-              Colors.yellow,
             ],
           ),
         ],
@@ -1383,13 +1361,11 @@ class InstalledAppsDialog extends StatefulWidget {
 
 class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   bool showSystemApps = false;
-  final Map<String, Uint8List> _iconCache = {};
   final Map<String, String> _labelCache = {};
   final Set<String> _loadingPackageNames = {};
 
   void _onNeedLoad(String packageName) async {
-    if (_iconCache.containsKey(packageName) ||
-        _labelCache.containsKey(packageName) ||
+    if (_labelCache.containsKey(packageName) ||
         _loadingPackageNames.contains(packageName)) {
       return;
     }
@@ -1401,14 +1377,10 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
         (a) => a.packageName == packageName,
       );
 
-      final icon = await app.applicationInfo?.getAppIcon();
       final label = await app.applicationInfo?.getAppLabel();
 
       if (mounted) {
         setState(() {
-          if (icon != null) {
-            _iconCache[packageName] = icon;
-          }
           if (label != null) {
             _labelCache[packageName] = label;
           }
@@ -1458,7 +1430,6 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
                   final packageName = app.packageName ?? '';
                   return InstalledAppTile(
                     app: app,
-                    icon: _iconCache[packageName],
                     label: _labelCache[packageName],
                     onNeedLoad: _onNeedLoad,
                   );

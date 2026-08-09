@@ -6,12 +6,38 @@ permissions:
   attestations: write
 
 on:
-  push:
-    branches:
-      - main 
+  schedule:
+    - cron: '45 * * * *'
   workflow_dispatch:
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.check.outputs.should_build }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Check for new commits since last nightly tag
+        id: check
+        run: |
+          if git rev-parse nightly >/dev/null 2>&1; then
+            DIFF=$(git diff nightly..HEAD)
+            if [ -z "$DIFF" ]; then
+              echo "No changes since last nightly build - skipping"
+              echo "should_build=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_build=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "No previous nightly tag found - building"
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
     runs-on: ubuntu-latest
 
@@ -35,26 +61,6 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Upgrade existing dependencies
-        run: flutter pub upgrade
-        
-      - name: Auto-fix linting issues
-        run: |
-          git config pull.rebase false
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull && dart fix --apply
-
-      - name: Format code
-        run: dart format .
-
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@master
-        with:
-          commit_message: "style: auto-fix linting and formatting issues"
-          branch: ${{ github.ref_name }}
-          push_options: --force
           
       - name: Generate Version
         id: version
@@ -119,14 +125,6 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-//' -e 's/-normal-release.apk//')
             cp "$apk" "build/outputs/Updatium-Nightly-${arch}.apk"
           done
-
-      # I need the debug APK for testing
-
-      - name: Build Debug APK
-        run: |
-          flutter build apk --flavor normal --debug --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false
-          # Copy and rename the debug APK to maintain original naming convention
-          cp "build/app/outputs/flutter-apk/app-normal-debug.apk" "build/outputs/Updatium-Nightly-Debug.apk"
 
       - name: Attest Build Provenance
         uses: actions/attest@v4.1.1

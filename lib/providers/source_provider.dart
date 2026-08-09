@@ -17,7 +17,7 @@ import 'package:updatium/app_sources/bitbucket.dart';
 import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
-import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/app_sources/gitea.dart';
@@ -40,10 +40,10 @@ import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
@@ -60,7 +60,6 @@ class APKDetails {
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
-  bool? reproducible;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -70,7 +69,6 @@ class APKDetails {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
-    this.reproducible,
     this.allAssetUrls = const [],
   });
 }
@@ -195,15 +193,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
       apkUrls = getApkUrlsFromUrls(List<String>.from(apkUrlJson));
     } catch (e) {
       apkUrls = assumed2DlistToStringMapList(List<dynamic>.from(apkUrlJson));
+      apkUrls = List<dynamic>.from(
+        apkUrlJson,
+      ).map((e) => MapEntry(e[0] as String, e[1] as String)).toList();
     }
     json['apkUrls'] = jsonEncode(stringMapListTo2DList(apkUrls));
-    // Clamp the stored index against the actual new URL count.
-    // A user whose persisted JSON was created when the source had more APK
-    // variants would otherwise load an out-of-bounds preferredApkIndex.
-    if (apkUrls.isNotEmpty && preferredApkIndex >= apkUrls.length) {
-      preferredApkIndex = apkUrls.length - 1;
-      json['preferredApkIndex'] = preferredApkIndex;
-    }
   }
   // Arch based APK filter option should be disabled if it previously did not exist
   if (additionalSettings['autoApkFilterByArch'] == null) {
@@ -259,12 +253,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
-        json['appAuthor'] == 'Signal' &&
+        json['author'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://updates.signal.org/android/latest.json';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -277,12 +270,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // WhatsApp from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://whatsapp.com' &&
         json['id'] == 'com.whatsapp' &&
-        json['appAuthor'] == 'Meta' &&
+        json['author'] == 'Meta' &&
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://whatsapp.com/android';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -294,12 +286,11 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // VLC from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://videolan.org' &&
         json['id'] == 'org.videolan.vlc' &&
-        json['appAuthor'] == 'VideoLAN' &&
+        json['author'] == 'VideoLAN' &&
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://www.videolan.org/vlc/download-android.html';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -355,14 +346,13 @@ class App {
   late String name;
   String? installedVersion;
   late String latestVersion;
-  bool? reproducible;
   List<MapEntry<String, String>> apkUrls = []; // Key is name, value is URL
   List<MapEntry<String, String>> otherAssetUrls = [];
   late int preferredApkIndex;
   late Map<String, dynamic> additionalSettings;
   late DateTime? lastUpdateCheck;
   bool pinned = false;
-  List<String>? categories;
+  List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
@@ -385,7 +375,6 @@ class App {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
-    this.reproducible,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -410,8 +399,8 @@ class App {
   }
 
   String? get overrideAuthor =>
-      additionalSettings['appAuthor']?.toString().trim().isNotEmpty == true
-      ? additionalSettings['appAuthor']
+      additionalSettings['author']?.toString().trim().isNotEmpty == true
+      ? additionalSettings['author']
       : null;
 
   String get finalAuthor {
@@ -430,7 +419,6 @@ class App {
     Map.from(additionalSettings),
     lastUpdateCheck,
     pinned,
-    reproducible: reproducible,
     categories: categories,
     changeLog: changeLog,
     remoteIconUrl: remoteIconUrl,
@@ -451,34 +439,24 @@ class App {
         'Error running JSON compat modifiers: ${e.toString()}: ${originalJSON.toString()}',
       );
     }
-    // Parse apkUrls first so we can safely clamp the index against the real
-    // list length. When appJSONCompatibilityModifiers throws (above) we fall
-    // back to originalJSON whose preferredApkIndex may be -1 (field absent) or
-    // a value that exceeds the current URL count — both cause RangeError on the
-    // very first list access before any of the runtime guards can fire.
-    final List<MapEntry<String, String>> parsedApkUrls =
-        assumed2DlistToStringMapList(
-          jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
-        );
-    final int rawIndex = (json['preferredApkIndex'] ?? -1) as int;
-    final int safeIndex = parsedApkUrls.isEmpty
-        ? 0
-        : rawIndex.clamp(0, parsedApkUrls.length - 1);
     return App(
-      json['id']?.toString() ?? '',
-      json['url']?.toString() ?? '',
-      json['appAuthor']?.toString() ?? '',
-      json['name']?.toString() ?? '',
-      json['installedVersion']?.toString(),
-      (json['latestVersion'] ?? 'unknown'.t()).toString(),
-      parsedApkUrls,
-      safeIndex,
-      jsonDecode(json['additionalSettings'] ?? '{}') as Map<String, dynamic>,
+      json['id'] as String,
+      json['url'] as String,
+      json['author'] as String,
+      json['name'] as String,
+      json['installedVersion'] == null
+          ? null
+          : json['installedVersion'] as String,
+      (json['latestVersion'] ?? tr('unknown')) as String,
+      assumed2DlistToStringMapList(
+        jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
+      ),
+      (json['preferredApkIndex'] ?? -1) as int,
+      jsonDecode(json['additionalSettings']) as Map<String, dynamic>,
       json['lastUpdateCheck'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['lastUpdateCheck']),
       json['pinned'] ?? false,
-      reproducible: json['reproducible'],
       categories: json['categories'] != null
           ? (json['categories'] as List<dynamic>)
                 .map((e) => e.toString())
@@ -503,11 +481,10 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'appAuthor': author,
+    'author': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
-    'reproducible': reproducible,
     'apkUrls': jsonEncode(stringMapListTo2DList(apkUrls)),
     'otherAssetUrls': jsonEncode(stringMapListTo2DList(otherAssetUrls)),
     'preferredApkIndex': preferredApkIndex,
@@ -749,6 +726,24 @@ abstract class AppSource {
     name = runtimeType.toString();
   }
 
+  void overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+    String key, {
+    bool disabled = true,
+    bool defaultValue = true,
+  }) {
+    additionalAppSpecificSettingsNeverUseDirectly =
+        additionalAppSpecificSettingsNeverUseDirectly.map((e) {
+          return e.map((e2) {
+            if (e2.key == key) {
+              var item = e2 as GeneratedFormSwitch;
+              item.disabled = disabled;
+              item.defaultValue = defaultValue;
+            }
+            return e2;
+          }).toList();
+        }).toList();
+  }
+
   String standardizeUrl(String url) {
     url = preStandardizeUrl(url);
     if (!hostChanged) {
@@ -777,6 +772,7 @@ abstract class AppSource {
   }) async {
     var sp = SettingsProvider();
     await sp.initializeSettings();
+    getSourceConfigValues(additionalSettings, sp);
     var additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
@@ -805,31 +801,6 @@ abstract class AppSource {
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
-
-    // Handle 304 Not Modified - return cached response, or transparently
-    // retry without the conditional header if our cache no longer has it
-    // (expired/evicted/app restarted). Falling through with the raw 304
-    // hands callers an empty body, which breaks JSON/HTML parsing and
-    // APK-ID extraction downstream ("Could not get ID from APK", RangeError
-    // on empty lists, etc.) until the user manually refreshes.
-    if (response.statusCode == 304) {
-      var retryHeaders = Map<String, String>.from(requestHeaders);
-      retryHeaders.remove('If-None-Match');
-      var retryStreamed = await sourceRequestStreamResponse(
-        method,
-        url,
-        retryHeaders,
-        additionalSettingsPlusSourceConfig,
-        followRedirects: followRedirects,
-        postBody: postBody,
-      );
-      response = await httpClientResponseStreamToFinalResponse(
-        retryStreamed.value.key,
-        method,
-        retryStreamed.key.toString(),
-        retryStreamed.value.value,
-      );
-    }
     return response;
   }
 
@@ -854,43 +825,10 @@ abstract class AppSource {
 
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
-  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
+  additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: 'appAuthor'.t(),
-        required: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'appSourceURL',
-        label: 'appSourceURL'.t(),
-        required: false,
-      ),
-    ],
+    [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
+    [GeneratedFormTextField('appURL', label: 'appURL'.t(), required: false)],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(
@@ -899,6 +837,15 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+
+    [
+      GeneratedFormSwitch(
+        'refreshBeforeDownload',
+        label: 'refreshBeforeDownload'.t(),
+        defaultValue: true,
+      ),
+    ],
+
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -935,6 +882,7 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+
     [
       GeneratedFormSwitch(
         'exemptFromBackgroundUpdates',
@@ -942,6 +890,28 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+    [
+      GeneratedFormSwitch(
+        'skipUpdateNotifications',
+        label: 'skipUpdateNotifications'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: 'includePrereleases'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: 'stayOneVersionBehind'.t(),
+        defaultValue: false,
+      ),
+    ],
+
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -958,20 +928,6 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: 'skipUpdateNotifications'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: 'refreshBeforeDownload'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
         'fallbackToOlderReleases',
         label: 'fallbackToOlderReleases'.t(),
         defaultValue: true,
@@ -982,20 +938,6 @@ abstract class AppSource {
         'trySelectingSuggestedVersionCode',
         label: 'trySelectingSuggestedVersionCode'.t(),
         defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: 'includePrereleases'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: 'stayOneVersionBehind'.t(),
-        defaultValue: false,
       ),
     ],
     [
@@ -1048,7 +990,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: t('matchGroupToUseForX', args: ['trimVersionString'.t()]),
+        label: 'matchGroupToUseForX'.t(args: ['trimVersionString'.t()]),
         required: false,
         hint: '\$0',
       ),
@@ -1082,7 +1024,7 @@ abstract class AppSource {
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
-      additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+      additionalAppSpecificSettingsNeverUseDirectly,
     );
 
     final versionDetectionIdx = agnosticItems.indexWhere(
@@ -1101,17 +1043,17 @@ abstract class AppSource {
         ),
       ]);
     }
+    additionalAppSpecificSettingsNeverUseDirectly =
+        additionalAppSpecificSettingsNeverUseDirectly
+            .map(
+              (e) => e
+                  .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
+                  .toList(),
+            )
+            .where((e) => e.isNotEmpty)
+            .toList();
 
-    agnosticItems = agnosticItems
-        .map(
-          (e) => e
-              .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
-              .toList(),
-        )
-        .where((e) => e.isNotEmpty)
-        .toList();
-
-    var moreConditionalItems = <List<GeneratedFormItem>>[];
+    var moreConditionalItems = [];
     if (allowIncludeZips) {
       moreConditionalItems.addAll([
         [
@@ -1124,7 +1066,7 @@ abstract class AppSource {
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: t('zippedApkFilterRegEx'),
+            label: 'zippedApkFilterRegEx'.t(),
             required: false,
             additionalValidators: [
               (value) {
@@ -1141,7 +1083,7 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeTarballs',
-            label: t('includeTarballs'),
+            label: 'includeTarballs'.t(),
             defaultValue: false,
           ),
         ],
@@ -1161,13 +1103,16 @@ abstract class AppSource {
     }
 
     if (versionDetectionDisallowed) {
-      for (var item in agnosticItems.expand((row) => row)) {
-        if (item.key == 'versionDetection' ||
-            item.key == 'useVersionCodeAsOSVersion') {
-          (item as GeneratedFormSwitch).disabled = true;
-          (item).defaultValue = false;
-        }
-      }
+      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+        'versionDetection',
+        disabled: true,
+        defaultValue: false,
+      );
+      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+        'useVersionCodeAsOSVersion',
+        disabled: true,
+        defaultValue: false,
+      );
     }
 
     return [
@@ -1192,6 +1137,7 @@ abstract class AppSource {
                 (e.runtimeType == GeneratedFormSwitch
                     ? settingsProvider.getSettingBool(e.key).toString()
                     : settingsProvider.getSettingString(e.key));
+      settingsProvider.getSettingString(e.key);
       if (val != null) {
         if (e.runtimeType == GeneratedFormSwitch) {
           val = val.toString();
@@ -1295,6 +1241,7 @@ String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
   if (RegExp(r'^\d+$').hasMatch(matchGroupString)) {
     matchGroupString = '\$$matchGroupString';
   }
+  // Regular expression to match numbers in the input string
   final pattern = RegExp(r'(\\)?\$(\d+)');
   if (!pattern.hasMatch(matchGroupString)) {
     return null;
@@ -1397,7 +1344,7 @@ class SourceProvider {
     DirectAPKLink(),
     Signal(),
     VLC(),
-    HTML(), // This should ALWAYS be the last option
+    HTML(), // This should ALWAYS be the last option as they were tried in order
   ];
 
   // Add more mass url source classes here so they are available via the service
@@ -1530,24 +1477,15 @@ class SourceProvider {
     bool sourceIsOverriden = false,
     bool inferAppIdIfOptional = false,
   }) async {
+    if (trackOnlyOverride || source.enforceTrackOnly) {
+      additionalSettings['trackOnly'] = true;
+    }
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
 
-    // Apply fallback for includePrereleases from global setting if not explicitly set
-    var mergedAdditionalSettings = Map<String, dynamic>.from(
-      additionalSettings,
-    );
-    SettingsProvider? sp;
-    if (mergedAdditionalSettings['includePrereleases'] == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-      mergedAdditionalSettings['includePrereleases'] =
-          sp.includePrereleasesByDefault;
-    }
-
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
-      mergedAdditionalSettings,
+      additionalSettings,
     );
 
     if (source.runtimeType !=
@@ -1578,10 +1516,8 @@ class SourceProvider {
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
     }
-    if (sp == null) {
-      sp = SettingsProvider();
-      await sp.initializeSettings();
-    }
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
     if (sp.preferApkOverXapk) {
       apk.apkUrls = preferApkOverXapk(apk.apkUrls);
     }
@@ -1645,12 +1581,11 @@ class SourceProvider {
         .getAppValues()
         .map((e) => e.app.url)
         .toList();
-    final urlsToCheck = List<String>.from(alreadyAddedUrls)
-      ..addAll(existingUrls);
+    alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
-        if (urlsToCheck.contains(url)) {
-          throw UpdatiumError('appAlreadyAdded'.t());
+        if (alreadyAddedUrls.contains(url)) {
+          throw UpdatiumError(tr('appAlreadyAdded'));
         }
         var source = sourceOverride ?? getSource(url);
         apps.add(

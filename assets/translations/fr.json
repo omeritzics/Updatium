@@ -113,7 +113,7 @@
     "filter": "Filtre",
     "filterApps": "Filtrer les applications",
     "filterDays": "Filter days",
-    "appAuthor": "Auteur",
+    "author": "Auteur",
     "appName": "Nom de l'application",
     "upToDateApps": "Applications à jour",
     "nonInstalledApps": "Applications non installées",
