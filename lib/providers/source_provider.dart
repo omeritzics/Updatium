@@ -40,6 +40,7 @@ import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -59,7 +60,6 @@ class APKDetails {
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
-  bool? reproducible;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -69,7 +69,6 @@ class APKDetails {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
-    this.reproducible,
     this.allAssetUrls = const [],
   });
 }
@@ -347,7 +346,6 @@ class App {
   late String name;
   String? installedVersion;
   late String latestVersion;
-  bool? reproducible;
   List<MapEntry<String, String>> apkUrls = []; // Key is name, value is URL
   List<MapEntry<String, String>> otherAssetUrls = [];
   late int preferredApkIndex;
@@ -377,7 +375,6 @@ class App {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
-    this.reproducible,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -422,7 +419,6 @@ class App {
     Map.from(additionalSettings),
     lastUpdateCheck,
     pinned,
-    reproducible: reproducible,
     categories: categories,
     changeLog: changeLog,
     remoteIconUrl: remoteIconUrl,
@@ -443,34 +439,24 @@ class App {
         'Error running JSON compat modifiers: ${e.toString()}: ${originalJSON.toString()}',
       );
     }
-    // Parse apkUrls first so we can safely clamp the index against the real
-    // list length. When appJSONCompatibilityModifiers throws (above) we fall
-    // back to originalJSON whose preferredApkIndex may be -1 (field absent) or
-    // a value that exceeds the current URL count — both cause RangeError on the
-    // very first list access before any of the runtime guards can fire.
-    final List<MapEntry<String, String>> parsedApkUrls =
-        assumed2DlistToStringMapList(
-          jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
-        );
-    final int rawIndex = (json['preferredApkIndex'] ?? -1) as int;
-    final int safeIndex = parsedApkUrls.isEmpty
-        ? 0
-        : rawIndex.clamp(0, parsedApkUrls.length - 1);
     return App(
-      json['id']?.toString() ?? '',
-      json['url']?.toString() ?? '',
-      json['author']?.toString() ?? '',
-      json['name']?.toString() ?? '',
-      json['installedVersion']?.toString(),
-      (json['latestVersion'] ?? 'unknown'.t()).toString(),
-      parsedApkUrls,
-      safeIndex,
-      jsonDecode(json['additionalSettings'] ?? '{}') as Map<String, dynamic>,
+      json['id'] as String,
+      json['url'] as String,
+      json['author'] as String,
+      json['name'] as String,
+      json['installedVersion'] == null
+          ? null
+          : json['installedVersion'] as String,
+      (json['latestVersion'] ?? tr('unknown')) as String,
+      assumed2DlistToStringMapList(
+        jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
+      ),
+      (json['preferredApkIndex'] ?? -1) as int,
+      jsonDecode(json['additionalSettings']) as Map<String, dynamic>,
       json['lastUpdateCheck'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['lastUpdateCheck']),
       json['pinned'] ?? false,
-      reproducible: json['reproducible'],
       categories: json['categories'] != null
           ? (json['categories'] as List<dynamic>)
                 .map((e) => e.toString())
@@ -499,7 +485,6 @@ class App {
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
-    'reproducible': reproducible,
     'apkUrls': jsonEncode(stringMapListTo2DList(apkUrls)),
     'otherAssetUrls': jsonEncode(stringMapListTo2DList(otherAssetUrls)),
     'preferredApkIndex': preferredApkIndex,
@@ -816,31 +801,6 @@ abstract class AppSource {
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
-
-    // Handle 304 Not Modified - return cached response, or transparently
-    // retry without the conditional header if our cache no longer has it
-    // (expired/evicted/app restarted). Falling through with the raw 304
-    // hands callers an empty body, which breaks JSON/HTML parsing and
-    // APK-ID extraction downstream ("Could not get ID from APK", RangeError
-    // on empty lists, etc.) until the user manually refreshes.
-    if (response.statusCode == 304) {
-      var retryHeaders = Map<String, String>.from(requestHeaders);
-      retryHeaders.remove('If-None-Match');
-      var retryStreamed = await sourceRequestStreamResponse(
-        method,
-        url,
-        retryHeaders,
-        additionalSettingsPlusSourceConfig,
-        followRedirects: followRedirects,
-        postBody: postBody,
-      );
-      response = await httpClientResponseStreamToFinalResponse(
-        retryStreamed.value.key,
-        method,
-        retryStreamed.key.toString(),
-        retryStreamed.value.value,
-      );
-    }
     return response;
   }
 
@@ -1565,11 +1525,8 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          // The 'appId' form field defaults to an empty string, which must not
-          // be mistaken for a user-provided ID
-          ((additionalSettings['appId'] is String &&
-                  (additionalSettings['appId'] as String).trim().isNotEmpty)
-              ? (additionalSettings['appId'] as String).trim()
+          ((additionalSettings['appId'] != null)
+              ? additionalSettings['appId']
               : null) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
@@ -1617,13 +1574,20 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
+
+    // Get existing apps to check for duplicates
+    final appsProvider = AppsProvider();
+    final existingUrls = appsProvider
+        .getAppValues()
+        .map((e) => e.app.url)
+        .toList();
+    alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
-        var source = sourceOverride ?? getSource(url);
-        if (alreadyAddedUrls.contains(url) ||
-            alreadyAddedUrls.contains(source.standardizeUrl(url))) {
-          throw UpdatiumError('appAlreadyAdded'.t());
+        if (alreadyAddedUrls.contains(url)) {
+          throw UpdatiumError(tr('appAlreadyAdded'));
         }
+        var source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,
