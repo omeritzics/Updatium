@@ -65,7 +65,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       GlobalKey<AddAppPageState>();
 
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
-    final isSafeMode = settingsProvider.safeMode;
     return [
       NavigationPageItem(
         'appsString'.t(),
@@ -73,9 +72,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
-        isSafeMode ? 'importExport'.t() : 'addApp'.t(),
-        isSafeMode ? Icons.import_export : Icons.add_circle,
-        isSafeMode ? const ImportExportPage() : AddAppPage(key: _addAppPageKey),
+        settingsProvider.safeMode ? 'importExport'.t() : 'addApp'.t(),
+        settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
+        settingsProvider.safeMode
+            ? const ImportExportPage()
+            : AddAppPage(key: _addAppPageKey),
       ),
       NavigationPageItem('settings'.t(), Icons.settings, const SettingsPage()),
     ];
@@ -86,6 +87,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Check if security disclaimer has been accepted
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
@@ -96,14 +98,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         );
 
+        // If user declined, exit the app
         if (accepted != true) {
           SystemNavigator.pop();
           return;
         }
       }
 
+      // Show FreeDroidWarn dialog if needed
       if (!context.mounted) return;
-      await FreeDroidWarnService.showWarningDialog(context);
+      await showFreeDroidWarnDialog(context);
     });
   }
 
@@ -131,140 +135,163 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           .toList();
 
       _iconsInitialized = true;
-      setState(() {});
+      setState(() {}); // Rebuild after initialization
     }
   }
 
   Future<void> initDeepLinks() async {
     _appLinks = AppLinks();
 
+    goToAddApp(String data) async {
+      final settingsProvider = context.read<SettingsProvider>();
+      if (settingsProvider.safeMode) {
+        showError(UpdatiumError('safeModeAddAppDisabled'.t()), context);
+        return;
+      }
+      switchToPage(1);
+      final pages = getPages(settingsProvider);
+      while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
+              ?.currentState ==
+          null) {
+        await Future.delayed(const Duration(microseconds: 1));
+      }
+      (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState
+          ?.linkFn(data);
+    }
+
+    goToExistingApp(String appId) async {
+      // Go to Apps page
+      switchToPage(0);
+      final settingsProvider = context.read<SettingsProvider>();
+      final pages = getPages(settingsProvider);
+      while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
+          null) {
+        await Future.delayed(const Duration(microseconds: 1));
+      }
+
+      // Navigate to the app
+      (pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState
+          ?.openAppById(appId);
+    }
+
+    interpretLink(Uri uri) async {
+      isLinkActivity = true;
+      var action = uri.host;
+      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      try {
+        if (action == 'add') {
+          // Ensure apps are loaded
+          AppsProvider appsProvider = context.read<AppsProvider>();
+          while (appsProvider.loadingApps) {
+            await Future.delayed(const Duration(milliseconds: 10));
+          }
+
+          // See if we already have this app
+          String standardizedUrl = SourceProvider()
+              .getSource(data)
+              .standardizeUrl(data);
+
+          AppInMemory? existingApp = appsProvider.apps.values
+              .where((AppInMemory a) => a.app.url == standardizedUrl)
+              .firstOrNull;
+
+          if (existingApp != null) {
+            await goToExistingApp(existingApp.app.id);
+          } else {
+            await goToAddApp(data);
+          }
+        } else if (action == 'app' || action == 'apps') {
+          var dataStr = Uri.decodeComponent(data);
+          if (await showDialog(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return _ImportDialog(action: action, dataStr: dataStr);
+                },
+              ) ==
+              true) {
+            // ignore: use_build_context_synchronously
+            var appsProvider = context.read<AppsProvider>();
+            var result = await appsProvider.import(
+              action == 'app'
+                  ? '{ "apps": [$dataStr] }'
+                  : '{ "apps": $dataStr }',
+            );
+            if (!context.mounted) return;
+            showMessage(
+              t(
+                'importedX',
+                args: ['apps'.plural(result.key.length).toLowerCase()],
+              ),
+              context,
+            );
+          }
+        } else {
+          throw UpdatiumError('unknown'.t());
+        }
+      } catch (e) {
+        if (!context.mounted) return;
+        showError(e, context);
+      }
+    }
+
+    interpretObtainiumLink(Uri uri) async {
+      isLinkActivity = true;
+      var action = uri.host;
+      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      try {
+        if (action == 'add') {
+          // Ensure apps are loaded
+          AppsProvider appsProvider = context.read<AppsProvider>();
+          while (appsProvider.loadingApps) {
+            await Future.delayed(const Duration(milliseconds: 10));
+          }
+
+          // See if we already have this app
+          String standardizedUrl = SourceProvider()
+              .getSource(data)
+              .standardizeUrl(data);
+
+          AppInMemory? existingApp = appsProvider.apps.values
+              .where((AppInMemory a) => a.app.url == standardizedUrl)
+              .firstOrNull;
+
+          if (existingApp != null) {
+            await goToExistingApp(existingApp.app.id);
+          } else {
+            await goToAddApp(data);
+          }
+        } else {
+          throw UpdatiumError('unknown'.t());
+        }
+      } catch (e) {
+        if (!context.mounted) return;
+        showError(e, context);
+      }
+    }
+
+    // Check initial link if app was in cold state (terminated)
     final appLink = await _appLinks.getInitialLink();
     var initLinked = false;
     if (appLink != null) {
-      await _handleLink(appLink);
+      if (appLink.scheme == 'obtainium') {
+        await interpretObtainiumLink(appLink);
+      } else {
+        await interpretLink(appLink);
+      }
       initLinked = true;
     }
-
+    // Handle link when app is in warm state (front or background)
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       if (!initLinked) {
-        await _handleLink(uri);
+        if (uri.scheme == 'obtainium') {
+          await interpretObtainiumLink(uri);
+        } else {
+          await interpretLink(uri);
+        }
       } else {
         initLinked = false;
       }
     });
-  }
-
-  Future<void> _handleLink(Uri uri) async {
-    if (uri.scheme == 'obtainium') {
-      await _interpretObtainiumLink(uri);
-    } else {
-      await _interpretLink(uri);
-    }
-  }
-
-  Future<void> _handleAddLink(String data) async {
-    AppsProvider appsProvider = context.read<AppsProvider>();
-    while (appsProvider.loadingApps) {
-      await Future.delayed(const Duration(milliseconds: 10));
-    }
-
-    String standardizedUrl = SourceProvider()
-        .getSource(data)
-        .standardizeUrl(data);
-
-    AppInMemory? existingApp = appsProvider.apps.values
-        .where((AppInMemory a) => a.app.url == standardizedUrl)
-        .firstOrNull;
-
-    if (existingApp != null) {
-      await _goToExistingApp(existingApp.app.id);
-    } else {
-      await _goToAddApp(data);
-    }
-  }
-
-  Future<void> _goToAddApp(String data) async {
-    final settingsProvider = context.read<SettingsProvider>();
-    if (settingsProvider.safeMode) {
-      showError(UpdatiumError('safeModeAddAppDisabled'.t()), context);
-      return;
-    }
-    switchToPage(1);
-    final pages = getPages(settingsProvider);
-    while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState ==
-        null) {
-      await Future.delayed(const Duration(microseconds: 1));
-    }
-    (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState?.linkFn(
-      data,
-    );
-  }
-
-  Future<void> _goToExistingApp(String appId) async {
-    switchToPage(0);
-    final settingsProvider = context.read<SettingsProvider>();
-    final pages = getPages(settingsProvider);
-    while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
-        null) {
-      await Future.delayed(const Duration(microseconds: 1));
-    }
-    (pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState
-        ?.openAppById(appId);
-  }
-
-  Future<void> _interpretLink(Uri uri) async {
-    isLinkActivity = true;
-    var action = uri.host;
-    var data = uri.path.length > 1 ? uri.path.substring(1) : "";
-    try {
-      if (action == 'add') {
-        await _handleAddLink(data);
-      } else if (action == 'app' || action == 'apps') {
-        var dataStr = Uri.decodeComponent(data);
-        if (await showDialog(
-              context: context,
-              builder: (BuildContext ctx) {
-                return _ImportDialog(action: action, dataStr: dataStr);
-              },
-            ) ==
-            true) {
-          // ignore: use_build_context_synchronously
-          var appsProvider = context.read<AppsProvider>();
-          var result = await appsProvider.import(
-            action == 'app' ? '{ "apps": [$dataStr] }' : '{ "apps": $dataStr }',
-          );
-          if (!context.mounted) return;
-          showMessage(
-            t(
-              'importedX',
-              args: ['apps'.plural(result.key.length).toLowerCase()],
-            ),
-            context,
-          );
-        }
-      } else {
-        throw UpdatiumError('unknown'.t());
-      }
-    } catch (e) {
-      if (!context.mounted) return;
-      showError(e, context);
-    }
-  }
-
-  Future<void> _interpretObtainiumLink(Uri uri) async {
-    isLinkActivity = true;
-    var action = uri.host;
-    var data = uri.path.length > 1 ? uri.path.substring(1) : "";
-    try {
-      if (action == 'add') {
-        await _handleAddLink(data);
-      } else {
-        throw UpdatiumError('unknown'.t());
-      }
-    } catch (e) {
-      if (!context.mounted) return;
-      showError(e, context);
-    }
   }
 
   void setIsReversing(int targetIndex) {
@@ -283,6 +310,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (index == 0) {
       while ((pages[0].widget.key as GlobalKey<AppsPageState>).currentState !=
           null) {
+        // Avoid duplicate GlobalKey error
         await Future.delayed(const Duration(microseconds: 1));
       }
       setState(() {
@@ -359,87 +387,74 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        body: _buildBody(pages, settingsProvider),
-        bottomNavigationBar: _buildBottomBar(pages, settingsProvider),
-      ),
-    );
-  }
+        body: PageTransitionSwitcher(
+          duration: Duration(
+            milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
+          ),
+          reverse: settingsProvider.reversePageTransitions
+              ? !isReversing
+              : isReversing,
+          transitionBuilder:
+              (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.horizontal,
+                  child: child,
+                );
+              },
+          child: pages
+              .elementAt(
+                selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
+              )
+              .widget,
+        ),
+        bottomNavigationBar: Semantics(
+          label: 'Main navigation',
+          hint:
+              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+          child: NavigationBar(
+            selectedIndex: selectedIndexHistory.isEmpty
+                ? 0
+                : selectedIndexHistory.last,
+            animationDuration: const Duration(milliseconds: 200),
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            onDestinationSelected: (int index) async {
+              HapticFeedback.selectionClick();
 
-  Widget _buildBody(
-    List<NavigationPageItem> pages,
-    SettingsProvider settingsProvider,
-  ) {
-    return PageTransitionSwitcher(
-      duration: Duration(
-        milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
-      ),
-      reverse: settingsProvider.reversePageTransitions
-          ? !isReversing
-          : isReversing,
-      transitionBuilder:
-          (
-            Widget child,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) {
-            return SharedAxisTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.horizontal,
-              child: child,
-            );
-          },
-      child: pages
-          .elementAt(
-            selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
-          )
-          .widget,
-    );
-  }
+              // Trigger full-rotation animation
+              if (_iconsInitialized && index < _iconControllers.length) {
+                _iconControllers[index].forward().then((_) {
+                  _iconControllers[index].reset();
+                });
+              }
 
-  Widget _buildBottomBar(
-    List<NavigationPageItem> pages,
-    SettingsProvider settingsProvider,
-  ) {
-    return Semantics(
-      label: 'Main navigation',
-      hint:
-          'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
-      child: NavigationBar(
-        selectedIndex: selectedIndexHistory.isEmpty
-            ? 0
-            : selectedIndexHistory.last,
-        animationDuration: const Duration(milliseconds: 200),
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        onDestinationSelected: (int index) async {
-          HapticFeedback.selectionClick();
-
-          if (_iconsInitialized && index < _iconControllers.length) {
-            _iconControllers[index].forward().then((_) {
-              _iconControllers[index].reset();
-            });
-          }
-
-          switchToPage(index);
-        },
-        destinations: pages.asMap().entries.map((entry) {
-          int index = entry.key;
-          var page = entry.value;
-          return NavigationDestination(
-            icon: _iconsInitialized && index < _iconAnimations.length
-                ? AnimatedBuilder(
-                    animation: _iconAnimations[index],
-                    builder: (context, child) {
-                      return Transform.rotate(
-                        angle: _iconAnimations[index].value * 2 * pi,
-                        child: Icon(page.icon),
-                      );
-                    },
-                  )
-                : Icon(page.icon),
-            label: page.title,
-          );
-        }).toList(),
+              switchToPage(index);
+            },
+            destinations: pages.asMap().entries.map((entry) {
+              int index = entry.key;
+              var page = entry.value;
+              return NavigationDestination(
+                icon: _iconsInitialized && index < _iconAnimations.length
+                    ? AnimatedBuilder(
+                        animation: _iconAnimations[index],
+                        builder: (context, child) {
+                          return Transform.rotate(
+                            angle: _iconAnimations[index].value * 2 * pi,
+                            child: Icon(page.icon),
+                          );
+                        },
+                      )
+                    : Icon(page.icon),
+                label: page.title,
+              );
+            }).toList(),
+          ),
+        ),
       ),
     );
   }
