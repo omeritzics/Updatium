@@ -828,7 +828,13 @@ abstract class AppSource {
   additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [GeneratedFormTextField('appURL', label: 'appURL'.t(), required: false)],
+    [
+      GeneratedFormTextField(
+        'appSourceURL',
+        label: 'appSourceURL'.t(),
+        required: false,
+      ),
+    ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(

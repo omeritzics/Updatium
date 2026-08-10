@@ -890,10 +890,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_apple
-      sha256: "11b7e94a9d2fbee23c27f0cae0105c6266c03fd83b9a2eda6cf09141fc82624b"
+      sha256: "70f86e18790e73975ce58d4ae7afc6d7d5c9e30b3e6da1e39a6e3c73b4505f3f"
       url: "https://pub.dev"
     source: hosted
-    version: "9.5.0"
+    version: "9.5.1"
   permission_handler_html:
     dependency: transitive
     description:
