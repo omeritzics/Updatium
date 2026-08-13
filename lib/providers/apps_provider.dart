@@ -174,6 +174,28 @@ List<MapEntry<String, int>> moveStrToEndMapEntryWithCount(
   return arr;
 }
 
+// Temporary workaround for Github 404 errors - Should be removed later
+
+bool isDownloadNotFoundError(Object? error) {
+  final message = error?.toString().toLowerCase() ?? '';
+  return message.contains('not found') || message.contains('404');
+}
+
+Future<T> retryAfterDownloadNotFound<T>(
+  Future<T> Function() attempt, {
+  required Future<void> Function() refreshMetadata,
+}) async {
+  try {
+    return await attempt();
+  } catch (e) {
+    if (!isDownloadNotFoundError(e)) {
+      rethrow;
+    }
+    await refreshMetadata();
+    return await attempt();
+  }
+}
+
 Future<File> downloadFileWithRetry(
   String url,
   String fileName,
@@ -754,7 +776,7 @@ class AppsProvider with ChangeNotifier {
           settingsProvider,
         )),
       };
-      String downloadUrl = await source.assetUrlPrefetchModifier(
+      var downloadUrl = await source.assetUrlPrefetchModifier(
         await source.generalReqPrefetchModifier(
           app.apkUrls[app.preferredApkIndex].value,
           additionalSettingsPlusSourceConfig,
@@ -777,7 +799,7 @@ class AppsProvider with ChangeNotifier {
       );
 
       // Determine file extension and check for conflicts
-      String ext;
+      late String ext;
       if (source.urlsAlwaysHaveExtension) {
         ext = app.apkUrls[app.preferredApkIndex].key.split('.').last;
       } else {
@@ -898,29 +920,72 @@ class AppsProvider with ChangeNotifier {
       }
 
       File? downloadedFile;
+      var useExistingForAttempt = useExisting;
       try {
-        downloadedFile = await downloadFileWithRetry(
-          downloadUrl,
-          fileNameNoExt,
-          source.urlsAlwaysHaveExtension,
-          headers: headers,
-          (double? progress) {
-            int? prog = progress?.ceil();
-            if (apps[app.id] != null) {
-              apps[app.id]!.downloadProgress = progress;
-              notifyListeners();
+        downloadedFile = await retryAfterDownloadNotFound(
+          () => downloadFileWithRetry(
+            downloadUrl,
+            fileNameNoExt,
+            source.urlsAlwaysHaveExtension,
+            headers: headers,
+            (double? progress) {
+              int? prog = progress?.ceil();
+              if (apps[app.id] != null) {
+                apps[app.id]!.downloadProgress = progress;
+                notifyListeners();
+              }
+              notif = DownloadNotification(app.finalName, prog ?? 100);
+              if (prog != null && prevProg != prog) {
+                notificationsProvider?.notify(notif);
+              }
+              prevProg = prog;
+            },
+            APKDir.path,
+            useExisting: useExistingForAttempt,
+            allowInsecure: app.additionalSettings['allowInsecure'] == true,
+            logs: logs,
+            preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
+          ),
+          refreshMetadata: () async {
+            if (!apps.containsKey(app.id)) {
+              throw UpdatiumError('appNotFound'.t());
             }
-            notif = DownloadNotification(app.finalName, prog ?? 100);
-            if (prog != null && prevProg != prog) {
-              notificationsProvider?.notify(notif);
+            await checkUpdate(app.id);
+            final refreshed = apps[app.id]!.app;
+            if (refreshed.preferredApkIndex >= refreshed.apkUrls.length) {
+              refreshed.preferredApkIndex = refreshed.apkUrls.length - 1;
+              apps[app.id]!.app.preferredApkIndex = refreshed.preferredApkIndex;
             }
-            prevProg = prog;
+            if (refreshed.preferredApkIndex < 0) {
+              refreshed.preferredApkIndex = 0;
+            }
+            additionalSettingsPlusSourceConfig = {
+              ...refreshed.additionalSettings,
+              ...(await source.getSourceConfigValues(
+                refreshed.additionalSettings,
+                settingsProvider,
+              )),
+            };
+            downloadUrl = await source.assetUrlPrefetchModifier(
+              await source.generalReqPrefetchModifier(
+                refreshed.apkUrls[refreshed.preferredApkIndex].value,
+                additionalSettingsPlusSourceConfig,
+              ),
+              refreshed.url,
+              additionalSettingsPlusSourceConfig,
+            );
+            fileNameNoExt = '${refreshed.id}-${downloadUrl.hashCode}';
+            if (source.urlsAlwaysHaveExtension) {
+              fileNameNoExt =
+                  '$fileNameNoExt.${refreshed.apkUrls[refreshed.preferredApkIndex].key.split('.').last}';
+            }
+            headers = await source.getRequestHeaders(
+              refreshed.additionalSettings,
+              downloadUrl,
+              forAPKDownload: true,
+            );
+            useExistingForAttempt = false;
           },
-          APKDir.path,
-          useExisting: useExisting,
-          allowInsecure: app.additionalSettings['allowInsecure'] == true,
-          logs: logs,
-          preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
         );
       } catch (e) {
         // Delete partial APK file if download was cancelled or failed
@@ -947,7 +1012,7 @@ class AppsProvider with ChangeNotifier {
       var originalAssetName = app.apkUrls[app.preferredApkIndex].key
           .toLowerCase();
       var isAPK = source_provider.endsWithExtension(
-        downloadedFile.path,
+        downloadedFile!.path,
         source_provider.supportedApkExtensions[0],
       );
       var isXAPK = source_provider.endsWithExtension(
