@@ -861,13 +861,6 @@ abstract class AppSource {
   additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appSourceURL',
-        label: 'appSourceURL'.t(),
-        required: false,
-      ),
-    ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(
@@ -1610,6 +1603,16 @@ class SourceProvider {
     }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;
+    if (additionalSettings['appName'] != null &&
+        (additionalSettings['appName'].toString().trim().isEmpty ||
+            additionalSettings['appName'].toString().trim() == name)) {
+      additionalSettings.remove('appName');
+    }
+    if (additionalSettings['author'] != null &&
+        (additionalSettings['author'].toString().trim().isEmpty ||
+            additionalSettings['author'].toString().trim() == apk.names.author)) {
+      additionalSettings.remove('author');
+    }
     App finalApp = App(
       currentApp?.id ??
           ((additionalSettings['appId'] != null)

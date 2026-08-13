@@ -722,6 +722,14 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       if (mounted) {
         setState(() {
           additionalSettings = Map.from(app.additionalSettings);
+          additionalSettings['appName'] =
+              additionalSettings['appName']?.toString().trim().isNotEmpty == true
+                  ? additionalSettings['appName']
+                  : app.name;
+          additionalSettings['author'] =
+              additionalSettings['author']?.toString().trim().isNotEmpty == true
+                  ? additionalSettings['author']
+                  : app.author;
           prefillVersion++;
         });
       }
@@ -947,13 +955,20 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
                 var item = e.clone();
+                if (additionalSettings.containsKey(item.key)) {
+                  item.defaultValue = additionalSettings[item.key];
+                }
                 return item;
               }).toList();
             }),
             ...(pickedSourceOverride != null
-                ? pickedSource!.sourceConfigSettingFormItems.map(
-                    (e) => [e.clone()],
-                  )
+                ? pickedSource!.sourceConfigSettingFormItems.map((e) {
+                    var item = e.clone();
+                    if (additionalSettings.containsKey(item.key)) {
+                      item.defaultValue = additionalSettings[item.key];
+                    }
+                    return [item];
+                  })
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {

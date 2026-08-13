@@ -609,6 +609,13 @@ class _AppPageState extends State<AppPage> {
                     .where((e) => e.key != 'appId') // id is not user-editable
                     .map((e) {
                       var item = e.clone();
+                      if (app.app.additionalSettings.containsKey(item.key)) {
+                        item.defaultValue = app.app.additionalSettings[item.key];
+                      } else if (item.key == 'appName') {
+                        item.defaultValue = app.app.name;
+                      } else if (item.key == 'author') {
+                        item.defaultValue = app.app.author;
+                      }
                       return item;
                     })
                     .toList();
@@ -702,6 +709,16 @@ class _AppPageState extends State<AppPage> {
               app.app.additionalSettings[item.key] = values[item.key];
             }
           }
+        }
+        if (app.app.additionalSettings['appName'] != null &&
+            (app.app.additionalSettings['appName'].toString().trim().isEmpty ||
+                app.app.additionalSettings['appName'].toString().trim() == app.app.name)) {
+          app.app.additionalSettings.remove('appName');
+        }
+        if (app.app.additionalSettings['author'] != null &&
+            (app.app.additionalSettings['author'].toString().trim().isEmpty ||
+                app.app.additionalSettings['author'].toString().trim() == app.app.author)) {
+          app.app.additionalSettings.remove('author');
         }
 
         var versionDetectionEnabled =
