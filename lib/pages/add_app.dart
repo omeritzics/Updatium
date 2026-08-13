@@ -723,13 +723,14 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         setState(() {
           additionalSettings = Map.from(app.additionalSettings);
           additionalSettings['appName'] =
-              additionalSettings['appName']?.toString().trim().isNotEmpty == true
-                  ? additionalSettings['appName']
-                  : app.name;
+              additionalSettings['appName']?.toString().trim().isNotEmpty ==
+                  true
+              ? additionalSettings['appName']
+              : app.name;
           additionalSettings['author'] =
               additionalSettings['author']?.toString().trim().isNotEmpty == true
-                  ? additionalSettings['author']
-                  : app.author;
+              ? additionalSettings['author']
+              : app.author;
           prefillVersion++;
         });
       }

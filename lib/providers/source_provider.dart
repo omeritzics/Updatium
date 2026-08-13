@@ -1610,7 +1610,8 @@ class SourceProvider {
     }
     if (additionalSettings['author'] != null &&
         (additionalSettings['author'].toString().trim().isEmpty ||
-            additionalSettings['author'].toString().trim() == apk.names.author)) {
+            additionalSettings['author'].toString().trim() ==
+                apk.names.author)) {
       additionalSettings.remove('author');
     }
     App finalApp = App(
