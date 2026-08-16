@@ -196,7 +196,7 @@ class GitHub extends AppSource {
           }
         }
       } catch (err) {
-        return null;
+        // Ignore - ID will be extracted from the APK
       }
     }
     return null;
@@ -240,6 +240,9 @@ class GitHub extends AppSource {
       settingsProvider,
     );
     String? creds = sourceConfig['githubPATLabel'];
+    if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
+      creds = null;
+    }
     if (creds != null) {
       var userNameEndIndex = creds.indexOf(':');
       if (userNameEndIndex > 0) {
@@ -266,6 +269,10 @@ class GitHub extends AppSource {
     String reqUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
+    if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
+      var uri = Uri.parse(reqUrl);
+      return 'https://${additionalSettings['GHReqPrefix']}/${uri.toString().substring('https://'.length)}';
+    }
     return reqUrl;
   }
 
@@ -345,6 +352,13 @@ class GitHub extends AppSource {
       additionalSettings,
       await getSourceConfigValues(additionalSettings, SettingsProvider()),
     );
+
+    SettingsProvider settingsProvider = SettingsProvider();
+    await settingsProvider.initializeSettings();
+    var sourceConfigSettingValues = await getSourceConfigValues(
+      additionalSettings,
+      settingsProvider,
+    );
     bool includePrereleases = additionalSettings['includePrereleases'] == true;
     bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
@@ -408,6 +422,7 @@ class GitHub extends AppSource {
                 )
                 ? (e['browser_download_url'] ?? e['url'])
                 : (e['url'] ?? e['browser_download_url']);
+            url = undoGHProxyMod(url, sourceConfigSettingValues);
             e['final_url'] = (e['name'] != null) && (url != null)
                 ? MapEntry(e['name'] as String, url as String)
                 : const MapEntry('', '');
@@ -586,7 +601,10 @@ class GitHub extends AppSource {
           allAssetUrls.add(
             MapEntry(
               (targetRelease['version'] ?? 'source') + '.tar.gz',
-              targetRelease['tarball_url'],
+              undoGHProxyMod(
+                targetRelease['tarball_url'],
+                sourceConfigSettingValues,
+              ),
             ),
           );
         }
@@ -594,7 +612,10 @@ class GitHub extends AppSource {
           allAssetUrls.add(
             MapEntry(
               (targetRelease['version'] ?? 'source') + '.zip',
-              targetRelease['zipball_url'],
+              undoGHProxyMod(
+                targetRelease['zipball_url'],
+                sourceConfigSettingValues,
+              ),
             ),
           );
         }
@@ -714,11 +735,22 @@ class GitHub extends AppSource {
     }
   }
 
+  String undoGHProxyMod(
+    String reqUrl,
+    Map<String, String> sourceConfigSettingValues,
+  ) => reqUrl.replaceFirst(
+    'https://${sourceConfigSettingValues['GHReqPrefix']}/',
+    '',
+  );
+
   @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
+    await getSourceConfigValues({}, sp);
     var results = await searchCommon(
       query,
       '${await getAPIHost({})}/search/repositories?q=${Uri.encodeQueryComponent(query)}&per_page=100',

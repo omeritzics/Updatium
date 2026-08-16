@@ -1,6 +1,10 @@
-// Defines App sources and provides functions used to interact with them
-// AppSource is an abstract class with a concrete implementation for each source
+// ========================================================================
+// App source definitions, models, services, and JSON migration logic.
+//
+// AppSource is an abstract class with a concrete implementation for each source.
+// ========================================================================
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -51,11 +55,19 @@ class AppNames {
   late String name;
 
   AppNames(this.author, this.name);
+
+  AppNames copyWith({String? author, String? name}) {
+    return AppNames(author ?? this.author, name ?? this.name);
+  }
 }
 
+// ------------------------------------------------------------------------
+// APKDetails
+// ------------------------------------------------------------------------
+
 class APKDetails {
-  late String version;
-  late List<MapEntry<String, String>> apkUrls;
+  String version;
+  List<MapEntry<String, String>> apkUrls;
   late AppNames names;
   late DateTime? releaseDate;
   late String? changeLog;
@@ -87,10 +99,12 @@ bool endsWithExtension(String filename, String extension) {
   return filename.toLowerCase().endsWith(extension.toLowerCase());
 }
 
+/// Converts a list of [MapEntry] pairs into a 2D list of strings for JSON encoding.
 List<List<String>> stringMapListTo2DList(
   List<MapEntry<String, String>> mapList,
 ) => mapList.map((e) => [e.key, e.value]).toList();
 
+/// Converts a 2D list (decoded from JSON) back into a list of [MapEntry] pairs.
 List<MapEntry<String, String>> assumed2DlistToStringMapList(
   List<dynamic> arr,
 ) => arr.map((e) => MapEntry(e[0] as String, e[1] as String)).toList();
@@ -447,7 +461,7 @@ class App {
       json['installedVersion'] == null
           ? null
           : json['installedVersion'] as String,
-      (json['latestVersion'] ?? tr('unknown')) as String,
+      (json['latestVersion'] ?? 'unknown'.t()) as String,
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
@@ -501,7 +515,7 @@ class App {
   };
 }
 
-// Ensure the input starts with HTTPS and has no WWW
+/// Ensures the URL is well-formed and starts with HTTPS.
 String preStandardizeUrl(String url) {
   var firstDotIndex = url.indexOf('.');
   if (!(firstDotIndex >= 0 && firstDotIndex != url.length - 1)) {
@@ -522,6 +536,9 @@ String preStandardizeUrl(String url) {
       ((uri.path.endsWith('/') || (uri.path.isEmpty && url.endsWith('/'))) &&
       uri.queryParameters.isEmpty);
 
+  // Only normalize duplicate slashes in the scheme/host/path portion; leave the
+  // query string and fragment untouched so any slashes they contain (e.g. a URL
+  // passed as a query parameter) aren't mangled.
   var cleanedUri = uri.replace(pathSegments: pathSegments);
 
   var result = cleanedUri.toString();
@@ -546,6 +563,7 @@ List<String> getLinksFromParsedHTML(
     .map((e) => '$prependToLinks${e.attributes['href']!}')
     .toList();
 
+/// Delegates to [ApkFilterService.getApkUrlsFromUrls].
 Map<String, dynamic> getDefaultValuesFromFormItems(
   List<List<GeneratedFormItem>> items,
 ) {
@@ -563,6 +581,7 @@ List<MapEntry<String, String>> getApkUrlsFromUrls(List<String> urls) =>
       return MapEntry(apkSegs.isNotEmpty ? apkSegs.last : segments.last, e);
     }).toList();
 
+/// Delegates to [ApkFilterService.filterApksByArch].
 Future<List<MapEntry<String, String>>> filterApksByArch(
   List<MapEntry<String, String>> apkUrls,
 ) async {
@@ -619,6 +638,7 @@ String getSourceRegex(List<String> hosts) {
   return '(${hosts.join('|').replaceAll('.', '\\.')})';
 }
 
+/// Delegates to [HttpService.createHttpClient].
 HttpClient createHttpClient(bool insecure) {
   final client = HttpClient();
   if (insecure) {
@@ -676,6 +696,7 @@ sourceRequestStreamResponse(
   throw UpdatiumError('Too many redirects ($maxRedirects)');
 }
 
+/// Delegates to [HttpService.httpClientResponseStreamToFinalResponse].
 Future<Response> httpClientResponseStreamToFinalResponse(
   HttpClient httpClient,
   String method,
@@ -702,6 +723,10 @@ Future<Response> httpClientResponseStreamToFinalResponse(
   );
 }
 
+// ========================================================================
+// AppSource — abstract base class for all app sources.
+// ========================================================================
+
 abstract class AppSource {
   List<String> hosts = [];
   bool hostChanged = false;
@@ -709,18 +734,22 @@ abstract class AppSource {
   late String name;
   bool enforceTrackOnly = false;
   bool changeLogIfAnyIsMarkDown = true;
+  bool changeLogPageIsStandardUrl = false;
   bool appIdInferIsOptional = false;
+  bool inferAppIdFromUrlPath = false;
   bool allowSubDomains = false;
   bool naiveStandardVersionDetection = false;
   bool allowOverride = true;
   bool neverAutoSelect = false;
   bool showReleaseDateAsVersionToggle = false;
   bool versionDetectionDisallowed = false;
+  bool suppressStandardVersionExtraction = false;
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
   bool allowIncludeTarballs = false;
   bool isOpenSource = false;
+  String get sourceIdentifier => runtimeType.toString();
 
   AppSource() {
     name = runtimeType.toString();
@@ -760,6 +789,10 @@ abstract class AppSource {
     return null;
   }
 
+  App postProcessApp(App app) {
+    return app;
+  }
+
   App endOfGetAppChanges(App app) {
     return app;
   }
@@ -770,10 +803,10 @@ abstract class AppSource {
     bool followRedirects = true,
     Object? postBody,
   }) async {
-    var sp = SettingsProvider();
+    final sp = SettingsProvider();
     await sp.initializeSettings();
     getSourceConfigValues(additionalSettings, sp);
-    var additionalSettingsPlusSourceConfig = {
+    final additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
     };
@@ -828,13 +861,6 @@ abstract class AppSource {
   additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appSourceURL',
-        label: 'appSourceURL'.t(),
-        required: false,
-      ),
-    ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormSwitch(
@@ -1027,7 +1053,11 @@ abstract class AppSource {
     ],
   ];
 
-  // Previous 2 variables combined into one at runtime for convenient usage + additional processing
+  /// Combines per-source form items with the common app-setting form items,
+  /// interspersing conditional items (zip/tarball options, version toggles) and
+  /// filtering out excluded keys. Cloned so that callers cannot mutate the
+  /// shared source-owned form items. Rebuilt on every access so that labels
+  /// pick up the current locale via tr().
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
       additionalAppSpecificSettingsNeverUseDirectly,
@@ -1049,17 +1079,17 @@ abstract class AppSource {
         ),
       ]);
     }
-    additionalAppSpecificSettingsNeverUseDirectly =
-        additionalAppSpecificSettingsNeverUseDirectly
-            .map(
-              (e) => e
-                  .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
-                  .toList(),
-            )
-            .where((e) => e.isNotEmpty)
-            .toList();
 
-    var moreConditionalItems = [];
+    agnosticItems = agnosticItems
+        .map(
+          (e) => e
+              .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
+              .toList(),
+        )
+        .where((e) => e.isNotEmpty)
+        .toList();
+
+    final moreConditionalItems = <List<GeneratedFormItem>>[];
     if (allowIncludeZips) {
       moreConditionalItems.addAll([
         [
@@ -1122,30 +1152,42 @@ abstract class AppSource {
     }
 
     return [
-      ...additionalSourceAppSpecificSettingFormItems,
+      // Clone so callers (e.g. the add-app form pre-filling default values)
+      // can't mutate the source-owned items. Sources are now cached/shared, so
+      // an in-place edit here would otherwise leak across apps.
+      ...cloneFormItems(additionalSourceAppSpecificSettingFormItems),
       ...agnosticItems,
       ...moreConditionalItems,
     ];
   }
 
-  // Some Sources may have additional settings at the Source level (not specific to Apps) - these use SettingsProvider
-  // If the source has been overridden, we expect the user to define one-time values as additional settings - don't use the stored values
+  bool get hasAppSpecificSettings =>
+      combinedAppSpecificSettingFormItems.isNotEmpty;
+
+  /// Flattened, read-only view of [combinedAppSpecificSettingFormItems],
+  /// used by callers that only need to enumerate keys without cloning.
+  List<GeneratedFormItem> get flatCombinedFormItemsReadOnly =>
+      combinedAppSpecificSettingFormItems.expand((row) => row).toList();
+
+  /// Source-level additional settings (not specific to Apps) backed by [SettingsProvider].
+  /// If the source has been overridden, per-app additional settings take precedence.
   List<GeneratedFormItem> sourceConfigSettingFormItems = [];
   Future<Map<String, String>> getSourceConfigValues(
     Map<String, dynamic> additionalSettings,
     SettingsProvider settingsProvider,
   ) async {
-    Map<String, String> results = {};
+    final Map<String, String> results = {};
     for (var e in sourceConfigSettingFormItems) {
       var val = hostChanged && !hostIdenticalDespiteAnyChange
           ? additionalSettings[e.key]
-          : additionalSettings[e.key] ??
-                (e.runtimeType == GeneratedFormSwitch
-                    ? settingsProvider.getSettingBool(e.key).toString()
-                    : settingsProvider.getSettingString(e.key));
-      settingsProvider.getSettingString(e.key);
+          : (additionalSettings[e.key] is String &&
+                (additionalSettings[e.key] as String).isNotEmpty)
+          ? additionalSettings[e.key]
+          : (e is GeneratedFormSwitch
+                ? settingsProvider.getSettingBool(e.key).toString()
+                : settingsProvider.getSettingString(e.key));
       if (val != null) {
-        if (e.runtimeType == GeneratedFormSwitch) {
+        if (e is GeneratedFormSwitch) {
           val = val.toString();
         }
         results[e.key] = val;
@@ -1155,7 +1197,7 @@ abstract class AppSource {
   }
 
   String? changeLogPageFromStandardUrl(String standardUrl) {
-    return null;
+    return changeLogPageIsStandardUrl ? standardUrl : null;
   }
 
   Future<String?> getSourceNote() async {
@@ -1196,6 +1238,7 @@ abstract class AppSource {
   }
 }
 
+/// Delegates to [HttpService.getHttpError].
 UpdatiumError getUpdatiumHttpError(Response res) {
   return UpdatiumError(
     (res.reasonPhrase != null &&
@@ -1206,9 +1249,13 @@ UpdatiumError getUpdatiumHttpError(Response res) {
   );
 }
 
+// ========================================================================
+// MassAppUrlSource — abstract base for mass URL import sources.
+// ========================================================================
+
 abstract class MassAppUrlSource {
-  late String name;
-  late List<String> requiredArgs;
+  String get name;
+  List<String> get requiredArgs;
   Future<Map<String, List<String>>> getUrlsWithDescriptions(List<String> args);
 }
 
@@ -1239,8 +1286,8 @@ String? intValidator(String? value, {bool positive = false}) {
 }
 
 bool isTempId(App app) {
-  // return app.id == generateTempID(app.url, app.additionalSettings);
-  return RegExp('^[0-9]+\$').hasMatch(app.id);
+  return RegExp(r'^[0-9]+$').hasMatch(app.id) ||
+      RegExp(r'^[0-9a-f]{12}$').hasMatch(app.id);
 }
 
 String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
@@ -1295,6 +1342,7 @@ String? extractVersion(
   }
 }
 
+/// Delegates to [ApkFilterService.filterApks].
 List<MapEntry<String, String>> filterApks(
   List<MapEntry<String, String>> apkUrls,
   String? apkFilterRegEx,
@@ -1313,17 +1361,29 @@ List<MapEntry<String, String>> filterApks(
 bool isEnglish() => 'and'.t() == 'and'; // Quick hack, find a better way
 String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 
+/// Returns true when the app uses pseudo-versioning (track-only or disabled version detection).
 bool isVersionPseudo(App app) =>
     app.additionalSettings['trackOnly'] == true ||
     (app.installedVersion != null &&
         app.additionalSettings['versionDetection'] != true);
 
+// ========================================================================
+// SourceProvider — singleton that manages available AppSource instances,
+// URL-to-source resolution, and app construction from URLs.
+// ========================================================================
+
 class SourceProvider {
   // Cache for compiled regex patterns to avoid recreating them on every call
   final Map<String, RegExp> _regexCache = {};
 
-  // Add more source classes here so they are available via the service
-  List<AppSource> get sources => [
+  static final SourceProvider _instance = SourceProvider._();
+  factory SourceProvider() => _instance;
+  SourceProvider._();
+
+  // Builds a fresh set of source instances. Adding a source here makes it
+  // available via the service. Kept private so callers go through [sources]
+  // (cached) or, when per-call mutation is needed, [_buildSources] directly.
+  List<AppSource> _buildSources() => [
     GitHub(),
     GitLab(),
     Bitbucket(),
@@ -1342,6 +1402,7 @@ class SourceProvider {
     Tencent(),
     VivoAppStore(),
     RuStore(),
+    SourceForge(),
     Jenkins(),
     APKMirror(),
     TelegramApp(),
@@ -1353,7 +1414,12 @@ class SourceProvider {
     HTML(), // This should ALWAYS be the last option as they were tried in order
   ];
 
-  // Add more mass url source classes here so they are available via the service
+  /// Cached, read-only source list built lazily by [_buildSources].
+  /// Because sources are immutable after construction, the cache is safe.
+  static List<AppSource>? _cachedSources;
+  List<AppSource> get sources => _cachedSources ??= _buildSources();
+
+  /// Add mass URL source classes here so they are available via the service.
   List<MassAppUrlSource> massUrlSources = [GitHubStars()];
 
   // Helper method to check if a source exists without throwing an error
@@ -1365,15 +1431,17 @@ class SourceProvider {
   AppSource getSource(String url, {String? overrideSource}) {
     url = preStandardizeUrl(url);
     if (overrideSource != null) {
-      var srcs = sources.where(
-        (e) => e.runtimeType.toString() == overrideSource,
+      // The override path mutates the chosen source's host config, so build a
+      // throwaway instance here rather than touching the shared cache.
+      final srcs = _buildSources().where(
+        (e) => e.sourceIdentifier == overrideSource,
       );
       if (srcs.isEmpty) {
         throw UnsupportedURLError();
       }
-      var res = srcs.first;
-      var originalHosts = res.hosts;
-      var newHost = Uri.parse(url).host;
+      final res = srcs.first;
+      final originalHosts = res.hosts;
+      final newHost = Uri.parse(url).host;
       res.hosts = [newHost];
       res.hostChanged = true;
       if (originalHosts.contains(newHost)) {
@@ -1381,8 +1449,12 @@ class SourceProvider {
       }
       return res;
     }
+    // The non-override path is read-only, so reuse the cached source set.
+    final allSources = sources;
     AppSource? source;
-    for (var s in sources.where((element) => element.hosts.isNotEmpty)) {
+    for (var s in allSources.where((element) => element.hosts.isNotEmpty)) {
+      // A non-match here is expected control flow during source auto-detection,
+      // so failures are intentionally not logged (they are just noise).
       try {
         if (RegExp(
           '^${s.allowSubDomains ? '([^\\.]+\\.)*' : '(www\\.)?'}(${getSourceRegex(s.hosts)})\$',
@@ -1391,19 +1463,21 @@ class SourceProvider {
           break;
         }
       } catch (e) {
-        // Ignore
+        // Ignore and try the next source.
       }
     }
     if (source == null) {
-      for (var s in sources.where(
+      for (var s in allSources.where(
         (element) => element.hosts.isEmpty && !element.neverAutoSelect,
       )) {
+        // As above, hostless sources are tried in order until one accepts the
+        // URL; a rejection is normal and must not be logged as an error.
         try {
           s.sourceSpecificStandardizeURL(url, forSelection: true);
           source = s;
           break;
         } catch (e) {
-          //
+          // Ignore and try the next source.
         }
       }
     }
@@ -1483,12 +1557,12 @@ class SourceProvider {
     bool sourceIsOverriden = false,
     bool inferAppIdIfOptional = false,
   }) async {
+    additionalSettings = Map<String, dynamic>.from(additionalSettings);
     if (trackOnlyOverride || source.enforceTrackOnly) {
       additionalSettings['trackOnly'] = true;
     }
-    var trackOnly = additionalSettings['trackOnly'] == true;
-    String standardUrl = source.standardizeUrl(url);
-
+    final trackOnly = additionalSettings['trackOnly'] == true;
+    final String standardUrl = source.standardizeUrl(url);
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
       additionalSettings,
@@ -1529,6 +1603,17 @@ class SourceProvider {
     }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;
+    if (additionalSettings['appName'] != null &&
+        (additionalSettings['appName'].toString().trim().isEmpty ||
+            additionalSettings['appName'].toString().trim() == name)) {
+      additionalSettings.remove('appName');
+    }
+    if (additionalSettings['author'] != null &&
+        (additionalSettings['author'].toString().trim().isEmpty ||
+            additionalSettings['author'].toString().trim() ==
+                apk.names.author)) {
+      additionalSettings.remove('author');
+    }
     App finalApp = App(
       currentApp?.id ??
           ((additionalSettings['appId'] != null)
@@ -1558,7 +1643,7 @@ class SourceProvider {
       changeLog: apk.changeLog,
       remoteIconUrl: apk.remoteIconUrl,
       overrideSource: sourceIsOverriden
-          ? source.runtimeType.toString()
+          ? source.sourceIdentifier
           : currentApp?.overrideSource,
       allowIdChange:
           currentApp?.allowIdChange ??
@@ -1569,7 +1654,7 @@ class SourceProvider {
           .where((a) => apk.apkUrls.indexWhere((p) => a.key == p.key) < 0)
           .toList(),
     );
-    return source.endOfGetAppChanges(finalApp);
+    return source.postProcessApp(finalApp);
   }
 
   // Returns errors in [results, errors] instead of throwing them
@@ -1578,8 +1663,8 @@ class SourceProvider {
     List<String> alreadyAddedUrls = const [],
     AppSource? sourceOverride,
   }) async {
-    List<App> apps = [];
-    Map<String, dynamic> errors = {};
+    final List<App> apps = [];
+    final Map<String, dynamic> errors = {};
 
     // Get existing apps to check for duplicates
     final appsProvider = AppsProvider();
@@ -1591,9 +1676,9 @@ class SourceProvider {
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
-          throw UpdatiumError(tr('appAlreadyAdded'));
+          throw UpdatiumError('appAlreadyAdded'.t());
         }
-        var source = sourceOverride ?? getSource(url);
+        final source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,
