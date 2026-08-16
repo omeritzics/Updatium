@@ -387,6 +387,7 @@
     "installedVersion": "Installerad",
     "installed": "Installerad",
     "notInstalledApps": "Inte installerad",
+    "defaultTab": "Default tab to display",
     "latest": "Senaste",
     "invertRegEx": "Invertera reguljärt uttryck",
     "note": "Anmärkning",

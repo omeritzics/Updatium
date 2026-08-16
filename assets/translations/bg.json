@@ -387,6 +387,7 @@
     "installedVersion": "Инсталирана",
     "installed": "Инсталирано",
     "notInstalledApps": "Неинсталирани",
+    "defaultTab": "Default tab to display",
     "latest": "Последна",
     "invertRegEx": "Обръщане на регулярен израз",
     "note": "Бележка",

@@ -387,6 +387,7 @@
     "installedVersion": "Instalat",
     "installed": "Instalat",
     "notInstalledApps": "Neinstalat",
+    "defaultTab": "Default tab to display",
     "latest": "Cel mai recent",
     "invertRegEx": "Inversează expresia regulată",
     "note": "Notă",

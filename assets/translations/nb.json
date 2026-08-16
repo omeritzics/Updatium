@@ -390,6 +390,7 @@
     "installedVersion": "Installert",
     "installed": "Installert",
     "notInstalledApps": "Ikke installert",
+    "defaultTab": "Default tab to display",
     "latest": "Nyeste",
     "invertRegEx": "Inverter regulært uttrykk (RegEx)",
     "note": "Merk",

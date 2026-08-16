@@ -387,6 +387,7 @@
     "installedVersion": "Yüklü",
     "installed": "Yüklü",
     "notInstalledApps": "Yüklü değil",
+    "defaultTab": "Default tab to display",
     "latest": "En son",
     "invertRegEx": "Düzenli ifadeyi (RegEx) tersine çevir",
     "note": "Not",

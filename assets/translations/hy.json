@@ -387,6 +387,7 @@
     "installedVersion": "Տեղադրված",
     "installed": "Installed",
     "notInstalledApps": "Not Installed",
+    "defaultTab": "Default tab to display",
     "latest": "Latest",
     "invertRegEx": "Invert regular expression",
     "note": "Note",

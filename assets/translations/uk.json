@@ -387,6 +387,7 @@
     "installedVersion": "Встановлено",
     "installed": "Встановлено",
     "notInstalledApps": "Не встановлено",
+    "defaultTab": "Default tab to display",
     "latest": "Остання",
     "invertRegEx": "Інвертувати регулярний вираз",
     "note": "Примітка",

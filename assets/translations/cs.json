@@ -387,6 +387,7 @@
     "installedVersion": "Nainstalováno",
     "installed": "Nainstalováno",
     "notInstalledApps": "Nenainstalováno",
+    "defaultTab": "Default tab to display",
     "latest": "Nejnovější",
     "invertRegEx": "Invertovat regulární výraz",
     "note": "Poznámka",

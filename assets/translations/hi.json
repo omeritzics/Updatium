@@ -387,6 +387,7 @@
     "installedVersion": "इंस्टॉल किया गया",
     "installed": "इंस्टॉल किया गया",
     "notInstalledApps": "इंस्टॉल नहीं है",
+    "defaultTab": "Default tab to display",
     "latest": "नवीनतम",
     "invertRegEx": "नियमित अभिव्यक्ति को उल्टा (Invert) करें",
     "note": "नोट",

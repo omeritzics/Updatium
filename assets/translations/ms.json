@@ -387,6 +387,7 @@
     "installedVersion": "Installed",
     "installed": "Installed",
     "notInstalledApps": "Tidak dipasang",
+    "defaultTab": "Default tab to display",
     "latest": "Terbaru",
     "invertRegEx": "Invert regular expression",
     "note": "Note",

@@ -387,6 +387,7 @@
     "installedVersion": "Installitud",
     "installed": "Installitud",
     "notInstalledApps": "Paigaldamata",
+    "defaultTab": "Default tab to display",
     "latest": "Viimane",
     "invertRegEx": "Pööra regulaaravaldis ümber",
     "note": "Märkus",
