@@ -388,6 +388,7 @@
     "installedVersion": "مثبت",
     "installed": "مثبت",
     "notInstalledApps": "غير مثبت",
+    "defaultTab": "Default tab to display",
     "latest": "الأحدث",
     "invertRegEx": "اعكس التعبير النمطي",
     "note": "ملاحظة",

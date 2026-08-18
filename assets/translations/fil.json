@@ -390,6 +390,7 @@
     "installedVersion": "Naka-install",
     "installed": "Naka-install",
     "notInstalledApps": "Hindi Naka-install",
+    "defaultTab": "Default tab to display",
     "latest": "Pinakabago",
     "invertRegEx": "Baligtarin ang regular expression",
     "note": "Tala",

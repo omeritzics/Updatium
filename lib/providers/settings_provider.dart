@@ -43,6 +43,8 @@ enum SortOrderSettings { ascending, descending }
 
 enum DNSServiceProvider { system, cloudflare, quad9, opendns, mullvad }
 
+enum DefaultTabSettings { all, installed, notInstalled }
+
 class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
   String? defaultAppDir;
@@ -162,6 +164,16 @@ class SettingsProvider with ChangeNotifier {
 
   set sortOrder(SortOrderSettings s) {
     prefs?.setInt('sortOrder', s.index);
+    notifyListeners();
+  }
+
+  DefaultTabSettings get defaultTab {
+    return DefaultTabSettings.values[prefs?.getInt('defaultTab') ??
+        DefaultTabSettings.all.index];
+  }
+
+  set defaultTab(DefaultTabSettings t) {
+    prefs?.setInt('defaultTab', t.index);
     notifyListeners();
   }
 

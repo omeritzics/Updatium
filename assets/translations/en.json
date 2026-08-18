@@ -390,6 +390,7 @@
     "installedVersion": "Installed",
     "installed": "Installed",
     "notInstalledApps": "Not Installed",
+    "defaultTab": "Default tab to display",
     "latest": "Latest",
     "invertRegEx": "Invert regular expression",
     "note": "Note",
@@ -557,4 +558,3 @@
     "misc": "Miscellaneous",
     "showConfetti": "Show confetti effect when adding open-source apps"
 }
-

@@ -387,6 +387,7 @@
     "installedVersion": "Geïnstalleerd",
     "installed": "Geïnstalleerd",
     "notInstalledApps": "Niet geïnstalleerd",
+    "defaultTab": "Default tab to display",
     "latest": "Nieuwste",
     "invertRegEx": "Reguliere expressie omkeren",
     "note": "Opmerking",

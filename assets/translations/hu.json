@@ -387,6 +387,7 @@
     "installedVersion": "Telepített",
     "installed": "Telepített",
     "notInstalledApps": "Nem telepített",
+    "defaultTab": "Default tab to display",
     "latest": "Legújabb",
     "invertRegEx": "Reguláris kifejezés invertálása",
     "note": "Megjegyzés",

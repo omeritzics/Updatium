@@ -390,6 +390,7 @@
     "installedVersion": "Εγκατεστημένη",
     "installed": "Εγκαταστάθηκε",
     "notInstalledApps": "Μη εγκατεστημένες",
+    "defaultTab": "Default tab to display",
     "latest": "Τελευταία",
     "invertRegEx": "Αντιστροφή κανονικής έκφρασης (RegEx)",
     "note": "Σημείωση",

@@ -387,6 +387,7 @@
     "installedVersion": "Đã cài đặt",
     "installed": "Đã cài đặt",
     "notInstalledApps": "Chưa cài đặt",
+    "defaultTab": "Default tab to display",
     "latest": "Mới nhất",
     "invertRegEx": "Đảo ngược biểu thức chính quy",
     "note": "Ghi chú",

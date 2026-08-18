@@ -204,7 +204,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+      initialIndex: context.read<SettingsProvider>().defaultTab.index,
+      length: 3,
+      vsync: this,
+    );
     _tabController.addListener(() {
       setState(() {});
     });

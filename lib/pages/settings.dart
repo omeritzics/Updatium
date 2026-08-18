@@ -360,6 +360,31 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
+    var defaultTabDropdown = GeneratedForm(
+      items: [
+        [
+          GeneratedFormDropdown(
+            'defaultTab',
+            [
+              const MapEntry('all', 'all'),
+              const MapEntry('installed', 'installed'),
+              const MapEntry('notInstalled', 'notInstalledApps'),
+            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
+            label: 'defaultTab'.t(),
+            defaultValue: settingsProvider.defaultTab.name,
+            required: true,
+          ),
+        ],
+      ],
+      onValueChanges: (values, valid, isBuilding) {
+        if (!isBuilding && valid) {
+          settingsProvider.defaultTab = DefaultTabSettings.values.firstWhere(
+            (e) => e.name == values['defaultTab'],
+          );
+        }
+      },
+    );
+
     var localeDropdown = GeneratedForm(
       items: [
         [
@@ -1213,15 +1238,13 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             M3ECardColumn(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(child: sortDropdown),
-                                    horizontalGap16,
-                                    Expanded(child: orderDropdown),
-                                  ],
-                                ),
+                                Expanded(child: sortDropdown),
+                                horizontalGap16,
+                                Expanded(child: orderDropdown),
+                              ],
+                            ),
+                            gap12,
+                            defaultTabDropdown,
 
                                 SwitchListTile(
                                   title: Text('pinUpdates'.t()),

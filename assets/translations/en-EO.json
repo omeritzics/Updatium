@@ -387,6 +387,7 @@
     "installedVersion": "Instalita",
     "installed": "Instalita",
     "notInstalledApps": "Ne instalita",
+    "defaultTab": "Default tab to display",
     "latest": "Lasta versio",
     "invertRegEx": "Inversigi la regula esprimo",
     "note": "Noto",

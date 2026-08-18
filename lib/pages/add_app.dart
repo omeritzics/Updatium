@@ -1006,21 +1006,32 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   pinned: true,
                   title: Text('addApp'.t()),
                   actions: [
-                    TextButton(
-                      onPressed:
-                          gettingAppInfo ||
-                              pickedSource == null ||
-                              (pickedSource!
-                                      .combinedAppSpecificSettingFormItems
-                                      .isNotEmpty &&
-                                  !additionalSettingsValid)
-                          ? null
-                          : () {
-                              HapticFeedback.selectionClick();
-                              addApp();
-                            },
-                      child: Text('add'.t()),
-                    ),
+                    if (gettingAppInfo)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: LoadingIndicatorM3E(),
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed:
+                            pickedSource == null ||
+                                (pickedSource!
+                                        .combinedAppSpecificSettingFormItems
+                                        .isNotEmpty &&
+                                    !additionalSettingsValid)
+                            ? null
+                            : () {
+                                HapticFeedback.selectionClick();
+                                addApp();
+                              },
+                        child: Text('add'.t()),
+                      ),
                   ],
                   leading: IconButton(
                     icon: const Icon(Icons.close),

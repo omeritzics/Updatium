@@ -387,6 +387,7 @@
     "installedVersion": "Installeret",
     "installed": "Installeret",
     "notInstalledApps": "Ikke installeret",
+    "defaultTab": "Default tab to display",
     "latest": "Seneste",
     "invertRegEx": "Inverter regulært udtryk",
     "note": "Bemærk",

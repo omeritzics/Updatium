@@ -387,6 +387,7 @@
     "installedVersion": "已安裝",
     "installed": "已安裝",
     "notInstalledApps": "未安裝",
+    "defaultTab": "Default tab to display",
     "latest": "最新",
     "invertRegEx": "反轉正則表達式",
     "note": "備註",
