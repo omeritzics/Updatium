@@ -3,7 +3,7 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/omeritzics/updatium/total)](https://tooomm.github.io/github-release-stats/?username=omeritzics&repository=Updatium)
-[![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
+[![Translation state](https://hosted.weblate.org/widget/updatium/updatium/svg-badge.svg)](https://hosted.weblate.org/engage/updatium/)
 
 Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
@@ -38,17 +38,12 @@ Based on Material Design 3 Expressive guidelines.
 
 ### Localization
 
-Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, you can help improving Updatium's translations [here (using Weblate)](https://hosted.weblate.org/engage/updatium). Every language is welcome to Updatium, but your help is needed to make it happen.
 
-If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
+If you need any help or advice for translating Updatium into your language, or if you found any error in the translation strings, please open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help.
 
-Every language is welcome to Updatium, but your help is needed to make it happen.
-
-- Currently supported locales: English, 简体中文, Italiano, 日本語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
-Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
-Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
-한국어, Català, العربية, മലയാളം, Galego, Български, Bahasa Melayu,
-Română, ئۇيغۇرچە, Norsk (Bokmål), Ελληνικά, Filipino.
+- Currently supported locales:
+[![Supported locales](https://hosted.weblate.org/widget/updatium/updatium/matrix-auto.svg)](https://hosted.weblate.org/engage/updatium/)
 
 `Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
 
@@ -64,7 +59,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 | ![App List View](./assets/screenshots/1.apps.png)| ![App Grid View](./assets/screenshots/6.grid_view.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 |---|---|---|---|
-| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) |  | |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Categories](./assets/screenshots/7.categories.png) | ![About screen](./assets/screenshots/8.about.png) |
 
 ## Limitations
 
