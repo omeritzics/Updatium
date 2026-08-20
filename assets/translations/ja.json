@@ -267,7 +267,6 @@
     "category": "カテゴリ",
     "noCategory": "カテゴリなし",
     "noCategories": "カテゴリなし",
-    "categoryDeleteQuestion": "カテゴリを削除しますか？",
     "categoryDeleteWarning": "削除されたカテゴリ内のアプリは未分類に設定されます。",
     "addCategory": "カテゴリを追加",
     "label": "ラベル",

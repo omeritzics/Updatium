@@ -267,7 +267,6 @@
     "category": "Categorie",
     "noCategory": "Fără categorie",
     "noCategories": "Nu există categorii",
-    "categoryDeleteQuestion": "Ștergeți categoriile?",
     "categoryDeleteWarning": "Toate aplicațiile din categoriile șterse vor fi setate ca necategorizate.",
     "addCategory": "Adaugă categorie",
     "label": "Etichetă",

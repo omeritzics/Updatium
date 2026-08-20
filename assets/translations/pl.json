@@ -267,7 +267,6 @@
     "category": "Kategoria",
     "noCategory": "Bez kategorii",
     "noCategories": "Brak kategorii",
-    "categoryDeleteQuestion": "Usunąć kategorie?",
     "categoryDeleteWarning": "Wszystkie aplikacje w usuniętych kategoriach zostaną ustawione jako nieskategoryzowane.",
     "addCategory": "Dodaj kategorię",
     "label": "Etykieta",
@@ -423,98 +422,66 @@
     "multipleSigners": "Wielu sygnatariuszy",
     "removeAppQuestion": {
         "one": "Usunąć aplikację?",
-        "few": "Usunąć aplikacje?",
-        "many": "Usunąć aplikacje?",
         "other": "Usunąć aplikacje?"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minutę",
-        "few": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minuty",
-        "many": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minut",
         "other": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minut"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minutę",
-        "few": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minuty",
-        "many": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minut",
         "other": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minuty"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Sprawdzanie w tle znalazło {} aktualizację - powiadomię, jeśli to konieczne",
-        "few": "Sprawdzanie w tle znalazło {} aktualizacje - powiadomię, jeśli to konieczne",
-        "many": "Sprawdzanie w tle znalazło {} aktualizacji - powiadomię, jeśli to konieczne",
         "other": "Sprawdzanie w tle znalazło {} aktualizacji - powiadomię, jeśli to konieczne"
     },
     "apps": {
         "one": "{} aplikacja",
-        "few": "{} aplikacje",
-        "many": "{} aplikacji",
         "other": "{} aplikacji"
     },
     "url": {
         "one": "{} adres URL",
-        "few": "{} adresy URL",
-        "many": "{} adresów URL",
         "other": "{} adresów URL"
     },
     "minute": {
         "one": "{} minuta",
-        "few": "{} minuty",
-        "many": "{} minut",
         "other": "{} minut"
     },
     "hour": {
         "one": "{} godzina",
-        "few": "{} godziny",
-        "many": "{} godzin",
         "other": "{} godzin"
     },
     "day": {
         "one": "{} dzień",
-        "few": "{} dni",
-        "many": "{} dni",
         "other": "{} dni"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Wyczyszczono {n} log (przed = {before}, po = {after})",
-        "few": "Wyczyszczono {n} logi (przed = {before}, po = {after})",
-        "many": "Wyczyszczono {n} logów (przed = {before}, po = {after})",
         "other": "Wyczyszczono {n} logów (przed = {before}, po = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i 1 inna aplikacja mają aktualizacje.",
-        "few": "{app} i {} inne aplikacje mają aktualizacje.",
-        "many": "{app} i {} innych aplikacji ma aktualizacje.",
         "other": "{app} i {} innych aplikacji ma aktualizacje."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "Zaktualizowano {app} i 1 inną apkę.",
-        "few": "{app} i {} inne apki zostały zaktualizowane.",
-        "many": "{app} i {} innych apek zostało zaktualizowanych.",
         "other": "{app} i {} inne apki zostały zaktualizowane."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Błąd aktualizacji {app} i 1 innej aplikacji.",
-        "few": "Błąd aktualizacji {app} i {} innych aplikacji.",
-        "many": "Błąd aktualizacji {app} i {} innych aplikacji.",
         "other": "Błąd aktualizacji {app} i {} innych aplikacji."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i 1 inna apka mogły zostać zaktualizowane.",
-        "few": "{app} i {} inne apki mogły zostać zaktualizowane.",
-        "many": "{app} i {} innych apek mogło zostać zaktualizowanych.",
         "other": "{app} i {} inne apki mogły zostać zaktualizowane."
     },
     "apk": {
         "one": "{} plik APK",
-        "few": "{} pliki APK",
-        "many": "{} plików APK",
         "other": "{} plików APK"
     },
     "certificateHash": {
         "one": "Hash certyfikatu",
-        "few": "Hashe certyfikatu",
-        "many": "Hashy certyfikatu",
         "other": "Hashy certyfikatu"
     },
     "securityDisclaimerTitle": "Zastrzeżenia Bezpieczeństwa i Prawne",

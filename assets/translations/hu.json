@@ -267,7 +267,6 @@
     "category": "Kategória",
     "noCategory": "Nincs kategória",
     "noCategories": "Nincsenek kategóriák",
-    "categoryDeleteQuestion": "Biztosan törli a kategóriákat?",
     "categoryDeleteWarning": "A törölt kategóriákban lévő összes alkalmazás kategorizálatlanná válik.",
     "addCategory": "Kategória hozzáadása",
     "label": "Címke",

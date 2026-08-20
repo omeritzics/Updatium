@@ -267,7 +267,6 @@
     "category": "Categoría",
     "noCategory": "Sin categoría",
     "noCategories": "Sin categorías",
-    "categoryDeleteQuestion": "¿Eliminar las categorías?",
     "categoryDeleteWarning": "Todas las aplicaciones en las categorías eliminadas se marcarán como «Sin categoría».",
     "addCategory": "Añadir categoría",
     "label": "Nombre",

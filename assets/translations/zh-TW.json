@@ -267,7 +267,6 @@
     "category": "類別",
     "noCategory": "無類別",
     "noCategories": "沒有類別",
-    "categoryDeleteQuestion": "要刪除類別嗎？",
     "categoryDeleteWarning": "已刪除類別中的所有應用程式將被設定為未分類。",
     "addCategory": "新增類別",
     "label": "標籤",

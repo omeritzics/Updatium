@@ -267,7 +267,6 @@
     "category": "Kategooria",
     "noCategory": "Kategooria puudub",
     "noCategories": "Kategooriad puuduvad",
-    "categoryDeleteQuestion": "Kustutada kategooriad?",
     "categoryDeleteWarning": "Kõik kustutatud kategooriate äpid seatakse kategoriseerimataks.",
     "addCategory": "Lisa kategooria",
     "label": "Silt",
