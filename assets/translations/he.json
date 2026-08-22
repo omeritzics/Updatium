@@ -194,7 +194,7 @@
     "appsUpdatedNotifDescription": "Notifies the user that updates to one or more apps were applied in the background",
     "xWasUpdatedToY": "{} עודכן לגרסה {}.",
     "xWasNotUpdatedToY": "נכשל העדכון של {} לגרסה {}.",
-    "errorCheckingUpdates": "שגיאה בעת  בדיקת עדכונים",
+    "errorCheckingUpdates": "שגיאה בעת בדיקת עדכונים",
     "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
     "appsRemoved": "הוסרו יישומים",
     "undo": "החזרה",
@@ -203,7 +203,7 @@
     "completeAppInstallation": "השלמת התקנת היישום",
     "updatiumMustBeOpenToInstallApps": "על Updatium להיות פתוח לצורך התקנת יישומים",
     "completeAppInstallationNotifDescription": "הודעה למשתמש עם בקשה לחזור ליישום Updatium לצורך סיום ההתקנה של יישום",
-    "checkingForUpdates": "בדיקת עדכונים",
+    "checkingForUpdates": "מתבצעת בדיקת עדכונים",
     "checkForUpdates": "בדיקת עדכונים",
     "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
     "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
@@ -211,7 +211,7 @@
     "trusted": "מהימן",
     "openSource": "קוד פתוח",
     "errorWithHttpStatusCode": "שגיאה {}",
-    "versionCorrectionDisabled": " תיקון הגרסה מושבת (נראה שהתוסף לא עובד)",
+    "versionCorrectionDisabled": "תיקון הגרסה מושבת (נראה שהתוסף לא עובד)",
     "unknown": "לא ידוע",
     "none": "ללא",
     "all": "הכול",
@@ -270,6 +270,7 @@
     "noCategories": "אין קטגוריות",
     "categoryDeleteQuestion": {
         "one": "למחוק את הקטגוריה?",
+        "two": "למחוק את הקטגוריות?",
         "other": "למחוק את הקטגוריות?"
     },
     "categoryDeleteWarning": "יבוטל השיוך לקטגוריות מכל היישומים שבקטגוריות שנמחקו.",
@@ -298,7 +299,7 @@
     "autoApkFilterByArch": "ביצוע ניסיון לסינון קובצי APK לפי ארכיטקטורת המעבד במידת האפשר",
     "autoLinkFilterByArch": "ביצוע לסינון קישורים לפי ארכיטקטורת המעבד במידת האפשר",
     "overrideSource": "דריסת המקור",
-    "dontShowAgain": "לא להציג שוב",
+    "dontShowAgain": "לא להציג זאת שוב",
     "dontShowTrackOnlyWarnings": "לא להציג אזהרות מסוג ‚למעקב עדכונים בלבד’",
     "dontShowAPKOriginWarnings": "לא להציג אזהרות לגבי מקור קובץ ה־APK",
     "moveNonInstalledAppsToBottom": "העברת יישומים שאינם מותקנים לתחתית תצוגת היישומים",
@@ -323,7 +324,7 @@
     "githubSourceNote": "אפשר להימנע ממגבלות השימוש של GitHub בעזרת שימוש במפתח API.",
     "sortByLastLinkSegment": "מיון לפי החלק האחרון של הקישור בלבד",
     "filterReleaseNotesByRegEx": "סינון הערות מהדורה לפי ביטוי רגולרי",
-    "customLinkFilterRegex": " של קובצי APK לפי ביטוי רגולרי (ברירת המחדל היא ‚‎.apk$‏’)",
+    "customLinkFilterRegex": "סינון מותאם אישית של קובצי APK בקישור לפי ביטוי רגולרי (ברירת המחדל היא ‚‎.apk$‏’)",
     "appsPossiblyUpdated": "בוצעו ניסיונות לעדכון יישומים",
     "appsPossiblyUpdatedNotifDescription": "התראה למשתמש על עצם כך שייתכן כי הותקנו ברקע עדכונים ליישום אחד או יותר",
     "xWasPossiblyUpdatedToY": "ייתכן כי היישום {} עודכן לגרסה {}.",
@@ -471,7 +472,7 @@
         "other": "{} ימים"
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "נוקה יומן אחד  (לפני = {before}, אחרי = {after})",
+        "one": "נוקה יומן אחד (לפני = {before}, אחרי = {after})",
         "two": "נוקו שני יומנים (לפני = {before}, אחרי = {after})",
         "other": "נוקו {n} יומנים (לפני = {before}, אחרי = {after})"
     },
@@ -502,6 +503,7 @@
     },
     "certificateHash": {
         "one": "גיבוב תעודה",
+        "two": "גיבובי תעודה",
         "other": "גיבובי תעודה"
     },
     "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",

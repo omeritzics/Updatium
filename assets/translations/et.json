@@ -2,8 +2,8 @@
     "invalidURLForSource": "Pole kehtiv {} äpi URL",
     "noReleaseFound": "Sobivat väljaannet ei leitud",
     "noVersionFound": "Ei suutnud tuvastada väljaande versiooni",
-    "urlMatchesNoSource": "URL ei vasta tuntud allikale",
-    "cantInstallOlderVersion": "Ei saa installida äpi vanemat versiooni",
+    "urlMatchesNoSource": "Võrguaadress ei vasta teadaolevale allikale",
+    "cantInstallOlderVersion": "Rakenduse vanemat versiooni ei saa paigaldada",
     "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
@@ -85,8 +85,8 @@
     "removeSelectedAppsQuestion": "Eemalda valitud äpid?",
     "removeSelectedApps": "Eemalda valitud äpid",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "Üks rakendus on eemaldatud",
+        "other": "{} rakendust on eemaldatud"
     },
     "updateX": "Uuenda {}",
     "installX": "Installi {}",
