@@ -267,7 +267,10 @@
     "category": "Kategooria",
     "noCategory": "Kategooria puudub",
     "noCategories": "Kategooriad puuduvad",
-    "categoryDeleteQuestion": "Kustutada kategooriad?",
+    "categoryDeleteQuestion": {
+        "one": "Kas kustutad kategooria?",
+        "other": "Kas kustutad kategooriad?"
+    },
     "categoryDeleteWarning": "Kõik kustutatud kategooriate äpid seatakse kategoriseerimataks.",
     "addCategory": "Lisa kategooria",
     "label": "Silt",
@@ -426,8 +429,8 @@
         "other": "Eemalda äpid?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast",
-        "other": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast"
+        "one": "Liiga palju päringuid (mis ületavad etteantud piiri) - proovi uuesti {} minuti pärast",
+        "other": "Liiga palju päringuid (mis ületavad etteantud piiri) - proovi uuesti {} minuti pärast"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {} minuti pärast",
