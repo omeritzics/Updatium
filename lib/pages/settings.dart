@@ -1186,7 +1186,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            gap8,
                             if (settingsProvider.theme == ThemeSettings.system)
                               followSystemThemeExplanation,
                             FutureBuilder(
@@ -1238,14 +1237,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             M3ECardColumn(
                               children: [
-                                Expanded(child: sortDropdown),
-                                horizontalGap16,
-                                Expanded(child: orderDropdown),
-                              ],
-                            ),
-                            gap12,
-                            defaultTabDropdown,
-
+                                Row(
+                                  children: [
+                                    Expanded(child: sortDropdown),
+                                    horizontalGap16,
+                                    Expanded(child: orderDropdown),
+                                  ],
+                                ),
+                                defaultTabDropdown,
                                 SwitchListTile(
                                   title: Text('pinUpdates'.t()),
                                   value: settingsProvider.pinUpdates,
@@ -1253,7 +1252,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                     settingsProvider.pinUpdates = value;
                                   },
                                 ),
-
                                 SwitchListTile(
                                   title: Text(
                                     'moveNonInstalledAppsToBottom'.t(),
@@ -1263,7 +1261,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                     settingsProvider.buryNonInstalled = value;
                                   },
                                 ),
-
                                 SwitchListTile(
                                   title: Text('groupByCategory'.t()),
                                   value: settingsProvider.groupByCategory,
@@ -1349,7 +1346,7 @@ class _SettingsPageState extends State<SettingsPage> {
           );
         },
       ),
-    )
+    );
   }
 }
 
