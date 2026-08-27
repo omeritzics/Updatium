@@ -149,7 +149,7 @@ check_unused() {
     echo "Checking each template key against used keys..."
     
     for key in $template_keys; do
-        if [[ ! " ${USED_KEYS[@]} " =~ " ${key} " ]]; then
+        if [[ ! " ${USED_KEYS[*]} " =~ " ${key} " ]]; then
             echo "❌ Unused key: $key"
             unused_keys=$((unused_keys + 1))
             unused_list="$unused_list $key"
