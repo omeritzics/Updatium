@@ -85,8 +85,8 @@
     "removeSelectedAppsQuestion": "Ta bort markerade Appar?",
     "removeSelectedApps": "Ta bort markerade Appar",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "Tog bort en app",
+        "other": "Tog bort {} appar"
     },
     "updateX": "Uppdatera {}",
     "installX": "Installera {}",
@@ -387,7 +387,7 @@
     "installedVersion": "Installerad",
     "installed": "Installerad",
     "notInstalledApps": "Inte installerad",
-    "defaultTab": "Default tab to display",
+    "defaultTab": "Standardflik att visa",
     "latest": "Senaste",
     "invertRegEx": "Invertera reguljärt uttryck",
     "note": "Anmärkning",
@@ -482,8 +482,8 @@
         "other": "{} APK:er"
     },
     "certificateHash": {
-        "one": "Certificate Hash",
-        "other": "Certificate Hashes"
+        "one": "Certifikat-hash",
+        "other": "Certifikat-hashar"
     },
     "securityDisclaimerTitle": "Säkerhets- och Juridiskt Ansvarsfriskrivning",
     "license": "Licens",
