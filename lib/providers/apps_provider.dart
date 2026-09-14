@@ -1860,6 +1860,7 @@ class AppsProvider with ChangeNotifier {
         await checkUpdate(apps[id]!.app.id);
       }
       if (!trackOnly) {
+        if (apps[id]!.app.apkUrls.isEmpty) throw NoAPKError();
         // ignore: use_build_context_synchronously
         apkUrl = await confirmAppFileUrl(apps[id]!.app, context, false);
       }
