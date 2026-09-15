@@ -1,7 +1,7 @@
 ![GitHub Repo Banner](https://ghrb.waren.build/banner?header=Keep+Open+Source+Neutral&subheader=Everyone+should+feel+free+to+use+Updatium%2C+everyone.&bg=013B84-016EEA&color=FFFFFF&headerfont=Google+Sans&subheaderfont=Google+Sans+Flex&support=false)
 <!-- Created with GitHub Repo Banner by Waren Gonzaga: https://ghrb.waren.build -->
 
-# ![Updatium Icon](./assets/graphics/icon_small.png) Updatium
+# <img src="./assets/graphics/icon.svg" alt="Updatium Icon" height="84px" /> Updatium
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
