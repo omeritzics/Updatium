@@ -84,10 +84,7 @@
     "xWillBeRemovedButRemainInstalled": "{} はUpdatiumから削除されますが、デバイスにはインストールされたままです。",
     "removeSelectedAppsQuestion": "選択したアプリを削除しますか？",
     "removeSelectedApps": "選択したアプリを削除する",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
+    "appRemoved": "Removed one app",
     "updateX": "{} をアップデートする",
     "installX": "{} をインストールする",
     "markXTrackOnlyAsUpdated": "{}\n(追跡のみ)\nをアップデート済みとしてマークする",
@@ -421,70 +418,22 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "複数の署名者",
-    "removeAppQuestion": {
-        "one": "アプリを削除しますか？",
-        "other": "アプリを削除しますか？"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください",
-        "other": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します",
-        "other": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
-        "other": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
-    },
-    "apps": {
-        "one": "{} 個のアプリ",
-        "other": "{} 個のアプリ"
-    },
-    "url": {
-        "one": "{} 個のURL",
-        "other": "{} 個のURL"
-    },
-    "minute": {
-        "one": "{} 分",
-        "other": "{} 分"
-    },
-    "hour": {
-        "one": "{} 時間",
-        "other": "{} 時間"
-    },
-    "day": {
-        "one": "{} 日",
-        "other": "{} 日"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})",
-        "other": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} とさらに 1 個のアプリのアップデートが利用可能です。",
-        "other": "{app} とさらに {} 個のアプリのアップデートが利用可能です。"
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} とさらに 1 個のアプリがアップデートされました。",
-        "other": "{app} とさらに {} 個のアプリがアップデートされました。"
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "{app} とさらに 1 個のアプリのアップデートに失敗しました。",
-        "other": "{app} とさらに {} 個のアプリのアップデートに失敗しました。"
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} とさらに 1 個のアプリがアップデートされた可能性があります。",
-        "other": "{app} とさらに {} 個のアプリがアップデートされた可能性があります。"
-    },
-    "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
-    },
-    "certificateHash": {
-        "one": "証明書ハッシュ",
-        "other": "証明書ハッシュ"
-    },
+    "removeAppQuestion": "アプリを削除しますか？",
+    "tooManyRequestsTryAgainInMinutes": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください",
+    "bgUpdateGotErrorRetryInMinutes": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します",
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
+    "apps": "{} 個のアプリ",
+    "url": "{} 個のURL",
+    "minute": "{} 分",
+    "hour": "{} 時間",
+    "day": "{} 日",
+    "clearedNLogsBeforeXAfterY": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})",
+    "xAndNMoreUpdatesAvailable": "{app} とさらに 1 個のアプリのアップデートが利用可能です。",
+    "xAndNMoreUpdatesInstalled": "{app} とさらに 1 個のアプリがアップデートされました。",
+    "xAndNMoreUpdatesFailed": "{app} とさらに 1 個のアプリのアップデートに失敗しました。",
+    "xAndNMoreUpdatesPossiblyInstalled": "{app} とさらに 1 個のアプリがアップデートされた可能性があります。",
+    "apk": "{} APK",
+    "certificateHash": "証明書ハッシュ",
     "securityDisclaimerTitle": "セキュリティおよび法的免責事項",
     "license": "ライセンス",
     "licenseText": "このアプリケーションはGPL v3ライセンスの下で配布されています。",

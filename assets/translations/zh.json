@@ -84,10 +84,7 @@
     "xWillBeRemovedButRemainInstalled": "“{}”将从 Updatium 中删除，但仍安装在您的设备中。",
     "removeSelectedAppsQuestion": "是否删除选中的应用？",
     "removeSelectedApps": "删除选中的应用",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
+    "appRemoved": "Removed one app",
     "updateX": "更新 {}",
     "installX": "安装 {}",
     "markXTrackOnlyAsUpdated": "将“{}”\n（仅追踪）\n标记为已更新",
@@ -421,70 +418,22 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "多个签名人",
-    "removeAppQuestion": {
-        "one": "是否删除应用？",
-        "other": "是否删除应用？"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "请求过于频繁（API 速率限制）- 请在 {} 分钟后重试",
-        "other": "请求过于频繁（API 速率限制）- 请在 {} 分钟后重试"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "后台更新检查遇到了“{error}”问题，将于 {} 分钟后重试",
-        "other": "后台更新检查遇到了“{error}”问题，将于 {} 分钟后重试"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "后台检查发现 {} 个应用更新 - 如有需要将发送通知",
-        "other": "后台检查发现 {} 个应用更新 - 如有需要将发送通知"
-    },
-    "apps": {
-        "one": "{} 个应用",
-        "other": "{} 个应用"
-    },
-    "url": {
-        "one": "{} 个 URL",
-        "other": "{} 个 URL"
-    },
-    "minute": {
-        "one": "{} 分钟",
-        "other": "{} 分钟"
-    },
-    "hour": {
-        "one": "{} 小时",
-        "other": "{} 小时"
-    },
-    "day": {
-        "one": "{} 天",
-        "other": "{} 天"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "清除了 {n} 条日志（早于 {before}，晚于 {after}）",
-        "other": "清除了 {n} 条日志（早于 {before}，晚于 {after}）"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "“{app}”和另外 1 个应用可以更新了。",
-        "other": "“{app}”和另外 {} 个应用可以更新了。"
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "“{app}”和另外 1 个应用已更新。",
-        "other": "“{app}”和另外 {} 个应用已更新。"
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "“{app}”和另外 1 个应用更新失败。",
-        "other": "“{app}”和另外 {} 个应用更新失败。"
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "已尝试更新“{app}”和另外 1 个应用。",
-        "other": "已尝试更新“{app}”和另外 {} 个应用。"
-    },
-    "apk": {
-        "one": "{} 个 APK 文件",
-        "other": "{} 个 APK 文件"
-    },
-    "certificateHash": {
-        "one": "证书散列",
-        "other": "Hashes 证书"
-    },
+    "removeAppQuestion": "是否删除应用？",
+    "tooManyRequestsTryAgainInMinutes": "请求过于频繁（API 速率限制）- 请在 {} 分钟后重试",
+    "bgUpdateGotErrorRetryInMinutes": "后台更新检查遇到了“{error}”问题，将于 {} 分钟后重试",
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": "后台检查发现 {} 个应用更新 - 如有需要将发送通知",
+    "apps": "{} 个应用",
+    "url": "{} 个 URL",
+    "minute": "{} 分钟",
+    "hour": "{} 小时",
+    "day": "{} 天",
+    "clearedNLogsBeforeXAfterY": "清除了 {n} 条日志（早于 {before}，晚于 {after}）",
+    "xAndNMoreUpdatesAvailable": "“{app}”和另外 1 个应用可以更新了。",
+    "xAndNMoreUpdatesInstalled": "“{app}”和另外 1 个应用已更新。",
+    "xAndNMoreUpdatesFailed": "“{app}”和另外 1 个应用更新失败。",
+    "xAndNMoreUpdatesPossiblyInstalled": "已尝试更新“{app}”和另外 1 个应用。",
+    "apk": "{} 个 APK 文件",
+    "certificateHash": "证书散列",
     "securityDisclaimerTitle": "安全与法律免责声明",
     "license": "许可证",
     "licenseText": "本应用程序采用 GPL v3 许可证分发。",

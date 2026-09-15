@@ -84,10 +84,7 @@
     "xWillBeRemovedButRemainInstalled": "{} will be removed from Updatium but remain installed on device.",
     "removeSelectedAppsQuestion": "Remove selected apps?",
     "removeSelectedApps": "Remove selected apps",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
+    "appRemoved": "Removed one app",
     "updateX": "Update {}",
     "installX": "Install {}",
     "markXTrackOnlyAsUpdated": "Mark {}\n(track-only)\nas updated",
@@ -421,70 +418,22 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Multiple Signers",
-    "removeAppQuestion": {
-        "one": "Remove app?",
-        "other": "Remove apps?"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "Too many requests (rate limited) - try again in {} minute",
-        "other": "Too many requests (rate limited) - try again in {} minutes"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG update checking encountered a {error}, will schedule a retry check in {} minute",
-        "other": "BG update checking encountered a {error}, will schedule a retry check in {} minutes"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG update checking found {} update - will notify user if needed",
-        "other": "BG update checking found {} updates - will notify user if needed"
-    },
-    "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
-    },
-    "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
-    },
-    "minute": {
-        "one": "{} minute",
-        "other": "{} minutes"
-    },
-    "hour": {
-        "one": "{} hour",
-        "other": "{} hours"
-    },
-    "day": {
-        "one": "{} day",
-        "other": "{} days"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "Cleared {n} log (before = {before}, after = {after})",
-        "other": "Cleared {n} logs (before = {before}, after = {after})"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} and 1 more app have updates.",
-        "other": "{app} and {} more apps have updates."
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} and 1 more app was updated.",
-        "other": "{app} and {} more apps were updated."
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {app} and 1 more app.",
-        "other": "Failed to update {app} and {} more apps."
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} and 1 more app may have been updated.",
-        "other": "{app} and {} more apps may have been updated."
-    },
-    "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
-    },
-    "certificateHash": {
-        "one": "Certificate Hash",
-        "other": "Certificate Hashes"
-    },
+    "removeAppQuestion": "Remove app?",
+    "tooManyRequestsTryAgainInMinutes": "Too many requests (rate limited) - try again in {} minute",
+    "bgUpdateGotErrorRetryInMinutes": "BG update checking encountered a {error}, will schedule a retry check in {} minute",
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": "BG update checking found {} update - will notify user if needed",
+    "apps": "{} App",
+    "url": "{} URL",
+    "minute": "{} minute",
+    "hour": "{} hour",
+    "day": "{} day",
+    "clearedNLogsBeforeXAfterY": "Cleared {n} log (before = {before}, after = {after})",
+    "xAndNMoreUpdatesAvailable": "{app} and 1 more app have updates.",
+    "xAndNMoreUpdatesInstalled": "{app} and 1 more app was updated.",
+    "xAndNMoreUpdatesFailed": "Failed to update {app} and 1 more app.",
+    "xAndNMoreUpdatesPossiblyInstalled": "{app} and 1 more app may have been updated.",
+    "apk": "{} APK",
+    "certificateHash": "Certificate Hash",
     "securityDisclaimerTitle": "Security & Legal Disclaimer",
     "license": "License",
     "licenseText": "This application is distributed under the GPL v3 License.",

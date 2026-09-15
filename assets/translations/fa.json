@@ -267,7 +267,10 @@
     "category": "دسته بندی",
     "noCategory": "بدون دسته بندی",
     "noCategories": "بدون دسته بندی ها",
-    "categoryDeleteQuestion": "دسته بندی ها حذف شوند؟",
+    "categoryDeleteQuestion": {
+        "one": "دسته بندی ها حذف شوند؟",
+        "other": ""
+    },
     "categoryDeleteWarning": "همه برنامه‌ها در دسته‌های حذف شده روی دسته‌بندی نشده تنظیم می‌شوند.",
     "addCategory": "اضافه کردن دسته",
     "label": "برچسب",

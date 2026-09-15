@@ -86,7 +86,8 @@
     "removeSelectedApps": "Elimina les aplicacions seleccionades",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "many": "Removed {} apps",
+        "other": ""
     },
     "updateX": "Actualitza {}",
     "installX": "Instal·la {}",
@@ -267,7 +268,11 @@
     "category": "Categoria",
     "noCategory": "No hi ha la categoria",
     "noCategories": "No hi ha les categories",
-    "categoryDeleteQuestion": "Suprimeixo les categories?",
+    "categoryDeleteQuestion": {
+        "one": "Suprimeixo les categories?",
+        "many": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Totes les aplicacions de les categories suprimides es marcaran com a no categoritzades.",
     "addCategory": "Afegeix una categoria",
     "label": "Nom",
@@ -423,67 +428,83 @@
     "multipleSigners": "Signadors múltiples",
     "removeAppQuestion": {
         "one": "¿Suprimeixo l'aplicació?",
-        "other": "¿Suprimeixo les aplicacions?"
+        "many": "¿Suprimeixo les aplicacions?",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Massa peticions (límit excedit), torna-hi en {} minut",
-        "other": "Massa peticions (límit excedit), torna-hi en {} minuts"
+        "many": "Massa peticions (límit excedit), torna-hi en {} minuts",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {} minut",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {} minuts"
+        "many": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {} minuts",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "La comprovació d'actualitzacions en segon pla ha trobat {} actualització, t'ho notificarem si cal",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat {} actualitzacions, t'ho notificarem si cal"
+        "many": "La comprovació d'actualitzacions en segon pla ha trobat {} actualitzacions, t'ho notificarem si cal",
+        "other": ""
     },
     "apps": {
         "one": "{} Aplicació",
-        "other": "{} Aplicacions"
+        "many": "{} Aplicacions",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URLs"
+        "many": "{} URLs",
+        "other": ""
     },
     "minute": {
         "one": "{} minut",
-        "other": "{} minuts"
+        "many": "{} minuts",
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} hores"
+        "many": "{} hores",
+        "other": ""
     },
     "day": {
         "one": "{} dia",
-        "other": "{} dies"
+        "many": "{} dies",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Suprimit {n} registre (anterior a = {before}, posterior a = {after})",
-        "other": "Suprimits {n} registres (anteriors a = {before}, posteriors a = {after})"
+        "many": "Suprimits {n} registres (anteriors a = {before}, posteriors a = {after})",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i 1 aplicació més tenen actualitzacions.",
-        "other": "{app} i {} aplicacions més tenen actualitzacions."
+        "many": "{app} i {} aplicacions més tenen actualitzacions.",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} i 1 aplicació més s'han actualitzat.",
-        "other": "{app} i {} aplicacions més s'han actualitzat."
+        "many": "{app} i {} aplicacions més s'han actualitzat.",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Error en actualitzar {app} i 1 aplicació més.",
-        "other": "No s'ha pogut actualizar {app} i {} aplicacions més."
+        "many": "No s'ha pogut actualizar {app} i {} aplicacions més.",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i 1 aplicació més podrien haver estat actualizades.",
-        "other": "{app} i {} aplicacions més podrien haver estat actualitzades."
+        "many": "{app} i {} aplicacions més podrien haver estat actualitzades.",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "many": "{} APKs",
+        "other": ""
     },
     "certificateHash": {
         "one": "Suma de certificat",
-        "other": "Resums del certificat"
+        "many": "Resums del certificat",
+        "other": ""
     },
     "securityDisclaimerTitle": "Avís de Seguretat i Legal",
     "license": "Llicència",
