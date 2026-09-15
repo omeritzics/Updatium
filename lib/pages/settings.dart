@@ -315,6 +315,7 @@ class _SettingsPageState extends State<SettingsPage> {
           GeneratedFormDropdown(
             'sortColumn',
             [
+              const MapEntry('manually', 'manually'),
               const MapEntry('authorName', 'authorName'),
               const MapEntry('nameAuthor', 'nameAuthor'),
               const MapEntry('asAdded', 'asAdded'),
