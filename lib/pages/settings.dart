@@ -890,7 +890,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               subtitle: GestureDetector(
                                 onTap: () {
                                   launchUrlString(
-                                    'https://github.com/soupslurpr/AppVerifier',
+                                    'https://github.com/RoundSalmon4/AppVerifierBG',
                                     mode: LaunchMode.externalApplication,
                                   );
                                 },
@@ -903,10 +903,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ),
                               value: settingsProvider
-                                  .beforeNewInstallsShareToAppVerifier,
+                                  .beforeNewInstallsShareToAppVerifierBG,
                               onChanged: (value) {
                                 settingsProvider
-                                        .beforeNewInstallsShareToAppVerifier =
+                                        .beforeNewInstallsShareToAppVerifierBG =
                                     value;
                               },
                             ),

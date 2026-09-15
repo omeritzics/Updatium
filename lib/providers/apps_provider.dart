@@ -1652,8 +1652,8 @@ class AppsProvider with ChangeNotifier {
     bool forceDelete = false,
   }) async {
     if (firstTimeWithContext != null &&
-        settingsProvider.beforeNewInstallsShareToAppVerifier &&
-        (await getInstalledInfo('dev.soupslurpr.appverifier')) != null) {
+        settingsProvider.beforeNewInstallsShareToAppVerifierBG &&
+        (await getInstalledInfo('com.roundsalmon4.appverifier')) != null) {
       XFile f = XFile.fromData(
         file.file.readAsBytesSync(),
         mimeType: 'application/vnd.android.package-archive',

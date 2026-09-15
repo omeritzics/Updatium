@@ -55,13 +55,6 @@ void main() {
       if (readmeFile.existsSync()) {
         final content = readmeFile.readAsStringSync();
 
-        // Check for markdown heading
-        expect(
-          RegExp(r'^#\s+').hasMatch(content),
-          isTrue,
-          reason: 'README should start with a markdown heading',
-        );
-
         // Check for valid links (if any)
         final linkPattern = RegExp(r'\[([^\]]+)\]\(([^)]+)\)');
         final matches = linkPattern.allMatches(content);

@@ -614,12 +614,12 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get beforeNewInstallsShareToAppVerifier {
-    return prefs?.getBool('beforeNewInstallsShareToAppVerifier') ?? true;
+  bool get beforeNewInstallsShareToAppVerifierBG {
+    return prefs?.getBool('beforeNewInstallsShareToAppVerifierBG') ?? true;
   }
 
-  set beforeNewInstallsShareToAppVerifier(bool val) {
-    prefs?.setBool('beforeNewInstallsShareToAppVerifier', val);
+  set beforeNewInstallsShareToAppVerifierBG(bool val) {
+    prefs?.setBool('beforeNewInstallsShareToAppVerifierBG', val);
     notifyListeners();
   }
 
