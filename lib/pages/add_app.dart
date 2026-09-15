@@ -715,7 +715,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         pickedSource!,
         userInput.trim(),
         additionalSettings,
-        trackOnlyOverride: true,
+        trackOnlyOverride: false,
         sourceIsOverriden: pickedSourceOverride != null,
         inferAppIdIfOptional: inferAppIdIfOptional,
       );
