@@ -756,7 +756,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => M3EFilledButton(
+    getInstallOrUpdateButton() => FloatingActionButton.extended(
       onPressed:
           !updating &&
               (app.app.installedVersion == null ||
@@ -792,7 +792,16 @@ class _AppPageState extends State<AppPage> {
               }
             }
           : null,
-      child: Text(
+      icon: Icon(
+        app.app.installedVersion == null
+            ? !trackOnly
+                  ? Icons.download
+                  : Icons.check
+            : !trackOnly
+            ? Icons.system_update
+            : Icons.check,
+      ),
+      label: Text(
         app.app.installedVersion == null
             ? !trackOnly
                   ? 'install'.t()
@@ -914,15 +923,6 @@ class _AppPageState extends State<AppPage> {
                     child: Column(
                       children: [
                         getFullInfoColumn(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(child: getInstallOrUpdateButton()),
-                            ],
-                          ),
-                        ),
                         if (app.downloadProgress != null)
                           Padding(
                             padding: const EdgeInsetsDirectional.only(
@@ -938,8 +938,8 @@ class _AppPageState extends State<AppPage> {
                               ),
                             ),
                           ),
-                        // Extra bottom padding to clear the docked toolbar
-                        const SizedBox(height: 96),
+                        // Extra bottom padding to clear the docked toolbar and FAB
+                        const SizedBox(height: 160),
                       ],
                     ),
                   ),
@@ -953,6 +953,7 @@ class _AppPageState extends State<AppPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: M3FloatingToolbar(
+                  floatingActionButton: getInstallOrUpdateButton(),
                   actions: [
                     if (app.app.installedVersion != null)
                       M3FloatingToolbarAction(

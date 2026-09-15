@@ -18,7 +18,7 @@ fi
 KEYSTORE_LOCATION="$1"
 BUILD_DIR="$2"
 
-read -s -p "Enter your keystore password: " KEYSTORE_PASSWORD
+read -s -p -r "Enter your keystore password: " KEYSTORE_PASSWORD
 
 if [ -z "$ANDROID_HOME" ]; then
   ANDROID_HOME=~/Android/Sdk
