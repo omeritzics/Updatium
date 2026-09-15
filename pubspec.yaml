@@ -99,6 +99,8 @@ dependencies:
   dynamic_color: ^1.8.1
   intl: any
   confetti: ^0.8.0
+  logger: ^2.8.0
+  material_ui: ^1.2.0
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"
