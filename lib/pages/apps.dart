@@ -342,40 +342,57 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       return true;
     }).toList();
 
-    listedApps.sort((a, b) {
-      int result = 0;
-      if (settingsProvider.sortColumn == SortColumnSettings.authorName) {
-        result = ((a.author + a.name).toLowerCase()).compareTo(
-          (b.author + b.name).toLowerCase(),
-        );
-      } else if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor) {
-        result = ((a.name + a.author).toLowerCase()).compareTo(
-          (b.name + b.author).toLowerCase(),
-        );
-      } else if (settingsProvider.sortColumn ==
-          SortColumnSettings.releaseDate) {
-        // Handle null dates: apps with unknown release dates are grouped at the end
-        final aDate = a.app.releaseDate;
-        final bDate = b.app.releaseDate;
-        final isDescending =
-            settingsProvider.sortOrder == SortOrderSettings.descending;
-        if (aDate == null && bDate == null) {
-          // Both null: sort by name for consistency
+    if (settingsProvider.sortColumn != SortColumnSettings.manually) {
+      listedApps.sort((a, b) {
+        int result = 0;
+        if (settingsProvider.sortColumn == SortColumnSettings.authorName) {
+          result = ((a.author + a.name).toLowerCase()).compareTo(
+            (b.author + b.name).toLowerCase(),
+          );
+        } else if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor) {
           result = ((a.name + a.author).toLowerCase()).compareTo(
             (b.name + b.author).toLowerCase(),
           );
-        } else if (aDate == null) {
-          // a has no date, always push to end regardless of sort direction
-          result = isDescending ? -1 : 1;
-        } else if (bDate == null) {
-          // b has no date, always push to end regardless of sort direction
-          result = isDescending ? 1 : -1;
-        } else {
-          result = aDate.compareTo(bDate);
+        } else if (settingsProvider.sortColumn ==
+            SortColumnSettings.releaseDate) {
+          // Handle null dates: apps with unknown release dates are grouped at the end
+          final aDate = a.app.releaseDate;
+          final bDate = b.app.releaseDate;
+          final isDescending =
+              settingsProvider.sortOrder == SortOrderSettings.descending;
+          if (aDate == null && bDate == null) {
+            // Both null: sort by name for consistency
+            result = ((a.name + a.author).toLowerCase()).compareTo(
+              (b.name + b.author).toLowerCase(),
+            );
+          } else if (aDate == null) {
+            // a has no date, always push to end regardless of sort direction
+            result = isDescending ? -1 : 1;
+          } else if (bDate == null) {
+            // b has no date, always push to end regardless of sort direction
+            result = isDescending ? 1 : -1;
+          } else {
+            result = aDate.compareTo(bDate);
+          }
+        } else if (settingsProvider.sortColumn == SortColumnSettings.added) {
+          // Handle null dates: apps with unknown added dates are grouped at the end
+          final aDate = a.app.lastUpdateCheck;
+          final bDate = b.app.lastUpdateCheck;
+          final isDescending =
+              settingsProvider.sortOrder == SortOrderSettings.descending;
+          if (aDate == null && bDate == null) {
+            result = 0;
+          } else if (aDate == null) {
+            result = isDescending ? -1 : 1;
+          } else if (bDate == null) {
+            result = isDescending ? 1 : -1;
+          } else {
+            result = aDate.compareTo(bDate);
+          }
         }
-      }
-      return result;
-    });
+        return result;
+      });
+    }
 
     if (settingsProvider.sortOrder == SortOrderSettings.descending) {
       listedApps = listedApps.reversed.toList();

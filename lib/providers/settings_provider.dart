@@ -37,7 +37,7 @@ Locale? tryParseLocale(String? localeString) {
 
 enum ThemeSettings { system, light, dark }
 
-enum SortColumnSettings { added, nameAuthor, authorName, releaseDate }
+enum SortColumnSettings { manually, added, nameAuthor, authorName, releaseDate }
 
 enum SortOrderSettings { ascending, descending }
 

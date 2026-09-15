@@ -119,11 +119,22 @@ class AppListBuilder {
     SortColumnSettings sortColumn,
     SortOrderSettings sortOrder,
   ) {
-    if (sortColumn == SortColumnSettings.added) return apps;
+    if (sortColumn == SortColumnSettings.manually) return apps;
 
     final isDesc = sortOrder == SortOrderSettings.descending;
     if (sortColumn == SortColumnSettings.releaseDate) {
       var entries = apps.map((a) => MapEntry(a.app.releaseDate, a)).toList()
+        ..sort((a, b) {
+          final aDate = a.key;
+          final bDate = b.key;
+          if (aDate == null && bDate == null) return 0;
+          if (aDate == null) return isDesc ? -1 : 1;
+          if (bDate == null) return isDesc ? 1 : -1;
+          return aDate.compareTo(bDate);
+        });
+      apps = entries.map((e) => e.value).toList();
+    } else if (sortColumn == SortColumnSettings.added) {
+      var entries = apps.map((a) => MapEntry(a.app.lastUpdateCheck, a)).toList()
         ..sort((a, b) {
           final aDate = a.key;
           final bDate = b.key;
