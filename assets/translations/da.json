@@ -268,7 +268,10 @@
     "category": "Kategori",
     "noCategory": "Ingen kategori",
     "noCategories": "Ingen kategorier",
-    "categoryDeleteQuestion": "Slet kategorier?",
+    "categoryDeleteQuestion": {
+        "one": "Slet kategorier?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alle apps i slettede kategorier indstilles til ukategoriseret.",
     "addCategory": "Tilføj kategori",
     "label": "Etiket",

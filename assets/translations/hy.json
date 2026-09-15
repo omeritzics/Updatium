@@ -268,7 +268,10 @@
     "category": "Category",
     "noCategory": "No category",
     "noCategories": "No categories",
-    "categoryDeleteQuestion": "Delete categories?",
+    "categoryDeleteQuestion": {
+        "one": "Delete categories?",
+        "other": ""
+    },
     "categoryDeleteWarning": "All apps in deleted categories will be set to uncategorized.",
     "addCategory": "Add category",
     "label": "Label",

@@ -268,7 +268,10 @@
     "category": "Kategorî",
     "noCategory": "Bê kategorî",
     "noCategories": "Kategorî tune ne",
-    "categoryDeleteQuestion": "Kategorî jê bibin?",
+    "categoryDeleteQuestion": {
+        "one": "Kategorî jê bibin?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Hemî sepanên di kategoriyan yên jêbirî de dê werin wek bê-kategorî sazkirin.",
     "addCategory": "Kategorî zêde bike",
     "label": "Etîket",

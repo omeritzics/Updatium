@@ -86,7 +86,8 @@
     "removeSelectedApps": "Rimuovi le app selezionate",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "many": "Removed {} apps",
+        "other": ""
     },
     "updateX": "Aggiorna {}",
     "installX": "Installa {}",
@@ -268,7 +269,11 @@
     "category": "Categoria",
     "noCategory": "Nessuna categoria",
     "noCategories": "Nessuna categoria",
-    "categoryDeleteQuestion": "Eliminare le categorie?",
+    "categoryDeleteQuestion": {
+        "one": "Eliminare le categorie?",
+        "many": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Tutte le app nelle categorie eliminate saranno impostate come non categorizzate.",
     "addCategory": "Aggiungi categoria",
     "label": "Etichetta",
@@ -424,67 +429,83 @@
     "multipleSigners": "Segnali multipli",
     "removeAppQuestion": {
         "one": "Rimuovere l'app?",
-        "other": "Rimuovere le app?"
+        "many": "Rimuovere le app?",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Troppe richieste (traffico limitato) - riprova tra {} minuto",
-        "other": "Troppe richieste (traffico limitato) - riprova tra {} minuti"
+        "many": "Troppe richieste (traffico limitato) - riprova tra {} minuti",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Il controllo degli aggiornamenti in secondo piano ha riscontrato un {error}, nuovo tentativo tra {} minuto",
-        "other": "Il controllo degli aggiornamenti in secondo piano ha riscontrato un {error}, nuovo tentativo tra {} minuti"
+        "many": "Il controllo degli aggiornamenti in secondo piano ha riscontrato un {error}, nuovo tentativo tra {} minuti",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Il controllo degli aggiornamenti in secondo piano ha trovato {} aggiornamento - notificherà l'utente se necessario",
-        "other": "Il controllo degli aggiornamenti in secondo piano ha trovato {} aggiornamenti - notificherà l'utente se necessario"
+        "many": "Il controllo degli aggiornamenti in secondo piano ha trovato {} aggiornamenti - notificherà l'utente se necessario",
+        "other": ""
     },
     "apps": {
         "one": "{} app",
-        "other": "{} app"
+        "many": "{} app",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL"
+        "many": "{} URL",
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minuti"
+        "many": "{} minuti",
+        "other": ""
     },
     "hour": {
         "one": "{} ora",
-        "other": "{} ore"
+        "many": "{} ore",
+        "other": ""
     },
     "day": {
         "one": "{} giorno",
-        "other": "{} giorni"
+        "many": "{} giorni",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Rimosso {n} log (prima = {before}, dopo = {after})",
-        "other": "Rimossi {n} log (prima = {before}, dopo = {after})"
+        "many": "Rimossi {n} log (prima = {before}, dopo = {after})",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e un'altra app hanno aggiornamenti disponibili.",
-        "other": "{app} e altre {} app hanno aggiornamenti disponibili."
+        "many": "{app} e altre {} app hanno aggiornamenti disponibili.",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e un'altra app sono state aggiornate.",
-        "other": "{app} e altre {} app sono state aggiornate."
+        "many": "{app} e altre {} app sono state aggiornate.",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Non è riuscito ad aggiornare {app} e altre 1 app.",
-        "other": "Non è riuscito ad aggiornare {app} e {} altre applicazioni."
+        "many": "Non è riuscito ad aggiornare {app} e {} altre applicazioni.",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e un'altra app potrebbero essere state aggiornate.",
-        "other": "{app} e altre {} app potrebbero essere state aggiornate."
+        "many": "{app} e altre {} app potrebbero essere state aggiornate.",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK"
+        "many": "{} APK",
+        "other": ""
     },
     "certificateHash": {
         "one": "Certificato Hash",
-        "other": "Certificato Hashes"
+        "many": "Certificato Hashes",
+        "other": ""
     },
     "securityDisclaimerTitle": "Disclaimer di Sicurezza e Legale",
     "license": "Licenza",
