@@ -566,6 +566,8 @@
     "fileExistsPrompt": "כבר קיים קובץ בשם זה. נא להקליד שם חדש לקובץ שיוּרד:",
     "fileName": "שם הקובץ",
     "downloadCancelled": "ההורדה בוטלה",
+    "cancelDownload": "ביטול ההורדה",
+    "cancelDownloadPrompt": "לבטל את ההורדה?",
     "showInFileManager": "הצגה במנהל הקבצים",
     "usedOpenSourcePackages": "חבילות קוד פתוח בשימוש",
     "pleaseWaitOperationInProgress": "נא להמתין, מתבצעת פעולה",

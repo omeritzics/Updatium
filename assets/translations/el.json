@@ -548,6 +548,8 @@
     "fileExistsPrompt": "Ένα αρχείο με αυτό το όνομα υπάρχει ήδη. Παρακαλώ εισαγάγετε ένα νέο όνομα για το ληφθέν αρχείο:",
     "fileName": "Όνομα αρχείου",
     "downloadCancelled": "Η μεταφόρτωση ακυρώθηκε",
+    "cancelDownload": "Cancel download",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Εμφάνιση στη διαχείριση αρχείων",
     "usedOpenSourcePackages": "Χρησιμοποιημένα πακέτα ανοιχτού κώδικα",
     "pleaseWaitOperationInProgress": "Παρακαλώ περιμένετε, η διαδικασία είναι σε εξέλιξη",

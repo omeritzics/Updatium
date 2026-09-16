@@ -756,6 +756,50 @@ class _AppPageState extends State<AppPage> {
     }
 
     getInstallOrUpdateButton() {
+      if (app.downloadProgress != null) {
+        return FloatingActionButton.extended(
+          onPressed: () async {
+            final shouldCancel = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: Text('cancelDownload'.t()),
+                  content: Text('cancelDownloadPrompt'.t()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, false),
+                      child: Text('no'.t()),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, true),
+                      child: Text('yes'.t()),
+                    ),
+                  ],
+                );
+              },
+            );
+            if (shouldCancel == true) {
+              final np = context.read<NotificationsProvider>();
+              final notifId = DownloadNotification(app.app.finalName, 0).id;
+              np.cancel(notifId);
+            }
+          },
+          icon: const SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          ),
+          label: Text(
+            'Downloading: ${app.downloadProgress!.toInt()}%...',
+          ),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        );
+      }
+
       final canInstallOrUpdate =
           !updating &&
           (app.app.installedVersion == null ||
@@ -819,6 +863,8 @@ class _AppPageState extends State<AppPage> {
         foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       );
     }
+
+    final fab = getInstallOrUpdateButton();
 
     return Scaffold(
       body: Padding(
@@ -959,9 +1005,11 @@ class _AppPageState extends State<AppPage> {
               right: 0,
               bottom: 20,
               child: Align(
-                alignment: Alignment.center,
+                alignment: fab != null
+                    ? Alignment.bottomLeft
+                    : Alignment.center,
                 child: M3FloatingToolbar(
-                  floatingActionButton: getInstallOrUpdateButton(),
+                  floatingActionButton: fab,
                   actions: [
                     if (app.app.installedVersion != null)
                       M3FloatingToolbarAction(

@@ -548,6 +548,8 @@
     "fileExistsPrompt": "Sellise nimega fail on juba olemas. Palun sisesta allalaaditava faili jaoks uus nimi:",
     "fileName": "Failinimi",
     "downloadCancelled": "Allalaadimine on katkestatud",
+    "cancelDownload": "Cancel download",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Näita failihalduris",
     "usedOpenSourcePackages": "Kasutatud avatud lähtekoodiga paketid",
     "pleaseWaitOperationInProgress": "Palun oota, tegevus on pooleli",

@@ -548,6 +548,8 @@
     "fileExistsPrompt": "Mayroon nang file na may ganitong pangalan. Mangyaring magpasok ng bagong pangalan para sa na-download na file:",
     "fileName": "Pangalan ng file",
     "downloadCancelled": "Kanselado ang pag-download",
+    "cancelDownload": "Cancel download",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Ipakita sa file manager",
     "usedOpenSourcePackages": "Ginamit na mga open-source package",
     "pleaseWaitOperationInProgress": "Mangyaring maghintay, kasalukuyang may ginagawa",
