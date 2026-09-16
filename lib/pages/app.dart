@@ -755,61 +755,70 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => FloatingActionButton.extended(
-      onPressed:
+    getInstallOrUpdateButton() {
+      final canInstallOrUpdate =
           !updating &&
-              (app.app.installedVersion == null ||
-                  app.app.installedVersion != app.app.latestVersion) &&
-              !areDownloadsRunning
-          ? () async {
-              try {
-                var successMessage = app.app.installedVersion == null
-                    ? 'installed'.t()
-                    : 'appsUpdated'.t();
-                settingsProvider.heavyImpact();
-                var res = await appsProvider.downloadAndInstallLatestApps([
-                  app.app.id,
-                ], globalNavigatorKey.currentContext);
-                if (!mounted) return;
-                if (res.isNotEmpty && !trackOnly) {
-                  showMessage(successMessage, context);
-                }
-                if (res.isNotEmpty) {
-                  Navigator.of(context).pop();
-                }
-                if (res.isNotEmpty) {
-                  // ignore: use_build_context_synchronously
-                  var np = context.read<NotificationsProvider>();
-                  np.cancel(UpdateNotification([]).id);
-                  np.cancel(
-                    SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
-                  );
-                }
-              } catch (e) {
-                if (!mounted) return;
-                showError(e, context);
-              }
+          (app.app.installedVersion == null ||
+              app.app.installedVersion != app.app.latestVersion) &&
+          !areDownloadsRunning;
+      
+      if (!canInstallOrUpdate) {
+        return null;
+      }
+      
+      return FloatingActionButton.extended(
+        onPressed: () async {
+          try {
+            var successMessage = app.app.installedVersion == null
+                ? 'installed'.t()
+                : 'appsUpdated'.t();
+            settingsProvider.heavyImpact();
+            var res = await appsProvider.downloadAndInstallLatestApps([
+              app.app.id,
+            ], globalNavigatorKey.currentContext);
+            if (!mounted) return;
+            if (res.isNotEmpty && !trackOnly) {
+              showMessage(successMessage, context);
             }
-          : null,
-      icon: Icon(
-        app.app.installedVersion == null
-            ? !trackOnly
-                  ? Icons.download
-                  : Icons.check
-            : !trackOnly
-            ? Icons.system_update
-            : Icons.check,
-      ),
-      label: Text(
-        app.app.installedVersion == null
-            ? !trackOnly
-                  ? 'install'.t()
-                  : 'markInstalled'.t()
-            : !trackOnly
-            ? 'update'.t()
-            : 'markUpdated'.t(),
-      ),
-    );
+            if (res.isNotEmpty) {
+              Navigator.of(context).pop();
+            }
+            if (res.isNotEmpty) {
+              // ignore: use_build_context_synchronously
+              var np = context.read<NotificationsProvider>();
+              np.cancel(UpdateNotification([]).id);
+              np.cancel(
+                SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
+              );
+            }
+          } catch (e) {
+            if (!mounted) return;
+            showError(e, context);
+          }
+        },
+        icon: Icon(
+          app.app.installedVersion == null
+              ? !trackOnly
+                    ? Icons.download
+                    : Icons.check
+              : !trackOnly
+              ? Icons.system_update
+              : Icons.check,
+        ),
+        label: Text(
+          app.app.installedVersion == null
+              ? !trackOnly
+                    ? 'install'.t()
+                    : 'markInstalled'.t()
+              : !trackOnly
+              ? 'update'.t()
+              : 'markUpdated'.t(),
+        ),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      );
+    }
 
     return Scaffold(
       body: Padding(

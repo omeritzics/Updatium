@@ -44,10 +44,6 @@ void main() {
         DNSService.getProviderName(DNSProvider.opendns),
         equals('OpenDNS'),
       );
-      expect(
-        DNSService.getProviderName(DNSProvider.mullvad),
-        equals('Mullvad DNS'),
-      );
     });
   });
 }

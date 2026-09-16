@@ -41,7 +41,7 @@ enum SortColumnSettings { manually, added, nameAuthor, authorName, releaseDate }
 
 enum SortOrderSettings { ascending, descending }
 
-enum DNSServiceProvider { system, cloudflare, quad9, opendns, mullvad }
+enum DNSServiceProvider { system, cloudflare, quad9, opendns }
 
 enum DefaultTabSettings { all, installed, notInstalled }
 
