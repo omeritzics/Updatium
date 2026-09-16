@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/external_install_bridge.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 
@@ -26,7 +28,7 @@ import 'package:updatium/services/dns_service.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:shizuku_apk_installer/shizuku_apk_installer.dart' hide InstallerMode;
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -73,6 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _scrollPositionRestored = false;
   final Map<String, TextEditingController> _textControllers = {};
   final Map<String, FocusNode> _focusNodes = {};
+  int _installerCheckSeq = 0;
 
   void initUpdateIntervalInterpolator() {
     List<InterpolationNode> nodes = [];
@@ -117,6 +120,71 @@ class _SettingsPageState extends State<SettingsPage> {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
       updateIntervalLabel = 'day'.plural(valRounded ~/ (24 * 60));
+    }
+  }
+
+  void handleInstallerModeChange(
+    SettingsProvider settingsProvider,
+    InstallerMode mode,
+    int currentSeq,
+  ) {
+    if (_installerCheckSeq != currentSeq) return;
+    settingsProvider.selectionClick();
+    if (mode == InstallerMode.shizuku) {
+      _installerCheckSeq++;
+      final seq = _installerCheckSeq;
+      ShizukuApkInstaller()
+          .checkPermission()
+          .then((resCode) {
+            if (_installerCheckSeq != seq) return;
+            settingsProvider.installerMode =
+                (resCode?.startsWith('granted') ?? false)
+                ? InstallerMode.shizuku
+                : InstallerMode.system;
+            if (!context.mounted) return;
+            final errorText = switch (resCode) {
+              'services_not_found' => 'shizukuBinderNotFound'.t(),
+              'old_shizuku' => 'shizukuOld'.t(),
+              'old_android_with_adb' => 'shizukuOldAndroidWithADB'.t(),
+              'denied' => 'cancelled'.t(),
+              null => 'unexpectedError'.t(),
+              _ => null,
+            };
+            if (errorText != null) {
+              if (!mounted) return;
+              showError(UpdatiumError(errorText), context);
+            }
+          })
+          .catchError((e) {
+            if (_installerCheckSeq != seq) return;
+            settingsProvider.installerMode = InstallerMode.system;
+            if (!mounted) return;
+            showError(e, context);
+          });
+    } else if (mode == InstallerMode.root) {
+      _installerCheckSeq++;
+      final seq = _installerCheckSeq;
+      // Import root installer - we'll need to add this import
+      // For now, we'll use a simple check
+      // TODO: Use RootInstaller from the installers package
+      Process.run('su', ['-c', 'id -u']).then((result) {
+        if (_installerCheckSeq != seq) return;
+        final isRoot = result.stdout.toString().trim() == '0';
+        settingsProvider.installerMode = isRoot
+            ? InstallerMode.root
+            : InstallerMode.system;
+        if (!mounted) return;
+        if (!isRoot) {
+          showError(UpdatiumError('rootNotGranted'.t()), context);
+        }
+      }).catchError((e) {
+        if (_installerCheckSeq != seq) return;
+        settingsProvider.installerMode = InstallerMode.system;
+        if (!mounted) return;
+        showError(e, context);
+      });
+    } else {
+      settingsProvider.installerMode = mode;
     }
   }
 
@@ -912,70 +980,58 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                             ),
 
-                            SwitchListTile(
-                              title: Text('useShizuku'.t()),
-                              value: settingsProvider.useShizuku,
-                              onChanged: (useShizuku) {
-                                if (useShizuku) {
-                                  ShizukuApkInstaller().checkPermission().then((
-                                    resCode,
-                                  ) {
-                                    if (!mounted) return;
-                                    settingsProvider.useShizuku =
-                                        resCode?.startsWith('granted') ?? false;
-                                    switch (resCode) {
-                                      case 'services_not_found':
-                                        showError(
-                                          UpdatiumError(
-                                            'shizukuBinderNotFound'.t(),
-                                          ),
-                                          context,
-                                        );
-                                      case 'old_shizuku':
-                                        showError(
-                                          UpdatiumError('shizukuOld'.t()),
-                                          context,
-                                        );
-                                      case 'old_android_with_adb':
-                                        showError(
-                                          UpdatiumError(
-                                            t('shizukuOldAndroidWithADB'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'denied':
-                                        showError(
-                                          UpdatiumError('cancelled'.t()),
-                                          context,
-                                        );
-                                    }
-                                  });
-                                } else {
-                                  settingsProvider.useShizuku = false;
+                            DropdownButton<InstallerMode>(
+                              value: settingsProvider.installerMode,
+                              isExpanded: true,
+                              items: InstallerMode.values.map((mode) {
+                                return DropdownMenuItem<InstallerMode>(
+                                  value: mode,
+                                  child: Text(
+                                    switch (mode) {
+                                      InstallerMode.system => 'installMethodSystem'.t(),
+                                      InstallerMode.shizuku => 'installMethodShizuku'.t(),
+                                      InstallerMode.external => 'installMethodExternal'.t(),
+                                      InstallerMode.root => 'installMethodRoot'.t(),
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (InstallerMode? value) {
+                                if (value != null) {
+                                  handleInstallerModeChange(
+                                    settingsProvider,
+                                    value,
+                                    _installerCheckSeq,
+                                  );
                                 }
                               },
                             ),
-
-                            SwitchListTile(
-                              title: Text(
-                                'shizukuPretendToBeGooglePlay'.t(),
-                                style: TextStyle(
-                                  color: settingsProvider.useShizuku
-                                      ? null
-                                      : Theme.of(context).colorScheme.onSurface
+                            if (settingsProvider.installerMode == InstallerMode.shizuku ||
+                                settingsProvider.installerMode == InstallerMode.root)
+                              SwitchListTile(
+                                title: Text(
+                                  'shizukuPretendToBeGooglePlay'.t(),
+                                  style: TextStyle(
+                                    color: (settingsProvider.installerMode == InstallerMode.shizuku ||
+                                        settingsProvider.installerMode == InstallerMode.root)
+                                        ? null
+                                        : Theme.of(context).colorScheme.onSurface
                                             .withValues(alpha: 0.6),
+                                  ),
                                 ),
+                                value:
+                                    settingsProvider.shizukuPretendToBeGooglePlay,
+                                onChanged: (settingsProvider.installerMode == InstallerMode.shizuku ||
+                                    settingsProvider.installerMode == InstallerMode.root)
+                                    ? (value) {
+                                        settingsProvider
+                                            .shizukuPretendToBeGooglePlay =
+                                        value;
+                                      }
+                                    : null,
                               ),
-                              value:
-                                  settingsProvider.shizukuPretendToBeGooglePlay,
-                              onChanged: settingsProvider.useShizuku
-                                  ? (value) {
-                                      settingsProvider
-                                              .shizukuPretendToBeGooglePlay =
-                                          value;
-                                    }
-                                  : null,
-                            ),
+                            if (settingsProvider.installerMode == InstallerMode.external)
+                              const _ExternalInstallerTile(),
                             gap8,
                             GeneratedForm(
                               items: [
@@ -2042,6 +2098,189 @@ class _AboutDialogState extends State<AboutDialog> {
               child: Text('close'.t()),
             ),
           ],
+        );
+      },
+    );
+  }
+}
+
+class _ExternalInstallerTile extends StatefulWidget {
+  const _ExternalInstallerTile();
+
+  @override
+  State<_ExternalInstallerTile> createState() => _ExternalInstallerTileState();
+}
+
+class _ExternalInstallerTileState extends State<_ExternalInstallerTile> {
+  Future<List<InstallerTarget>>? _targetsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _targetsFuture = ExternalInstallerBridge.instance.listTargets();
+  }
+
+  InstallerTarget? _findCurrent(
+    List<InstallerTarget> targets,
+    String? pkg,
+    String? activity,
+  ) {
+    if (pkg == null) return null;
+    for (final target in targets) {
+      if (target.package == pkg && target.activity == activity) return target;
+    }
+    return null;
+  }
+
+  Widget _targetIcon(InstallerTarget? target, {double size = 40}) {
+    final icon = target?.icon;
+    if (icon != null && icon.isNotEmpty) {
+      return Image.memory(icon, width: size, height: size);
+    }
+    return Icon(Icons.extension_outlined, size: size);
+  }
+
+  Future<void> _choose(
+    List<InstallerTarget> targets,
+    SettingsProvider settingsProvider,
+  ) async {
+    if (targets.isEmpty) return;
+    final grouped = <String, List<InstallerTarget>>{};
+    for (final t in targets) {
+      grouped.putIfAbsent(t.package, () => []).add(t);
+    }
+    // Deduplicate intents with identical activity names
+    for (final entry in grouped.entries) {
+      final seen = <String>{};
+      entry.value.removeWhere((t) => !seen.add(t.activity));
+    }
+    grouped.removeWhere((_, v) => v.isEmpty);
+    int expandedIndex = -1;
+    final entries = grouped.entries.toList();
+    final picked = await showDialog<InstallerTarget>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          scrollable: true,
+          title: Text('chooseExternalInstaller'.t()),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 8,
+            children: [
+              for (var i = 0; i < entries.length; i++)
+                Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ListTile(
+                        autofocus:
+                            i == 0 && context.read<SettingsProvider>().isTV,
+                        onTap: () {
+                          final entry = entries[i];
+                          if (entry.value.length == 1) {
+                            Navigator.of(ctx).pop(entry.value.first);
+                          } else {
+                            setDialogState(() {
+                              expandedIndex = expandedIndex == i ? -1 : i;
+                            });
+                          }
+                        },
+                        leading: _targetIcon(entries[i].value.first, size: 36),
+                        title: Text(
+                          entries[i].value.first.label,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        trailing: entries[i].value.length > 1
+                            ? Icon(expandedIndex == i ? Icons.expand_less : Icons.expand_more)
+                            : null,
+                      ),
+                      if (expandedIndex == i)
+                        ...entries[i].value.map(
+                          (target) => ListTile(
+                            onTap: () => Navigator.of(ctx).pop(target),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 2,
+                            ),
+                            minTileHeight: 36,
+                            visualDensity: VisualDensity.compact,
+                            title: Text(
+                              _shortActivityName(target, entries[i].value),
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (picked == null) return;
+    settingsProvider.externalInstallerPackage = picked.package;
+    settingsProvider.externalInstallerComponent = picked.activity;
+    if (mounted) setState(() {});
+  }
+
+  String _shortActivityName(
+    InstallerTarget target,
+    List<InstallerTarget> siblings,
+  ) {
+    final short = target.activity.split('.').last;
+    final duplicates = siblings.where(
+      (s) => s.activity.split('.').last == short && s != target,
+    );
+    if (duplicates.isNotEmpty) {
+      return target.activity;
+    }
+    return short;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settingsProvider = context.read<SettingsProvider>();
+    final extPkg = context.select<SettingsProvider, String?>(
+      (p) => p.externalInstallerPackage,
+    );
+    final extComp = context.select<SettingsProvider, String?>(
+      (p) => p.externalInstallerComponent,
+    );
+    return FutureBuilder<List<InstallerTarget>>(
+      future: _targetsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const ListTile(
+            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+            leading: SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        final targets = snapshot.data ?? const <InstallerTarget>[];
+        final current = _findCurrent(targets, extPkg, extComp);
+        final intentCount = targets
+            .where((t) => t.package == current?.package)
+            .map((t) => t.activity)
+            .toSet()
+            .length;
+        final subtitle = current != null
+            ? intentCount > 1
+                  ? '${current.label} \u00b7 ${current.activity.split('.').last}'
+                  : current.label
+            : extPkg ?? 'externalInstallerUnset'.t();
+        return ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+          leading: _targetIcon(current),
+          title: Text('chooseExternalInstaller'.t()),
+          subtitle: Text(subtitle),
+          trailing: const Icon(Icons.arrow_drop_down),
+          onTap: () => _choose(targets, settingsProvider),
         );
       },
     );

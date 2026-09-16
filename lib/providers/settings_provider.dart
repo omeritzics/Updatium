@@ -45,6 +45,8 @@ enum DNSServiceProvider { system, cloudflare, quad9, opendns, mullvad }
 
 enum DefaultTabSettings { all, installed, notInstalled }
 
+enum InstallerMode { system, shizuku, external, root }
+
 class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
   String? defaultAppDir;
@@ -79,6 +81,47 @@ class SettingsProvider with ChangeNotifier {
 
   set useShizuku(bool useShizuku) {
     prefs?.setBool('useShizuku', useShizuku);
+    notifyListeners();
+  }
+
+  String? get externalInstallerPackage =>
+      getSettingString('externalInstallerPackage');
+
+  set externalInstallerPackage(String? val) {
+    if (val == null || val.isEmpty) {
+      prefs?.remove('externalInstallerPackage');
+    } else {
+      prefs?.setString('externalInstallerPackage', val);
+    }
+    notifyListeners();
+  }
+
+  String? get externalInstallerComponent =>
+      getSettingString('externalInstallerComponent');
+
+  set externalInstallerComponent(String? val) {
+    if (val == null || val.isEmpty) {
+      prefs?.remove('externalInstallerComponent');
+    } else {
+      prefs?.setString('externalInstallerComponent', val);
+    }
+    notifyListeners();
+  }
+
+  InstallerMode get installerMode {
+    final mode = prefs?.getString('installerMode');
+    if (mode == null) {
+      // Migrate from old useShizuku setting
+      return useShizuku ? InstallerMode.shizuku : InstallerMode.system;
+    }
+    return InstallerMode.values.firstWhere(
+      (e) => e.name == mode,
+      orElse: () => InstallerMode.system,
+    );
+  }
+
+  set installerMode(InstallerMode mode) {
+    prefs?.setString('installerMode', mode.name);
     notifyListeners();
   }
 
