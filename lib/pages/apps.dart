@@ -349,7 +349,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           result = ((a.author + a.name).toLowerCase()).compareTo(
             (b.author + b.name).toLowerCase(),
           );
-        } else if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor) {
+        } else if (settingsProvider.sortColumn ==
+            SortColumnSettings.nameAuthor) {
           result = ((a.name + a.author).toLowerCase()).compareTo(
             (b.name + b.author).toLowerCase(),
           );
