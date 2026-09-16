@@ -84,10 +84,7 @@
     "xWillBeRemovedButRemainInstalled": "{} 將從 Updatium 中移除，但仍會安裝在裝置上。",
     "removeSelectedAppsQuestion": "要移除選取的應用程式嗎？",
     "removeSelectedApps": "移除選取的應用程式",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
+    "appRemoved": "Removed one app",
     "updateX": "更新 {}",
     "installX": "安裝 {}",
     "markXTrackOnlyAsUpdated": "將 {}\n（僅追蹤）\n標記為已更新",
@@ -422,70 +419,22 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "多重簽署者",
-    "removeAppQuestion": {
-        "one": "移除應用程式？",
-        "other": "移除應用程式？"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "要求過多（受速率限制） - 請在 {} 分鐘後重試",
-        "other": "要求過多（受速率限制） - 請在 {} 分鐘後重試"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "背景更新檢查遭遇 {error}，將在 {} 分鐘後排程重試檢查",
-        "other": "背景更新檢查遭遇 {error}，將在 {} 分鐘後排程重試檢查"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "背景更新檢查找到 {} 個更新 - 必要時將通知使用者",
-        "other": "背景更新檢查找到 {} 個更新 - 必要時將通知使用者"
-    },
-    "apps": {
-        "one": "{} 個應用程式",
-        "other": "{} 個應用程式"
-    },
-    "url": {
-        "one": "{} 個網址",
-        "other": "{} 個網址"
-    },
-    "minute": {
-        "one": "{} 分鐘",
-        "other": "{} 分鐘"
-    },
-    "hour": {
-        "one": "{} 小時",
-        "other": "{} 小時"
-    },
-    "day": {
-        "one": "{} 天",
-        "other": "{} 天"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "已清除 {n} 筆記錄（之前 = {before}，之後 = {after}）",
-        "other": "已清除 {n} 筆記錄（之前 = {before}，之後 = {after}）"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} 以及 1 個應用程式有更新。",
-        "other": "{app} 以及 {} 個應用程式有更新。"
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} 以及 1 個應用程式已更新。",
-        "other": "{app} 以及 {} 個應用程式已更新。"
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "無法更新 {app} 以及 1 個應用程式。",
-        "other": "無法更新 {app} 以及 {} 個應用程式。"
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} 以及 1 個應用程式可能已更新。",
-        "other": "{app} 以及 {} 個應用程式可能已更新。"
-    },
-    "apk": {
-        "one": "{} 個 APK",
-        "other": "{} 個 APK"
-    },
-    "certificateHash": {
-        "one": "憑證雜湊",
-        "other": "憑證雜湊"
-    },
+    "removeAppQuestion": "移除應用程式？",
+    "tooManyRequestsTryAgainInMinutes": "要求過多（受速率限制） - 請在 {} 分鐘後重試",
+    "bgUpdateGotErrorRetryInMinutes": "背景更新檢查遭遇 {error}，將在 {} 分鐘後排程重試檢查",
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": "背景更新檢查找到 {} 個更新 - 必要時將通知使用者",
+    "apps": "{} 個應用程式",
+    "url": "{} 個網址",
+    "minute": "{} 分鐘",
+    "hour": "{} 小時",
+    "day": "{} 天",
+    "clearedNLogsBeforeXAfterY": "已清除 {n} 筆記錄（之前 = {before}，之後 = {after}）",
+    "xAndNMoreUpdatesAvailable": "{app} 以及 1 個應用程式有更新。",
+    "xAndNMoreUpdatesInstalled": "{app} 以及 1 個應用程式已更新。",
+    "xAndNMoreUpdatesFailed": "無法更新 {app} 以及 1 個應用程式。",
+    "xAndNMoreUpdatesPossiblyInstalled": "{app} 以及 1 個應用程式可能已更新。",
+    "apk": "{} 個 APK",
+    "certificateHash": "憑證雜湊",
     "securityDisclaimerTitle": "安全與法律免責聲明",
     "license": "授權",
     "licenseText": "此應用程式採用 GPL v3 授權條款分發。",

@@ -268,7 +268,10 @@
     "category": "Kategori",
     "noCategory": "Kategori yok",
     "noCategories": "Kategori yok",
-    "categoryDeleteQuestion": "Kategoriler silinsin mi?",
+    "categoryDeleteQuestion": {
+        "one": "Kategoriler silinsin mi?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Silinen kategorilerdeki tüm uygulamalar kategorize edilmemiş olarak ayarlanacaktır.",
     "addCategory": "Kategori ekle",
     "label": "Etiket",

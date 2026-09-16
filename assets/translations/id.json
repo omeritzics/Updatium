@@ -84,10 +84,7 @@
     "xWillBeRemovedButRemainInstalled": "{} akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
     "removeSelectedAppsQuestion": "Hapus aplikasi terpilih?",
     "removeSelectedApps": "Hapus aplikasi terpilih",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
+    "appRemoved": "Removed one app",
     "updateX": "Perbarui {}",
     "installX": "Pasang {}",
     "markXTrackOnlyAsUpdated": "Tandai {}\n(Pelacakan Saja)\nsudah diperbarui",
@@ -422,70 +419,22 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Tanda Tangan Ganda",
-    "removeAppQuestion": {
-        "one": "Hapus aplikasi?",
-        "other": "Hapus aplikasi?"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit",
-        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit",
-        "other": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan",
-        "other": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan"
-    },
-    "apps": {
-        "one": "{} aplikasi",
-        "other": "{} aplikasi"
-    },
-    "url": {
-        "one": "{} URL",
-        "other": "{} URL"
-    },
-    "minute": {
-        "one": "{} menit",
-        "other": "{} menit"
-    },
-    "hour": {
-        "one": "{} jam",
-        "other": "{} jam"
-    },
-    "day": {
-        "one": "{} hari",
-        "other": "{} hari"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})",
-        "other": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} dan 1 aplikasi lainnya memiliki pembaruan.",
-        "other": "{app} dan {} aplikasi lainnya memiliki pembaruan."
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} dan 1 aplikasi lainnya telah diperbarui.",
-        "other": "{app} dan {} aplikasi lainnya telah diperbarui."
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "Gagal memperbarui {app} dan 1 aplikasi lainnya.",
-        "other": "Gagal memperbarui {app} dan {} aplikasi lainnya."
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} dan 1 aplikasi lainnya mungkin telah diperbarui.",
-        "other": "{app} dan {} aplikasi lainnya mungkin telah diperbarui."
-    },
-    "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
-    },
-    "certificateHash": {
-        "one": "Hash Sertifikat",
-        "other": "Hashes Sertifikat"
-    },
+    "removeAppQuestion": "Hapus aplikasi?",
+    "tooManyRequestsTryAgainInMinutes": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit",
+    "bgUpdateGotErrorRetryInMinutes": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit",
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan",
+    "apps": "{} aplikasi",
+    "url": "{} URL",
+    "minute": "{} menit",
+    "hour": "{} jam",
+    "day": "{} hari",
+    "clearedNLogsBeforeXAfterY": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})",
+    "xAndNMoreUpdatesAvailable": "{app} dan 1 aplikasi lainnya memiliki pembaruan.",
+    "xAndNMoreUpdatesInstalled": "{app} dan 1 aplikasi lainnya telah diperbarui.",
+    "xAndNMoreUpdatesFailed": "Gagal memperbarui {app} dan 1 aplikasi lainnya.",
+    "xAndNMoreUpdatesPossiblyInstalled": "{app} dan 1 aplikasi lainnya mungkin telah diperbarui.",
+    "apk": "{} APK",
+    "certificateHash": "Hash Sertifikat",
     "securityDisclaimerTitle": "Penafian Keamanan dan Hukum",
     "license": "Lisensi",
     "licenseText": "Aplikasi ini didistribusikan di bawah Lisensi GPL v3.",

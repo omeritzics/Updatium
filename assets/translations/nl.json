@@ -268,7 +268,10 @@
     "category": "Categorie",
     "noCategory": "Geen categorie",
     "noCategories": "Geen categorieën",
-    "categoryDeleteQuestion": "Categorieën verwijderen?",
+    "categoryDeleteQuestion": {
+        "one": "Categorieën verwijderen?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alle apps in verwijderde categorieën worden teruggezet naar 'ongecategoriseerd'.",
     "addCategory": "Categorie toevoegen",
     "label": "Label",

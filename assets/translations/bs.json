@@ -86,7 +86,8 @@
     "removeSelectedApps": "Ukloni odabrane aplikacije",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "few": "Removed {} apps",
+        "other": ""
     },
     "updateX": "Nadogradi {}",
     "installX": "Instaliraj {}",
@@ -268,7 +269,11 @@
     "category": "Kategorija",
     "noCategory": "Nema kategorije",
     "noCategories": "Nema kategorija",
-    "categoryDeleteQuestion": "Želite li izbrisati kategorije?",
+    "categoryDeleteQuestion": {
+        "one": "Želite li izbrisati kategorije?",
+        "few": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Sve aplikacije u izbrisanim kategorijama će biti postavljene kao nekategorisane.",
     "addCategory": "Dodaj kategoriju",
     "label": "Oznaka",
@@ -424,67 +429,83 @@
     "multipleSigners": "Multiple Signers",
     "removeAppQuestion": {
         "one": "Želite li ukloniti aplikaciju?",
-        "other": "Želite li ukloniti aplikacije?"
+        "few": "Želite li ukloniti aplikacije?",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {} minutu",
-        "other": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {} min."
+        "few": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {} min.",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {} minutu",
-        "other": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {} min."
+        "few": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {} min.",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Provjera ažuriranja u pozadini je pronašla {} ažuriranje - korisnik će biti obavješten ako je to potrebno",
-        "other": "Provjera ažuriranja u pozadini je pronašla {} ažuriranja - korisnik će biti obavješten ako je to potrebno"
+        "few": "Provjera ažuriranja u pozadini je pronašla {} ažuriranja - korisnik će biti obavješten ako je to potrebno",
+        "other": ""
     },
     "apps": {
         "one": "{} aplikacija",
-        "other": "{} aplikacije"
+        "few": "{} aplikacije",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL-ovi"
+        "few": "{} URL-ovi",
+        "other": ""
     },
     "minute": {
         "one": "{} minuta",
-        "other": "{} min."
+        "few": "{} min.",
+        "other": ""
     },
     "hour": {
         "one": "{} sat",
-        "other": "{} sat/i"
+        "few": "{} sat/i",
+        "other": ""
     },
     "day": {
         "one": "{} dan",
-        "other": "{} dana"
+        "few": "{} dana",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Izbrisan {n} log (prije = {before}, nakon = {after})",
-        "other": "Izbrisano {n} log-ova (prije = {before}, nakon = {after})"
+        "few": "Izbrisano {n} log-ova (prije = {before}, nakon = {after})",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i još 1 aplikacija ima ažuriranja.",
-        "other": "{app} i još {} aplikacija imaju ažuriranja."
+        "few": "{app} i još {} aplikacija imaju ažuriranja.",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} i još 1 aplikacija je ažurirana.",
-        "other": "{app} i još {} aplikacija je ažurirano."
+        "few": "{app} i još {} aplikacija je ažurirano.",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Neuspješno ažuriranje {app} i još 1 aplikacije.",
-        "other": "Neuspješno ažuriranje {app} i još {} aplikacija."
+        "few": "Neuspješno ažuriranje {app} i još {} aplikacija.",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i još jedna aplikacija je vjerovatno ažurirana.",
-        "other": "{app} i još {} aplikacija su vjerovatno ažurirane."
+        "few": "{app} i još {} aplikacija su vjerovatno ažurirane.",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK-a"
+        "few": "{} APK-a",
+        "other": ""
     },
     "certificateHash": {
         "one": "Certificate Hash",
-        "other": "Certificate Hashes"
+        "few": "Certificate Hashes",
+        "other": ""
     },
     "securityDisclaimerTitle": "Bezbednosno i Pravno Odricanje Odgovornosti",
     "license": "Licenca",

@@ -268,7 +268,10 @@
     "category": "Категория",
     "noCategory": "Няма категория",
     "noCategories": "Няма категории",
-    "categoryDeleteQuestion": "Изтриване на категории?",
+    "categoryDeleteQuestion": {
+        "one": "Изтриване на категории?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Всички приложения в изтритите категории ще бъдат зададени като некатегоризирани.",
     "addCategory": "Добавяне на категория",
     "label": "Етикет",

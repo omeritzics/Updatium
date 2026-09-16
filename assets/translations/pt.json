@@ -86,7 +86,8 @@
     "removeSelectedApps": "Remover aplicações selecionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "many": "Removed {} apps",
+        "other": ""
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -268,7 +269,11 @@
     "category": "Categoria",
     "noCategory": "Sem categoria",
     "noCategories": "Sem categorias",
-    "categoryDeleteQuestion": "Deletar  categorias?",
+    "categoryDeleteQuestion": {
+        "one": "Deletar  categorias?",
+        "many": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Todas as aplicações em categorias removidas serão descategorizadas.",
     "addCategory": "Adicionar categoria",
     "label": "Etiqueta",
@@ -424,67 +429,83 @@
     "multipleSigners": "Assinantes Múltiplos",
     "removeAppQuestion": {
         "one": "Remover aplicação?",
-        "other": "Remover aplicações?"
+        "many": "Remover aplicações?",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Muitos pedidos (taxa de pedidos limitada) - tente novamente em {} minuto",
-        "other": "Muitos pedidos (taxa limitada) - tente novamente em {} minutos"
+        "many": "Muitos pedidos (taxa limitada) - tente novamente em {} minutos",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minuto",
-        "other": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minutos"
+        "many": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minutos",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "A verificação de atualizações em segundo plano encontrou {} atualização, o utilizador será notificado caso necessário",
-        "other": "A verificação de atualizações em segundo plano encontrou {} atualizações, o utilizador será notificado caso necessário"
+        "many": "A verificação de atualizações em segundo plano encontrou {} atualizações, o utilizador será notificado caso necessário",
+        "other": ""
     },
     "apps": {
         "one": "{} Aplicação",
-        "other": "{} Aplicações"
+        "many": "{} Aplicações",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URLs"
+        "many": "{} URLs",
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "many": "{} minutos",
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "many": "{} horas",
+        "other": ""
     },
     "day": {
         "one": "{} dia",
-        "other": "{} dias"
+        "many": "{} dias",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Foi limpo {n} log (antes = {antes}, depois = {depois})",
-        "other": "Foram limpos {n} logs (antes = {antes}, depois = {depois})"
+        "many": "Foram limpos {n} logs (antes = {antes}, depois = {depois})",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e uma outra aplicação possui atualizações.",
-        "other": "{app} e {} outras aplicações possuem atualizações."
+        "many": "{app} e {} outras aplicações possuem atualizações.",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e uma outra aplicação foram atualizadas.",
-        "other": "{app} e {} outras aplicações foram atualizadas."
+        "many": "{app} e {} outras aplicações foram atualizadas.",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Falha ao atualizar {app} e mais 1 aplicação.",
-        "other": "Falha ao atualizar {app} e {} outras aplicações."
+        "many": "Falha ao atualizar {app} e {} outras aplicações.",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e uma outra aplicação podem ter sido atualizadas.",
-        "other": "{app} e {} outras aplicações podem ter sido atualizadas."
+        "many": "{app} e {} outras aplicações podem ter sido atualizadas.",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "many": "{} APKs",
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash do Certificado",
-        "other": "Certificado Hashes"
+        "many": "Certificado Hashes",
+        "other": ""
     },
     "securityDisclaimerTitle": "Aviso de Segurança e Legal",
     "license": "Licença",
