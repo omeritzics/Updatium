@@ -256,6 +256,7 @@
     "disableVersionDetection": "Disable version detection",
     "noVersionDetectionExplanation": "This option should only be used for apps where version detection does not work correctly.",
     "downloadingX": "Downloading {}",
+    "downloading": "Downloading",
     "downloadX": "Download {}",
     "downloadedX": "Downloaded {}",
     "editCategory": "Edit category",

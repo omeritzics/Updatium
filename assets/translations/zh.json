@@ -256,6 +256,7 @@
     "disableVersionDetection": "禁用版本检测",
     "noVersionDetectionExplanation": "此选项应该仅用于无法进行版本检测的应用。",
     "downloadingX": "正在下载 {}",
+    "downloading": "正在下载",
     "downloadX": "下载 {}",
     "downloadedX": "已下载 {}",
     "editCategory": "Edit category",

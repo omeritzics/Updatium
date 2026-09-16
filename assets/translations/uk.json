@@ -256,6 +256,7 @@
     "disableVersionDetection": "Вимкнути визначення версії",
     "noVersionDetectionExplanation": "Цю опцію слід використовувати лише для застосунків, де визначення версії працює неправильно.",
     "downloadingX": "Завантаження {}",
+    "downloading": "Завантаження",
     "downloadX": "Завантажити {}",
     "downloadedX": "Завантажено {}",
     "editCategory": "Edit category",

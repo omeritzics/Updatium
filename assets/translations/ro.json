@@ -256,6 +256,7 @@
     "disableVersionDetection": "Dezactivează detectarea versiunii",
     "noVersionDetectionExplanation": "Această opțiune ar trebui folosită doar pentru aplicațiile unde detectarea versiunii nu funcționează corect.",
     "downloadingX": "Se descarcă {}",
+    "downloading": "Se descarcă",
     "downloadX": "Descarcă {}",
     "downloadedX": "Descărcat {}",
     "editCategory": "Edit category",

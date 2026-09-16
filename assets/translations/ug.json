@@ -256,6 +256,7 @@
     "disableVersionDetection": "نەشرىنى بايقاشنى چەكلەش",
     "noVersionDetectionExplanation": "بۇ تاللانما پەقەت نەشرىنى بايقاش نورمال ئىشلىمىگەن ئەپلەر ئۈچۈنلا ئىشلىتىلىشى كېرەك.",
     "downloadingX": "چۈشۈرۈۋاتىدۇ: {}",
+    "downloading": "چۈشۈرۈۋاتىدۇ:",
     "downloadX": "چۈشۈرۈش: {}",
     "downloadedX": "چۈشۈرۈلدى: {}",
     "editCategory": "Edit category",

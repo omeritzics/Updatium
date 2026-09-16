@@ -256,6 +256,7 @@
     "disableVersionDetection": "Deaktivovat detekci verze",
     "noVersionDetectionExplanation": "Tato možnost by měla být použita pouze u aplikace, kde detekce verzí nefunguje správně.",
     "downloadingX": "Stáhnout {}",
+    "downloading": "Stáhnout",
     "downloadX": "Stáhnout {}",
     "downloadedX": "Staženo {}",
     "editCategory": "Edit category",

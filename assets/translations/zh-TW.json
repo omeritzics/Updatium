@@ -256,6 +256,7 @@
     "disableVersionDetection": "停用版本偵測",
     "noVersionDetectionExplanation": "此選項應僅用於版本偵測無法正確運作的應用程式。",
     "downloadingX": "正在下載 {}",
+    "downloading": "正在下載",
     "downloadX": "下載 {}",
     "downloadedX": "已下載 {}",
     "editCategory": "Edit category",

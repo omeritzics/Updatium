@@ -256,6 +256,7 @@
     "disableVersionDetection": "Disattiva il rilevamento della versione",
     "noVersionDetectionExplanation": "Questa opzione dovrebbe essere usata solo per le app la cui versione non viene rilevata correttamente.",
     "downloadingX": "Scaricamento di {} in corso",
+    "downloading": "Scaricamento di  in corso",
     "downloadX": "Scarica {}",
     "downloadedX": "Scaricato {}",
     "editCategory": "Edit category",

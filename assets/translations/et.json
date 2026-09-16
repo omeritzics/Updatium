@@ -256,6 +256,7 @@
     "disableVersionDetection": "Keela versiooni tuvastamine",
     "noVersionDetectionExplanation": "Seda valikut tuleks kasutada ainult rakenduste puhul, kus versiooni tuvastamine ei tööta korrektselt.",
     "downloadingX": "{} on allalaadimisel",
+    "downloading": "on allalaadimisel",
     "downloadX": "Laadi {} alla",
     "downloadedX": "{} on allalaaditud",
     "editCategory": "Muuda kategooriat",

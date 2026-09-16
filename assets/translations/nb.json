@@ -256,6 +256,7 @@
     "disableVersionDetection": "Deaktiver versjonsgjenkjenning",
     "noVersionDetectionExplanation": "Dette valget bør kun brukes for apper der versjonsgjenkjenning ikke fungerer som det skal.",
     "downloadingX": "Laster ned {}",
+    "downloading": "Laster ned",
     "downloadX": "Last ned {}",
     "downloadedX": "Lastet ned {}",
     "editCategory": "Rediger kategori",

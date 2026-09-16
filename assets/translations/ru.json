@@ -256,6 +256,7 @@
     "disableVersionDetection": "Отключить определение версии",
     "noVersionDetectionExplanation": "Эта настройка должна использоваться только для приложений, где определение версии не работает корректно",
     "downloadingX": "Загрузка {}",
+    "downloading": "Загрузка",
     "downloadX": "Загрузить {}",
     "downloadedX": "Загружено {}",
     "editCategory": "Edit category",

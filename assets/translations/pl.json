@@ -256,6 +256,7 @@
     "disableVersionDetection": "Wyłącz wykrywanie wersji",
     "noVersionDetectionExplanation": "Używaj tylko dla aplikacji, w których automatyczne wykrywanie wersji nie działa poprawnie.",
     "downloadingX": "Pobieranie {}",
+    "downloading": "Pobieranie",
     "downloadX": "Pobierz {}",
     "downloadedX": "Pobrano {}",
     "editCategory": "Edit category",

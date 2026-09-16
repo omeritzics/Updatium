@@ -256,6 +256,7 @@
     "disableVersionDetection": "Sürüm algılamayı devre dışı bırak",
     "noVersionDetectionExplanation": "Bu seçenek yalnızca sürüm algılamanın doğru çalışmadığı uygulamalar için kullanılmalıdır.",
     "downloadingX": "{} indiriliyor",
+    "downloading": "indiriliyor",
     "downloadX": "{} İndir",
     "downloadedX": "{} indirildi",
     "editCategory": "Edit category",

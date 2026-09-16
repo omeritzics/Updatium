@@ -256,6 +256,7 @@
     "disableVersionDetection": "Versieherkenning uitschakelen",
     "noVersionDetectionExplanation": "Deze optie moet alleen worden gebruikt voor apps waar versieherkenning niet correct werkt.",
     "downloadingX": "{} downloaden",
+    "downloading": "downloaden",
     "downloadX": "{} downloaden",
     "downloadedX": "{} gedownload",
     "editCategory": "Edit category",

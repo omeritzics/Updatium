@@ -256,6 +256,7 @@
     "disableVersionDetection": "버전 감지 비활성화",
     "noVersionDetectionExplanation": "이 옵션은 버전 감지가 올바르게 작동하지 않는 앱에만 사용해야 합니다.",
     "downloadingX": "{} 다운로드 중",
+    "downloading": "다운로드 중",
     "downloadX": "{} 다운로드",
     "downloadedX": "{} 다운로드 완료",
     "editCategory": "Edit category",

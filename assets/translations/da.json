@@ -256,6 +256,7 @@
     "disableVersionDetection": "Deaktivér versionsregistrering",
     "noVersionDetectionExplanation": "Denne indstilling bør kun bruges til apps, hvor versionsregistrering ikke virker korrekt.",
     "downloadingX": "Henter {}",
+    "downloading": "Henter",
     "downloadX": "Hent {}",
     "downloadedX": "Hentede {}",
     "editCategory": "Edit category",

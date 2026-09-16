@@ -256,6 +256,7 @@
     "disableVersionDetection": "Desactivar detección da versión",
     "noVersionDetectionExplanation": "Esta opción só se debería usar coas apps nas que a detección da versión non funciona correctamente.",
     "downloadingX": "Descargando {}",
+    "downloading": "Descargando",
     "downloadX": "Descargar {}",
     "downloadedX": "Descargado {}",
     "editCategory": "Edit category",

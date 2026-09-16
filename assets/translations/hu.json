@@ -256,6 +256,7 @@
     "disableVersionDetection": "Verziófelismerés letiltása",
     "noVersionDetectionExplanation": "Ezt a beállítást csak olyan alkalmazásoknál szabad használni, ahol a verziófelismerés nem működik megfelelően.",
     "downloadingX": "{} letöltése",
+    "downloading": "letöltése",
     "downloadX": "{} letöltése",
     "downloadedX": "{} letöltve",
     "editCategory": "Edit category",

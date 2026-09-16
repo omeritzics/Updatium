@@ -256,6 +256,7 @@
     "disableVersionDetection": "Malaktivigi la versiodetekto",
     "noVersionDetectionExplanation": "Tiu opcio devas esti uzata nur por apoj, kie la versiodetekto ne funkcias ĝuste.",
     "downloadingX": "Elŝutante {}",
+    "downloading": "Elŝutante",
     "downloadX": "Elŝuti {}",
     "downloadedX": "Elŝutita {}",
     "editCategory": "Edit category",

@@ -256,6 +256,7 @@
     "disableVersionDetection": "Onemogući detekciju verzije",
     "noVersionDetectionExplanation": "Ova opcija bi se trebala koristiti samo za aplikacije gdje detekcija verzije ne radi ispravno.",
     "downloadingX": "Preuzimanje {}",
+    "downloading": "Preuzimanje",
     "downloadX": "Preuzeti {}",
     "downloadedX": "Preuzeto {}",
     "editCategory": "Edit category",

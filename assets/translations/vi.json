@@ -256,6 +256,7 @@
     "disableVersionDetection": "Tắt tính năng phát hiện phiên bản",
     "noVersionDetectionExplanation": "Chỉ nên sử dụng tùy chọn này cho Ứng dụng mà tính năng phát hiện phiên bản không hoạt động chính xác.",
     "downloadingX": "Đang tải xuống {}",
+    "downloading": "Đang tải xuống",
     "downloadX": "Tải xuống {}",
     "downloadedX": "Đã tải xuống {}",
     "editCategory": "Edit category",

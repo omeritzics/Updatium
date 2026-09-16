@@ -824,7 +824,7 @@ class _AppPageState extends State<AppPage> {
             width: 24,
             height: 24,
             child: CircularProgressIndicator(
-              value: progress,
+              value: isInstalling ? null : progress,
               strokeWidth: 2,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
@@ -832,7 +832,7 @@ class _AppPageState extends State<AppPage> {
           label: Text(
             isInstalling
                 ? 'installing'.t()
-                : t('downloadingX', args: [app.app.finalName]),
+                : '${'downloading'.t()} ${app.downloadProgress!.toInt()}%',
           ),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,

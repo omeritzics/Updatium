@@ -256,6 +256,7 @@
     "disableVersionDetection": "Inaktivera versionsdetektering",
     "noVersionDetectionExplanation": "Det här alternativet bör endast användas för appar där versionsidentifiering inte fungerar korrekt.",
     "downloadingX": "Laddar ner {}",
+    "downloading": "Laddar ner",
     "downloadX": "Ladda ner {}",
     "downloadedX": "Nedladdad {}",
     "editCategory": "Edit category",

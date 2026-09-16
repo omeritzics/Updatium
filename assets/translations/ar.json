@@ -257,6 +257,7 @@
     "disableVersionDetection": "عطّل اكتشاف الإصدار",
     "noVersionDetectionExplanation": "يجب استخدام هذا الخيار فقط للتطبيقات التي لا يعمل فيها اكتشاف الإصدار بشكل صحيح.",
     "downloadingX": "جارِ تنزيل {}",
+    "downloading": "جارِ تنزيل",
     "downloadX": "تنزيل {}",
     "downloadedX": "نُزَّل {}",
     "editCategory": "Edit category",

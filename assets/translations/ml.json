@@ -256,6 +256,7 @@
     "disableVersionDetection": "പതിപ്പ് കണ്ടെത്തൽ പ്രവർത്തനരഹിതമാക്കുക",
     "noVersionDetectionExplanation": "പതിപ്പ് കണ്ടെത്തൽ ശരിയായി പ്രവർത്തിക്കാത്ത ആപ്പുകൾക്ക് മാത്രമേ ഈ ഓപ്ഷൻ ഉപയോഗിക്കാവൂ.",
     "downloadingX": "{} ഡൗൺലോഡ് ചെയ്യുന്നു",
+    "downloading": "ഡൗൺലോഡ് ചെയ്യുന്നു",
     "downloadX": "{} ഡൗൺലോഡ് ചെയ്യുക",
     "downloadedX": "{} ഡൗൺലോഡ് ചെയ്തു",
     "editCategory": "Edit category",

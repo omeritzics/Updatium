@@ -256,6 +256,7 @@
     "disableVersionDetection": "I-disable ang version detection",
     "noVersionDetectionExplanation": "Ang opsyong ito ay dapat lamang gamitin para sa mga app kung saan hindi gumagana nang tama ang bersyon detection.",
     "downloadingX": "Dina-download ang {}",
+    "downloading": "Dina-download ang",
     "downloadX": "I-download ang {}",
     "downloadedX": "Na-download na ang {}",
     "editCategory": "I-edit ang kategorya",

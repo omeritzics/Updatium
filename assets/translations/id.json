@@ -256,6 +256,7 @@
     "disableVersionDetection": "Nonaktifkan pendeteksi versi",
     "noVersionDetectionExplanation": "Opsi ini hanya boleh digunakan untuk aplikasi dengan pendeteksi versi yang tidak berfungsi dengan benar.",
     "downloadingX": "Mengunduh {}",
+    "downloading": "Mengunduh",
     "downloadX": "Unduh {}",
     "downloadedX": "{} diunduh",
     "editCategory": "Edit category",

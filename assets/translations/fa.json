@@ -256,6 +256,7 @@
     "disableVersionDetection": "غیرفعال کردن تشخیص نسخه",
     "noVersionDetectionExplanation": "این گزینه فقط باید برای برنامه هایی استفاده شود که تشخیص نسخه به درستی کار نمی کند.",
     "downloadingX": "در حال دانلود {}",
+    "downloading": "در حال دانلود",
     "downloadX": "دانلود {}",
     "downloadedX": "دانلود شده {}",
     "editCategory": "Edit category",

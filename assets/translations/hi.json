@@ -256,6 +256,7 @@
     "disableVersionDetection": "वर्शन डिटेक्शन अक्षम करें",
     "noVersionDetectionExplanation": "इस विकल्प का उपयोग केवल उन ऐप्स के लिए किया जाना चाहिए जहाँ वर्शन डिटेक्शन सही ढंग से काम नहीं करता है।",
     "downloadingX": "{} डाउनलोड हो रहा है",
+    "downloading": "डाउनलोड हो रहा है",
     "downloadX": "{} डाउनलोड करें",
     "downloadedX": "{} डाउनलोड किया गया",
     "editCategory": "Edit category",

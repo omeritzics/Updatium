@@ -256,6 +256,7 @@
     "disableVersionDetection": "バージョン検出を無効にする",
     "noVersionDetectionExplanation": "このオプションは、バージョン検出が正しく機能しないアプリにのみ使用する必要があります。",
     "downloadingX": "{} をダウンロード中",
+    "downloading": "をダウンロード中",
     "downloadX": "{} をダウンロード",
     "downloadedX": "{} をダウンロードしました",
     "editCategory": "Edit category",
