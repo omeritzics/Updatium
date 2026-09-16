@@ -49,10 +49,41 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  static const _appLaunchChannel = MethodChannel(
+    'io.github.omeritzics.updatium/app_launch',
+  );
+
   AppInMemory? prevApp;
   bool updating = false;
   bool _iconRequested = false;
   Future<void>? _iconFuture;
+  String? _openabilityCheckedPackageName;
+  bool? _isAppOpenable;
+
+  Future<void> _checkAppOpenability(String packageName) async {
+    if (_openabilityCheckedPackageName == packageName) return;
+
+    _openabilityCheckedPackageName = packageName;
+    _isAppOpenable = null;
+    try {
+      final isOpenable =
+          await _appLaunchChannel.invokeMethod<bool>('canOpenApp', {
+            'packageName': packageName,
+          }) ??
+          false;
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = isOpenable);
+      }
+    } on PlatformException {
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = false);
+      }
+    } on MissingPluginException {
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = false);
+      }
+    }
+  }
 
   Widget buildRepoRenameWarning({
     required AppInMemory? app,
@@ -336,6 +367,9 @@ class _AppPageState extends State<AppPage> {
           ),
         ),
       );
+    }
+    if (app.installedInfo != null) {
+      _checkAppOpenability(app.app.id);
     }
     if (!areDownloadsRunning &&
         prevApp == null &&
@@ -757,6 +791,7 @@ class _AppPageState extends State<AppPage> {
 
     getInstallOrUpdateButton() {
       if (app.downloadProgress != null) {
+        final isInstalling = app.downloadProgress! < 0;
         final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
         return FloatingActionButton.extended(
           onPressed: () async {
@@ -795,9 +830,9 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
           label: Text(
-            app.downloadProgress! >= 0
-                ? t('downloadingX', args: [app.app.finalName])
-                : 'installing'.t(),
+            isInstalling
+                ? 'installing'.t()
+                : t('downloadingX', args: [app.app.finalName]),
           ),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -812,7 +847,7 @@ class _AppPageState extends State<AppPage> {
           !areDownloadsRunning;
 
       if (!canInstallOrUpdate) {
-        if (app.app.installedVersion == null) return null;
+        if (_isAppOpenable != true) return null;
         return FloatingActionButton.extended(
           onPressed: () => pm.openApp(app.app.id),
           icon: const Icon(Icons.open_in_new),
