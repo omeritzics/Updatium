@@ -757,6 +757,7 @@ class _AppPageState extends State<AppPage> {
 
     getInstallOrUpdateButton() {
       if (app.downloadProgress != null) {
+        final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
         return FloatingActionButton.extended(
           onPressed: () async {
             final shouldCancel = await showDialog<bool>(
@@ -784,12 +785,20 @@ class _AppPageState extends State<AppPage> {
               np.cancel(notifId);
             }
           },
-          icon: const SizedBox(
+          icon: SizedBox(
             width: 24,
             height: 24,
-            child: CircularProgressIndicator(strokeWidth: 2),
+            child: CircularProgressIndicator(
+              value: progress,
+              strokeWidth: 2,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
           ),
-          label: Text('Downloading: ${app.downloadProgress!.toInt()}%...'),
+          label: Text(
+            app.downloadProgress! >= 0
+                ? t('downloadingX', args: [app.app.finalName])
+                : 'installing'.t(),
+          ),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -803,7 +812,15 @@ class _AppPageState extends State<AppPage> {
           !areDownloadsRunning;
 
       if (!canInstallOrUpdate) {
-        return null;
+        if (app.app.installedVersion == null) return null;
+        return FloatingActionButton.extended(
+          onPressed: () => pm.openApp(app.app.id),
+          icon: const Icon(Icons.open_in_new),
+          label: Text('open'.t()),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        );
       }
 
       return FloatingActionButton.extended(
@@ -842,7 +859,7 @@ class _AppPageState extends State<AppPage> {
                     ? Icons.download
                     : Icons.check
               : !trackOnly
-              ? Icons.system_update
+              ? Icons.update
               : Icons.check,
         ),
         label: Text(
@@ -936,7 +953,7 @@ class _AppPageState extends State<AppPage> {
                                 return Padding(
                                   padding: EdgeInsets.zero,
                                   child: Icon(
-                                    Icons.apps,
+                                    Icons.apps_rounded,
                                     size: 48,
                                     color: Theme.of(
                                       context,
@@ -1002,20 +1019,11 @@ class _AppPageState extends State<AppPage> {
               bottom: 20,
               child: Align(
                 alignment: fab != null
-                    ? Alignment.bottomLeft
+                    ? AlignmentDirectional.bottomEnd
                     : Alignment.center,
                 child: M3FloatingToolbar(
                   floatingActionButton: fab,
                   actions: [
-                    if (app.app.installedVersion != null)
-                      M3FloatingToolbarAction(
-                        icon: Icons.open_in_new,
-                        semanticLabel: 'open'.t(),
-                        tooltip: 'open'.t(),
-                        onPressed: () {
-                          pm.openApp(app.app.id);
-                        },
-                      ),
                     if (!updating &&
                         source != null &&
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)

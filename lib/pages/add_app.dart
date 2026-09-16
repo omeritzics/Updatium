@@ -1388,11 +1388,13 @@ class InstalledAppsDialog extends StatefulWidget {
 
 class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   bool showSystemApps = false;
+  final Map<String, Uint8List> _iconCache = {};
   final Map<String, String> _labelCache = {};
+  final Set<String> _loadedPackageNames = {};
   final Set<String> _loadingPackageNames = {};
 
   void _onNeedLoad(String packageName) async {
-    if (_labelCache.containsKey(packageName) ||
+    if (_loadedPackageNames.contains(packageName) ||
         _loadingPackageNames.contains(packageName)) {
       return;
     }
@@ -1404,19 +1406,29 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
         (a) => a.packageName == packageName,
       );
 
-      final label = await app.applicationInfo?.getAppLabel();
+      final labelFuture =
+          app.applicationInfo?.getAppLabel() ?? Future<String?>.value(null);
+      final iconFuture =
+          app.applicationInfo?.getAppIcon() ?? Future<Uint8List?>.value(null);
+      final label = await labelFuture;
+      final icon = await iconFuture;
 
       if (mounted) {
         setState(() {
           if (label != null) {
             _labelCache[packageName] = label;
           }
+          if (icon != null && icon.isNotEmpty) {
+            _iconCache[packageName] = icon;
+          }
+          _loadedPackageNames.add(packageName);
           _loadingPackageNames.remove(packageName);
         });
       }
     } catch (e) {
       if (mounted) {
         setState(() {
+          _loadedPackageNames.add(packageName);
           _loadingPackageNames.remove(packageName);
         });
       }
@@ -1456,7 +1468,9 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
                   final app = filteredApps[index];
                   final packageName = app.packageName ?? '';
                   return InstalledAppTile(
+                    key: ValueKey(packageName),
                     app: app,
+                    icon: _iconCache[packageName],
                     label: _labelCache[packageName],
                     onNeedLoad: _onNeedLoad,
                   );
@@ -1480,7 +1494,7 @@ class InstalledAppTile extends StatefulWidget {
   final PackageInfo app;
   final Uint8List? icon;
   final String? label;
-  final Function(String packageName) onNeedLoad;
+  final ValueChanged<String> onNeedLoad;
 
   const InstalledAppTile({
     super.key,
@@ -1505,7 +1519,10 @@ class _InstalledAppTileState extends State<InstalledAppTile> {
     _label = widget.label;
     if (_icon == null || _label == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.onNeedLoad(widget.app.packageName!);
+        final packageName = widget.app.packageName;
+        if (packageName != null && packageName.isNotEmpty) {
+          widget.onNeedLoad(packageName);
+        }
       });
     }
   }
@@ -1525,8 +1542,13 @@ class _InstalledAppTileState extends State<InstalledAppTile> {
   Widget build(BuildContext context) {
     return ListTile(
       dense: true,
-      leading: _icon != null
-          ? Image.memory(_icon!, width: 40, height: 40)
+      leading: _icon != null && _icon!.isNotEmpty
+          ? Image.memory(
+              _icon!,
+              width: 40,
+              height: 40,
+              errorBuilder: (_, _, _) => const Icon(Icons.apps),
+            )
           : const Icon(Icons.apps),
       title: Text(_label ?? (widget.app.packageName ?? 'Unknown')),
       subtitle: Text(widget.app.packageName ?? ''),

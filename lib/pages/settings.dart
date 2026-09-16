@@ -957,7 +957,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                             SwitchListTile(
                               title: Text(
-                                'beforeNewInstallsShareToAppVerifier'.t(),
+                                'beforeNewInstallsShareToAppVerifierBG'.t(),
                               ),
                               subtitle: GestureDetector(
                                 onTap: () {
