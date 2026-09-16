@@ -761,11 +761,11 @@ class _AppPageState extends State<AppPage> {
           (app.app.installedVersion == null ||
               app.app.installedVersion != app.app.latestVersion) &&
           !areDownloadsRunning;
-      
+
       if (!canInstallOrUpdate) {
         return null;
       }
-      
+
       return FloatingActionButton.extended(
         onPressed: () async {
           try {
