@@ -28,7 +28,8 @@ import 'package:updatium/services/dns_service.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart' hide InstallerMode;
+import 'package:shizuku_apk_installer/shizuku_apk_installer.dart'
+    hide InstallerMode;
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -167,22 +168,24 @@ class _SettingsPageState extends State<SettingsPage> {
       // Import root installer - we'll need to add this import
       // For now, we'll use a simple check
       // TODO: Use RootInstaller from the installers package
-      Process.run('su', ['-c', 'id -u']).then((result) {
-        if (_installerCheckSeq != seq) return;
-        final isRoot = result.stdout.toString().trim() == '0';
-        settingsProvider.installerMode = isRoot
-            ? InstallerMode.root
-            : InstallerMode.system;
-        if (!mounted) return;
-        if (!isRoot) {
-          showError(UpdatiumError('rootNotGranted'.t()), context);
-        }
-      }).catchError((e) {
-        if (_installerCheckSeq != seq) return;
-        settingsProvider.installerMode = InstallerMode.system;
-        if (!mounted) return;
-        showError(e, context);
-      });
+      Process.run('su', ['-c', 'id -u'])
+          .then((result) {
+            if (_installerCheckSeq != seq) return;
+            final isRoot = result.stdout.toString().trim() == '0';
+            settingsProvider.installerMode = isRoot
+                ? InstallerMode.root
+                : InstallerMode.system;
+            if (!mounted) return;
+            if (!isRoot) {
+              showError(UpdatiumError('rootNotGranted'.t()), context);
+            }
+          })
+          .catchError((e) {
+            if (_installerCheckSeq != seq) return;
+            settingsProvider.installerMode = InstallerMode.system;
+            if (!mounted) return;
+            showError(e, context);
+          });
     } else {
       settingsProvider.installerMode = mode;
     }
@@ -986,14 +989,16 @@ class _SettingsPageState extends State<SettingsPage> {
                               items: InstallerMode.values.map((mode) {
                                 return DropdownMenuItem<InstallerMode>(
                                   value: mode,
-                                  child: Text(
-                                    switch (mode) {
-                                      InstallerMode.system => 'installMethodSystem'.t(),
-                                      InstallerMode.shizuku => 'installMethodShizuku'.t(),
-                                      InstallerMode.external => 'installMethodExternal'.t(),
-                                      InstallerMode.root => 'installMethodRoot'.t(),
-                                    },
-                                  ),
+                                  child: Text(switch (mode) {
+                                    InstallerMode.system =>
+                                      'installMethodSystem'.t(),
+                                    InstallerMode.shizuku =>
+                                      'installMethodShizuku'.t(),
+                                    InstallerMode.external =>
+                                      'installMethodExternal'.t(),
+                                    InstallerMode.root =>
+                                      'installMethodRoot'.t(),
+                                  }),
                                 );
                               }).toList(),
                               onChanged: (InstallerMode? value) {
@@ -1006,31 +1011,42 @@ class _SettingsPageState extends State<SettingsPage> {
                                 }
                               },
                             ),
-                            if (settingsProvider.installerMode == InstallerMode.shizuku ||
-                                settingsProvider.installerMode == InstallerMode.root)
+                            if (settingsProvider.installerMode ==
+                                    InstallerMode.shizuku ||
+                                settingsProvider.installerMode ==
+                                    InstallerMode.root)
                               SwitchListTile(
                                 title: Text(
                                   'shizukuPretendToBeGooglePlay'.t(),
                                   style: TextStyle(
-                                    color: (settingsProvider.installerMode == InstallerMode.shizuku ||
-                                        settingsProvider.installerMode == InstallerMode.root)
+                                    color:
+                                        (settingsProvider.installerMode ==
+                                                InstallerMode.shizuku ||
+                                            settingsProvider.installerMode ==
+                                                InstallerMode.root)
                                         ? null
-                                        : Theme.of(context).colorScheme.onSurface
-                                            .withValues(alpha: 0.6),
+                                        : Theme.of(context)
+                                              .colorScheme
+                                              .onSurface
+                                              .withValues(alpha: 0.6),
                                   ),
                                 ),
-                                value:
-                                    settingsProvider.shizukuPretendToBeGooglePlay,
-                                onChanged: (settingsProvider.installerMode == InstallerMode.shizuku ||
-                                    settingsProvider.installerMode == InstallerMode.root)
+                                value: settingsProvider
+                                    .shizukuPretendToBeGooglePlay,
+                                onChanged:
+                                    (settingsProvider.installerMode ==
+                                            InstallerMode.shizuku ||
+                                        settingsProvider.installerMode ==
+                                            InstallerMode.root)
                                     ? (value) {
                                         settingsProvider
-                                            .shizukuPretendToBeGooglePlay =
-                                        value;
+                                                .shizukuPretendToBeGooglePlay =
+                                            value;
                                       }
                                     : null,
                               ),
-                            if (settingsProvider.installerMode == InstallerMode.external)
+                            if (settingsProvider.installerMode ==
+                                InstallerMode.external)
                               const _ExternalInstallerTile(),
                             gap8,
                             GeneratedForm(
@@ -2193,7 +2209,11 @@ class _ExternalInstallerTileState extends State<_ExternalInstallerTile> {
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         trailing: entries[i].value.length > 1
-                            ? Icon(expandedIndex == i ? Icons.expand_less : Icons.expand_more)
+                            ? Icon(
+                                expandedIndex == i
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                              )
                             : null,
                       ),
                       if (expandedIndex == i)
