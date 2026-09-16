@@ -787,13 +787,9 @@ class _AppPageState extends State<AppPage> {
           icon: const SizedBox(
             width: 24,
             height: 24,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
+            child: CircularProgressIndicator(strokeWidth: 2),
           ),
-          label: Text(
-            'Downloading: ${app.downloadProgress!.toInt()}%...',
-          ),
+          label: Text('Downloading: ${app.downloadProgress!.toInt()}%...'),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
