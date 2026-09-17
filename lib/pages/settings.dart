@@ -988,22 +988,36 @@ class _SettingsPageState extends State<SettingsPage> {
                                   GeneratedFormDropdown(
                                     'installerMode',
                                     const [
-                                      MapEntry('system', 'installMethodSystem'),
-                                      MapEntry('shizuku', 'installMethodShizuku'),
-                                      MapEntry('external', 'installMethodExternal'),
-                                      MapEntry('root', 'installMethodRoot'),
-                                    ].map((e) => MapEntry(e.key, t(e.value))).toList(),
+                                          MapEntry(
+                                            'system',
+                                            'installMethodSystem',
+                                          ),
+                                          MapEntry(
+                                            'shizuku',
+                                            'installMethodShizuku',
+                                          ),
+                                          MapEntry(
+                                            'external',
+                                            'installMethodExternal',
+                                          ),
+                                          MapEntry('root', 'installMethodRoot'),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
                                     label: 'installerMode'.t(),
-                                    defaultValue: settingsProvider.installerMode.name,
+                                    defaultValue:
+                                        settingsProvider.installerMode.name,
                                     required: true,
                                   ),
                                 ],
                               ],
                               onValueChanges: (values, valid, isBuilding) {
                                 if (!isBuilding && valid) {
-                                  final newMode = InstallerMode.values.firstWhere(
-                                    (e) => e.name == values['installerMode'],
-                                  );
+                                  final newMode = InstallerMode.values
+                                      .firstWhere(
+                                        (e) =>
+                                            e.name == values['installerMode'],
+                                      );
                                   handleInstallerModeChange(
                                     settingsProvider,
                                     newMode,
@@ -1407,28 +1421,33 @@ class _LogsDialogState extends State<LogsDialog> {
             children: [
               Text('filterDays'.t()),
               gap8,
-                  GeneratedForm(
-                    items: [
-                      [
-                        GeneratedFormDropdown(
-                          'days',
-                          days.map((day) => MapEntry(day.toString(), 'day'.plural(day))).toList(),
-                          label: 'filterDays'.t(),
-                          defaultValue: selectedDays.toString(),
-                          required: true,
-                        ),
-                      ],
-                    ],
-                    onValueChanges: (values, valid, isBuilding) {
-                      if (!isBuilding && valid) {
-                        final days = int.parse(values['days']);
-                        setState(() {
-                          selectedDays = days;
-                        });
-                        filterLogs(days);
-                      }
-                    },
-                  ),
+              GeneratedForm(
+                items: [
+                  [
+                    GeneratedFormDropdown(
+                      'days',
+                      days
+                          .map(
+                            (day) =>
+                                MapEntry(day.toString(), 'day'.plural(day)),
+                          )
+                          .toList(),
+                      label: 'filterDays'.t(),
+                      defaultValue: selectedDays.toString(),
+                      required: true,
+                    ),
+                  ],
+                ],
+                onValueChanges: (values, valid, isBuilding) {
+                  if (!isBuilding && valid) {
+                    final days = int.parse(values['days']);
+                    setState(() {
+                      selectedDays = days;
+                    });
+                    filterLogs(days);
+                  }
+                },
+              ),
             ],
           ),
           gap32,
