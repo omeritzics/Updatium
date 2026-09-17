@@ -795,6 +795,7 @@ class _AppPageState extends State<AppPage> {
         final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
         return FloatingActionButton.extended(
           onPressed: () async {
+            if (!context.mounted) return;
             final shouldCancel = await showDialog<bool>(
               context: context,
               builder: (BuildContext ctx) {
