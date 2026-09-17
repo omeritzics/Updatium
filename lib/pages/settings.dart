@@ -985,7 +985,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                             DropdownButton<InstallerMode>(
                               value: settingsProvider.installerMode,
-                              isExpanded: true,
+
                               items: InstallerMode.values.map((mode) {
                                 return DropdownMenuItem<InstallerMode>(
                                   value: mode,
@@ -1016,21 +1016,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.installerMode ==
                                     InstallerMode.root)
                               SwitchListTile(
-                                title: Text(
-                                  'shizukuPretendToBeGooglePlay'.t(),
-                                  style: TextStyle(
-                                    color:
-                                        (settingsProvider.installerMode ==
-                                                InstallerMode.shizuku ||
-                                            settingsProvider.installerMode ==
-                                                InstallerMode.root)
-                                        ? null
-                                        : Theme.of(context)
-                                              .colorScheme
-                                              .onSurface
-                                              .withValues(alpha: 0.6),
-                                  ),
-                                ),
+                                title: Text('shizukuPretendToBeGooglePlay'.t()),
                                 value: settingsProvider
                                     .shizukuPretendToBeGooglePlay,
                                 onChanged:
@@ -1414,43 +1400,31 @@ class _LogsDialogState extends State<LogsDialog> {
       title: Text('appLogs'.t()),
       content: Column(
         children: [
-          Card(
-            margin: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'filterDays'.t(),
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  gap8,
-                  DropdownButton<int>(
-                    value: selectedDays,
-                    isExpanded: true,
-                    items: days.map((day) {
-                      return DropdownMenuItem<int>(
-                        value: day,
-                        child: Text('day'.plural(day)),
-                      );
-                    }).toList(),
-                    onChanged: (int? value) {
-                      if (value != null) {
-                        setState(() {
-                          selectedDays = value;
-                        });
-                        filterLogs(value);
-                      }
-                    },
-                  ),
-                ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('filterDays'.t()),
+              gap8,
+              DropdownButton<int>(
+                value: selectedDays,
+
+                items: days.map((day) {
+                  return DropdownMenuItem<int>(
+                    value: day,
+                    child: Text('day'.plural(day)),
+                  );
+                }).toList(),
+                onChanged: (int? value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedDays = value;
+                    });
+                    filterLogs(value);
+                  }
+                },
               ),
-            ),
+            ],
           ),
           gap32,
           Text(logString ?? ''),

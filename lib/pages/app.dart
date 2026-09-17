@@ -1030,15 +1030,6 @@ class _AppPageState extends State<AppPage> {
                             padding: const EdgeInsetsDirectional.only(
                               bottom: 32,
                             ),
-                            child: Semantics(
-                              label: 'downloadProgress'.t(),
-                              value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicator(
-                                value: app.downloadProgress! >= 0
-                                    ? app.downloadProgress! / 100
-                                    : null,
-                              ),
-                            ),
                           ),
                         // Extra bottom padding to clear the docked toolbar and FAB
                         const SizedBox(height: 160),
