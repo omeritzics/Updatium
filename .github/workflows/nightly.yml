@@ -40,8 +40,7 @@ jobs:
 
   build:
     needs: check-changes
-    if: ${{ needs.check-changes.outputs.should_build == 'true' }}
-
+    if: needs.check-changes.outputs.should_build == 'true'
     runs-on: ubuntu-latest
 
     steps:

@@ -1,4 +1,7 @@
-# ![Updatium Icon](./assets/graphics/icon_small.png) Updatium
+![GitHub Repo Banner](https://ghrb.waren.build/banner?header=Keep+Open+Source+Neutral&subheader=Everyone+should+feel+free+to+use+Updatium%2C+everyone.&bg=013B84-016EEA&color=FFFFFF&headerfont=Google+Sans&subheaderfont=Google+Sans+Flex&support=false)
+<!-- Created with GitHub Repo Banner by Waren Gonzaga: https://ghrb.waren.build -->
+
+# <img src="./assets/graphics/icon.svg" alt="Updatium Icon" height="84px" /> Updatium
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
@@ -61,29 +64,45 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 |---|---|---|---|
 | ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Categories](./assets/screenshots/7.categories.png) | ![About screen](./assets/screenshots/8.about.png) |
 
+## Frequently Asked Questions
+
+### Q: What is Updatium?
+
+A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to be a better alternative to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variety of sources, like GitHub and APKPure.
+
+### Q: Why fork Obtainium?
+
+A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved in the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
+
+### Q: How is Updatium different from other Obtainium forks?
+
+A: Every fork of Obtainium serves a different goal. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) was made to be a catalogue for discovering new open-source apps, while Updatium focuses on providing a better experience managing your already added apps or ready-made imported lists.
+While [ObtainX](https://github.com/bikram-agarwal/ObtainX) shares many vision aspects with Updatium, this fork focuses on being simple and easy-to-understand for both novice and tech-savvy people.
+Also, Updatium is intended to be a customizable app catalogue that everyone can adjust to their needs.
+
+### Q: Does Updatium encourage piracy?
+
+A: Absolutely not! Updatium is highly against piracy and modded applications.
+
+### Q: How do I migrate from Obtainium?
+
+A: It's easy to update to Updatium from Obtainium, by following these steps:
+
+On Obtainium:
+
+1. Tap on Import/Export → Pick export directory.
+2. Choose a directory path and confirm.
+3. Tap on "Obtainium export" and confirm.
+
+On Updatium:
+
+1. Tap on Add App → Import/Export → Updatium import.
+2. Locate Obtainium export file, tap on it, and confirm. Welcome to Updatium :)
+
+### Q: How can I help?
+
+A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, adding new translations (or improving existing ones), design proposals and ideas. To start, you can simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
+
 ## Limitations
 
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
-
-## Troubleshooting
-
-### App not updating even when a new version is available
-- **Check the source settings** — Some sources require additional configuration (e.g., GitHub releases need the correct repository URL format)
-- **Check if the source is supported** — Not all sources support version checking equally; some use HTML scraping which may be slower
-- **Check the update interval** — By default, apps update every 6 hours. You can change this in app settings
-- **Try force-refreshing** — Pull down on the apps list to force a refresh
-
-### Source additions failing with 403 Forbidden
-- Some sources block requests from unknown user agents or regions
-- GitHub-based sources may need a Personal Access Token if you're hitting rate limits
-- Some APK hosts (APKMirror, etc.) may require cookies or specific headers
-
-### Flutter-related issues
-- Updatium is built with Flutter. If the app crashes on startup, try:
-  - Clearing app data and reinstalling
-  - Ensuring your Android version meets the minimum requirement
-  - Checking if you have the latest Google Play Services
-
-### APK verification failures
-- If you see "Signature verification failed", ensure you haven't modified the APK after download
-- The SHA-256 hash in the app settings should match the downloaded APK

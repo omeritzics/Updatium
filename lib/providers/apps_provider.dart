@@ -1652,8 +1652,8 @@ class AppsProvider with ChangeNotifier {
     bool forceDelete = false,
   }) async {
     if (firstTimeWithContext != null &&
-        settingsProvider.beforeNewInstallsShareToAppVerifier &&
-        (await getInstalledInfo('dev.soupslurpr.appverifier')) != null) {
+        settingsProvider.beforeNewInstallsShareToAppVerifierBG &&
+        (await getInstalledInfo('com.roundsalmon4.appverifier')) != null) {
       XFile f = XFile.fromData(
         file.file.readAsBytesSync(),
         mimeType: 'application/vnd.android.package-archive',
@@ -1860,6 +1860,7 @@ class AppsProvider with ChangeNotifier {
         await checkUpdate(apps[id]!.app.id);
       }
       if (!trackOnly) {
+        if (apps[id]!.app.apkUrls.isEmpty) throw NoAPKError();
         // ignore: use_build_context_synchronously
         apkUrl = await confirmAppFileUrl(apps[id]!.app, context, false);
       }

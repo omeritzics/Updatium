@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:updatium/custom_errors.dart';
@@ -50,10 +49,41 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  static const _appLaunchChannel = MethodChannel(
+    'io.github.omeritzics.updatium/app_launch',
+  );
+
   AppInMemory? prevApp;
   bool updating = false;
   bool _iconRequested = false;
   Future<void>? _iconFuture;
+  String? _openabilityCheckedPackageName;
+  bool? _isAppOpenable;
+
+  Future<void> _checkAppOpenability(String packageName) async {
+    if (_openabilityCheckedPackageName == packageName) return;
+
+    _openabilityCheckedPackageName = packageName;
+    _isAppOpenable = null;
+    try {
+      final isOpenable =
+          await _appLaunchChannel.invokeMethod<bool>('canOpenApp', {
+            'packageName': packageName,
+          }) ??
+          false;
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = isOpenable);
+      }
+    } on PlatformException {
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = false);
+      }
+    } on MissingPluginException {
+      if (mounted && _openabilityCheckedPackageName == packageName) {
+        setState(() => _isAppOpenable = false);
+      }
+    }
+  }
 
   Widget buildRepoRenameWarning({
     required AppInMemory? app,
@@ -337,6 +367,9 @@ class _AppPageState extends State<AppPage> {
           ),
         ),
       );
+    }
+    if (app.installedInfo != null) {
+      _checkAppOpenability(app.app.id);
     }
     if (!areDownloadsRunning &&
         prevApp == null &&
@@ -756,52 +789,130 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => M3EFilledButton(
-      onPressed:
-          !updating &&
-              (app.app.installedVersion == null ||
-                  app.app.installedVersion != app.app.latestVersion) &&
-              !areDownloadsRunning
-          ? () async {
-              try {
-                var successMessage = app.app.installedVersion == null
-                    ? 'installed'.t()
-                    : 'appsUpdated'.t();
-                settingsProvider.heavyImpact();
-                var res = await appsProvider.downloadAndInstallLatestApps([
-                  app.app.id,
-                ], globalNavigatorKey.currentContext);
-                if (!mounted) return;
-                if (res.isNotEmpty && !trackOnly) {
-                  showMessage(successMessage, context);
-                }
-                if (res.isNotEmpty) {
-                  Navigator.of(context).pop();
-                }
-                if (res.isNotEmpty) {
-                  // ignore: use_build_context_synchronously
-                  var np = context.read<NotificationsProvider>();
-                  np.cancel(UpdateNotification([]).id);
-                  np.cancel(
-                    SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
-                  );
-                }
-              } catch (e) {
-                if (!mounted) return;
-                showError(e, context);
-              }
+    getInstallOrUpdateButton() {
+      if (app.downloadProgress != null) {
+        final isInstalling = app.downloadProgress! < 0;
+        final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
+        return FloatingActionButton.extended(
+          onPressed: () async {
+            final shouldCancel = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: Text('cancelDownload'.t()),
+                  content: Text('cancelDownloadPrompt'.t()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, false),
+                      child: Text('no'.t()),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, true),
+                      child: Text('yes'.t()),
+                    ),
+                  ],
+                );
+              },
+            );
+            if (shouldCancel == true) {
+              final np = context.read<NotificationsProvider>();
+              final notifId = DownloadNotification(app.app.finalName, 0).id;
+              np.cancel(notifId);
             }
-          : null,
-      child: Text(
-        app.app.installedVersion == null
-            ? !trackOnly
-                  ? 'install'.t()
-                  : 'markInstalled'.t()
-            : !trackOnly
-            ? 'update'.t()
-            : 'markUpdated'.t(),
-      ),
-    );
+          },
+          icon: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              value: isInstalling ? null : progress,
+              strokeWidth: 2,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+          ),
+          label: Text(
+            isInstalling
+                ? 'installing'.t()
+                : '${'downloading'.t()} ${app.downloadProgress!.toInt()}%',
+          ),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        );
+      }
+
+      final canInstallOrUpdate =
+          !updating &&
+          (app.app.installedVersion == null ||
+              app.app.installedVersion != app.app.latestVersion) &&
+          !areDownloadsRunning;
+
+      if (!canInstallOrUpdate) {
+        if (_isAppOpenable != true) return null;
+        return FloatingActionButton.extended(
+          onPressed: () => pm.openApp(app.app.id),
+          icon: const Icon(Icons.open_in_new),
+          label: Text('open'.t()),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        );
+      }
+
+      return FloatingActionButton.extended(
+        onPressed: () async {
+          try {
+            var successMessage = app.app.installedVersion == null
+                ? 'installed'.t()
+                : 'appsUpdated'.t();
+            settingsProvider.heavyImpact();
+            var res = await appsProvider.downloadAndInstallLatestApps([
+              app.app.id,
+            ], globalNavigatorKey.currentContext);
+            if (!mounted) return;
+            if (res.isNotEmpty && !trackOnly) {
+              showMessage(successMessage, context);
+            }
+            if (res.isNotEmpty) {
+              Navigator.of(context).pop();
+            }
+            if (res.isNotEmpty) {
+              // ignore: use_build_context_synchronously
+              var np = context.read<NotificationsProvider>();
+              np.cancel(UpdateNotification([]).id);
+              np.cancel(
+                SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
+              );
+            }
+          } catch (e) {
+            if (!mounted) return;
+            showError(e, context);
+          }
+        },
+        icon: Icon(
+          app.app.installedVersion == null
+              ? !trackOnly
+                    ? Icons.download
+                    : Icons.check
+              : !trackOnly
+              ? Icons.update
+              : Icons.check,
+        ),
+        label: Text(
+          app.app.installedVersion == null
+              ? !trackOnly
+                    ? 'install'.t()
+                    : 'markInstalled'.t()
+              : !trackOnly
+              ? 'update'.t()
+              : 'markUpdated'.t(),
+        ),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      );
+    }
+
+    final fab = getInstallOrUpdateButton();
 
     return Scaffold(
       body: Padding(
@@ -877,7 +988,7 @@ class _AppPageState extends State<AppPage> {
                                 return Padding(
                                   padding: EdgeInsets.zero,
                                   child: Icon(
-                                    Icons.apps,
+                                    Icons.apps_rounded,
                                     size: 48,
                                     color: Theme.of(
                                       context,
@@ -914,32 +1025,14 @@ class _AppPageState extends State<AppPage> {
                     child: Column(
                       children: [
                         getFullInfoColumn(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(child: getInstallOrUpdateButton()),
-                            ],
-                          ),
-                        ),
                         if (app.downloadProgress != null)
                           Padding(
                             padding: const EdgeInsetsDirectional.only(
                               bottom: 32,
                             ),
-                            child: Semantics(
-                              label: 'downloadProgress'.t(),
-                              value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicator(
-                                value: app.downloadProgress! >= 0
-                                    ? app.downloadProgress! / 100
-                                    : null,
-                              ),
-                            ),
                           ),
-                        // Extra bottom padding to clear the docked toolbar
-                        const SizedBox(height: 96),
+                        // Extra bottom padding to clear the docked toolbar and FAB
+                        const SizedBox(height: 160),
                       ],
                     ),
                   ),
@@ -951,18 +1044,12 @@ class _AppPageState extends State<AppPage> {
               right: 0,
               bottom: 20,
               child: Align(
-                alignment: Alignment.center,
+                alignment: fab != null
+                    ? AlignmentDirectional.bottomEnd
+                    : Alignment.center,
                 child: M3FloatingToolbar(
+                  floatingActionButton: fab,
                   actions: [
-                    if (app.app.installedVersion != null)
-                      M3FloatingToolbarAction(
-                        icon: Icons.open_in_new,
-                        semanticLabel: 'open'.t(),
-                        tooltip: 'open'.t(),
-                        onPressed: () {
-                          pm.openApp(app.app.id);
-                        },
-                      ),
                     if (!updating &&
                         source != null &&
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)

@@ -11,7 +11,7 @@ docker run \
     -v "${PWD}/../:${PWD}/../":z \
     -w "${PWD}" \
     --name flutter-dev-updatium \
-    --user $(id -u) \
+    --user "$(id -u)" \
     -v ./data/home:/home/${USER}:z \
     -e USER=${USER} \
     -e HOME=/home/${USER} \

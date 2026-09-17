@@ -14,6 +14,7 @@ class MainActivity : FlutterActivity() {
     private val DEVICE_ADMIN_CHANNEL = "io.github.omeritzics.updatium/device_admin"
     private val SAF_CHANNEL = "io.github.omeritzics.updatium/saf"
     private val FREEDROID_WARN_CHANNEL = "io.github.omeritzics.updatium/freedroid_warn"
+    private val APP_LAUNCH_CHANNEL = "io.github.omeritzics.updatium/app_launch"
     private val OPEN_DIRECTORY_TREE_REQUEST = 1001
     private lateinit var devicePolicyManager: DevicePolicyManager
     private lateinit var deviceAdminComponent: ComponentName
@@ -120,6 +121,18 @@ class MainActivity : FlutterActivity() {
                     safResult = result
                     val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
                     startActivityForResult(intent, OPEN_DIRECTORY_TREE_REQUEST)
+                }
+                else -> result.notImplemented()
+            }
+        }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, APP_LAUNCH_CHANNEL).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "canOpenApp" -> {
+                    val packageName = call.argument<String>("packageName")
+                    result.success(
+                        packageName != null && packageManager.getLaunchIntentForPackage(packageName) != null
+                    )
                 }
                 else -> result.notImplemented()
             }
