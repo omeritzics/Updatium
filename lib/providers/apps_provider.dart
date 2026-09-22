@@ -647,6 +647,13 @@ class AppsProvider with ChangeNotifier {
   bool exportInProgress = false;
   LogsProvider logs = LogsProvider();
 
+  // Tracks app IDs for which the user has requested download cancellation
+  final Set<String> _cancelledDownloads = {};
+
+  /// Exposed only for testing — do not use in production code.
+  @visibleForTesting
+  Set<String> get cancelledDownloadsForTest => _cancelledDownloads;
+
   // Variables to keep track of the app foreground status (installs can't run in the background)
   bool isForeground = true;
   late Stream<FGBGType>? foregroundStream;
@@ -655,6 +662,27 @@ class AppsProvider with ChangeNotifier {
   late SettingsProvider settingsProvider = SettingsProvider();
 
   Iterable<AppInMemory> getAppValues() => apps.values;
+
+  /// Constructor for unit tests only: skips FGBG subscription, settings
+  /// initialization, and app loading, all of which require platform
+  /// channels unavailable outside a real app context.
+  @visibleForTesting
+  AppsProvider.forTesting() {
+    foregroundStream = null;
+    foregroundSubscription = null;
+  }
+
+  /// Signals that the download for [appId] should be aborted.
+  /// The download loop checks this flag via the progress callback and throws
+  /// a [DownloadCancelledError] when it detects the flag, which causes the
+  /// partial file to be cleaned up automatically.
+  void cancelDownload(String appId) {
+    _cancelledDownloads.add(appId);
+    if (apps[appId] != null) {
+      apps[appId]!.downloadProgress = null;
+      notifyListeners();
+    }
+  }
 
   AppsProvider({bool isBg = false}) {
     // Subscribe to changes in the app foreground status
@@ -929,6 +957,11 @@ class AppsProvider with ChangeNotifier {
             source.urlsAlwaysHaveExtension,
             headers: headers,
             (double? progress) {
+              // Abort if the user requested cancellation
+              if (_cancelledDownloads.contains(app.id)) {
+                _cancelledDownloads.remove(app.id);
+                throw DownloadCancelledError();
+              }
               int? prog = progress?.ceil();
               if (apps[app.id] != null) {
                 apps[app.id]!.downloadProgress = progress;
@@ -2036,7 +2069,10 @@ class AppsProvider with ChangeNotifier {
           await waitForUserToReturnToForeground(context);
         }
       } catch (e) {
-        errors.add(id, e, appName: apps[id]?.name);
+        // Silently accept user-initiated cancellations
+        if (e is! DownloadCancelledError) {
+          errors.add(id, e, appName: apps[id]?.name);
+        }
       }
       return {
         'id': id,

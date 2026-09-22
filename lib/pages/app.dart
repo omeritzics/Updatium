@@ -816,6 +816,8 @@ class _AppPageState extends State<AppPage> {
               },
             );
             if (shouldCancel == true) {
+              final ap = context.read<AppsProvider>();
+              ap.cancelDownload(app.app.id);
               final np = context.read<NotificationsProvider>();
               final notifId = DownloadNotification(app.app.finalName, 0).id;
               np.cancel(notifId);
