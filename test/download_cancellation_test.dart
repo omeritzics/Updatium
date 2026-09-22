@@ -7,14 +7,12 @@
 //   3. The flag is cleared after throwing so re-downloads are safe.
 //   4. DownloadCancelledError is a silent UpdatiumError (empty message).
 
-
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-
 
 // ---------------------------------------------------------------------------
 // Minimal test double for AppsProvider.
