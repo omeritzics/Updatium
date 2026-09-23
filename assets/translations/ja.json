@@ -28,6 +28,7 @@
     "noDescription": "説明はありません",
     "newUrl": "新しいURL",
     "cancel": "キャンセル",
+    "cancelling": "Cancelling",
     "continue": "続行",
     "requiredInBrackets": "(必須)",
     "dropdownNoOptsError": "エラー: ドロップダウンには少なくとも1つのオプションが必要です",

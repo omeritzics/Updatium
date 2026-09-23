@@ -28,6 +28,7 @@
     "noDescription": "No description",
     "newUrl": "New URL",
     "cancel": "Չեղարկել",
+    "cancelling": "Cancelling",
     "continue": "Continue",
     "requiredInBrackets": "(required)",
     "dropdownNoOptsError": "ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT",

@@ -28,6 +28,7 @@
     "noDescription": "Sense descripció",
     "newUrl": "New URL",
     "cancel": "Cancel·la",
+    "cancelling": "Cancelling",
     "continue": "Continua",
     "requiredInBrackets": "(requerit)",
     "dropdownNoOptsError": "ERROR: EL DESPLEGABLE HA DE TENIR ALMENYS UNA OPCIÓ",

@@ -794,7 +794,9 @@ class _AppPageState extends State<AppPage> {
         final isInstalling = app.downloadProgress! < 0;
         final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
         return FloatingActionButton.extended(
-          onPressed: () async {
+          onPressed: app.isCancelling
+              ? null
+              : () async {
             if (!context.mounted) return;
             final shouldCancel = await showDialog<bool>(
               context: context,
@@ -833,7 +835,9 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
           label: Text(
-            isInstalling
+            app.isCancelling
+                ? 'cancelling'.t()
+                : isInstalling
                 ? 'installing'.t()
                 : '${'downloading'.t()} ${app.downloadProgress!.toInt()}%',
           ),

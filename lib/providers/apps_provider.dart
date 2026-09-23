@@ -50,10 +50,17 @@ class AppInMemory {
   double? downloadProgress;
   PackageInfo? installedInfo;
   Uint8List? icon;
+  // True from the moment cancelDownload() is called until the download loop
+  // actually observes the cancellation flag and unwinds. Used only for
+  // immediate UI feedback (e.g. disabling the cancel button); it must NOT
+  // affect areDownloadsRunning(), since the underlying download/file I/O is
+  // still in progress until downloadProgress itself is cleared.
+  bool isCancelling = false;
 
   AppInMemory(this.app, this.downloadProgress, this.installedInfo, this.icon);
   AppInMemory deepCopy() =>
-      AppInMemory(app.deepCopy(), downloadProgress, installedInfo, icon);
+      AppInMemory(app.deepCopy(), downloadProgress, installedInfo, icon)
+        ..isCancelling = isCancelling;
 
   String get name => app.overrideName ?? app.finalName;
   String get author => app.overrideAuthor ?? app.finalAuthor;
@@ -676,10 +683,17 @@ class AppsProvider with ChangeNotifier {
   /// The download loop checks this flag via the progress callback and throws
   /// a [DownloadCancelledError] when it detects the flag, which causes the
   /// partial file to be cleaned up automatically.
+  ///
+  /// Deliberately does NOT clear downloadProgress here: the actual download
+  /// (and its file I/O) keeps running until the next progress tick observes
+  /// the flag and throws, which is handled in downloadApp()'s `finally`
+  /// block. Clearing downloadProgress early would make areDownloadsRunning()
+  /// report false while a download/write is still active, letting a new
+  /// download start and race the old one on the same partial file.
   void cancelDownload(String appId) {
     _cancelledDownloads.add(appId);
     if (apps[appId] != null) {
-      apps[appId]!.downloadProgress = null;
+      apps[appId]!.isCancelling = true;
       notifyListeners();
     }
   }
@@ -1184,6 +1198,7 @@ class AppsProvider with ChangeNotifier {
       notificationsProvider?.cancel(notifId);
       if (apps[app.id] != null) {
         apps[app.id]!.downloadProgress = null;
+        apps[app.id]!.isCancelling = false;
         notifyListeners();
       }
     }
@@ -2072,6 +2087,14 @@ class AppsProvider with ChangeNotifier {
         // Silently accept user-initiated cancellations
         if (e is! DownloadCancelledError) {
           errors.add(id, e, appName: apps[id]?.name);
+        } else {
+          return {
+            'id': id,
+            'willBeSilent': false,
+            'downloadedFile': null,
+            'downloadedDir': null,
+            'cancelled': true,
+          };
         }
       }
       return {
