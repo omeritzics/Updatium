@@ -795,6 +795,7 @@ class _AppPageState extends State<AppPage> {
         final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
         return FloatingActionButton.extended(
           onPressed: () async {
+            if (!context.mounted) return;
             final shouldCancel = await showDialog<bool>(
               context: context,
               builder: (BuildContext ctx) {
@@ -815,6 +816,8 @@ class _AppPageState extends State<AppPage> {
               },
             );
             if (shouldCancel == true) {
+              final ap = context.read<AppsProvider>();
+              ap.cancelDownload(app.app.id);
               final np = context.read<NotificationsProvider>();
               final notifId = DownloadNotification(app.app.finalName, 0).id;
               np.cancel(notifId);

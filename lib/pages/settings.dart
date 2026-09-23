@@ -387,7 +387,6 @@ class _SettingsPageState extends State<SettingsPage> {
           GeneratedFormDropdown(
             'sortColumn',
             [
-              const MapEntry('manually', 'manually'),
               const MapEntry('authorName', 'authorName'),
               const MapEntry('nameAuthor', 'nameAuthor'),
               const MapEntry('asAdded', 'asAdded'),
@@ -915,30 +914,110 @@ class _SettingsPageState extends State<SettingsPage> {
                                   },
                                 ),
 
-                                DropdownButton<InstallerMode>(
-                                  value: settingsProvider.installerMode,
-
-                                  items: InstallerMode.values.map((mode) {
-                                    return DropdownMenuItem<InstallerMode>(
-                                      value: mode,
-                                      child: Text(switch (mode) {
-                                        InstallerMode.system =>
-                                          'installMethodSystem'.t(),
-                                        InstallerMode.shizuku =>
-                                          'installMethodShizuku'.t(),
-                                        InstallerMode.external =>
-                                          'installMethodExternal'.t(),
-                                        InstallerMode.root =>
-                                          'installMethodRoot'.t(),
-                                      }),
-                                    );
-                                  }).toList(),
-                                  onChanged: (InstallerMode? value) {
-                                    if (value != null) {
-                                      handleInstallerModeChange(
-                                        settingsProvider,
-                                        value,
-                                        _installerCheckSeq,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'installerMode',
+                                    const [
+                                          MapEntry(
+                                            'system',
+                                            'installMethodSystem',
+                                          ),
+                                          MapEntry(
+                                            'shizuku',
+                                            'installMethodShizuku',
+                                          ),
+                                          MapEntry(
+                                            'external',
+                                            'installMethodExternal',
+                                          ),
+                                          MapEntry('root', 'installMethodRoot'),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'installMethod'.t(),
+                                    defaultValue:
+                                        settingsProvider.installerMode.name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  final newMode = InstallerMode.values
+                                      .firstWhere(
+                                        (e) =>
+                                            e.name == values['installerMode'],
+                                      );
+                                  handleInstallerModeChange(
+                                    settingsProvider,
+                                    newMode,
+                                    _installerCheckSeq,
+                                  );
+                                }
+                              },
+                            ),
+                            if (settingsProvider.installerMode ==
+                                    InstallerMode.shizuku ||
+                                settingsProvider.installerMode ==
+                                    InstallerMode.root)
+                              SwitchListTile(
+                                title: Text('shizukuPretendToBeGooglePlay'.t()),
+                                value: settingsProvider
+                                    .shizukuPretendToBeGooglePlay,
+                                onChanged:
+                                    (settingsProvider.installerMode ==
+                                            InstallerMode.shizuku ||
+                                        settingsProvider.installerMode ==
+                                            InstallerMode.root)
+                                    ? (value) {
+                                        settingsProvider
+                                                .shizukuPretendToBeGooglePlay =
+                                            value;
+                                      }
+                                    : null,
+                              ),
+                            if (settingsProvider.installerMode ==
+                                InstallerMode.external)
+                              const _ExternalInstallerTile(),
+                            gap8,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'dnsProvider',
+                                    [
+                                          const MapEntry(
+                                            'system',
+                                            'systemDefaults',
+                                          ),
+                                          const MapEntry(
+                                            'cloudflare',
+                                            'cloudflare',
+                                          ),
+                                          const MapEntry('quad9', 'quad9'),
+                                          const MapEntry('opendns', 'openDNS'),
+                                          const MapEntry(
+                                            'mullvad',
+                                            'mullvadDNS',
+                                          ),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'dnsServiceProvider'.t(),
+                                    defaultValue: settingsProvider
+                                        .dnsServiceProvider
+                                        .name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  final newProvider = DNSServiceProvider.values
+                                      .firstWhere(
+                                        (e) => e.name == values['dnsProvider'],
                                       );
                                     }
                                   },
@@ -1398,21 +1477,30 @@ class _LogsDialogState extends State<LogsDialog> {
             children: [
               Text('filterDays'.t()),
               gap8,
-              DropdownButton<int>(
-                value: selectedDays,
-
-                items: days.map((day) {
-                  return DropdownMenuItem<int>(
-                    value: day,
-                    child: Text('day'.plural(day)),
-                  );
-                }).toList(),
-                onChanged: (int? value) {
-                  if (value != null) {
+              GeneratedForm(
+                items: [
+                  [
+                    GeneratedFormDropdown(
+                      'days',
+                      days
+                          .map(
+                            (day) =>
+                                MapEntry(day.toString(), 'day'.plural(day)),
+                          )
+                          .toList(),
+                      label: 'filterDays'.t(),
+                      defaultValue: selectedDays.toString(),
+                      required: true,
+                    ),
+                  ],
+                ],
+                onValueChanges: (values, valid, isBuilding) {
+                  if (!isBuilding && valid) {
+                    final days = int.parse(values['days']);
                     setState(() {
-                      selectedDays = value;
+                      selectedDays = days;
                     });
-                    filterLogs(value);
+                    filterLogs(days);
                   }
                 },
               ),

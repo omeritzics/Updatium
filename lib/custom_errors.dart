@@ -79,6 +79,10 @@ class NotImplementedError extends UpdatiumError {
   NotImplementedError() : super(t('functionNotImplemented'));
 }
 
+class DownloadCancelledError extends UpdatiumError {
+  DownloadCancelledError() : super('');
+}
+
 class MultiAppMultiError extends UpdatiumError {
   Map<String, dynamic> rawErrors = {};
   Map<String, List<String>> idsByErrorString = {};
@@ -118,6 +122,8 @@ class MultiAppMultiError extends UpdatiumError {
 }
 
 void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
+  // User-initiated cancellations are silent — no snackbar or dialog needed.
+  if (e is DownloadCancelledError) return;
   Provider.of<LogsProvider>(
     context,
     listen: false,
