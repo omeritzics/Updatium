@@ -797,34 +797,37 @@ class _AppPageState extends State<AppPage> {
           onPressed: app.isCancelling
               ? null
               : () async {
-            if (!context.mounted) return;
-            final shouldCancel = await showDialog<bool>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return AlertDialog(
-                  title: Text('cancelDownload'.t()),
-                  content: Text('cancelDownloadPrompt'.t()),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(ctx, false),
-                      child: Text('no'.t()),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(ctx, true),
-                      child: Text('yes'.t()),
-                    ),
-                  ],
-                );
-              },
-            );
-            if (shouldCancel == true) {
-              final ap = context.read<AppsProvider>();
-              ap.cancelDownload(app.app.id);
-              final np = context.read<NotificationsProvider>();
-              final notifId = DownloadNotification(app.app.finalName, 0).id;
-              np.cancel(notifId);
-            }
-          },
+                  if (!context.mounted) return;
+                  final shouldCancel = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      return AlertDialog(
+                        title: Text('cancelDownload'.t()),
+                        content: Text('cancelDownloadPrompt'.t()),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx, false),
+                            child: Text('no'.t()),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx, true),
+                            child: Text('yes'.t()),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  if (shouldCancel == true) {
+                    final ap = context.read<AppsProvider>();
+                    ap.cancelDownload(app.app.id);
+                    final np = context.read<NotificationsProvider>();
+                    final notifId = DownloadNotification(
+                      app.app.finalName,
+                      0,
+                    ).id;
+                    np.cancel(notifId);
+                  }
+                },
           icon: SizedBox(
             width: 24,
             height: 24,
