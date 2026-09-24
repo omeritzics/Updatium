@@ -1,5 +1,5 @@
-import 'package:simple_localization/simple_localization.dart' as sl;
-export 'package:simple_localization/simple_localization.dart' hide plural;
+import 'package:quick_localization/quick_localization.dart' as sl;
+export 'package:quick_localization/quick_localization.dart' hide plural;
 
 /// Parameter mapping by key for complex plural keys.
 const Map<String, List<String>> _pluralParamMappings = {

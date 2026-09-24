@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:quick_localization/quick_localization.dart';
 import 'package:updatium/core/logging/app_logger.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';

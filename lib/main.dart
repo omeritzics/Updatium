@@ -18,8 +18,8 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
-import 'package:simple_localization/src/simple_localization_controller.dart';
-import 'package:simple_localization/src/localization.dart';
+import 'package:quick_localization/src/quick_localization_controller.dart';
+import 'package:quick_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 
@@ -79,12 +79,12 @@ final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
-  await SimpleLocalizationController.initEasyLocation();
+  await QuickLocalizationController.initQuickLocation();
   var s = SettingsProvider();
   try {
     await s.initializeSettings();
     var forceLocale = s.forcedLocale;
-    final controller = SimpleLocalizationController(
+    final controller = QuickLocalizationController(
       saveLocale: true,
       forceLocale: forceLocale,
       fallbackLocale: fallbackLocale,
@@ -124,7 +124,7 @@ void main() async {
     // Already added, do nothing (see #375)
   }
   await initializeDateFormatting();
-  await SimpleLocalization.ensureInitialized();
+  await QuickLocalization.ensureInitialized();
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -147,7 +147,7 @@ void main() async {
         Provider(create: (context) => np),
         ChangeNotifierProvider(create: (context) => LogsProvider()),
       ],
-      child: SimpleLocalization(
+      child: QuickLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
         path: localeDir,
         fallbackLocale: fallbackLocale,

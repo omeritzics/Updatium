@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:android_package_installer/android_package_installer.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:quick_localization/quick_localization.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';
 import 'package:updatium/providers/apps_provider.dart';
