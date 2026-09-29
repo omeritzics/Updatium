@@ -387,7 +387,7 @@
     "shizukuBinderNotFound": "Shizuku சேவை இயங்கவில்லை",
     "shizukuOld": "பழைய Shizuku பதிப்பு (<11) - அதைப் புதுப்பிக்கவும்",
     "shizukuOldAndroidWithADB": "Shizuku அண்ட்ராய்டு < 8.1 இல் ADB உடன் இயங்குகிறது - அண்ட்ராய்டைப் புதுப்பிக்கவும் அல்லது அதற்குப் பதிலாக Sui ஐப் பயன்படுத்தவும்",
-    "shizukuPretendToBeGooglePlay": "Google Play ஐ நிறுவல் மூலமாக அமைக்கவும் (Shizuku அல்லது Root பயன்படுத்தப்பட்டால்)",} | head -5
+    "shizukuPretendToBeGooglePlay": "Google Play ஐ நிறுவல் மூலமாக அமைக்கவும் (Shizuku அல்லது Root பயன்படுத்தப்பட்டால்)",
     "useSystemFont": "கணினி எழுத்துருவைப் பயன்படுத்து",
     "useVersionCodeAsOSVersion": "செயலியின் versionCode ஐ OS-கண்டறிந்த பதிப்பாகப் பயன்படுத்து",
     "requestHeader": "கோரிக்கை தலைப்பு (Request header)",
