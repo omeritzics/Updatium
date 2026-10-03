@@ -384,7 +384,7 @@
     "shizukuBinderNotFound": "Shizuku chưa khởi động",
     "shizukuOld": "Phiên bản Shizuku lỗi thời (<11) - hãy cập nhật nó",
     "shizukuOldAndroidWithADB": "Shizuku chạy trên Android < 8.1 với ADB - hãy cập nhật Android hoặc thay bằng Sui",
-    "shizukuPretendToBeGooglePlay": "Đặt Google Play làm nguồn cài đặt (nếu sử dụng Shizuku hoặc Root)",} | head -5
+    "shizukuPretendToBeGooglePlay": "Đặt Google Play làm nguồn cài đặt (nếu sử dụng Shizuku hoặc Root)",
     "useSystemFont": "Sử dụng phông chữ hệ thống",
     "useVersionCodeAsOSVersion": "Sử dụng Mã phiên bản ứng dụng làm phiên bản do hệ điều hành phát hiện",
     "requestHeader": "Tiêu đề yêu cầu",
