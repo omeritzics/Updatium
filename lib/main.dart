@@ -499,6 +499,7 @@ class _UpdatiumState extends State<Updatium> {
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
+              focusColor: scheme.primary.withValues(alpha: 0.18),
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: const [
                 'GoogleSans',
@@ -864,24 +865,48 @@ class _UpdatiumState extends State<Updatium> {
                   : darkColorScheme,
               settingsProvider.theme != ThemeSettings.light,
             ),
-            home: Shortcuts(
-              shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                    const DirectionalFocusIntent(TraversalDirection.up),
-                LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                    const DirectionalFocusIntent(TraversalDirection.down),
-                LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                    const DirectionalFocusIntent(TraversalDirection.left),
-                LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                    const DirectionalFocusIntent(TraversalDirection.right),
-                LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
-              },
-              child: const HomePage(),
-            ),
+            builder: (context, child) {
+              return Shortcuts(
+                shortcuts: <LogicalKeySet, Intent>{
+                  LogicalKeySet(LogicalKeyboardKey.select):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.enter):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.space):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.numpadEnter):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.gameButtonA):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.gameButtonSelect):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.gameButtonStart):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                      const DirectionalFocusIntent(TraversalDirection.up),
+                  LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                      const DirectionalFocusIntent(TraversalDirection.down),
+                  LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                      const DirectionalFocusIntent(TraversalDirection.left),
+                  LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                      const DirectionalFocusIntent(TraversalDirection.right),
+                  LogicalKeySet(LogicalKeyboardKey.tab):
+                      const NextFocusIntent(),
+                  LogicalKeySet(
+                    LogicalKeyboardKey.shift,
+                    LogicalKeyboardKey.tab,
+                  ): const PreviousFocusIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.escape):
+                      const DismissIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.gameButtonB):
+                      const DismissIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.goBack):
+                      const DismissIntent(),
+                },
+                child: child ?? const SizedBox.shrink(),
+              );
+            },
+            home: const HomePage(),
           );
         },
       ),
