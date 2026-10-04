@@ -360,6 +360,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
+  void _onNavigationDestinationSelected(int index) {
+    HapticFeedback.selectionClick();
+
+    // Trigger full-rotation animation
+    if (_iconsInitialized && index < _iconControllers.length) {
+      _iconControllers[index].forward(from: 0.0);
+    }
+
+    switchToPage(index);
+  }
+
+  Widget _buildAnimatedIcon(NavigationPageItem page, int index) {
+    if (_iconsInitialized && index < _iconAnimations.length) {
+      return AnimatedBuilder(
+        animation: _iconAnimations[index],
+        builder: (context, child) {
+          return Transform.rotate(
+            angle: _iconAnimations[index].value * 2 * pi,
+            child: Icon(page.icon),
+          );
+        },
+      );
+    }
+    return Icon(page.icon);
+  }
+
+  List<NavigationDestination> _buildNavigationDestinations(
+      List<NavigationPageItem> pages) {
+    return pages.asMap().entries.map((entry) {
+      int index = entry.key;
+      var page = entry.value;
+      return NavigationDestination(
+        icon: _buildAnimatedIcon(page, index),
+        label: page.title,
+      );
+    }).toList();
+  }
+
+  List<NavigationRailDestination> _buildNavigationRailDestinations(
+      List<NavigationPageItem> pages) {
+    return pages.asMap().entries.map((entry) {
+      int index = entry.key;
+      var page = entry.value;
+      return NavigationRailDestination(
+        icon: _buildAnimatedIcon(page, index),
+        label: Text(page.title),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.watch<AppsProvider>();
@@ -378,6 +428,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     prevAppCount = appsProvider.apps.length;
     prevIsLoading = appsProvider.loadingApps;
 
+    final bool isTV = settingsProvider.isTV;
+
+    final pageTransitionSwitcher = PageTransitionSwitcher(
+      duration: Duration(
+        milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
+      ),
+      reverse: settingsProvider.reversePageTransitions
+          ? !isReversing
+          : isReversing,
+      transitionBuilder: (
+        Widget child,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return SharedAxisTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.horizontal,
+          child: child,
+        );
+      },
+      child: pages
+          .elementAt(
+            selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
+          )
+          .widget,
+    );
+
     return PopScope(
       canPop: _canPop(),
       onPopInvokedWithResult: (didPop, result) {
@@ -387,74 +465,44 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        body: PageTransitionSwitcher(
-          duration: Duration(
-            milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
-          ),
-          reverse: settingsProvider.reversePageTransitions
-              ? !isReversing
-              : isReversing,
-          transitionBuilder:
-              (
-                Widget child,
-                Animation<double> animation,
-                Animation<double> secondaryAnimation,
-              ) {
-                return SharedAxisTransition(
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  transitionType: SharedAxisTransitionType.horizontal,
-                  child: child,
-                );
-              },
-          child: pages
-              .elementAt(
-                selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
+        body: isTV
+            ? Row(
+                children: [
+                  Semantics(
+                    label: 'Main navigation',
+                    hint:
+                        'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+                    child: NavigationRail(
+                      selectedIndex: selectedIndexHistory.isEmpty
+                          ? 0
+                          : selectedIndexHistory.last,
+                      onDestinationSelected: _onNavigationDestinationSelected,
+                      destinations: _buildNavigationRailDestinations(pages),
+                      labelType: NavigationRailLabelType.all,
+                    ),
+                  ),
+                  Expanded(
+                    child: pageTransitionSwitcher,
+                  ),
+                ],
               )
-              .widget,
-        ),
-        bottomNavigationBar: Semantics(
-          label: 'Main navigation',
-          hint:
-              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
-          child: NavigationBar(
-            selectedIndex: selectedIndexHistory.isEmpty
-                ? 0
-                : selectedIndexHistory.last,
-            animationDuration: const Duration(milliseconds: 200),
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-            onDestinationSelected: (int index) async {
-              HapticFeedback.selectionClick();
-
-              // Trigger full-rotation animation
-              if (_iconsInitialized && index < _iconControllers.length) {
-                _iconControllers[index].forward().then((_) {
-                  _iconControllers[index].reset();
-                });
-              }
-
-              switchToPage(index);
-            },
-            destinations: pages.asMap().entries.map((entry) {
-              int index = entry.key;
-              var page = entry.value;
-              return NavigationDestination(
-                icon: _iconsInitialized && index < _iconAnimations.length
-                    ? AnimatedBuilder(
-                        animation: _iconAnimations[index],
-                        builder: (context, child) {
-                          return Transform.rotate(
-                            angle: _iconAnimations[index].value * 2 * pi,
-                            child: Icon(page.icon),
-                          );
-                        },
-                      )
-                    : Icon(page.icon),
-                label: page.title,
-              );
-            }).toList(),
-          ),
-        ),
+            : pageTransitionSwitcher,
+        bottomNavigationBar: isTV
+            ? null
+            : Semantics(
+                label: 'Main navigation',
+                hint:
+                    'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+                child: NavigationBar(
+                  selectedIndex: selectedIndexHistory.isEmpty
+                      ? 0
+                      : selectedIndexHistory.last,
+                  animationDuration: const Duration(milliseconds: 200),
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+                  onDestinationSelected: _onNavigationDestinationSelected,
+                  destinations: _buildNavigationDestinations(pages),
+                ),
+              ),
       ),
     );
   }
