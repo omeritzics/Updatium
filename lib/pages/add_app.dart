@@ -32,22 +32,6 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
-// class AppAddingProgressBar extends StatelessWidget {
-//  final int currentStep;
-//  final int totalSteps;
-//
-//  const AppAddingProgressBar({
-//    super.key,
-//    required this.currentStep,
-//    required this.totalSteps,
-//  });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LinearProgressIndicator(value: currentStep / totalSteps);
-//  }
-// }
-
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
 
@@ -292,40 +276,12 @@ class AddAppPageState extends State<AddAppPage> {
                                   ),
                                 ),
                               ),
-                              //if (e.isOpenSource) ...[
-                              //  const SizedBox(width: 4),
-                              //  Icon(
-                              //    Icons.workspace_premium,
-                              //    size: 14,
-                              //    color: Theme.of(context).colorScheme.primary,
-                              //    semanticLabel: 'openSource'.t(),
-                              //  ),
-                              //  const SizedBox(width: 2),
-                              //],
                             ],
                           ),
                         ),
                       ),
                     ),
                     gap12,
-
-                    //Row(
-                    //  children: [
-                    //    Icon(
-                    //      Icons.workspace_premium,
-                    //      size: 14,
-                    //      color: Theme.of(context).colorScheme.primary,
-                    //    ),
-                    //    const SizedBox(width: 4),
-                    //    Expanded(
-                    //      child: Text(
-                    //        'openSourceNote'.t(),
-                    //        style: Theme.of(context).textTheme.bodySmall,
-                    //      ),
-                    //    ),
-                    //  ],
-                    //),
-                    //gap12,
                     Text(
                       '${'note'.t()}:',
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -586,15 +542,7 @@ class AddAppPageState extends State<AddAppPage> {
                 (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      //child: AppAddingProgressBar(
-                      //  currentStep: 0,
-                      //  totalSteps: (isUrlLoading || searchQuery.isNotEmpty)
-                      //      ? 3
-                      //      : 2,
-                      //),
-                    ),
+                    child: Padding(padding: const EdgeInsets.only(top: 4)),
                   )
                 : null,
           ),
@@ -760,7 +708,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
-        // ignore: use_build_context_synchronously
         var values = await showDialog<Map<String, dynamic>?>(
           context: context,
           builder: (BuildContext ctx) {
@@ -813,7 +760,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       bool userPickedTrackOnly,
     ) async {
       return (!(additionalSettings['releaseDateAsVersion'] == true &&
-          // ignore: use_build_context_synchronously
           await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
@@ -875,7 +821,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 .map((e) => e.value)
                 .toList()
                 .indexOf(apkUrl.value);
-            // ignore: use_build_context_synchronously
             if (!mounted) return;
             var downloadedArtifact = await appsProvider.downloadApp(
               app,
@@ -927,7 +872,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         }
       } catch (e) {
         if (!mounted) return;
-        // ignore: use_build_context_synchronously
         showError(e, context);
       } finally {
         setState(() {
@@ -1037,15 +981,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                     icon: const Icon(Icons.close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  //bottom: (pickedSource != null || cameFromSearch)
-                  //    ? PreferredSize(
-                  //        preferredSize: const Size.fromHeight(4),
-                  //        child: AppAddingProgressBar(
-                  //          currentStep: cameFromSearch ? 3 : 2,
-                  //          totalSteps: cameFromSearch ? 3 : 2,
-                  //        ),
-                  //      )
-                  //    : null,
                 ),
                 SliverToBoxAdapter(
                   child: Padding(

@@ -285,7 +285,7 @@ class _UpdatiumState extends State<Updatium> {
                         'versionDetection': true,
                         'apkFilterRegEx': 'fdroid',
                         'invertAPKFilter': true,
-                        'useVersionCodeAsOSVersion': true,
+                        'useVersionCodeAsOSVersion': false,
                         'includePrereleases': false,
                       },
                       null,
@@ -395,172 +395,104 @@ class _UpdatiumState extends State<Updatium> {
 
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme, bool isDark) {
+            // Define fallback fonts
+            const List<String> fallbackFonts = [
+              'GoogleSans',
+              'NotoSansCJK',
+              'NotoSansArabic',
+            ];
+
             // Define text theme as local variable for reusability
             final textTheme = TextTheme(
               displayLarge: TextStyle(
                 fontSize: 57,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               displayMedium: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               displaySmall: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               headlineLarge: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               headlineMedium: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               headlineSmall: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               titleLarge: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               titleMedium: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               titleSmall: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               bodyLarge: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               bodyMedium: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               bodySmall: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               labelLarge: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               labelMedium: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
               labelSmall: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
-                color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSans',
-                  'NotoSansCJK',
-                  'NotoSansArabic',
-                ],
+                fontFamilyFallback: fallbackFonts,
               ),
             );
 
@@ -590,11 +522,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontFamily: getPrimaryFontForLocale(context.locale),
@@ -610,11 +537,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive ElevatedButton with subtle shadows
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
                   textStyle: TextStyle(
                     fontFamily: getPrimaryFontForLocale(context.locale),
                     fontFamilyFallback: const [
@@ -629,12 +551,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive OutlinedButton
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  side: BorderSide(color: scheme.outline, width: 1.5),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
                   textStyle: TextStyle(
                     fontFamily: getPrimaryFontForLocale(context.locale),
                     fontFamilyFallback: const [
@@ -649,11 +565,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive TextButton
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
                   textStyle: TextStyle(
                     fontFamily: getPrimaryFontForLocale(context.locale),
                     fontFamilyFallback: const [
@@ -711,7 +622,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
-                  fontWeight: FontWeight.w500,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -775,14 +685,6 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material 3 Extended Floating Action Button
               floatingActionButtonTheme: FloatingActionButtonThemeData(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                elevation: isDark ? 6 : 8,
-                extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
                 extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontFamily: getPrimaryFontForLocale(context.locale),
@@ -792,15 +694,11 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansArabic',
                   ],
                 ),
-                foregroundColor: scheme.onPrimary,
-                backgroundColor: scheme.primary,
-                iconSize: 24,
               ),
 
               // Material App Bar with fallback fonts
               appBarTheme: AppBarTheme(
                 titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
                   fontFamily: getPrimaryFontForLocale(context.locale),
@@ -822,10 +720,7 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 selectedTileColor: scheme.surface.withValues(alpha: 0.2),
-                iconColor: scheme.onSurfaceVariant,
-                textColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: getPrimaryFontForLocale(context.locale),
@@ -873,7 +768,6 @@ class _UpdatiumState extends State<Updatium> {
                 selectedColor: scheme.secondaryContainer,
                 disabledColor: scheme.surface,
                 labelStyle: TextStyle(
-                  color: scheme.onSurface,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   fontFamily: getPrimaryFontForLocale(context.locale),
@@ -902,9 +796,6 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Bottom Navigation Bar
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                // backgroundColor: scheme.surface,
-                // selectedItemColor: scheme.onSecondaryContainer,
-                // unselectedItemColor: scheme.onSurfaceVariant,
                 selectedLabelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
@@ -931,7 +822,6 @@ class _UpdatiumState extends State<Updatium> {
               // Dialog Theme for AMOLED black theme compatibility
               dialogTheme: DialogThemeData(
                 titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
                   fontFamily: getPrimaryFontForLocale(context.locale),
@@ -942,7 +832,6 @@ class _UpdatiumState extends State<Updatium> {
                   ],
                 ),
                 contentTextStyle: TextStyle(
-                  color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   fontFamily: getPrimaryFontForLocale(context.locale),
