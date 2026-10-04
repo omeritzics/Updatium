@@ -387,7 +387,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   List<NavigationDestination> _buildNavigationDestinations(
-      List<NavigationPageItem> pages) {
+    List<NavigationPageItem> pages,
+  ) {
     return pages.asMap().entries.map((entry) {
       int index = entry.key;
       var page = entry.value;
@@ -399,7 +400,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   List<NavigationRailDestination> _buildNavigationRailDestinations(
-      List<NavigationPageItem> pages) {
+    List<NavigationPageItem> pages,
+  ) {
     return pages.asMap().entries.map((entry) {
       int index = entry.key;
       var page = entry.value;
@@ -437,18 +439,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       reverse: settingsProvider.reversePageTransitions
           ? !isReversing
           : isReversing,
-      transitionBuilder: (
-        Widget child,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-      ) {
-        return SharedAxisTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.horizontal,
-          child: child,
-        );
-      },
+      transitionBuilder:
+          (
+            Widget child,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return SharedAxisTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.horizontal,
+              child: child,
+            );
+          },
       child: pages
           .elementAt(
             selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
@@ -481,9 +484,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       labelType: NavigationRailLabelType.all,
                     ),
                   ),
-                  Expanded(
-                    child: pageTransitionSwitcher,
-                  ),
+                  Expanded(child: pageTransitionSwitcher),
                 ],
               )
             : pageTransitionSwitcher,
