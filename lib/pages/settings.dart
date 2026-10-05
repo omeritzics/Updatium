@@ -808,13 +808,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [],
-                                    ),
-                                  ),
                                   SwitchListTile(
                                     title: Text('preventUninstallation'.t()),
                                     subtitle: Text(
@@ -1238,7 +1231,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
 
                             SwitchListTile(
-                              title: Text('disablePageTransitions'.t()),
+                              title: Text('reversePageTransitions'.t()),
                               value: settingsProvider.reversePageTransitions,
                               onChanged: settingsProvider.disablePageTransitions
                                   ? null
