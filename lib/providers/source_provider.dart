@@ -858,26 +858,10 @@ abstract class AppSource {
 
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
-  additionalAppSpecificSettingsNeverUseDirectly = [
-    [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
-    [
-      GeneratedFormSwitch(
-        'trackOnly',
-        label: 'trackOnly'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: 'refreshBeforeDownload'.t(),
-        defaultValue: true,
-      ),
-    ],
-
+  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
+    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -893,12 +877,33 @@ abstract class AppSource {
       ),
     ],
     [
+      GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: tr('filterAPKsByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        defaultValue: false,
+      ),
+    ],
+    [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
         label: 'autoApkFilterByArch'.t(),
         defaultValue: true,
       ),
     ],
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [
       GeneratedFormTextField(
         'apkFilterRegEx',
@@ -943,7 +948,6 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
-
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -1014,7 +1018,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: 'trimVersionString'.t(),
+        label: tr('trimVersionString'),
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -1022,15 +1026,34 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: 'matchGroupToUseForX'.t(args: ['trimVersionString'.t()]),
+        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
         required: false,
         hint: '\$0',
       ),
     ],
     [
       GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: tr('filterAPKsByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: 'filterReleaseTitlesByRegEx'.t(),
+        label: tr('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1042,7 +1065,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: 'filterReleaseNotesByRegEx'.t(),
+        label: tr('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
