@@ -38,10 +38,10 @@ packages:
     dependency: "direct main"
     description:
       name: animations
-      sha256: "9cb469212ea51be27097f23b519d594c01171721347b55df9334fff653659e7f"
+      sha256: "5ec868ffa78851e6f3f32e9377b780c7ae2087a5523d8b5e6df59bd8287ac5dd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "3.0.0"
   app_links:
     dependency: "direct main"
     description:
@@ -223,6 +223,14 @@ packages:
     description:
       name: csslib
       sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  cupertino_ui:
+    dependency: transitive
+    description:
+      name: cupertino_ui
+      sha256: e9dfe7fac704028f8928cbe4028a0be5e8a709498e8daf8247de99e99a32aef3
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
@@ -427,10 +435,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_foreground_task
-      sha256: "0dad7e6a4ac57aeb0e680e35ec7ae997f1a2b8579fdb85b16dd16e299b634f4f"
+      sha256: fe0e8c88fbdeb703161e20c54ffd10593fb112ccfa068c989ad2a93d28e4b976
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "11.0.3"
   flutter_lints:
     dependency: "direct main"
     description:
@@ -514,10 +522,10 @@ packages:
     dependency: "direct main"
     description:
       name: fluttertoast
-      sha256: "7903c9d5339173497bfecbc23bc4212f5a87e0edfac2e1693fb74465ea67da7e"
+      sha256: a5c39007e19fff5eeb7810d5be651c02bb5a1c06104bdd203b037bbfe49bd827
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.0"
+    version: "10.0.2"
   fraction:
     dependency: transitive
     description:
@@ -698,10 +706,10 @@ packages:
     dependency: "direct main"
     description:
       name: m3_floating_toolbar
-      sha256: "0cbfc5a6f869117a7fb8546243190ef607bfee19993834bfcaad62c566a4ed42"
+      sha256: "50bb22f237d11e389f8ebdbf73be12af8af085b3eb704794725f666c10fd54b1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.0"
   m3e_buttons:
     dependency: "direct main"
     description:
@@ -710,6 +718,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.6"
+  m3e_card_list:
+    dependency: "direct main"
+    description:
+      name: m3e_card_list
+      sha256: d4aba0123cccda40ac80789befa8d355e1dc16aa7dcee910157690b0546d78d6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   m3e_design:
     dependency: transitive
     description:
@@ -750,6 +766,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  material_ui:
+    dependency: transitive
+    description:
+      name: material_ui
+      sha256: fbfb53cab6c4629438feeade5f3d305f72944bc9d9f25786b19106d32b80ec45
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   meta:
     dependency: transitive
     description:
@@ -890,18 +914,18 @@ packages:
     dependency: "direct main"
     description:
       name: permission_handler
-      sha256: fe54465bcc62a4564c6e4db337bbaded6c0c0fa6e10487414436d163114784f6
+      sha256: e6bcecadfe40df6b888141f23cbaf6ba6c3da49fb33f6ff887d060dd48544fbd
       url: "https://pub.dev"
     source: hosted
-    version: "12.0.3"
+    version: "13.0.2"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: "1e3bc410ca1bf84662104b100eb126e066cb55791b7451307f9708d4007350e6"
+      sha256: b1ce660f4d0dcaffdf2605a19544c129fb5adda4e6fd039992ae356c4e437039
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.1"
+    version: "14.1.0"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -1003,7 +1027,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "9609a9376138a179625be890a220078d46fab3d6"
+      resolved-ref: a14a06871be93f22d80c5fb5ef1bbc4366d3da4e
       url: "https://github.com/omeritzics/quick_localization"
     source: git
     version: "1.0.0"
