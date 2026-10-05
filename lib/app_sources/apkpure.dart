@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:html/parser.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
@@ -21,6 +22,7 @@ class APKPure extends AppSource {
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
+    canSearch = true;
   }
 
   @override
@@ -45,6 +47,34 @@ class APKPure extends AppSource {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
+  }
+
+  @override
+  Future<Map<String, List<String>>> search(
+    String query, {
+    Map<String, dynamic> querySettings = const {},
+  }) async {
+    final res = await sourceRequest(
+      'https://apkpure.net/search?q=${Uri.encodeQueryComponent(query)}',
+      {},
+    );
+    if (res.statusCode != 200) {
+      throw getUpdatiumHttpError(res);
+    }
+    final doc = parse(res.body);
+    final results = <String, List<String>>{};
+    // Main result: a.top, rest of the results: a.apk-item
+    for (final a in doc.querySelectorAll('a.top, a.apk-item')) {
+      final href = a.attributes['href'];
+      final title = a.attributes['title']?.trim();
+      if (href == null || title == null || title.isEmpty) continue;
+      final segs = Uri.parse(href).pathSegments.where((s) => s.isNotEmpty);
+      if (segs.length < 2) continue;
+      final slug = segs.elementAt(segs.length - 2);
+      final pkg = a.attributes['data-dt-pkg'] ?? segs.last;
+      results.putIfAbsent('https://apkpure.net/$slug/$pkg', () => [title, '']);
+    }
+    return results;
   }
 
   Future<APKDetails> getDetailsForVersion(
@@ -110,6 +140,9 @@ class APKPure extends AppSource {
   }) async {
     if (forAPKDownload) {
       return null;
+    } else if (!url.contains('pureapk.com')) {
+      // regular website pages (search): browser-like headers only
+      return {'User-Agent': 'curl/8.0.1'};
     } else {
       return {
         "Ual-Access-Businessid": "projecta",
