@@ -931,13 +931,6 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
-        'includePrereleases',
-        label: 'includePrereleases'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
         'stayOneVersionBehind',
         label: 'stayOneVersionBehind'.t(),
         defaultValue: false,
@@ -979,7 +972,6 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
-    [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],
     [
       GeneratedFormDropdown(
         'sortMethodChoice',
@@ -1001,13 +993,6 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'useLatestAssetDateAsReleaseDate',
         label: 'useLatestAssetDateAsReleaseDate'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'releaseTitleAsVersion',
-        label: 'releaseTitleAsVersion'.t(),
         defaultValue: false,
       ),
     ],

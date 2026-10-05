@@ -96,7 +96,23 @@ class GitHub extends AppSource {
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [];
+    additionalSourceAppSpecificSettingFormItems = [
+      [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],
+      [
+        GeneratedFormSwitch(
+          'includePrereleases',
+          label: 'includePrereleases'.t(),
+          defaultValue: false,
+        ),
+      ],
+      [
+        GeneratedFormSwitch(
+          'releaseTitleAsVersion',
+          label: 'releaseTitleAsVersion'.t(),
+          defaultValue: false,
+        ),
+      ],
+    ];
 
     canSearch = true;
     searchQuerySettingFormItems = [
