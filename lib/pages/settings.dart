@@ -380,116 +380,6 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = GeneratedForm(
-      items: [
-        [
-          GeneratedFormDropdown(
-            'sortColumn',
-            [
-              const MapEntry('authorName', 'authorName'),
-              const MapEntry('nameAuthor', 'nameAuthor'),
-              const MapEntry('asAdded', 'asAdded'),
-              const MapEntry('releaseDate', 'releaseDate'),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: 'appSortBy'.t(),
-            defaultValue: settingsProvider.sortColumn.name,
-            required: true,
-          ),
-        ],
-      ],
-      onValueChanges: (values, valid, isBuilding) {
-        if (!isBuilding && valid) {
-          settingsProvider.sortColumn = SortColumnSettings.values.firstWhere(
-            (e) => e.name == values['sortColumn'],
-          );
-        }
-      },
-    );
-
-    var orderDropdown = GeneratedForm(
-      items: [
-        [
-          GeneratedFormDropdown(
-            'sortOrder',
-            [
-              const MapEntry('ascending', 'ascending'),
-              const MapEntry('descending', 'descending'),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: 'appSortOrder'.t(),
-            defaultValue: settingsProvider.sortOrder.name,
-            required: true,
-          ),
-        ],
-      ],
-      onValueChanges: (values, valid, isBuilding) {
-        if (!isBuilding && valid) {
-          settingsProvider.sortOrder = SortOrderSettings.values.firstWhere(
-            (e) => e.name == values['sortOrder'],
-          );
-        }
-      },
-    );
-
-    var defaultTabDropdown = GeneratedForm(
-      items: [
-        [
-          GeneratedFormDropdown(
-            'defaultTab',
-            [
-              const MapEntry('all', 'all'),
-              const MapEntry('installed', 'installed'),
-              const MapEntry('notInstalled', 'notInstalledApps'),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: 'defaultTab'.t(),
-            defaultValue: settingsProvider.defaultTab.name,
-            required: true,
-          ),
-        ],
-      ],
-      onValueChanges: (values, valid, isBuilding) {
-        if (!isBuilding && valid) {
-          settingsProvider.defaultTab = DefaultTabSettings.values.firstWhere(
-            (e) => e.name == values['defaultTab'],
-          );
-        }
-      },
-    );
-
-    var localeDropdown = GeneratedForm(
-      items: [
-        [
-          GeneratedFormDropdown(
-            'forcedLocale',
-            [
-              const MapEntry('', 'followSystem'),
-              ...supportedLocales.map(
-                (e) => MapEntry(e.key.toString(), e.value),
-              ),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: 'language'.t(),
-            defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
-            required: true,
-          ),
-        ],
-      ],
-      onValueChanges: (values, valid, isBuilding) {
-        if (!isBuilding && valid) {
-          final localeValue = values['forcedLocale'] as String;
-          if (localeValue.isEmpty) {
-            settingsProvider.forcedLocale = null;
-          } else {
-            settingsProvider.forcedLocale = Locale(localeValue);
-          }
-          // Apply the locale change immediately
-          if (settingsProvider.forcedLocale != null) {
-            context.setLocale(settingsProvider.forcedLocale!);
-          } else {
-            context.resetLocale();
-          }
-        }
-      },
-    );
-
     final rawSlider = Slider(
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
@@ -561,70 +451,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           )
         : rawSlider;
-
-    var sourceSpecificFields = sourceProvider.sources.map((e) {
-      if (e.sourceConfigSettingFormItems.isNotEmpty) {
-        final columnContent = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              e.name,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            gap12,
-            ...e.sourceConfigSettingFormItems.map((formItem) {
-              if (formItem is GeneratedFormSwitch) {
-                // Switch type
-                final bool currentValue =
-                    settingsProvider.getSettingBool(formItem.key) ?? false;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: SwitchListTile(
-                    title: Text(formItem.label),
-                    value: currentValue,
-                    onChanged: (value) {
-                      settingsProvider.setSettingBool(formItem.key, value);
-                    },
-                  ),
-                );
-              } else {
-                // Text field type
-                final String currentValue =
-                    settingsProvider.getSettingString(formItem.key) ?? '';
-                if (!_textControllers.containsKey(formItem.key)) {
-                  _textControllers[formItem.key] = TextEditingController(
-                    text: currentValue,
-                  );
-                  _focusNodes[formItem.key] = FocusNode();
-                } else if (_textControllers[formItem.key]!.text !=
-                    currentValue) {
-                  // Only update if not focused to avoid overwriting user input
-                  if (!_focusNodes[formItem.key]!.hasFocus) {
-                    _textControllers[formItem.key]!.text = currentValue;
-                  }
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: TextField(
-                    controller: _textControllers[formItem.key],
-                    focusNode: _focusNodes[formItem.key],
-                    decoration: InputDecoration(labelText: formItem.label),
-                    onChanged: (value) {
-                      settingsProvider.setSettingString(formItem.key, value);
-                    },
-                  ),
-                );
-              }
-            }),
-          ],
-        );
-        return columnContent;
-      } else {
-        return const SizedBox.shrink();
-      }
-    });
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -1112,7 +938,105 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingsProvider.appViewSectionExpanded = expanded;
                           },
                           childrenPadding: const EdgeInsets.all(8),
-                          children: [...sourceSpecificFields],
+                          children: [
+                            ...sourceProvider.sources.map((e) {
+                              if (e.sourceConfigSettingFormItems.isNotEmpty) {
+                                final columnContent = Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      e.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    gap12,
+                                    ...e.sourceConfigSettingFormItems.map((
+                                      formItem,
+                                    ) {
+                                      if (formItem is GeneratedFormSwitch) {
+                                        // Switch type
+                                        final bool currentValue =
+                                            settingsProvider.getSettingBool(
+                                              formItem.key,
+                                            ) ??
+                                            false;
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 16,
+                                          ),
+                                          child: SwitchListTile(
+                                            title: Text(formItem.label),
+                                            value: currentValue,
+                                            onChanged: (value) {
+                                              settingsProvider.setSettingBool(
+                                                formItem.key,
+                                                value,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        // Text field type
+                                        final String currentValue =
+                                            settingsProvider.getSettingString(
+                                              formItem.key,
+                                            ) ??
+                                            '';
+                                        if (!_textControllers.containsKey(
+                                          formItem.key,
+                                        )) {
+                                          _textControllers[formItem.key] =
+                                              TextEditingController(
+                                                text: currentValue,
+                                              );
+                                          _focusNodes[formItem.key] =
+                                              FocusNode();
+                                        } else if (_textControllers[formItem
+                                                    .key]!
+                                                .text !=
+                                            currentValue) {
+                                          // Only update if not focused to avoid overwriting user input
+                                          if (!_focusNodes[formItem.key]!
+                                              .hasFocus) {
+                                            _textControllers[formItem.key]!
+                                                    .text =
+                                                currentValue;
+                                          }
+                                        }
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 16,
+                                          ),
+                                          child: TextField(
+                                            controller:
+                                                _textControllers[formItem.key],
+                                            focusNode:
+                                                _focusNodes[formItem.key],
+                                            decoration: InputDecoration(
+                                              labelText: formItem.label,
+                                            ),
+                                            onChanged: (value) {
+                                              settingsProvider.setSettingString(
+                                                formItem.key,
+                                                value,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    }),
+                                  ],
+                                );
+                                return columnContent;
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            }),
+                          ],
                         ),
                         gap16,
                         ExpansionTile(
@@ -1179,7 +1103,53 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap8,
                             if (!settingsProvider.useMaterialYou) colorPicker,
                             gap12,
-                            localeDropdown,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'forcedLocale',
+                                    [
+                                          const MapEntry('', 'followSystem'),
+                                          ...supportedLocales.map(
+                                            (e) => MapEntry(
+                                              e.key.toString(),
+                                              e.value,
+                                            ),
+                                          ),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'language'.t(),
+                                    defaultValue:
+                                        settingsProvider.forcedLocale
+                                            ?.toString() ??
+                                        '',
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  final localeValue =
+                                      values['forcedLocale'] as String;
+                                  if (localeValue.isEmpty) {
+                                    settingsProvider.forcedLocale = null;
+                                  } else {
+                                    settingsProvider.forcedLocale = Locale(
+                                      localeValue,
+                                    );
+                                  }
+                                  // Apply the locale change immediately
+                                  if (settingsProvider.forcedLocale != null) {
+                                    context.setLocale(
+                                      settingsProvider.forcedLocale!,
+                                    );
+                                  } else {
+                                    context.resetLocale();
+                                  }
+                                }
+                              },
+                            ),
                             FutureBuilder(
                               builder: (ctx, val) {
                                 return (val.data?.version.sdkInt ?? 0) >= 36
@@ -1277,13 +1247,136 @@ class _SettingsPageState extends State<SettingsPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(child: sortDropdown),
+                                Expanded(
+                                  child: GeneratedForm(
+                                    items: [
+                                      [
+                                        GeneratedFormDropdown(
+                                          'sortColumn',
+                                          [
+                                                const MapEntry(
+                                                  'authorName',
+                                                  'authorName',
+                                                ),
+                                                const MapEntry(
+                                                  'nameAuthor',
+                                                  'nameAuthor',
+                                                ),
+                                                const MapEntry(
+                                                  'asAdded',
+                                                  'asAdded',
+                                                ),
+                                                const MapEntry(
+                                                  'releaseDate',
+                                                  'releaseDate',
+                                                ),
+                                              ]
+                                              .map(
+                                                (e) =>
+                                                    MapEntry(e.key, t(e.value)),
+                                              )
+                                              .toList(),
+                                          label: 'appSortBy'.t(),
+                                          defaultValue:
+                                              settingsProvider.sortColumn.name,
+                                          required: true,
+                                        ),
+                                      ],
+                                    ],
+                                    onValueChanges:
+                                        (values, valid, isBuilding) {
+                                          if (!isBuilding && valid) {
+                                            settingsProvider.sortColumn =
+                                                SortColumnSettings.values
+                                                    .firstWhere(
+                                                      (e) =>
+                                                          e.name ==
+                                                          values['sortColumn'],
+                                                    );
+                                          }
+                                        },
+                                  ),
+                                ),
                                 horizontalGap16,
-                                Expanded(child: orderDropdown),
+                                Expanded(
+                                  child: GeneratedForm(
+                                    items: [
+                                      [
+                                        GeneratedFormDropdown(
+                                          'sortOrder',
+                                          [
+                                                const MapEntry(
+                                                  'ascending',
+                                                  'ascending',
+                                                ),
+                                                const MapEntry(
+                                                  'descending',
+                                                  'descending',
+                                                ),
+                                              ]
+                                              .map(
+                                                (e) =>
+                                                    MapEntry(e.key, t(e.value)),
+                                              )
+                                              .toList(),
+                                          label: 'appSortOrder'.t(),
+                                          defaultValue:
+                                              settingsProvider.sortOrder.name,
+                                          required: true,
+                                        ),
+                                      ],
+                                    ],
+                                    onValueChanges:
+                                        (values, valid, isBuilding) {
+                                          if (!isBuilding && valid) {
+                                            settingsProvider.sortOrder =
+                                                SortOrderSettings.values
+                                                    .firstWhere(
+                                                      (e) =>
+                                                          e.name ==
+                                                          values['sortOrder'],
+                                                    );
+                                          }
+                                        },
+                                  ),
+                                ),
                               ],
                             ),
                             gap12,
-                            defaultTabDropdown,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'defaultTab',
+                                    [
+                                          const MapEntry('all', 'all'),
+                                          const MapEntry(
+                                            'installed',
+                                            'installed',
+                                          ),
+                                          const MapEntry(
+                                            'notInstalled',
+                                            'notInstalledApps',
+                                          ),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'defaultTab'.t(),
+                                    defaultValue:
+                                        settingsProvider.defaultTab.name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  settingsProvider.defaultTab =
+                                      DefaultTabSettings.values.firstWhere(
+                                        (e) => e.name == values['defaultTab'],
+                                      );
+                                }
+                              },
+                            ),
 
                             SwitchListTile(
                               title: Text('pinUpdates'.t()),
