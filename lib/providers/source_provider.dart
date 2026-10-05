@@ -858,31 +858,57 @@ abstract class AppSource {
 
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
-  additionalAppSpecificSettingsNeverUseDirectly = [
-    [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
-    [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
-    [
-      GeneratedFormSwitch(
-        'trackOnly',
-        label: 'trackOnly'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: 'refreshBeforeDownload'.t(),
-        defaultValue: true,
-      ),
-    ],
-
+  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
+    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormSwitch(
         'versionDetection',
         label: 'versionDetectionExplanation'.t(),
         defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'appId',
+        label: t('appId'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            final isValid = RegExp(
+              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+            ).hasMatch(value);
+            if (!isValid) {
+              return t('invalidInput');
+            }
+            return null;
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'appId',
+        label: t('appId'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            final isValid = RegExp(
+              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+            ).hasMatch(value);
+            if (!isValid) {
+              return t('invalidInput');
+            }
+            return null;
+          },
+        ],
       ),
     ],
     [
@@ -893,18 +919,15 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: 'filterAPKsByRegEx'.t(),
+        label: tr('filterAPKsByRegEx'),
         required: false,
-        additionalValidators: [(value) => regExValidator(value)],
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
       ),
     ],
     [
@@ -936,7 +959,6 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
-
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -999,7 +1021,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: 'trimVersionString'.t(),
+        label: tr('trimVersionString'),
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -1007,7 +1029,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: 'matchGroupToUseForX'.t(args: ['trimVersionString'.t()]),
+        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
         required: false,
         hint: '\$0',
       ),
@@ -1015,7 +1037,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: 'filterReleaseTitlesByRegEx'.t(),
+        label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1027,7 +1049,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: 'filterReleaseNotesByRegEx'.t(),
+        label: t('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1036,13 +1058,73 @@ abstract class AppSource {
         ],
       ),
     ],
+    [
+      GeneratedFormTextField(
+        'appId',
+        label: t('appId'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'shizukuPretendToBeGooglePlay',
+        label: t('shizukuPretendToBeGooglePlay'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'allowInsecure',
+        label: t('allowInsecure'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: t('filterAPKsByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) => regExValidator(value),
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+        defaultValue: false,
+      ),
+    ],
   ];
 
-  /// Combines per-source form items with the common app-setting form items,
-  /// interspersing conditional items (zip/tarball options, version toggles) and
-  /// filtering out excluded keys. Cloned so that callers cannot mutate the
-  /// shared source-owned form items. Rebuilt on every access so that labels
-  /// pick up the current locale via tr().
+  List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
+    var items = <List<GeneratedFormItem>>[];
+    if (enforceTrackOnly) {
+      items.add(advancedAppSpecificSourceAgnosticSettingFormItems[0]);
+    }
+    items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
+    if (allowIncludeZips) {
+      items.add([
+        GeneratedFormTextField(
+          'zippedApkFilterRegEx',
+          label: t('zippedApkFilterRegEx'),
+          required: false,
+          additionalValidators: [
+            (value) => regExValidator(value),
+          ],
+        ),
+      ]);
+    }
+    return items;
+  }
+
+  // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
       additionalAppSpecificSettingsNeverUseDirectly,

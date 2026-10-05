@@ -269,7 +269,10 @@
     "category": "Kategori",
     "noCategory": "Ingen Kategori",
     "noCategories": "Inga Kategorier",
-    "categoryDeleteQuestion": "Ta Bort Kategorier?",
+    "categoryDeleteQuestion": {
+        "one": "Ta Bort Kategorier?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alla Appar i de borttagna kategorierna kommer att märkas som okategoriserade.",
     "addCategory": "Lägg till Kategori",
     "label": "Märka",
@@ -562,5 +565,8 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
+    "cancelling": ""
 }

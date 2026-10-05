@@ -269,7 +269,10 @@
     "category": "Categorie",
     "noCategory": "Geen categorie",
     "noCategories": "Geen categorieën",
-    "categoryDeleteQuestion": "Categorieën verwijderen?",
+    "categoryDeleteQuestion": {
+        "one": "Categorieën verwijderen?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alle apps in verwijderde categorieën worden teruggezet naar 'ongecategoriseerd'.",
     "addCategory": "Categorie toevoegen",
     "label": "Label",
@@ -562,5 +565,8 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
+    "cancelling": ""
 }

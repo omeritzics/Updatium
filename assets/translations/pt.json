@@ -86,7 +86,7 @@
     "removeSelectedApps": "Remover aplicações selecionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -269,7 +269,10 @@
     "category": "Categoria",
     "noCategory": "Sem categoria",
     "noCategories": "Sem categorias",
-    "categoryDeleteQuestion": "Deletar  categorias?",
+    "categoryDeleteQuestion": {
+        "one": "Deletar  categorias?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Todas as aplicações em categorias removidas serão descategorizadas.",
     "addCategory": "Adicionar categoria",
     "label": "Etiqueta",
@@ -433,67 +436,67 @@
     "multipleSigners": "Assinantes Múltiplos",
     "removeAppQuestion": {
         "one": "Remover aplicação?",
-        "other": "Remover aplicações?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Muitos pedidos (taxa de pedidos limitada) - tente novamente em {} minuto",
-        "other": "Muitos pedidos (taxa limitada) - tente novamente em {} minutos"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minuto",
-        "other": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minutos"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "A verificação de atualizações em segundo plano encontrou {} atualização, o utilizador será notificado caso necessário",
-        "other": "A verificação de atualizações em segundo plano encontrou {} atualizações, o utilizador será notificado caso necessário"
+        "other": ""
     },
     "apps": {
         "one": "{} Aplicação",
-        "other": "{} Aplicações"
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URLs"
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": ""
     },
     "day": {
         "one": "{} dia",
-        "other": "{} dias"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Foi limpo {n} log (antes = {antes}, depois = {depois})",
-        "other": "Foram limpos {n} logs (antes = {antes}, depois = {depois})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e uma outra aplicação possui atualizações.",
-        "other": "{app} e {} outras aplicações possuem atualizações."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e uma outra aplicação foram atualizadas.",
-        "other": "{app} e {} outras aplicações foram atualizadas."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Falha ao atualizar {app} e mais 1 aplicação.",
-        "other": "Falha ao atualizar {app} e {} outras aplicações."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e uma outra aplicação podem ter sido atualizadas.",
-        "other": "{app} e {} outras aplicações podem ter sido atualizadas."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash do Certificado",
-        "other": "Certificado Hashes"
+        "other": ""
     },
     "securityDisclaimerTitle": "Aviso de Segurança e Legal",
     "license": "Licença",
@@ -562,5 +565,8 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
+    "cancelling": ""
 }
