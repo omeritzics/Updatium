@@ -485,25 +485,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Material 3 Extended Floating Action Button
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                extendedTextStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-              ),
-
-              // Material App Bar with fallback fonts
-              appBarTheme: AppBarTheme(
-                titleTextStyle: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-              ),
-
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
