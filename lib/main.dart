@@ -601,23 +601,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive Bottom Navigation Bar
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                selectedLabelStyle: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: scheme.onSecondaryContainer,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                unselectedLabelStyle: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-              ),
-
               // Dialog Theme for AMOLED black theme compatibility
               dialogTheme: DialogThemeData(
                 titleTextStyle: TextStyle(
