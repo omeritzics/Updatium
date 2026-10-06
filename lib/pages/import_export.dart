@@ -387,7 +387,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           )
           .map(
             (source) => _CardAction(
-              Icons.cloud_download,
+              Icons.star_outline,
               t('importX', args: [source.name]),
               importInProgress ? null : () => runMassSourceImport(source),
             ),
@@ -423,7 +423,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   : () => runUpdatiumExport(pickOnly: true),
                             ),
                             _CardAction(
-                              Icons.save_alt_outlined,
+                              Icons.save_outlined,
                               'updatiumExport'.t(),
                               busy || snapshot.data == null
                                   ? null
