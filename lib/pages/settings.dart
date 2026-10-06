@@ -885,10 +885,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                                           const MapEntry('quad9', 'quad9'),
                                           const MapEntry('opendns', 'openDNS'),
-                                          const MapEntry(
-                                            'mullvad',
-                                            'mullvadDNS',
-                                          ),
                                         ]
                                         .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
