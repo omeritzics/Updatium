@@ -408,99 +408,6 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: fallbackFonts,
 
-              textTheme: TextTheme(
-                displayLarge: TextStyle(
-                  fontSize: 57,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                displayMedium: TextStyle(
-                  fontSize: 45,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                displaySmall: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                headlineLarge: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                headlineMedium: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                headlineSmall: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                titleLarge: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                titleMedium: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                titleSmall: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                bodyLarge: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                bodyMedium: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                bodySmall: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                labelLarge: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                labelMedium: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                labelSmall: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-              ),
-
               // Expressive Card Design - preserve M3 Expressive transparency
               cardTheme: CardThemeData(
                 clipBehavior: Clip.antiAlias,
@@ -535,12 +442,6 @@ class _UpdatiumState extends State<Updatium> {
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 16,
-                ),
-                hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
                 ),
               ),
 
@@ -580,18 +481,6 @@ class _UpdatiumState extends State<Updatium> {
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
-                  ),
-                  hintStyle: TextStyle(
-                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    fontWeight: FontWeight.w400,
-                  ),
-                  labelStyle: TextStyle(
-                    color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  floatingLabelStyle: TextStyle(
-                    color: scheme.primary,
-                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -658,46 +547,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Touch Feedback
               splashFactory: InkRipple.splashFactory,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-              // Expressive Chip Theme - preserve M3 Expressive transparency
-              chipTheme: ChipThemeData(
-                backgroundColor: scheme.surface.withValues(alpha: 0.1),
-                selectedColor: scheme.secondaryContainer,
-                disabledColor: scheme.surface,
-                labelStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                secondaryLabelStyle: TextStyle(
-                  color: scheme.onSecondaryContainer,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-
-              // Dialog Theme for AMOLED black theme compatibility
-              dialogTheme: DialogThemeData(
-                titleTextStyle: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                contentTextStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-              ),
             );
           }
 
