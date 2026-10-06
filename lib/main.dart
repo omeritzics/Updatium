@@ -495,19 +495,6 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 selectedTileColor: scheme.surface.withValues(alpha: 0.2),
-                titleTextStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
-                subtitleTextStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: fallbackFonts,
-                ),
               ),
 
               // Expressive Page Transitions
