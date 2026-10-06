@@ -6,7 +6,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_card_list/m3e_card_list.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -26,6 +26,37 @@ const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
+
+class _CardAction {
+  const _CardAction(this.icon, this.label, this.onPressed);
+
+  final IconData icon;
+  final String label;
+  final VoidCallback? onPressed; // null = disabled
+}
+
+Widget _actionCards(BuildContext context, List<_CardAction> actions) {
+  final theme = Theme.of(context);
+  return M3ECardColumn(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    onTap: (i) => actions[i].onPressed?.call(),
+    children: [
+      for (final a in actions)
+        Opacity(
+          opacity: a.onPressed == null ? 0.38 : 1,
+          child: Row(
+            children: [
+              Icon(a.icon, color: theme.colorScheme.onSurfaceVariant),
+              horizontalGap16,
+              Expanded(
+                child: Text(a.label, style: theme.textTheme.titleMedium),
+              ),
+            ],
+          ),
+        ),
+    ],
+  );
+}
 
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
@@ -338,12 +369,38 @@ class _ImportExportPageState extends State<ImportExportPage> {
       sourceStrings[s.name] = [s.name];
     });
 
+    final importActions = <_CardAction>[
+      _CardAction(
+        Icons.list_alt,
+        'importFromURLList'.t(),
+        importInProgress ? null : () => urlListImport(),
+      ),
+      if (!settingsProvider.safeMode)
+        _CardAction(
+          Icons.link,
+          'importFromURLsInFile'.t(),
+          importInProgress ? null : runUrlImport,
+        ),
+      ...sourceProvider.massUrlSources
+          .where(
+            (source) => !(source is GitHubStars && settingsProvider.safeMode),
+          )
+          .map(
+            (source) => _CardAction(
+              Icons.cloud_download,
+              t('importX', args: [source.name]),
+              importInProgress ? null : () => runMassSourceImport(source),
+            ),
+          ),
+    ];
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar.medium(pinned: true, title: Text('importExport'.t())),
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Column(
@@ -352,83 +409,32 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   FutureBuilder(
                     future: settingsProvider.getExportDir(),
                     builder: (context, snapshot) {
+                      final busy =
+                          importInProgress || appsProvider.exportInProgress;
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Semantics(
-                                  button: true,
-                                  label: 'pickExportDir'.t(),
-                                  hint:
-                                      'Choose a directory to export your apps and settings',
-                                  excludeSemantics: true,
-                                  child: M3EFilledButton.tonalIcon(
-                                    onPressed:
-                                        importInProgress ||
-                                            appsProvider.exportInProgress
-                                        ? null
-                                        : () {
-                                            runUpdatiumExport(pickOnly: true);
-                                          },
-                                    icon: const Icon(Icons.folder_open),
-                                    label: Text(
-                                      'pickExportDir'.t(),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              horizontalGap16,
-                              Expanded(
-                                child: Semantics(
-                                  button: true,
-                                  label: 'updatiumExport'.t(),
-                                  hint: snapshot.data == null
-                                      ? 'Set export directory first'
-                                      : 'Export all your apps and settings to file',
-                                  excludeSemantics: true,
-                                  child: M3EFilledButton.tonalIcon(
-                                    onPressed:
-                                        importInProgress ||
-                                            appsProvider.exportInProgress ||
-                                            snapshot.data == null
-                                        ? null
-                                        : runUpdatiumExport,
-                                    icon: const Icon(Icons.upload_file),
-                                    label: Text(
-                                      'updatiumExport'.t(),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          gap8,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Semantics(
-                                  button: true,
-                                  label: 'updatiumImport'.t(),
-                                  hint:
-                                      'Import apps and settings from a backup file',
-                                  excludeSemantics: true,
-                                  child: M3EFilledButton.tonalIcon(
-                                    onPressed: importInProgress
-                                        ? null
-                                        : runUpdatiumImport,
-                                    icon: const Icon(Icons.download),
-                                    label: Text(
-                                      'updatiumImport'.t(),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          _actionCards(context, [
+                            _CardAction(
+                              Icons.folder_open,
+                              'pickExportDir'.t(),
+                              busy
+                                  ? null
+                                  : () => runUpdatiumExport(pickOnly: true),
+                            ),
+                            _CardAction(
+                              Icons.save_alt_outlined,
+                              'updatiumExport'.t(),
+                              busy || snapshot.data == null
+                                  ? null
+                                  : () => runUpdatiumExport(),
+                            ),
+                            _CardAction(
+                              Icons.restore_outlined,
+                              'updatiumImport'.t(),
+                              importInProgress ? null : runUpdatiumImport,
+                            ),
+                          ]),
                           if (snapshot.data != null)
                             Column(
                               children: [
@@ -484,61 +490,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       children: [gap12, LinearProgressIndicator(), gap12],
                     )
                   else
-                    Column(
-                      children: [
-                        gap32,
-                        Semantics(
-                          button: true,
-                          label: 'importFromURLList'.t(),
-                          hint:
-                              'Import multiple apps by entering their URLs in a list',
-                          excludeSemantics: true,
-                          child: M3EFilledButton.tonalIcon(
-                            onPressed: importInProgress ? null : urlListImport,
-                            icon: const Icon(Icons.list_alt),
-                            label: Text('importFromURLList'.t()),
-                          ),
-                        ),
-                        if (!settingsProvider.safeMode) ...[
-                          gap8,
-                          Semantics(
-                            button: true,
-                            label: 'importFromURLsInFile'.t(),
-                            hint:
-                                'Import apps by reading URLs from a text file',
-                            excludeSemantics: true,
-                            child: M3EFilledButton.tonalIcon(
-                              onPressed: importInProgress ? null : runUrlImport,
-                              icon: const Icon(Icons.link),
-                              label: Text('importFromURLsInFile'.t()),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ...sourceProvider.massUrlSources
-                      .where(
-                        (source) =>
-                            !(source is GitHubStars &&
-                                settingsProvider.safeMode),
-                      )
-                      .map(
-                        (source) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            gap8,
-                            M3EFilledButton.tonalIcon(
-                              onPressed: importInProgress
-                                  ? null
-                                  : () {
-                                      runMassSourceImport(source);
-                                    },
-                              icon: const Icon(Icons.cloud_download),
-                              label: Text(t('importX', args: [source.name])),
-                            ),
-                          ],
-                        ),
-                      ),
+                    gap32,
+                  _actionCards(context, importActions),
                   const Spacer(),
                   const Divider(height: 32),
                   Text(

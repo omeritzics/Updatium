@@ -80,10 +80,9 @@ final globalNavigatorKey = GlobalKey<NavigatorState>();
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
   await QuickLocalizationController.initQuickLocation();
-  var s = SettingsProvider();
   try {
-    await s.initializeSettings();
-    var forceLocale = s.forcedLocale;
+    await SettingsProvider().initializeSettings();
+    var forceLocale = SettingsProvider().forcedLocale;
     final controller = QuickLocalizationController(
       saveLocale: true,
       forceLocale: forceLocale,
@@ -105,7 +104,7 @@ Future<void> loadTranslations() async {
     );
   } finally {
     // Clean up the temporary SettingsProvider instance
-    s.dispose();
+    SettingsProvider().dispose();
   }
 }
 
@@ -504,7 +503,6 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Card Design - preserve M3 Expressive transparency
               cardTheme: CardThemeData(
-                elevation: isDark ? 2 : 1,
                 clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
