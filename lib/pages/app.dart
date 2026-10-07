@@ -127,18 +127,10 @@ class _AppPageState extends State<AppPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          t('repoRenamed'),
-                          style: textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: colorScheme.onSurface,
-                          ),
-                        ),
+                        Text(t('repoRenamed'), style: textTheme.bodyLarge),
                         Text(
                           t('repoRenamedExplanation'),
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                          style: textTheme.bodyMedium,
                         ),
                       ],
                     ),
@@ -170,19 +162,8 @@ class _AppPageState extends State<AppPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          t('newUrl'),
-                          style: textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: colorScheme.onSurface,
-                          ),
-                        ),
-                        Text(
-                          pendingUrl,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
+                        Text(t('newUrl'), style: textTheme.bodyLarge),
+                        Text(pendingUrl, style: textTheme.bodyMedium),
                       ],
                     ),
                   ),
@@ -258,11 +239,7 @@ class _AppPageState extends State<AppPage> {
                     child: FilledButton.tonal(
                       style: ButtonStyle(
                         elevation: WidgetStatePropertyAll(0),
-                        textStyle: WidgetStatePropertyAll(
-                          textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
                       ),
                       onPressed: () async {
                         await appsProvider.acceptRepoRename(
@@ -416,137 +393,102 @@ class _AppPageState extends State<AppPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: buildRepoRenameWarning(
-                  app: app,
-                  appsProvider: appsProvider,
-                  onUpdate: (id) => getUpdate(id),
-                ),
-              ),
-              gap24,
-              Text(
-                versionLines,
-                textAlign: TextAlign.start,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-              ),
-              changeLogFn != null || app.app.releaseDate != null
-                  ? InkWell(
-                      onTap: changeLogFn,
-                      child: Text(
-                        app.app.releaseDate == null
-                            ? 'changes'.t()
-                            : app.app.releaseDate!.toLocal().toString(),
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          decoration: changeLogFn != null
-                              ? TextDecoration.underline
-                              : null,
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              gap24,
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: buildRepoRenameWarning(
+              app: app,
+              appsProvider: appsProvider,
+              onUpdate: (id) => getUpdate(id),
+            ),
           ),
-          Text(
-            infoLines,
-            textAlign: TextAlign.start,
-            style: const TextStyle(fontSize: 14),
-          ),
+          gap24,
+          Text(versionLines, style: Theme.of(context).textTheme.bodyLarge),
+          changeLogFn != null || app.app.releaseDate != null
+              ? InkWell(
+                  onTap: changeLogFn,
+                  child: Text(
+                    app.app.releaseDate == null
+                        ? 'changes'.t()
+                        : app.app.releaseDate!.toLocal().toString(),
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      decoration: changeLogFn != null
+                          ? TextDecoration.underline
+                          : null,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
+          gap24,
+          Text(infoLines, textAlign: TextAlign.start),
 
           /* Certificate Hashes */
-          if (app.certificateHashes.isNotEmpty)
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                gap24,
-                Text(
-                  "${'certificateHash'.plural(app.certificateHashes.length)}:"
-                  "${app.hasMultipleSigners ? " (${'multipleSigners'.t()})" : ""}",
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(fontSize: 14),
+          if (app.certificateHashes.isNotEmpty) gap24,
+          Text(
+            "${'certificateHash'.plural(app.certificateHashes.length)}:"
+            "${app.hasMultipleSigners ? " (${'multipleSigners'.t()})" : ""}",
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: app.certificateHashes.map((hash) {
+              return GestureDetector(
+                onLongPress: () {
+                  Clipboard.setData(ClipboardData(text: hash));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('copiedToClipboard'.t())),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    hash,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: app.certificateHashes.map((hash) {
-                    return GestureDetector(
-                      onLongPress: () {
-                        Clipboard.setData(ClipboardData(text: hash));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('copiedToClipboard'.t())),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Text(
-                          hash,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(fontSize: 14),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
+              );
+            }).toList(),
+          ),
 
           gap24,
           if (app.app.additionalSettings['about'] is String &&
               app.app.additionalSettings['about'].isNotEmpty)
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                gap24,
-                GestureDetector(
-                  onLongPress: () {
-                    Clipboard.setData(
-                      ClipboardData(
-                        text: app.app.additionalSettings['about'] ?? '',
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('copiedToClipboard'.t())),
-                    );
-                  },
-                  child: Markdown(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    styleSheet: MarkdownStyleSheet(
-                      blockquoteDecoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                      ),
-                      textAlign: WrapAlignment.start,
-                    ),
-                    data: app.app.additionalSettings['about'],
-                    onTapLink: (text, href, title) {
-                      if (href != null) {
-                        launchUrlString(
-                          href,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [
-                        md.EmojiSyntax(),
-                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                      ],
-                    ),
-                  ),
+            gap24,
+          GestureDetector(
+            onLongPress: () {
+              Clipboard.setData(
+                ClipboardData(text: app.app.additionalSettings['about'] ?? ''),
+              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('copiedToClipboard'.t())));
+            },
+            child: Markdown(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              styleSheet: MarkdownStyleSheet(
+                blockquoteDecoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
                 ),
-              ],
+                textAlign: WrapAlignment.start,
+              ),
+              data: app.app.additionalSettings['about'],
+              onTapLink: (text, href, title) {
+                if (href != null) {
+                  launchUrlString(href, mode: LaunchMode.externalApplication);
+                }
+              },
+              extensionSet: md.ExtensionSet(
+                md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                [
+                  md.EmojiSyntax(),
+                  ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                ],
+              ),
             ),
+          ),
         ],
       );
     }
@@ -970,12 +912,7 @@ class _AppPageState extends State<AppPage> {
                               Text(app.name),
                               Text(
                                 t('byX', args: [app.author]),
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
-                                    ),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
                           ),
