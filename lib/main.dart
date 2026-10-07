@@ -284,7 +284,6 @@ class _UpdatiumState extends State<Updatium> {
                         'versionDetection': true,
                         'apkFilterRegEx': 'fdroid',
                         'invertAPKFilter': true,
-                        'useVersionCodeAsOSVersion': false,
                         'includePrereleases': false,
                       },
                       null,
