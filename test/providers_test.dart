@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/providers/apk_json_migration.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
