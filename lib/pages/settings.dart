@@ -786,9 +786,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 },
                                 child: Text(
                                   'about'.t(),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                  ),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
                               ),
                               value: settingsProvider

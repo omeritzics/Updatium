@@ -35,12 +35,7 @@ class Bitbucket extends AppSource {
                 mode: LaunchMode.externalApplication,
               );
             },
-            child: Text(
-              'about'.t(),
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-            ),
+            child: Text('about'.t(), style: const TextStyle(fontSize: 12)),
           ),
         ],
       ),
