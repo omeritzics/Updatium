@@ -236,8 +236,10 @@ class AddAppPageState extends State<AddAppPage> {
     controller: _sourceOverrideController,
   );
 
-  Widget getSourcesListWidget() => Row(
-    mainAxisSize: MainAxisSize.min,
+  Widget getSourcesListWidget() => Wrap(
+    spacing: 8,
+    runSpacing: 4,
+    crossAxisAlignment: WrapCrossAlignment.center,
     children: [
       TextButton.icon(
         onPressed: () {
@@ -248,47 +250,42 @@ class AddAppPageState extends State<AddAppPage> {
                 scrollable: true,
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
                 title: Text('supportedSources'.t()),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ...sourceProvider.sources.map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: GestureDetector(
-                          onTap: e.hosts.isNotEmpty
-                              ? () {
-                                  launchUrlString(
-                                    'https://${e.hosts[0]}',
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                }
-                              : null,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  '${e.name} ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
-                                  style: TextStyle(
-                                    decoration: e.hosts.isNotEmpty
-                                        ? TextDecoration.underline
-                                        : TextDecoration.none,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                content: SizedBox(
+                  width: double.maxFinite,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: sourceProvider.sources.map((e) {
+                          final label = Text(
+                            '${e.name}${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
+                          );
+                          if (e.hosts.isEmpty) {
+                            return Chip(label: label);
+                          }
+                          return ActionChip(
+                            label: label,
+                            onPressed: () {
+                              launchUrlString(
+                                'https://${e.hosts[0]}',
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                          );
+                        }).toList(),
                       ),
-                    ),
-                    gap12,
-                    Text(
-                      '${'note'.t()}:',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(t('selfHostedNote', args: ['overrideSource'.t()])),
-                  ],
+                      gap12,
+                      Text(
+                        '${'note'.t()}:',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(t('selfHostedNote', args: ['overrideSource'.t()])),
+                    ],
+                  ),
                 ),
                 actions: [
                   TextButton(
@@ -307,7 +304,6 @@ class AddAppPageState extends State<AddAppPage> {
           padding: EdgeInsets.zero,
         ),
       ),
-      horizontalGap8,
       TextButton.icon(
         onPressed: () async {
           setState(() {
