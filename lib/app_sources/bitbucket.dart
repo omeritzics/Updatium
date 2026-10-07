@@ -28,8 +28,8 @@ class Bitbucket extends AppSource {
         required: false,
         belowWidgets: [
           const SizedBox(height: 4),
-          GestureDetector(
-            onTap: () {
+          TextButton(
+            onPressed: () {
               launchUrlString(
                 'https://support.atlassian.com/bitbucket-cloud/docs/create-an-api-token/',
                 mode: LaunchMode.externalApplication,
@@ -38,7 +38,6 @@ class Bitbucket extends AppSource {
             child: Text(
               'about'.t(),
               style: const TextStyle(
-                decoration: TextDecoration.underline,
                 fontSize: 12,
               ),
             ),

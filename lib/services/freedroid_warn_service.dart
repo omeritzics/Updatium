@@ -120,7 +120,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(
             strings['solution'] ?? 'Solution',
-            style: const TextStyle(color: Colors.green),
+            style: const TextStyle(color: Colors.greenAccent),
           ),
         ),
         TextButton(

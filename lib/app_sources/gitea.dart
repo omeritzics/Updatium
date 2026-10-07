@@ -28,8 +28,8 @@ class Gitea extends AppSource {
         required: false,
         belowWidgets: [
           const SizedBox(height: 4),
-          GestureDetector(
-            onTap: () {
+          TextButton(
+            onPressed: () {
               launchUrlString(
                 'https://docs.gitea.com/next/development/api-usage',
                 mode: LaunchMode.externalApplication,
@@ -38,7 +38,6 @@ class Gitea extends AppSource {
             child: Text(
               'about'.t(),
               style: const TextStyle(
-                decoration: TextDecoration.underline,
                 fontSize: 12,
               ),
             ),

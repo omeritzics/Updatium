@@ -777,8 +777,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text(
                                 'beforeNewInstallsShareToAppVerifierBG'.t(),
                               ),
-                              subtitle: GestureDetector(
-                                onTap: () {
+                              subtitle: TextButton(
+                                onPressed: () {
                                   launchUrlString(
                                     'https://github.com/RoundSalmon4/AppVerifierBG',
                                     mode: LaunchMode.externalApplication,
@@ -787,7 +787,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: Text(
                                   'about'.t(),
                                   style: const TextStyle(
-                                    decoration: TextDecoration.underline,
                                     fontSize: 12,
                                   ),
                                 ),
