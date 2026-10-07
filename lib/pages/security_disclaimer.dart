@@ -125,23 +125,9 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                t(item.titleKey),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurfaceVariant,
-                  fontSize: 14,
-                ),
-              ),
+              Text(t(item.titleKey)),
               const SizedBox(height: 4),
-              Text(
-                t(item.contentKey),
-                style: TextStyle(
-                  color: colorScheme.onSurfaceVariant,
-                  fontSize: 14,
-                  height: 1.4,
-                ),
-              ),
+              Text(t(item.contentKey)),
             ],
           ),
         ),
@@ -169,13 +155,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(
-                    'acceptAndContinue'.t(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  child: Text('acceptAndContinue'.t()),
                 ),
               ),
             ),
@@ -191,11 +171,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
                     'decline'.t(),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.error,
-                    ),
+                    style: TextStyle(fontSize: 16, color: colorScheme.error),
                   ),
                 ),
               ),
