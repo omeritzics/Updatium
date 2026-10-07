@@ -133,6 +133,7 @@
     "importFromURLList": "Importer fra URL-liste",
     "searchQuery": "Søketekst",
     "appURLList": "App URL-liste",
+    "trackedURL": "Tracked URL",
     "line": "Linje",
     "searchX": "Søk etter {}",
     "noResults": "Ingen resultater funnet",

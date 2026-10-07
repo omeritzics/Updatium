@@ -133,6 +133,7 @@
     "importFromURLList": "Импорт из списка URL-адресов",
     "searchQuery": "Поисковый запрос",
     "appURLList": "Список URL-адресов приложений",
+    "trackedURL": "Tracked URL",
     "line": "Строка",
     "searchX": "Поиск {}",
     "noResults": "Ничего не найдено",

@@ -133,6 +133,7 @@
     "importFromURLList": "Import from URL list",
     "searchQuery": "Search query",
     "appURLList": "App URL list",
+    "trackedURL": "Tracked URL",
     "line": "Line",
     "searchX": "Search {}",
     "noResults": "No results found",

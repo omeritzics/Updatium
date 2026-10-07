@@ -133,6 +133,7 @@
     "importFromURLList": "Impordi võrguaadresside loendist",
     "searchQuery": "Otsingupäring",
     "appURLList": "Rakenduse võrguaadresside loend",
+    "trackedURL": "Tracked URL",
     "line": "Rida",
     "searchX": "Otsi {}",
     "noResults": "Tulemusi ei leidu",

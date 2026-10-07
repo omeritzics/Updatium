@@ -133,6 +133,7 @@
     "importFromURLList": "Імпорт зі списку URL-адрес",
     "searchQuery": "Пошуковий запит",
     "appURLList": "Список URL-адрес застосунків",
+    "trackedURL": "Tracked URL",
     "line": "Лінія",
     "searchX": "Пошук {}",
     "noResults": "Результати відсутні",

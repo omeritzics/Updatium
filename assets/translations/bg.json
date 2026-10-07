@@ -133,6 +133,7 @@
     "importFromURLList": "Импорт от списък с URL адреси",
     "searchQuery": "Заявка за търсене",
     "appURLList": "Списък с URL адреси на приложения",
+    "trackedURL": "Tracked URL",
     "line": "Ред",
     "searchX": "Търсене на {}",
     "noResults": "Не са намерени резултати",

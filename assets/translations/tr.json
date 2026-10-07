@@ -133,6 +133,7 @@
     "importFromURLList": "Bağlantı (URL) listesinden içe aktar",
     "searchQuery": "Arama sorgusu",
     "appURLList": "Uygulama bağlantı (URL) listesi",
+    "trackedURL": "Tracked URL",
     "line": "Satır",
     "searchX": "{} Ara",
     "noResults": "Sonuç bulunamadı",

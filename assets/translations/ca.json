@@ -133,6 +133,7 @@
     "importFromURLList": "Importa des de la llista d'URL",
     "searchQuery": "Terme de cerca",
     "appURLList": "Llista d'URL d'aplicacions",
+    "trackedURL": "Tracked URL",
     "line": "Línia",
     "searchX": "Cerca {}",
     "noResults": "No hi ha resultats",

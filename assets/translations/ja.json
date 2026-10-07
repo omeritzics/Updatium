@@ -133,6 +133,7 @@
     "importFromURLList": "URLリストからのインポート",
     "searchQuery": "検索キーワード",
     "appURLList": "アプリのURLリスト",
+    "trackedURL": "Tracked URL",
     "line": "行",
     "searchX": "{} で検索",
     "noResults": "結果は見つかりませんでした",

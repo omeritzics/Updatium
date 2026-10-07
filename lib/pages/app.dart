@@ -552,71 +552,23 @@ class _AppPageState extends State<AppPage> {
     }
 
     getFullInfoColumn({bool small = false}) => Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
-        GestureDetector(
-          onTap: () {
-            launchUrlString(app.app.url, mode: LaunchMode.externalApplication);
-          },
-          onLongPress: () {
-            Clipboard.setData(ClipboardData(text: app.app.url));
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('copiedToClipboard'.t())));
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: settingsProvider.highlightTouchTargets
-                      ? () {
-                          bool usePureBlack =
-                              settingsProvider.useBlackTheme &&
-                              Theme.of(context).brightness == Brightness.dark;
-                          if (usePureBlack) {
-                            return Colors.white.withValues(alpha: 0.16);
-                          }
-                          return (Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).primaryColorLight)
-                              .withValues(
-                                alpha:
-                                    Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? 20 / 255
-                                    : 40 / 255,
-                              );
-                        }()
-                      : null,
-                ),
-                child: Tooltip(
-                  message: app.app.url,
-                  child: Text(
-                    app.app.url,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        Tooltip(
+          message: app.app.url,
+          child: Text(
+            '${'trackedURL'.t()}: ${app.app.url}',
+            textAlign: TextAlign.start,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         const SizedBox(height: 4),
         Text(
-          app.app.id,
-          textAlign: TextAlign.start,
+          '${'appId'.t()}: ${app.app.id}',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
         gap24,
