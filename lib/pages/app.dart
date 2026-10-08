@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
@@ -192,40 +193,7 @@ class _AppPageState extends State<AppPage> {
                 spacing: 12,
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.fromMap({
-                          WidgetState.disabled: colorScheme.onSurface
-                              .withValues(alpha: 0.10),
-                          WidgetState.any: Colors.transparent,
-                        }),
-                        side: WidgetStatePropertyAll(
-                          BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignInside,
-                            color: colorScheme.outlineVariant,
-                          ),
-                        ),
-                        elevation: WidgetStatePropertyAll(0),
-                        overlayColor: WidgetStateProperty.fromMap({
-                          WidgetState.disabled: colorScheme.onSurfaceVariant
-                              .withAlpha(0),
-                          WidgetState.pressed: colorScheme.onSurfaceVariant
-                              .withValues(alpha: 0.10),
-                          WidgetState.focused: colorScheme.onSurfaceVariant
-                              .withValues(alpha: 0.10),
-                          WidgetState.hovered: colorScheme.onSurfaceVariant
-                              .withValues(alpha: 0.08),
-                          WidgetState.any: colorScheme.onSurfaceVariant
-                              .withAlpha(0),
-                        }),
-                        foregroundColor: WidgetStateProperty.fromMap({
-                          WidgetState.disabled: colorScheme.onSurface
-                              .withValues(alpha: 0.38),
-                          WidgetState.any: colorScheme.onSurfaceVariant,
-                        }),
-                        textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
-                      ),
+                    child: M3EOutlinedButton(
                       onPressed: () async {
                         await appsProvider.updatePendingRepoRename(
                           appValue.app.id,
@@ -236,11 +204,7 @@ class _AppPageState extends State<AppPage> {
                     ),
                   ),
                   Expanded(
-                    child: FilledButton.tonal(
-                      style: ButtonStyle(
-                        elevation: WidgetStatePropertyAll(0),
-                        textStyle: WidgetStatePropertyAll(textTheme.labelLarge),
-                      ),
+                    child: M3EFilledButton.tonal(
                       onPressed: () async {
                         await appsProvider.acceptRepoRename(
                           appValue.app.id,
@@ -403,26 +367,19 @@ class _AppPageState extends State<AppPage> {
           ),
           gap24,
           Text(versionLines, style: Theme.of(context).textTheme.bodyLarge),
-          changeLogFn != null || app.app.releaseDate != null
-              ? InkWell(
-                  onTap: changeLogFn,
-                  child: Text(
-                    app.app.releaseDate == null
-                        ? 'changes'.t()
-                        : app.app.releaseDate!.toLocal().toString(),
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      decoration: changeLogFn != null
-                          ? TextDecoration.underline
-                          : null,
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink(),
+          if (app.app.releaseDate != null)
+            Text(
+              '${'releaseDate'.t()}: ${app.app.releaseDate!.toLocal().toString().split('.').first}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          if (changeLogFn != null)
+            TextButton.icon(
+                onPressed: changeLogFn,
+                icon: const Icon(Icons.article_outlined, size: 18),
+                label: Text('changes'.t()),
+              ),
           gap24,
-          Text(infoLines, textAlign: TextAlign.start),
+          Text(infoLines),
 
           /* Certificate Hashes */
           if (app.certificateHashes.isNotEmpty) gap24,
@@ -440,14 +397,7 @@ class _AppPageState extends State<AppPage> {
                     SnackBar(content: Text('copiedToClipboard'.t())),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(
-                    hash,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                child: Text(hash, maxLines: 3, overflow: TextOverflow.ellipsis),
               );
             }).toList(),
           ),
@@ -867,37 +817,28 @@ class _AppPageState extends State<AppPage> {
                                     appsProvider.apps[app.app.id];
 
                                 if (updatedAppInMemory?.icon != null) {
-                                  return Padding(
-                                    padding: EdgeInsets.zero,
-                                    child: Image.memory(
-                                      updatedAppInMemory!.icon!,
-                                      width: 48,
-                                      height: 48,
-                                      gaplessPlayback: true,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                            return Icon(
-                                              Icons.apps,
-                                              size: 48,
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.primary,
-                                            );
-                                          },
-                                    ),
+                                  return Image.memory(
+                                    updatedAppInMemory!.icon!,
+                                    width: 48,
+                                    height: 48,
+                                    gaplessPlayback: true,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(
+                                        Icons.apps_rounded,
+                                        size: 48,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      );
+                                    },
                                   );
                                 }
 
                                 // Fallback icon while loading
-                                return Padding(
-                                  padding: EdgeInsets.zero,
-                                  child: Icon(
-                                    Icons.apps_rounded,
-                                    size: 48,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
+                                return Icon(
+                                  Icons.apps_rounded,
+                                  size: 48,
+                                  color: Theme.of(context).colorScheme.primary,
                                 );
                               },
                             );
