@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "ফিক্সড APK URL সমর্থন করুন",
     "selectX": "{} নির্বাচন করুন",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "একসাথে একাধিক ডাউনলোড করার অনুমতি দিন",
     "useShizuku": "ইনস্টল করতে Shizuku বা Sui ব্যবহার করুন",
     "installMethod": "Install method",

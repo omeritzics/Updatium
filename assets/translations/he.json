@@ -377,7 +377,7 @@
     "supportFixedAPKURL": "תמיכה בכתובות קבועות של קובצי APK",
     "selectX": "בחירת {}",
     "showSystemApps": "הצגת יישומי מערכת",
-    "hideSystemApps": "הסתרת יישומי מערכת",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "לאפשר מספר הורדות במקביל",
     "useShizuku": "שימוש ב־Shizuku או Sui להתקנה",
     "installMethod": "שיטת התקנה",

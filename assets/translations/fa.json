@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "پشتیبانی از URL های APK ثابت",
     "selectX": "انتخاب کنید {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "اجازه دانلود موازی",
     "useShizuku": "برای نصب از Shizuku یا Sui استفاده کنید",
     "installMethod": "Install method",

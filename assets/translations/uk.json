@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "Підтримка фіксованих посилань на APK",
     "selectX": "Вибрати {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Дозволити паралельні завантаження",
     "useShizuku": "Використовуйте Shizuku або Sui для встановлення",
     "installMethod": "Install method",

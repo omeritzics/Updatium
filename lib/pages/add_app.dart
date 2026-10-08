@@ -315,10 +315,14 @@ class AddAppPageState extends State<AddAppPage> {
           });
           if (!mounted) return;
 
+          final addedAppIds = context.read<AppsProvider>().apps.keys.toSet();
+
           final selectedPackageName = await showDialog<String>(
             context: context,
-            builder: (BuildContext ctx) =>
-                InstalledAppsDialog(installedApps: installedApps),
+            builder: (BuildContext ctx) => InstalledAppsDialog(
+              installedApps: installedApps,
+              addedAppIds: addedAppIds,
+            ),
           );
 
           if (selectedPackageName != null) {
@@ -1310,8 +1314,13 @@ class _SelectionModalState extends State<SelectionModal> {
 
 class InstalledAppsDialog extends StatefulWidget {
   final List<PackageInfo> installedApps;
+  final Set<String> addedAppIds;
 
-  const InstalledAppsDialog({super.key, required this.installedApps});
+  const InstalledAppsDialog({
+    super.key,
+    required this.installedApps,
+    this.addedAppIds = const {},
+  });
 
   @override
   State<InstalledAppsDialog> createState() => _InstalledAppsDialogState();
@@ -1319,6 +1328,7 @@ class InstalledAppsDialog extends StatefulWidget {
 
 class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   bool showSystemApps = false;
+  bool hideAddedApps = false;
   final Map<String, Uint8List> _iconCache = {};
   final Map<String, String> _labelCache = {};
   final Set<String> _loadedPackageNames = {};
@@ -1370,7 +1380,11 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   Widget build(BuildContext context) {
     final filteredApps = widget.installedApps.where((app) {
       final flags = app.applicationInfo?.flags ?? 0;
-      return showSystemApps || (flags & 0x00000001) == 0;
+      if (!showSystemApps && (flags & 0x00000001) != 0) return false;
+      if (hideAddedApps && widget.addedAppIds.contains(app.packageName)) {
+        return false;
+      }
+      return true;
     }).toList();
 
     return AlertDialog(
@@ -1382,13 +1396,21 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
           children: [
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: Text(
-                showSystemApps ? 'hideSystemApps'.t() : 'showSystemApps'.t(),
-              ),
+              title: Text('showSystemApps'.t()),
               value: showSystemApps,
               onChanged: (val) {
                 setState(() {
                   showSystemApps = val;
+                });
+              },
+            ),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text('hideAddedApps'.t()),
+              value: hideAddedApps,
+              onChanged: (val) {
+                setState(() {
+                  hideAddedApps = val;
                 });
               },
             ),
@@ -1403,6 +1425,7 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
                     app: app,
                     icon: _iconCache[packageName],
                     label: _labelCache[packageName],
+                    isAdded: widget.addedAppIds.contains(packageName),
                     onNeedLoad: _onNeedLoad,
                   );
                 },
@@ -1425,6 +1448,7 @@ class InstalledAppTile extends StatefulWidget {
   final PackageInfo app;
   final Uint8List? icon;
   final String? label;
+  final bool isAdded;
   final ValueChanged<String> onNeedLoad;
 
   const InstalledAppTile({
@@ -1432,6 +1456,7 @@ class InstalledAppTile extends StatefulWidget {
     required this.app,
     this.icon,
     this.label,
+    this.isAdded = false,
     required this.onNeedLoad,
   });
 
@@ -1483,6 +1508,9 @@ class _InstalledAppTileState extends State<InstalledAppTile> {
           : const Icon(Icons.apps),
       title: Text(_label ?? (widget.app.packageName ?? 'Unknown')),
       subtitle: Text(widget.app.packageName ?? ''),
+      trailing: widget.isAdded
+          ? const Icon(Icons.check_circle, color: Colors.green)
+          : null,
       onTap: () {
         Navigator.of(context).pop(widget.app.packageName);
       },

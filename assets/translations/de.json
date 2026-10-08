@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "Unterstützung von festen APK-URLs",
     "selectX": "{} wählen",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Parallele Downloads erlauben",
     "useShizuku": "Shizuku oder Sui zur Installation verwenden",
     "installMethod": "Install method",

@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "支援固定的 APK 網址",
     "selectX": "選取 {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "允許平行下載",
     "useShizuku": "使用 Dhizuku、Shizuku 或 Sui 進行安裝",
     "installMethod": "Install method",

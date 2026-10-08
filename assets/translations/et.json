@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "Toeta fikseeritud APK-failide võrguaadresse",
     "selectX": "Vali {}",
     "showSystemApps": "Näita süsteemi rakendusi",
-    "hideSystemApps": "Peida süsteemi rakendused",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Luba rööpsed allalaadimised",
     "useShizuku": "Kasuta paigaldamiseks Dhizuku, Shizuku või Sui liidestusi",
     "installMethod": "Install method",

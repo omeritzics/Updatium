@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "Sabit APK bağlantılarını (URL) destekle",
     "selectX": "{} seç",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Eşzamanlı (Paralel) indirmelere izin ver",
     "useShizuku": "Yüklemek için Shizuku veya Sui kullan",
     "installMethod": "Install method",

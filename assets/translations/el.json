@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "Υποστήριξη σταθερών διευθύνσεων URL για APK",
     "selectX": "Επιλογή {}",
     "showSystemApps": "Εμφάνιση εφαρμογών συστήματος",
-    "hideSystemApps": "Απόκρυψη εφαρμογών συστήματος",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Να επιτρέπονται παράλληλες μεταφορτώσεις",
     "useShizuku": "Χρήση του Shizuku ή του Sui για εγκατάσταση",
     "installMethod": "Install method",

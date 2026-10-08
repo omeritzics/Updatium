@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "Vaste APK-URL's ondersteunen",
     "selectX": "{} selecteren",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Parallelle downloads toestaan",
     "useShizuku": "Shizuku of Sui gebruiken om te installeren",
     "installMethod": "Install method",

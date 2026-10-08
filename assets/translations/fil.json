@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "Suportahan ang mga fixed APK URL",
     "selectX": "Piliin ang {}",
     "showSystemApps": "Ipakita ang mga system app",
-    "hideSystemApps": "Ibahagi ang mga system app",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Payagan ang mga parallel download",
     "useShizuku": "Gamitin ang Shizuku o Sui upang mag-install",
     "installMethod": "Install method",

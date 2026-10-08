@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "நிலையான APK URLகளை ஆதரி",
     "selectX": "{} ஐத் தேர்ந்தெடு",
     "showSystemApps": "கணினி செயலிகளைக் காட்டு",
-    "hideSystemApps": "கணினி செயலிகளை மறை",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "இணை பதிவிறக்கங்களை (Parallel downloads) அனுமதி",
     "useShizuku": "நிறுவ Shizuku அல்லது Sui ஐப் பயன்படுத்து",
     "installMethod": "Install method",

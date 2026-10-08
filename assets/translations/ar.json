@@ -373,7 +373,7 @@
     "supportFixedAPKURL": "دعم روابط APK الثابتة",
     "selectX": "اختر {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "السماح بالتنزيل المتوازي",
     "useShizuku": "استخدم Shizuku أو Sui للتثبيت",
     "installMethod": "Install method",

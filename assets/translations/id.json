@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "Mendukung URL APK tetap",
     "selectX": "Pilih {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Izinkan mengunduh paralel",
     "useShizuku": "Gunakan Shizuku atau Sui untuk memasang",
     "installMethod": "Install method",

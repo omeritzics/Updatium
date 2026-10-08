@@ -375,7 +375,7 @@
     "supportFixedAPKURL": "Støtt faste APK-URL-er",
     "selectX": "Velg {}",
     "showSystemApps": "Vis systemapper",
-    "hideSystemApps": "Skjul systemapper",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Tillat parallelle nedlastinger",
     "useShizuku": "Bruk Shizuku eller Sui for å installere",
     "installMethod": "Install method",

@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "固定されたAPKのURLをサポートする",
     "selectX": "{} 選択",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "並行ダウンロードを許可する",
     "useShizuku": "Dhizuku、ShizukuまたはSuiを使用してインストールする",
     "installMethod": "Install method",

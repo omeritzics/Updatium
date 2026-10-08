@@ -372,7 +372,7 @@
     "supportFixedAPKURL": "Suportă URL-uri APK fixe",
     "selectX": "Selectează {}",
     "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
+    "hideAddedApps": "Hide already added apps",
     "parallelDownloads": "Permite descărcări paralele",
     "useShizuku": "Folosește Shizuku sau Sui pentru a instala",
     "installMethod": "Install method",
