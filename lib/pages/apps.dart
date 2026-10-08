@@ -541,12 +541,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           // Hide subtext if translation key is not found (returns the key itself)
                           return subtext == 'noAppsSubtext' ? '' : subtext;
                         }(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: preserveTransparency(
-                            Theme.of(context).colorScheme.onSurface,
-                            0.7,
-                          ),
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                         textAlign: TextAlign.center,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
@@ -759,8 +754,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                       const SizedBox(height: 4),
                       // Author name
@@ -778,7 +772,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: 'downloadProgress'.t(),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 80,
+                            width: 100,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -867,11 +861,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     appInfo.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: app.pinned
-                          ? FontWeight.w600
-                          : FontWeight.w500,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 if (app.pinned)
@@ -898,7 +888,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: 'downloadProgress'.t(),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 80,
+                      width: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

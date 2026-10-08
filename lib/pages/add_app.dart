@@ -567,10 +567,6 @@ class AddAppPageState extends State<AddAppPage> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.import_export),
         label: Text('importExport'.t()),
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 3,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         onPressed: () {
           HapticFeedback.selectionClick();
           Navigator.push(

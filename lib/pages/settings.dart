@@ -32,12 +32,14 @@ import 'package:shizuku_apk_installer/shizuku_apk_installer.dart'
     hide InstallerMode;
 
 // Material 3 spacing tokens
+const gap4 = SizedBox(height: 4);
 const gap8 = SizedBox(height: 8);
 const gap12 = SizedBox(height: 12);
 const gap16 = SizedBox(height: 16);
 const gap24 = SizedBox(height: 24);
 const gap32 = SizedBox(height: 32);
 
+const horizontalGap4 = SizedBox(width: 4);
 const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
@@ -472,11 +474,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       children: [
                         ExpansionTile(
                           leading: Icon(Icons.update),
-                          title: Text(
-                            'updates'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('updates'.t()),
                           initiallyExpanded:
                               settingsProvider.updatesSectionExpanded,
                           onExpansionChanged: (bool expanded) {
@@ -685,60 +683,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
 
-                            //if (settingsProvider.safeMode &&
-                            //    settingsProvider.preventUninstallation)
-                            //  SwitchListTile(
-                            //    title: Text('safeModeAntiCheat'.t()),
-                            //    subtitle: Text(
-                            //      'safeModeAntiCheatDescription'.t(),
-                            //      style: Theme.of(context).textTheme.labelSmall,
-                            //  ),
-                            //  value: settingsProvider.safeModeAntiCheat,
-                            //  onChanged: (value) async {
-                            //    if (value) {
-                            //      // Enable anti-cheat
-                            //      final success =
-                            //          await DeviceAdminService.enableAntiCheat();
-                            //      if (success) {
-                            //        settingsProvider.safeModeAntiCheat = true;
-                            //      } else {
-                            //        ScaffoldMessenger.of(
-                            //          context,
-                            //        ).showSnackBar(
-                            //          SnackBar(
-                            //            content: Text(
-                            //              'safeModeAntiCheatError'.t(),
-                            //            ),
-                            //            backgroundColor: Theme.of(
-                            //              context,
-                            //            ).colorScheme.error,
-                            //          ),
-                            //        );
-                            //      }
-                            //    } else {
-                            //      // Disable anti-cheat
-                            //      final success =
-                            //          await DeviceAdminService.disableAntiCheat();
-                            //      if (success) {
-                            //        settingsProvider.safeModeAntiCheat =
-                            //            false;
-                            //      } else {
-                            //        ScaffoldMessenger.of(
-                            //          context,
-                            //        ).showSnackBar(
-                            //          SnackBar(
-                            //            content: Text(
-                            //              'safeModeAntiCheatError'.t(),
-                            //            ),
-                            //            backgroundColor: Theme.of(
-                            //              context,
-                            //            ).colorScheme.error,
-                            //          ),
-                            //        );
-                            //      }
-                            //    }
-                            //  },
-                            //),
+                            // TODO: Implement anti-cheat for Safe Mode
                             SwitchListTile(
                               title: Text('checkOnStart'.t()),
                               value: settingsProvider.checkOnStart,
@@ -777,17 +722,22 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text(
                                 'beforeNewInstallsShareToAppVerifierBG'.t(),
                               ),
-                              subtitle: TextButton(
+                              subtitle: TextButton.icon(
                                 onPressed: () {
                                   launchUrlString(
                                     'https://github.com/RoundSalmon4/AppVerifierBG',
                                     mode: LaunchMode.externalApplication,
                                   );
                                 },
-                                child: Text(
+                                label: Text(
                                   'about'.t(),
                                   style: const TextStyle(fontSize: 12),
                                 ),
+                                style: TextButton.styleFrom(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.zero,
+                                ),
+                                icon: const Icon(Icons.info_outline, size: 18),
                               ),
                               value: settingsProvider
                                   .beforeNewInstallsShareToAppVerifierBG,
@@ -913,11 +863,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap16,
                         ExpansionTile(
                           leading: Icon(Icons.cloud_download),
-                          title: Text(
-                            'sourceSpecific'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('sourceSpecific'.t()),
                           initiallyExpanded:
                               settingsProvider.appViewSectionExpanded,
                           onExpansionChanged: (bool expanded) {
@@ -1027,11 +973,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap16,
                         ExpansionTile(
                           leading: Icon(Icons.palette_rounded),
-                          title: Text(
-                            'appearance'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('appearance'.t()),
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
                           onExpansionChanged: (bool expanded) {
@@ -1144,7 +1086,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           gap8,
-
                                           SwitchListTile(
                                             title: Text('useSystemFont'.t()),
                                             value:
@@ -1216,11 +1157,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap16,
                         ExpansionTile(
                           leading: Icon(Icons.list_rounded),
-                          title: Text(
-                            'appView'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('appView'.t()),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
                           onExpansionChanged: (bool expanded) {
@@ -1392,11 +1329,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap16,
                         ExpansionTile(
                           leading: Icon(Icons.more_horiz),
-                          title: Text(
-                            'misc'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('misc'.t()),
                           initiallyExpanded: false,
                           onExpansionChanged: (bool expanded) {
                             // Optional: save expansion state in settingsProvider if desired
@@ -1416,11 +1349,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap16,
                         ExpansionTile(
                           leading: Icon(Icons.category_rounded),
-                          title: Text(
-                            'categories'.t(),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                          title: Text('categories'.t()),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
                           onExpansionChanged: (bool expanded) {
@@ -1442,10 +1371,6 @@ class _SettingsPageState extends State<SettingsPage> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.info_outline_rounded),
         label: Text('about'.t()),
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 3,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         onPressed: () {
           showDialog(
             context: context,
@@ -1864,16 +1789,10 @@ class LicenseDialog extends StatelessWidget {
             if (snapshot.hasData) {
               return SelectableText(
                 snapshot.data!,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontFamily: 'monospace',
-                  height: 1.5,
-                ),
+                style: Theme.of(context).textTheme.bodySmall,
               );
             } else if (snapshot.hasError) {
-              return Text(
-                'error'.t(),
-                style: Theme.of(context).textTheme.bodyMedium,
-              );
+              return Text('error'.t());
             }
             return const Center(child: CircularProgressIndicator());
           },
@@ -2002,7 +1921,7 @@ class _AboutDialogState extends State<AboutDialog> {
             children: [
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -2010,15 +1929,14 @@ class _AboutDialogState extends State<AboutDialog> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/graphics/icon.png',
+                      'assets/graphics/icon.svg',
                       width: 72,
                       height: 72,
                     ),
-                    gap12,
+                    gap8,
                     Text(
                       'Updatium',
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     gap8,
                     GestureDetector(
@@ -2039,7 +1957,7 @@ class _AboutDialogState extends State<AboutDialog> {
                         ),
                       ),
                     ),
-                    gap8,
+                    gap12,
                     Text(
                       'appDescription'.t(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -2055,7 +1973,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 'developedBy'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              gap8,
+              gap4,
               TextButton.icon(
                 onPressed: () {
                   launchUrlString(
@@ -2075,7 +1993,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 'sourceCode'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              gap8,
+              gap4,
               TextButton.icon(
                 onPressed: () {
                   launchUrlString(
@@ -2095,7 +2013,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 'license'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              gap8,
+              gap4,
               TextButton.icon(
                 onPressed: () {
                   showDialog(
@@ -2112,7 +2030,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   padding: EdgeInsets.zero,
                 ),
               ),
-              gap24,
+              gap16,
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
