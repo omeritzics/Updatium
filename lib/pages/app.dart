@@ -374,10 +374,10 @@ class _AppPageState extends State<AppPage> {
             ),
           if (changeLogFn != null)
             TextButton.icon(
-                onPressed: changeLogFn,
-                icon: const Icon(Icons.article_outlined, size: 18),
-                label: Text('changes'.t()),
-              ),
+              onPressed: changeLogFn,
+              icon: const Icon(Icons.article_outlined, size: 18),
+              label: Text('changes'.t()),
+            ),
           gap24,
           Text(infoLines),
 
