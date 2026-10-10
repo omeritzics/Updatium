@@ -28,7 +28,7 @@
     "noDescription": "چۈشەندۈرۈشى يوق",
     "newUrl": "New URL",
     "cancel": "ۋاز كەچ",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "داۋاملاشتۇر",
     "requiredInBrackets": "(زۆرۈر)",
     "dropdownNoOptsError": "خاتالىق: تىزىملىكتە ئاز دېگەندە بىر تاللاش بولۇشى كېرەك",
@@ -272,7 +272,6 @@
     "category": "تۈر",
     "noCategory": "تۈرى يوق",
     "noCategories": "تۈرلەر يوق",
-    "categoryDeleteQuestion": "تۈرلەرنى ئۆچۈرەمسىز؟",
     "categoryDeleteWarning": "ئۆچۈرۈلگەن تۈرلەردىكى بارلىق ئەپلەر تۈرگە ئايرىلمىغان ھالەتكە تەڭشىلىدۇ.",
     "addCategory": "تۈر قوشۇش",
     "label": "بەلگە",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "تۈرلەرنى ئۆچۈرەمسىز؟"
+    }
 }
