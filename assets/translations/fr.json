@@ -87,7 +87,7 @@
     "removeSelectedApps": "Supprimer les applications sélectionnées",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Mettre à jour {}",
     "installX": "Installer {}",
@@ -272,7 +272,6 @@
     "category": "Catégorie",
     "noCategory": "Aucune catégorie",
     "noCategories": "Aucune catégorie",
-    "categoryDeleteQuestion": "Supprimer les catégories ?",
     "categoryDeleteWarning": "Toutes les applications des catégories supprimées deviendront non catégorisées.",
     "addCategory": "Ajouter une catégorie",
     "label": "Étiquette",
@@ -436,67 +435,67 @@
     "multipleSigners": "Plusieurs signataires",
     "removeAppQuestion": {
         "one": "Supprimer l'application ?",
-        "other": "Supprimer les applications ?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Trop de requêtes (limite atteinte) - réessayez dans {} minute",
-        "other": "Trop de requêtes (limite atteinte) - réessayez dans {} minutes"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "La recherche en arrière-plan a rencontré une {error}, une nouvelle tentative sera programmée dans {} minute",
-        "other": "La recherche en arrière-plan a rencontré une {error}, une nouvelle tentative sera programmée dans {} minutes"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "La recherche en arrière-plan a trouvé {} mise à jour - l'utilisateur sera averti si nécessaire",
-        "other": "La recherche en arrière-plan a trouvé {} mises à jour - l'utilisateur sera averti si nécessaire"
+        "other": ""
     },
     "apps": {
         "one": "{} application",
-        "other": "{} applications"
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL"
+        "other": ""
     },
     "minute": {
         "one": "{} minute",
-        "other": "{} minutes"
+        "other": ""
     },
     "hour": {
         "one": "{} heure",
-        "other": "{} heures"
+        "other": ""
     },
     "day": {
         "one": "{} jour",
-        "other": "{} jours"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Journal effacé {n} (avant = {before}, après = {after})",
-        "other": "Journaux effacés {n} (avant = {before}, après = {after})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} et 1 autre application ont des mises à jour.",
-        "other": "{app} et {} autres applications ont des mises à jour."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} et 1 autre application ont été mises à jour.",
-        "other": "{app} et {} autres applications ont été mises à jour."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Échec de la mise à jour de {app} et 1 autre application.",
-        "other": "Échec de la mise à jour de {app} et {} autres applications."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} et 1 autre application ont peut-être été mises à jour.",
-        "other": "{app} et {} autres applications ont peut-être été mises à jour."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK"
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash de certificat",
-        "other": "Hashs de certificats"
+        "other": ""
     },
     "securityDisclaimerTitle": "Avis de Sécurité et Légal",
     "license": "Licence",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Supprimer les catégories ?"
+    }
 }

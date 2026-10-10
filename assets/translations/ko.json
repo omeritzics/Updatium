@@ -86,8 +86,8 @@
     "removeSelectedAppsQuestion": "선택한 앱을 제거하시겠습니까?",
     "removeSelectedApps": "선택한 앱 제거",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "",
+        "other": ""
     },
     "updateX": "{} 업데이트",
     "installX": "{} 설치",
@@ -272,7 +272,6 @@
     "category": "카테고리",
     "noCategory": "카테고리 없음",
     "noCategories": "카테고리 없음",
-    "categoryDeleteQuestion": "카테고리를 삭제하시겠습니까?",
     "categoryDeleteWarning": "삭제된 카테고리의 모든 앱은 미분류로 설정됩니다.",
     "addCategory": "카테고리 추가",
     "label": "레이블",
@@ -435,68 +434,68 @@
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "다수 Signers",
     "removeAppQuestion": {
-        "one": "앱을 제거하시겠습니까?",
-        "other": "앱을 제거하시겠습니까?"
+        "one": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "요청이 너무 많습니다 (속도 제한) - {}분 후에 다시 시도하세요",
-        "other": "요청이 너무 많습니다 (속도 제한) - {}분 후에 다시 시도하세요"
+        "one": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG 업데이트 확인 중 {error} 오류가 발생했습니다. {}분 후에 다시 확인을 예약합니다",
-        "other": "BG 업데이트 확인 중 {error} 오류가 발생했습니다. {}분 후에 다시 확인을 예약합니다"
+        "one": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG 업데이트 확인에서 {}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다",
-        "other": "BG 업데이트 확인에서 {}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다"
+        "one": "",
+        "other": ""
     },
     "apps": {
-        "one": "{} 앱",
-        "other": "{} 앱"
+        "one": "",
+        "other": ""
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "",
+        "other": ""
     },
     "minute": {
-        "one": "{} 분",
-        "other": "{} 분"
+        "one": "",
+        "other": ""
     },
     "hour": {
-        "one": "{} 시간",
-        "other": "{} 시간"
+        "one": "",
+        "other": ""
     },
     "day": {
-        "one": "{} 일",
-        "other": "{} 일"
+        "one": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "{n}개의 로그가 지워졌습니다 (이전 = {before}, 이후 = {after})",
-        "other": "{n}개의 로그가 지워졌습니다 (이전 = {before}, 이후 = {after})"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} 및 1개의 앱에 업데이트가 있습니다.",
-        "other": "{app} 및 {}개의 앱에 업데이트가 있습니다."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} 및 1개의 앱이 업데이트되었습니다.",
-        "other": "{app} 및 {}개의 앱이 업데이트되었습니다."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{app} 및 1개의 앱 업데이트에 실패했습니다.",
-        "other": "{app} 및 {}개의 앱 업데이트에 실패했습니다."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} 및 1개의 앱이 업데이트되었을 수 있습니다.",
-        "other": "{app} 및 {}개의 앱이 업데이트되었을 수 있습니다."
+        "one": "",
+        "other": ""
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "",
+        "other": ""
     },
     "certificateHash": {
-        "one": "인증서 해시",
-        "other": "인증서 해시"
+        "one": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "보안 및 법적 고지",
     "license": "라이선스",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    }
 }
