@@ -7,12 +7,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:http/http.dart';
+
 import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
@@ -326,14 +326,17 @@ Map<String, dynamic> getDefaultValuesFromFormItems(
 ) {
   return Map.fromEntries(
     items
-        .map((row) => row.map((el) => MapEntry(el.key, el.defaultValue ?? '')))
-        .reduce((value, element) => [...value, ...element]),
+        .expand((row) => row)
+        .map((el) => MapEntry(el.key, el.defaultValue ?? '')),
   );
 }
 
 List<MapEntry<String, String>> getApkUrlsFromUrls(List<String> urls) =>
     urls.map((e) {
-      var segments = e.split('/').where((el) => el.trim().isNotEmpty);
+      var segments = e.split('/').where((el) => el.trim().isNotEmpty).toList();
+      if (segments.isEmpty) {
+        return MapEntry(e, e);
+      }
       var apkSegs = segments.where(hasSupportedApkExtension);
       return MapEntry(apkSegs.isNotEmpty ? apkSegs.last : segments.last, e);
     }).toList();
@@ -472,11 +475,11 @@ Future<Response> httpClientResponseStreamToFinalResponse(
 
   httpClient.close();
 
-  return http.Response.bytes(
+  return Response.bytes(
     bytes,
     response.statusCode,
     headers: headers,
-    request: http.Request(method, Uri.parse(url)),
+    request: Request(method, Uri.parse(url)),
   );
 }
 
@@ -520,10 +523,9 @@ abstract class AppSource {
     additionalAppSpecificSettingsNeverUseDirectly =
         additionalAppSpecificSettingsNeverUseDirectly.map((e) {
           return e.map((e2) {
-            if (e2.key == key) {
-              var item = e2 as GeneratedFormSwitch;
-              item.disabled = disabled;
-              item.defaultValue = defaultValue;
+            if (e2.key == key && e2 is GeneratedFormSwitch) {
+              e2.disabled = disabled;
+              e2.defaultValue = defaultValue;
             }
             return e2;
           }).toList();
@@ -562,7 +564,6 @@ abstract class AppSource {
   }) async {
     final sp = SettingsProvider();
     await sp.initializeSettings();
-    getSourceConfigValues(additionalSettings, sp);
     final additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
@@ -801,6 +802,19 @@ abstract class AppSource {
   /// shared source-owned form items. Rebuilt on every access so that labels
   /// pick up the current locale via tr().
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
+    if (versionDetectionDisallowed) {
+      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+        'versionDetection',
+        disabled: true,
+        defaultValue: false,
+      );
+      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+        'useVersionCodeAsOSVersion',
+        disabled: true,
+        defaultValue: false,
+      );
+    }
+
     var agnosticItems = cloneFormItems(
       additionalAppSpecificSettingsNeverUseDirectly,
     );
@@ -878,19 +892,6 @@ abstract class AppSource {
           ),
         ],
       ]);
-    }
-
-    if (versionDetectionDisallowed) {
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
-        'versionDetection',
-        disabled: true,
-        defaultValue: false,
-      );
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
-        'useVersionCodeAsOSVersion',
-        disabled: true,
-        defaultValue: false,
-      );
     }
 
     return [
@@ -1389,9 +1390,9 @@ class SourceProvider {
           : currentApp?.overrideSource,
       allowIdChange:
           currentApp?.allowIdChange ??
-          trackOnly ||
+          (trackOnly ||
               (source.appIdInferIsOptional &&
-                  inferAppIdIfOptional), // Optional ID inferring may be incorrect - allow correction on first install
+                  inferAppIdIfOptional)), // Optional ID inferring may be incorrect - allow correction on first install
       otherAssetUrls: apk.allAssetUrls
           .where((a) => apk.apkUrls.indexWhere((p) => a.key == p.key) < 0)
           .toList(),
@@ -1414,10 +1415,10 @@ class SourceProvider {
         .getAppValues()
         .map((e) => e.app.url)
         .toList();
-    alreadyAddedUrls.addAll(existingUrls);
+    final added = <String>[...alreadyAddedUrls, ...existingUrls];
     for (var url in urls) {
       try {
-        if (alreadyAddedUrls.contains(url)) {
+        if (added.contains(url)) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
         final source = sourceOverride ?? getSource(url);

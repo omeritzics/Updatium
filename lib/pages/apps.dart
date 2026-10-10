@@ -1077,13 +1077,15 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
                   return AlertDialog(
+                    scrollable: true,
                     title: Text(
                       t(
                         'changeX',
                         args: ['apps'.plural(totalApps).toLowerCase()],
                       ),
                     ),
-                    content: SingleChildScrollView(
+                    content: SizedBox(
+                      width: double.maxFinite,
                       child: GeneratedForm(
                         items: formItems.map((e) => [e]).toList(),
                         onValueChanges: (vals, valid, isBuilding) {
