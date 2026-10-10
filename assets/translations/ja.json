@@ -134,6 +134,7 @@
     "searchQuery": "検索キーワード",
     "appURLList": "アプリのURLリスト",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "行",
     "searchX": "{} で検索",
     "noResults": "結果は見つかりませんでした",

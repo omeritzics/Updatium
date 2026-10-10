@@ -134,6 +134,7 @@
     "searchQuery": "Otsingupäring",
     "appURLList": "Rakenduse võrguaadresside loend",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Rida",
     "searchX": "Otsi {}",
     "noResults": "Tulemusi ei leidu",

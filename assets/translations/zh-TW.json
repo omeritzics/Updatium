@@ -134,6 +134,7 @@
     "searchQuery": "搜尋查詢",
     "appURLList": "應用程式網址清單",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "行號",
     "searchX": "搜尋 {}",
     "noResults": "找不到結果",

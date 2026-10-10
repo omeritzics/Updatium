@@ -134,6 +134,7 @@
     "searchQuery": "Arama sorgusu",
     "appURLList": "Uygulama bağlantı (URL) listesi",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Satır",
     "searchX": "{} Ara",
     "noResults": "Sonuç bulunamadı",

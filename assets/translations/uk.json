@@ -134,6 +134,7 @@
     "searchQuery": "Пошуковий запит",
     "appURLList": "Список URL-адрес застосунків",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Лінія",
     "searchX": "Пошук {}",
     "noResults": "Результати відсутні",

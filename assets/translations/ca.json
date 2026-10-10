@@ -134,6 +134,7 @@
     "searchQuery": "Terme de cerca",
     "appURLList": "Llista d'URL d'aplicacions",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Línia",
     "searchX": "Cerca {}",
     "noResults": "No hi ha resultats",

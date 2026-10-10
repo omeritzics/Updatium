@@ -619,7 +619,25 @@ abstract class AppSource {
   additionalAppSpecificSettingsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
+    [
+      GeneratedFormTextField(
+        'trackedUrl',
+        label: 'trackedUrl'.t(),
+        required: false,
+        hint: 'https://github.com/author/app',
+        additionalValidators: [(value) => httpUrlValidator(value)],
+      ),
+    ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
+    [
+      GeneratedFormTextField(
+        'IconUrl',
+        label: 'IconUrl'.t(),
+        required: false,
+        hint: 'https://example.com/icon.png',
+        additionalValidators: [(value) => httpUrlValidator(value)],
+      ),
+    ],
     [
       GeneratedFormSwitch(
         'trackOnly',
@@ -1014,6 +1032,19 @@ String? regExValidator(String? value) {
   return null;
 }
 
+String? httpUrlValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return null;
+  }
+  final uri = Uri.tryParse(value.trim());
+  if (uri == null ||
+      !(uri.scheme == 'http' || uri.scheme == 'https') ||
+      uri.host.isEmpty) {
+    return 'invalidInput'.t();
+  }
+  return null;
+}
+
 String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
     return 'invalidInput'.t();
@@ -1305,7 +1336,17 @@ class SourceProvider {
       additionalSettings['trackOnly'] = true;
     }
     final trackOnly = additionalSettings['trackOnly'] == true;
-    final String standardUrl = source.standardizeUrl(url);
+    // A user-edited tracked URL replaces the original; it's consumed here so
+    // the final App.url (standardUrl) is the single source of truth.
+    final editedTrackedUrl = additionalSettings
+        .remove('trackedUrl')
+        ?.toString()
+        .trim();
+    final String standardUrl = source.standardizeUrl(
+      (editedTrackedUrl != null && editedTrackedUrl.isNotEmpty)
+          ? editedTrackedUrl
+          : url,
+    );
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
       additionalSettings,
@@ -1357,6 +1398,10 @@ class SourceProvider {
                 apk.names.author)) {
       additionalSettings.remove('author');
     }
+    final IconUrl = additionalSettings['IconUrl']?.toString().trim();
+    if (IconUrl == null || IconUrl.isEmpty) {
+      additionalSettings.remove('IconUrl');
+    }
     App finalApp = App(
       currentApp?.id ??
           ((additionalSettings['appId'] != null)
@@ -1384,7 +1429,9 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
-      remoteIconUrl: apk.remoteIconUrl,
+      remoteIconUrl: (IconUrl != null && IconUrl.isNotEmpty)
+          ? IconUrl
+          : apk.remoteIconUrl,
       overrideSource: sourceIsOverriden
           ? source.sourceIdentifier
           : currentApp?.overrideSource,

@@ -134,6 +134,7 @@
     "searchQuery": "Поисковый запрос",
     "appURLList": "Список URL-адресов приложений",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Строка",
     "searchX": "Поиск {}",
     "noResults": "Ничего не найдено",

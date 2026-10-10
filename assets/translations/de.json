@@ -134,6 +134,7 @@
     "searchQuery": "Suchanfrage",
     "appURLList": "App-URL-Liste",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Zeile",
     "searchX": "{} suchen",
     "noResults": "Keine Ergebnisse gefunden",

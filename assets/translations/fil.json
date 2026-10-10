@@ -134,6 +134,7 @@
     "searchQuery": "Search query",
     "appURLList": "Listahan ng URL ng app",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Linya",
     "searchX": "I-search ang {}",
     "noResults": "Walang nahanap na mga resulta",

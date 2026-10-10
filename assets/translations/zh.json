@@ -134,6 +134,7 @@
     "searchQuery": "搜索查询",
     "appURLList": "应用 URL 列表",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "行",
     "searchX": "搜索{}",
     "noResults": "无结果",

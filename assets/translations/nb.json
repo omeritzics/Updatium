@@ -134,6 +134,7 @@
     "searchQuery": "Søketekst",
     "appURLList": "App URL-liste",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Linje",
     "searchX": "Søk etter {}",
     "noResults": "Ingen resultater funnet",

@@ -134,6 +134,7 @@
     "searchQuery": "Szukana fraza",
     "appURLList": "Lista adresów URL aplikacji",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Wiersz",
     "searchX": "Przeszukaj {}",
     "noResults": "Brak wyników",

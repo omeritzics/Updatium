@@ -134,6 +134,7 @@
     "searchQuery": "Заявка за търсене",
     "appURLList": "Списък с URL адреси на приложения",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "Ред",
     "searchX": "Търсене на {}",
     "noResults": "Не са намерени резултати",

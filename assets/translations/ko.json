@@ -134,6 +134,7 @@
     "searchQuery": "검색 쿼리",
     "appURLList": "앱 URL 목록",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "줄",
     "searchX": "{} 검색",
     "noResults": "결과가 없습니다",

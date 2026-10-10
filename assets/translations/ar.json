@@ -135,6 +135,7 @@
     "searchQuery": "استعلام البحث",
     "appURLList": "قائمة روابط التطبيقات",
     "trackedURL": "Tracked URL",
+    "iconURL": "Icon URL",
     "line": "سطر",
     "searchX": "بحث {}",
     "noResults": "لا توجد نتائج",
