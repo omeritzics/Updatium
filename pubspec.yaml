@@ -65,7 +65,7 @@ dependencies:
   app_links: ^7.0.0
   background_fetch: ^1.7.0
   equations: ^6.0.0
-  flex_color_picker: ^3.8.0
+  flex_color_picker: ^4.0.0
   android_system_font:
     git:
       url: https://github.com/re7gog/android_system_font
@@ -93,7 +93,7 @@ dependencies:
   flutter_foreground_task: ^11.0.3
   flutter_markdown_plus: ^1.0.7
   path: ^1.9.1
-  m3e_buttons: ^0.0.3
+  m3e_buttons: ^1.0.3
   progress_indicator_m3e: ^0.1.1
   loading_indicator_m3e: ^0.1.1
   dynamic_color: ^1.8.1
@@ -101,7 +101,7 @@ dependencies:
   confetti: ^0.8.0
   logger: ^2.8.0
   sqflite_common_ffi: ^2.4.3
-  m3e_card_list: ^0.1.0
+  m3e_card_list: ^1.0.0
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"

@@ -1929,7 +1929,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/graphics/icon.svg',
+                      'assets/graphics/icon.png',
                       width: 72,
                       height: 72,
                     ),
