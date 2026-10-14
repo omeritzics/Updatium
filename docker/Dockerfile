@@ -61,13 +61,13 @@ RUN rm -rf /var/lib/apt/lists/*
 
     # Platform tools
 # Get latest with sdkmanager --list
-RUN sdkmanager --install "build-tools;36.0.0"
+RUN sdkmanager --install "build-tools;37.0.0"
 RUN sdkmanager --install "ndk;28.2.13676358"
 RUN sdkmanager --install "cmake;4.0.2"
 RUN sdkmanager --install platform-tools
 RUN sdkmanager --install emulator
 RUN sdkmanager --install tools
-RUN sdkmanager --install "platforms;android-36"
+RUN sdkmanager --install "platforms;android-37"
 
 # Flutter
 ARG DEV_UID=0

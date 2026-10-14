@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:equations/equations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -1080,7 +1080,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             FutureBuilder(
                               builder: (ctx, val) {
-                                return (val.data?.version.sdkInt ?? 0) >= 36
+                                return (val.data?.version.sdkInt ?? 0) >= 37
                                     ? Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -1423,8 +1423,6 @@ class _LogsDialogState extends State<LogsDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('filterDays'.t()),
-              gap8,
               GeneratedForm(
                 items: [
                   [

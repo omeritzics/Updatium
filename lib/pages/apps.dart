@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:updatium/custom_errors.dart';
 

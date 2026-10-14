@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -376,7 +376,11 @@ class _AppPageState extends State<AppPage> {
             TextButton.icon(
               onPressed: changeLogFn,
               icon: const Icon(Icons.article_outlined, size: 18),
-              label: Text('changes'.t()),
+              label: Text('changes'.t(), style: const TextStyle(fontSize: 12)),
+              style: TextButton.styleFrom(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.zero,
+              ),
             ),
           gap24,
           Text(infoLines),
