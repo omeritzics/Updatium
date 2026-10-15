@@ -28,7 +28,7 @@
     "noDescription": "Sem descrição",
     "newUrl": "New URL",
     "cancel": "Cancelar",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Continuar",
     "requiredInBrackets": "(obrigatório)",
     "dropdownNoOptsError": "ERRO: O MENU DEVE TER PELO MENOS UMA OPÇÃO",
@@ -87,7 +87,7 @@
     "removeSelectedApps": "Remover apps selecionados",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -272,7 +272,6 @@
     "category": "Categoria",
     "noCategory": "Nenhuma categoria",
     "noCategories": "Nenhuma categoria",
-    "categoryDeleteQuestion": "Excluir categorias?",
     "categoryDeleteWarning": "Todos os apps em categorias excluídas ficarão sem categoria.",
     "addCategory": "Adicionar categoria",
     "label": "Rótulo",
@@ -436,67 +435,67 @@
     "multipleSigners": "Assinantes Múltiplos",
     "removeAppQuestion": {
         "one": "Remover app?",
-        "other": "Remover apps?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Muitas solicitações (limitado) - tente novamente em {} minuto",
-        "other": "Muitas solicitações (limitado) - tente novamente em {} minutos"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "A busca de atualizações em segundo plano encontrou um {error}, será agendado uma nova tentativa em {} minuto",
-        "other": "A busca de atualizações em segundo plano encontrou um {error}, será agendado uma nova tentativa em {} minutos"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Verificação da atualização do BG encontrada {} atualização - notificará o usuário se necessário",
-        "other": "Verificação de atualização do BG encontrou atualizações {} - notificará o usuário se necessário"
+        "other": ""
     },
     "apps": {
         "one": "{} app",
-        "other": "{} apps"
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URLs"
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "other": ""
     },
     "day": {
         "one": "{} dia",
-        "other": "{} dias"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Limpou {n} registros (before = {before}, after = {after})",
-        "other": "Limpou {n} registros (antes = {before}, depois = {after})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e mais 1 app têm atualizações.",
-        "other": "{app} e mais {} apps têm atualizações."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e mais 1 app foram atualizados.",
-        "other": "{app} e mais {} apps foram atualizados."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Falha ao atualizar {app} e mais 1 app.",
-        "other": "Falha ao atualizar {app} e mais {} apps."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e mais 1 app podem ter sido atualizados.",
-        "other": "{app} e mais {} apps podem ter sido atualizados."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash do Certificado",
-        "other": "Certificado Hashes"
+        "other": ""
     },
     "securityDisclaimerTitle": "Aviso de Segurança e Legal",
     "license": "Licença",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Excluir categorias?"
+    }
 }

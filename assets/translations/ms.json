@@ -28,7 +28,7 @@
     "noDescription": "No description",
     "newUrl": "New URL",
     "cancel": "Cancel",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Continue",
     "requiredInBrackets": "(required)",
     "dropdownNoOptsError": "ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT",
@@ -86,8 +86,8 @@
     "removeSelectedAppsQuestion": "Remove selected apps?",
     "removeSelectedApps": "Remove selected apps",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "",
+        "other": ""
     },
     "updateX": "Update {}",
     "installX": "Install {}",
@@ -272,7 +272,6 @@
     "category": "Category",
     "noCategory": "No category",
     "noCategories": "No categories",
-    "categoryDeleteQuestion": "Delete categories?",
     "categoryDeleteWarning": "All apps in deleted categories will be set to uncategorized.",
     "addCategory": "Add category",
     "label": "Label",
@@ -435,68 +434,68 @@
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Multiple Signers",
     "removeAppQuestion": {
-        "one": "Remove app?",
-        "other": "Remove apps?"
+        "one": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Too many requests (rate limited) - try again in {} minute",
-        "other": "Too many requests (rate limited) - try again in {} minutes"
+        "one": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG update checking encountered a {error}, will schedule a retry check in {} minute",
-        "other": "BG update checking encountered a {error}, will schedule a retry check in {} minutes"
+        "one": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG update checking found {} update - will notify user if needed",
-        "other": "BG update checking found {} updates - will notify user if needed"
+        "one": "",
+        "other": ""
     },
     "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
+        "one": "",
+        "other": ""
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "",
+        "other": ""
     },
     "minute": {
-        "one": "{} minute",
-        "other": "{} minutes"
+        "one": "",
+        "other": ""
     },
     "hour": {
-        "one": "{} hour",
-        "other": "{} hours"
+        "one": "",
+        "other": ""
     },
     "day": {
-        "one": "{} day",
-        "other": "{} days"
+        "one": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "Cleared {n} log (before = {before}, after = {after})",
-        "other": "Cleared {n} logs (before = {before}, after = {after})"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} and 1 more app have updates.",
-        "other": "{app} and {} more apps have updates."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} and 1 more app was updated.",
-        "other": "{app} and {} more apps were updated."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {app} and 1 more app.",
-        "other": "Failed to update {app} and {} more apps."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} and 1 more app may have been updated.",
-        "other": "{app} and {} more apps may have been updated."
+        "one": "",
+        "other": ""
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "",
+        "other": ""
     },
     "certificateHash": {
-        "one": "Certificate Hash",
-        "other": "Certificate Hashes"
+        "one": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Security & Legal Disclaimer",
     "license": "License",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    }
 }
