@@ -37,7 +37,7 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 activityManager.appTasks.forEach { task ->
-                    if (task.taskInfo.baseActivity?.packageName == packageName) {
+                    if (task.taskInfo?.baseActivity?.packageName == packageName) {
                         activityManager.killBackgroundProcesses(packageName)
                     }
                 }
