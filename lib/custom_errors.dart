@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';

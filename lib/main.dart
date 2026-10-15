@@ -313,9 +313,8 @@ class _UpdatiumState extends State<Updatium> {
       GitHubStarPrompt.initializeAndCheck(context);
     });
 
-    return WithForegroundTask(
-      child: DynamicColorBuilder(
-        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
           ColorScheme lightColorScheme;
           ColorScheme darkColorScheme;
 
@@ -577,10 +576,11 @@ class _UpdatiumState extends State<Updatium> {
                 child: child ?? const SizedBox.shrink(),
               );
             },
-            home: const HomePage(),
+            home: const WithForegroundTask(
+              child: HomePage(),
+            ),
           );
         },
-      ),
-    );
+      );
   }
 }
