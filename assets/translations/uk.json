@@ -28,7 +28,7 @@
     "noDescription": "Немає опису",
     "newUrl": "New URL",
     "cancel": "Скасувати",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Продовжити",
     "requiredInBrackets": "(Обов'язково)",
     "dropdownNoOptsError": "ПОМИЛКА: В ВИПАДАЮЧОМУ СПИСКУ МАЄ БУТИ ХОЧА Б ОДИН ЕЛЕМЕНТ",
@@ -87,7 +87,7 @@
     "removeSelectedApps": "Видалити вибрані застосунки",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Оновити {}",
     "installX": "Встановити {}",
@@ -272,7 +272,6 @@
     "category": "Категорія",
     "noCategory": "Без категорії",
     "noCategories": "Немає категорій",
-    "categoryDeleteQuestion": "Видалити категорії?",
     "categoryDeleteWarning": "Усі застосунки у видалених категоріях будуть переведені у некатегоризовані.",
     "addCategory": "Додати категорію",
     "label": "Мітка",
@@ -436,67 +435,67 @@
     "multipleSigners": "Кілька підписників",
     "removeAppQuestion": {
         "one": "Видалити застосунок?",
-        "other": "Видалити застосунки?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилину",
-        "other": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилин"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилину",
-        "other": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилин"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Фонова перевірка оновлень знайшла {} оновлення - сповістити користувача, якщо це необхідно",
-        "other": "Фонова перевірка оновлень знайшла {} оновлень - сповістити користувача, якщо це необхідно"
+        "other": ""
     },
     "apps": {
         "one": "{} застосунок",
-        "other": "{} застосунки"
+        "other": ""
     },
     "url": {
         "one": "{} URL-адреса",
-        "other": "{} URL-адреси"
+        "other": ""
     },
     "minute": {
         "one": "{} хвилина",
-        "other": "{} хвилин"
+        "other": ""
     },
     "hour": {
         "one": "{} година",
-        "other": "{} годин"
+        "other": ""
     },
     "day": {
         "one": "{} день",
-        "other": "{} днів"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Очищено {n} журнал (до = {before}, після = {after})",
-        "other": "Очищено {n} журналів (до = {before}, після = {after})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} та ще 1 застосунок мають оновлення.",
-        "other": "{app} та ще {} застосунки мають оновлення."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} та ще 1 застосунок було оновлено.",
-        "other": "{app} та ще {} застосунків було оновлено."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Не вдалося оновити {app} та ще 1 програму.",
-        "other": "Не вдалося оновити {app} і {} та інші програми."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} та ще 1 застосунок можливо було оновлено.",
-        "other": "{app} та ще {} застосунків можливо було оновлено."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK-файли"
+        "other": ""
     },
     "certificateHash": {
         "one": "Сертифікат Hash",
-        "other": "Сертифікат Hashes"
+        "other": ""
     },
     "securityDisclaimerTitle": "Відмова від відповідальності щодо безпеки та правових питань",
     "license": "Ліцензія",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Видалити категорії?"
+    }
 }

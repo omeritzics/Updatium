@@ -28,7 +28,7 @@
     "noDescription": "Không có mô tả",
     "newUrl": "New URL",
     "cancel": "Hủy",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Tiếp tục",
     "requiredInBrackets": "(Yêu cầu)",
     "dropdownNoOptsError": "LỖI: TẢI XUỐNG PHẢI CÓ ÍT NHẤT MỘT LỰA CHỌN",
@@ -86,8 +86,8 @@
     "removeSelectedAppsQuestion": "Xóa ứng dụng đã chọn?",
     "removeSelectedApps": "Xóa ứng dụng đã chọn",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "",
+        "other": ""
     },
     "updateX": "Cập nhật {}",
     "installX": "Cài đặt {}",
@@ -272,7 +272,6 @@
     "category": "Danh mục",
     "noCategory": "Không danh mục",
     "noCategories": "Không danh mục",
-    "categoryDeleteQuestion": "Xóa danh mục?",
     "categoryDeleteWarning": "Tất cả ứng dụng trong danh mục đã xóa sẽ được đặt thành chưa được phân loại.",
     "addCategory": "Thêm thể loại",
     "label": "Nhãn",
@@ -435,68 +434,68 @@
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Nhiều người ký",
     "removeAppQuestion": {
-        "one": "Gỡ ứng dụng?",
-        "other": "Gỡ ứng dụng?"
+        "one": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút",
-        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút"
+        "one": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút",
-        "other": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút"
+        "one": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
-        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
+        "one": "",
+        "other": ""
     },
     "apps": {
-        "one": "{} Ứng dụng",
-        "other": "{} Ứng dụng"
+        "one": "",
+        "other": ""
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "",
+        "other": ""
     },
     "minute": {
-        "one": "{} phút",
-        "other": "{} phút"
+        "one": "",
+        "other": ""
     },
     "hour": {
-        "one": "{} giờ",
-        "other": "{} giờ"
+        "one": "",
+        "other": ""
     },
     "day": {
-        "one": "{} ngày",
-        "other": "{} ngày"
+        "one": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})",
-        "other": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} và 1 ứng dụng khác có bản cập nhật.",
-        "other": "{app} và {} ứng dụng khác có bản cập nhật."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} và 1 ứng dụng khác đã được cập nhật.",
-        "other": "{app} và {} ứng dụng khác đã được cập nhật."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{app} và 1 ứng dụng khác đã cập nhật không thành công.",
-        "other": "{app} và {} ứng dụng khác đã cập nhật không thành công."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} và 1 ứng dụng khác có thể đã được cập nhật.",
-        "other": "{app} và {} ứng dụng khác có thể đã được cập nhật."
+        "one": "",
+        "other": ""
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "",
+        "other": ""
     },
     "certificateHash": {
-        "one": "Mã băm chứng chỉ",
-        "other": "Mã băm chứng chỉ"
+        "one": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý",
     "license": "Giấy phép",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    }
 }

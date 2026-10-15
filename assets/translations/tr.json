@@ -28,7 +28,7 @@
     "noDescription": "Açıklama yok",
     "newUrl": "New URL",
     "cancel": "İptal",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Devam et",
     "requiredInBrackets": "(gerekli)",
     "dropdownNoOptsError": "HATA: AÇILIR MENÜDE EN AZ BİR SEÇENEK OLMALIDIR",
@@ -272,7 +272,6 @@
     "category": "Kategori",
     "noCategory": "Kategori yok",
     "noCategories": "Kategori yok",
-    "categoryDeleteQuestion": "Kategoriler silinsin mi?",
     "categoryDeleteWarning": "Silinen kategorilerdeki tüm uygulamalar kategorize edilmemiş olarak ayarlanacaktır.",
     "addCategory": "Kategori ekle",
     "label": "Etiket",
@@ -549,8 +548,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Kategoriler silinsin mi?"
+    }
 }

@@ -86,8 +86,8 @@
     "removeSelectedAppsQuestion": "選択したアプリを削除しますか？",
     "removeSelectedApps": "選択したアプリを削除する",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "",
+        "other": ""
     },
     "updateX": "{} をアップデートする",
     "installX": "{} をインストールする",
@@ -272,7 +272,6 @@
     "category": "カテゴリ",
     "noCategory": "カテゴリなし",
     "noCategories": "カテゴリなし",
-    "categoryDeleteQuestion": "カテゴリを削除しますか？",
     "categoryDeleteWarning": "削除されたカテゴリ内のアプリは未分類に設定されます。",
     "addCategory": "カテゴリを追加",
     "label": "ラベル",
@@ -435,68 +434,68 @@
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "複数の署名者",
     "removeAppQuestion": {
-        "one": "アプリを削除しますか？",
-        "other": "アプリを削除しますか？"
+        "one": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください",
-        "other": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください"
+        "one": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します",
-        "other": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します"
+        "one": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
-        "other": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
+        "one": "",
+        "other": ""
     },
     "apps": {
-        "one": "{} 個のアプリ",
-        "other": "{} 個のアプリ"
+        "one": "",
+        "other": ""
     },
     "url": {
-        "one": "{} 個のURL",
-        "other": "{} 個のURL"
+        "one": "",
+        "other": ""
     },
     "minute": {
-        "one": "{} 分",
-        "other": "{} 分"
+        "one": "",
+        "other": ""
     },
     "hour": {
-        "one": "{} 時間",
-        "other": "{} 時間"
+        "one": "",
+        "other": ""
     },
     "day": {
-        "one": "{} 日",
-        "other": "{} 日"
+        "one": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})",
-        "other": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} とさらに 1 個のアプリのアップデートが利用可能です。",
-        "other": "{app} とさらに {} 個のアプリのアップデートが利用可能です。"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} とさらに 1 個のアプリがアップデートされました。",
-        "other": "{app} とさらに {} 個のアプリがアップデートされました。"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{app} とさらに 1 個のアプリのアップデートに失敗しました。",
-        "other": "{app} とさらに {} 個のアプリのアップデートに失敗しました。"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} とさらに 1 個のアプリがアップデートされた可能性があります。",
-        "other": "{app} とさらに {} 個のアプリがアップデートされた可能性があります。"
+        "one": "",
+        "other": ""
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "",
+        "other": ""
     },
     "certificateHash": {
-        "one": "証明書ハッシュ",
-        "other": "証明書ハッシュ"
+        "one": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "セキュリティおよび法的免責事項",
     "license": "ライセンス",
@@ -567,5 +566,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    }
 }
