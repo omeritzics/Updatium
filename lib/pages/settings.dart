@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:updatium/custom_errors.dart';
@@ -722,22 +723,28 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text(
                                 'beforeNewInstallsShareToAppVerifierBG'.t(),
                               ),
-                              subtitle: TextButton.icon(
-                                onPressed: () {
-                                  launchUrlString(
-                                    'https://github.com/RoundSalmon4/AppVerifierBG',
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                },
-                                label: Text(
-                                  'about'.t(),
-                                  style: const TextStyle(fontSize: 12),
+                              subtitle: Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton.icon(
+                                  onPressed: () {
+                                    launchUrlString(
+                                      'https://github.com/RoundSalmon4/AppVerifierBG',
+                                      mode: LaunchMode.externalApplication,
+                                    );
+                                  },
+                                  label: Text(
+                                    'about'.t(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  icon: const Icon(
+                                    Icons.info_outline,
+                                    size: 18,
+                                  ),
                                 ),
-                                style: TextButton.styleFrom(
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.zero,
-                                ),
-                                icon: const Icon(Icons.info_outline, size: 18),
                               ),
                               value: settingsProvider
                                   .beforeNewInstallsShareToAppVerifierBG,
@@ -1471,7 +1478,7 @@ class _LogsDialogState extends State<LogsDialog> {
                           onPressed: () => Navigator.of(ctx).pop(false),
                           child: Text('cancel'.t()),
                         ),
-                        TextButton(
+                        M3EFilledButton(
                           onPressed: () => Navigator.of(ctx).pop(true),
                           child: Text('ok'.t()),
                         ),

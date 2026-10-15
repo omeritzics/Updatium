@@ -16,6 +16,7 @@ abstract class GeneratedFormItem {
   late List<Widget> belowWidgets;
   late dynamic defaultValue;
   List<dynamic> additionalValidators;
+  late bool autofocus;
   dynamic ensureType(dynamic val);
   GeneratedFormItem clone();
 
@@ -448,6 +449,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               final textField = TextFormField(
                 controller: ctrl,
                 focusNode: focusNode,
+                autofocus: formItem.autofocus,
                 keyboardType: formItem.textInputType,
                 obscureText: formItem.password,
                 autocorrect: !formItem.password,
