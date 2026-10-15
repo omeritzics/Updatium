@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';

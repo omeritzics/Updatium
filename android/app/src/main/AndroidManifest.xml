@@ -78,7 +78,11 @@
         <service 
             android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
             android:foregroundServiceType="specialUse"
-            android:exported="false" />
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Background checking and downloading of app updates" />
+        </service>
         <meta-data
             android:name="io.github.omeritzics.updatium.service.NOTIFICATION_ICON"
             android:resource="@drawable/ic_notification" />
@@ -107,7 +111,7 @@
     <uses-permission android:name="android.permission.ENFORCE_UPDATE_OWNERSHIP"/>
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
+        android:maxSdkVersion="37" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
