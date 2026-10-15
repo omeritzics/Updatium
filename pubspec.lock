@@ -38,10 +38,10 @@ packages:
     dependency: "direct main"
     description:
       name: animations
-      sha256: "5ec868ffa78851e6f3f32e9377b780c7ae2087a5523d8b5e6df59bd8287ac5dd"
+      sha256: "9cb469212ea51be27097f23b519d594c01171721347b55df9334fff653659e7f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "2.2.0"
   app_links:
     dependency: "direct main"
     description:
@@ -698,26 +698,26 @@ packages:
     dependency: "direct main"
     description:
       name: m3_floating_toolbar
-      sha256: "50bb22f237d11e389f8ebdbf73be12af8af085b3eb704794725f666c10fd54b1"
+      sha256: "0cbfc5a6f869117a7fb8546243190ef607bfee19993834bfcaad62c566a4ed42"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.1"
   m3e_buttons:
     dependency: "direct main"
     description:
       name: m3e_buttons
-      sha256: dca780e813563754576194ed18e3f6a33422ed136c8d4ccfeca20909edddd728
+      sha256: ab3508570a374a971ca414d30c12a9208bda37f67682dc746872bf3440caa634
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "0.0.6"
   m3e_card_list:
     dependency: "direct main"
     description:
       name: m3e_card_list
-      sha256: ed1cc150f051b8812ffd735915ae59fed23517ffeeed04c4b2b8ef6257cc18b7
+      sha256: d4aba0123cccda40ac80789befa8d355e1dc16aa7dcee910157690b0546d78d6
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "0.1.0"
   m3e_design:
     dependency: transitive
     description:
@@ -759,7 +759,7 @@ packages:
     source: hosted
     version: "1.0.0"
   material_ui:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: material_ui
       sha256: "27ea1af251a79728ee63068417f2ab469d294931a9bb8366ba8b85b0ef839060"

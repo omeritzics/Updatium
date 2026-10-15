@@ -2,7 +2,7 @@
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
 import 'package:updatium/services/slang_converter.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';

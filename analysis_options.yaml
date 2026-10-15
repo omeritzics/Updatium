@@ -13,6 +13,7 @@ analyzer:
     file_names: ignore
     non_constant_identifier_names: ignore
     use_build_context_synchronously: ignore
+    implementation_imports: ignore
   exclude:
     - build/**
     - android/**
