@@ -1,3 +1,4 @@
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -209,7 +210,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
           onPressed: () => Navigator.pop(context),
           child: Text('cancel'.t()),
         ),
-        TextButton(
+        M3EFilledButton(
           onPressed: () {
             if (_formKey.currentState?.validate() ?? false) {
               Navigator.pop(
