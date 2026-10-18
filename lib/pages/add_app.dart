@@ -288,7 +288,7 @@ class AddAppPageState extends State<AddAppPage> {
                   ),
                 ),
                 actions: [
-                  TextButton(
+                  M3EFilledButton(
                     onPressed: () => Navigator.of(ctx).pop(),
                     child: Text('ok'.t()),
                   ),
@@ -305,6 +305,12 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       TextButton.icon(
+        icon: const Icon(Icons.apps, size: 18),
+        label: Text('installedApps'.t()),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
+        ),
         onPressed: () async {
           setState(() {
             searching = true;
@@ -337,12 +343,6 @@ class AddAppPageState extends State<AddAppPage> {
             });
           }
         },
-        icon: const Icon(Icons.apps, size: 18),
-        label: Text('installedApps'.t()),
-        style: TextButton.styleFrom(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.zero,
-        ),
       ),
     ],
   );
@@ -431,7 +431,7 @@ class AddAppPageState extends State<AddAppPage> {
                                               Navigator.of(ctx).pop(null),
                                           child: Text('cancel'.t()),
                                         ),
-                                        TextButton(
+                                        M3EFilledButton(
                                           onPressed: () => Navigator.of(
                                             ctx,
                                           ).pop(localValues),
@@ -735,7 +735,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text('cancel'.t()),
                 ),
-                TextButton(
+                M3EFilledButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
                   child: Text('ok'.t()),
                 ),
@@ -767,7 +767,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                         onPressed: () => Navigator.of(ctx).pop(null),
                         child: Text('cancel'.t()),
                       ),
-                      TextButton(
+                      M3EFilledButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
                         child: Text('ok'.t()),
                       ),
@@ -1132,7 +1132,7 @@ class _SelectionModalState extends State<SelectionModal> {
           title: Text(widget.title ?? 'pick'.t()),
           actions: [
             getSelectAllButton(),
-            TextButton(
+            M3EFilledButton(
               onPressed: entrySelections.values.every((v) => v == false)
                   ? null
                   : () {
@@ -1431,7 +1431,7 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        M3EFilledButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text('ok'.t()),
         ),

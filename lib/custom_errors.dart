@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:android_package_installer/android_package_installer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
@@ -153,7 +154,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
             child: Text(e.toString()),
           ),
           actions: [
-            TextButton(
+            M3EFilledButton(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },

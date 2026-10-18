@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FreeDroidWarnService {
@@ -120,10 +121,10 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(
             strings['solution'] ?? 'Solution',
-            style: const TextStyle(color: Colors.greenAccent),
+            style: const TextStyle(color: Colors.blueAccent),
           ),
         ),
-        TextButton(
+        M3EFilledButton(
           onPressed: () async {
             await _saveWarningVersion();
             if (context.mounted) {
