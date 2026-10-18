@@ -6,6 +6,7 @@ import 'package:app_links/app_links.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
@@ -576,7 +577,7 @@ class _ImportDialogState extends State<_ImportDialog> {
           onPressed: () => Navigator.of(context).pop(null),
           child: Text('cancel'.t()),
         ),
-        TextButton(
+        M3EFilledButton(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text('ok'.t()),
         ),

@@ -78,7 +78,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           ),
         ),
         widget.singleNullReturnButton == null
-            ? TextButton(
+            ? FilledButton(
                 style: widget.primaryActionColour == null
                     ? null
                     : TextButton.styleFrom(
@@ -92,7 +92,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
                           Navigator.of(context).pop(values);
                         }
                       },
-                child: Text(t('continue')),
+                child: Text('continue'.t()),
               )
             : const SizedBox.shrink(),
       ],

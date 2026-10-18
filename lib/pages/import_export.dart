@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/services/slang_converter.dart';
@@ -111,7 +112,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 onPressed: () => Navigator.of(ctx).pop(null),
                 child: Text('cancel'.t()),
               ),
-              TextButton(
+              M3EFilledButton(
                 onPressed: () {
                   if (formKey.currentState?.validate() == true) {
                     Navigator.of(ctx).pop(controller.text);
@@ -296,7 +297,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           onPressed: () => Navigator.of(ctx).pop(null),
                           child: Text('cancel'.t()),
                         ),
-                        TextButton(
+                        M3EFilledButton(
                           onPressed: () {
                             if (formKey.currentState?.validate() == true) {
                               Navigator.of(ctx).pop(
@@ -573,12 +574,15 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        TextButton.icon(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          icon: const Icon(Icons.close),
-          label: Text('ok'.t()),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            onPressed: () {
+              Navigator.of(context).pop(null);
+            },
+            icon: const Icon(Icons.close),
+            label: Text('ok'.t()),
+          ),
         ),
       ],
     );

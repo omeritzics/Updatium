@@ -132,7 +132,7 @@ void showChangeLogDialog(
           ],
         ),
         actions: [
-          TextButton(
+          M3EFilledButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text('ok'.t()),
           ),
@@ -1094,21 +1094,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                     ),
                     actions: [
-                      Semantics(
-                        button: true,
-                        label: 'cancel'.t(),
-                        child: TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(null),
-                          child: Text('cancel'.t()),
-                        ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text('cancel'.t()),
                       ),
-                      Semantics(
-                        button: true,
-                        label: 'ok'.t(),
-                        child: TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(localValues),
-                          child: Text('ok'.t()),
-                        ),
+                      M3EFilledButton(
+                        onPressed: () => Navigator.of(ctx).pop(localValues),
+                        child: Text('ok'.t()),
                       ),
                     ],
                   );
@@ -1180,21 +1172,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       title: Text('categorize'.t()),
                       content: Text('selectedCategorizeWarning'.t()),
                       actions: [
-                        Semantics(
-                          button: true,
-                          label: 'cancel'.t(),
-                          child: TextButton(
-                            onPressed: () => Navigator.of(ctx).pop(false),
-                            child: Text('cancel'.t()),
-                          ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: Text('cancel'.t()),
                         ),
-                        Semantics(
-                          button: true,
-                          label: 'ok'.t(),
-                          child: TextButton(
-                            onPressed: () => Navigator.of(ctx).pop(true),
-                            child: Text('ok'.t()),
-                          ),
+                        M3EFilledButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: Text('ok'.t()),
                         ),
                       ],
                     );
@@ -1265,38 +1249,30 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             actions: [
-              Semantics(
-                button: true,
-                label: 'no'.t(),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('no'.t()),
-                ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('no'.t()),
               ),
-              Semantics(
-                button: true,
-                label: 'yes'.t(),
-                child: TextButton(
-                  onPressed: () {
-                    settingsProvider.selectionClick();
-                    appsProvider.saveApps(
-                      selectedApps.map((a) {
-                        if (a.installedVersion != null &&
-                            !appsProvider.isVersionDetectionPossible(
-                              appsProvider.apps[a.id],
-                            )) {
-                          a.installedVersion = a.latestVersion;
-                        }
-                        return a;
-                      }).toList(),
-                    );
+              TextButton(
+                onPressed: () {
+                  settingsProvider.selectionClick();
+                  appsProvider.saveApps(
+                    selectedApps.map((a) {
+                      if (a.installedVersion != null &&
+                          !appsProvider.isVersionDetectionPossible(
+                            appsProvider.apps[a.id],
+                          )) {
+                        a.installedVersion = a.latestVersion;
+                      }
+                      return a;
+                    }).toList(),
+                  );
 
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('yes'.t()),
-                ),
+                  Navigator.of(context).pop();
+                },
+                child: Text('yes'.t()),
               ),
             ],
           );
@@ -1456,13 +1432,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   child: Text('cancel'.t()),
                 ),
               ),
-              Semantics(
-                button: true,
-                label: 'ok'.t(),
-                child: TextButton(
-                  onPressed: () => Navigator.of(ctx).pop(localValues),
-                  child: Text('ok'.t()),
-                ),
+              M3EFilledButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text('ok'.t()),
               ),
             ],
           );
