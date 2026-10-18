@@ -241,114 +241,108 @@ class AddAppPageState extends State<AddAppPage> {
     runSpacing: 4,
     crossAxisAlignment: WrapCrossAlignment.center,
     children: [
-      Align(
-        alignment: Alignment.centerLeft,
-        child: TextButton.icon(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext ctx) {
-                return AlertDialog(
-                  scrollable: true,
-                  contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                  title: Text('supportedSources'.t()),
-                  content: SizedBox(
-                    width: double.maxFinite,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: sourceProvider.sources.map((e) {
-                            final label = Text(
-                              '${e.name}${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
-                            );
-                            if (e.hosts.isEmpty) {
-                              return Chip(label: label);
-                            }
-                            return ActionChip(
-                              label: label,
-                              onPressed: () {
-                                launchUrlString(
-                                  'https://${e.hosts[0]}',
-                                  mode: LaunchMode.externalApplication,
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                        gap12,
-                        Text(
-                          '${'note'.t()}:',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(t('selfHostedNote', args: ['overrideSource'.t()])),
-                      ],
-                    ),
+      TextButton.icon(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return AlertDialog(
+                scrollable: true,
+                contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                title: Text('supportedSources'.t()),
+                content: SizedBox(
+                  width: double.maxFinite,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: sourceProvider.sources.map((e) {
+                          final label = Text(
+                            '${e.name}${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
+                          );
+                          if (e.hosts.isEmpty) {
+                            return Chip(label: label);
+                          }
+                          return ActionChip(
+                            label: label,
+                            onPressed: () {
+                              launchUrlString(
+                                'https://${e.hosts[0]}',
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      gap12,
+                      Text(
+                        '${'note'.t()}:',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(t('selfHostedNote', args: ['overrideSource'.t()])),
+                    ],
                   ),
-                  actions: [
-                    M3EFilledButton(
-                      onPressed: () => Navigator.of(ctx).pop(),
-                      child: Text('ok'.t()),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          icon: const Icon(Icons.info_outline, size: 18),
-          label: Text('supportedSources'.t()),
-          style: TextButton.styleFrom(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.zero,
-          ),
+                ),
+                actions: [
+                  M3EFilledButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text('ok'.t()),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        icon: const Icon(Icons.info_outline, size: 18),
+        label: Text('supportedSources'.t()),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
         ),
       ),
-      Align(
-        alignment: Alignment.centerLeft,
-        child: TextButton.icon(
-          icon: const Icon(Icons.apps, size: 18),
-          label: Text('installedApps'.t()),
-          style: TextButton.styleFrom(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.zero,
-          ),
-          onPressed: () async {
-            setState(() {
-              searching = true;
-            });
-            final installedApps = await getAllInstalledInfo();
-            setState(() {
-              searching = false;
-            });
-            if (!mounted) return;
-
-            final addedAppIds = context.read<AppsProvider>().apps.keys.toSet();
-
-            final selectedPackageName = await showDialog<String>(
-              context: context,
-              builder: (BuildContext ctx) => InstalledAppsDialog(
-                installedApps: installedApps,
-                addedAppIds: addedAppIds,
-              ),
-            );
-
-            if (selectedPackageName != null) {
-              setState(() {
-                searchQuery = (selectedPackageName.contains('.'))
-                    ? selectedPackageName.split('.').last
-                    : selectedPackageName;
-                userInput = '';
-                pickedSource = null;
-                pickedSourceOverride = null;
-                searchBarKey++;
-              });
-            }
-          },
+      TextButton.icon(
+        icon: const Icon(Icons.apps, size: 18),
+        label: Text('installedApps'.t()),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
         ),
+        onPressed: () async {
+          setState(() {
+            searching = true;
+          });
+          final installedApps = await getAllInstalledInfo();
+          setState(() {
+            searching = false;
+          });
+          if (!mounted) return;
+
+          final addedAppIds = context.read<AppsProvider>().apps.keys.toSet();
+
+          final selectedPackageName = await showDialog<String>(
+            context: context,
+            builder: (BuildContext ctx) => InstalledAppsDialog(
+              installedApps: installedApps,
+              addedAppIds: addedAppIds,
+            ),
+          );
+
+          if (selectedPackageName != null) {
+            setState(() {
+              searchQuery = (selectedPackageName.contains('.'))
+                  ? selectedPackageName.split('.').last
+                  : selectedPackageName;
+              userInput = '';
+              pickedSource = null;
+              pickedSourceOverride = null;
+              searchBarKey++;
+            });
+          }
+        },
       ),
     ],
   );
