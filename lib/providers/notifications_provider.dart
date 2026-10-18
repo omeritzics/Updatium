@@ -1,6 +1,7 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -303,7 +304,7 @@ class NotificationsProvider {
             title: Text(title),
             content: Text(content),
             actions: [
-              TextButton(
+              M3EFilledButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {

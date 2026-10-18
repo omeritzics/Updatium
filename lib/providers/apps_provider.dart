@@ -2779,7 +2779,7 @@ class AppsProvider with ChangeNotifier {
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text('cancel'.t()),
                 ),
-                TextButton(
+                FilledButton(
                   style: TextButton.styleFrom(
                     foregroundColor: Theme.of(context).colorScheme.error,
                   ),
@@ -3290,7 +3290,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
               },
               child: Text('cancel'.t()),
             ),
-            TextButton(
+            M3EFilledButton(
               onPressed: () {
                 HapticFeedback.selectionClick();
                 Navigator.of(context).pop(fileUrl);
@@ -3301,30 +3301,6 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ),
         body: Column(
           children: [
-            //  if (showProgress)
-            //    AppAddingProgressBar(
-            //      currentStep: widget.progressIndicatorStep!,
-            //      totalSteps: widget.progressIndicatorTotal!,
-            //    ),
-            //  if (showProgress)
-            //    Padding(
-            //      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            //      child: Row(
-            //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //        children: [
-            //          Text(
-            //            'confirmAppSelection'.t(),
-            //            style: Theme.of(context).textTheme.titleSmall,
-            //          ),
-            //         Text(
-            //            progressText,
-            //            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            //              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            //            ),
-            //          ),
-            //        ],
-            //      ),
-            //    ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -3418,7 +3394,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
           },
           child: Text('cancel'.t()),
         ),
-        TextButton(
+        M3EFilledButton(
           onPressed: () {
             context.read<SettingsProvider>().selectionClick();
             Navigator.of(context).pop(true);
