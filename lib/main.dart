@@ -393,19 +393,11 @@ class _UpdatiumState extends State<Updatium> {
         // Determine fallback fonts
         List<String> getFallbackFonts() {
           if (settingsProvider.useSystemFont) {
-            return const [
-              'NotoSansCJK',
-              'NotoSansArabic',
-              'GoogleSans',
-            ];
+            return const ['NotoSansCJK', 'NotoSansArabic', 'GoogleSans'];
           }
 
           final primary = getPrimaryFontForLocale(context.locale);
-          const allFonts = [
-            'GoogleSans',
-            'NotoSansCJK',
-            'NotoSansArabic',
-          ];
+          const allFonts = ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'];
           return allFonts.where((f) => f != primary).toList();
         }
 
