@@ -892,7 +892,7 @@ class _AppPageState extends State<AppPage> {
             Positioned(
               left: 0,
               right: 0,
-              bottom: 20,
+              bottom: 54,
               child: Align(
                 alignment: fab != null
                     ? AlignmentDirectional.bottomEnd
