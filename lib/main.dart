@@ -390,21 +390,33 @@ class _UpdatiumState extends State<Updatium> {
           return 'GoogleSans';
         }
 
-        // Shared theme component generator with Material Design Expressive
-        ThemeData createTheme(ColorScheme scheme, bool isDark) {
-          // Define fallback fonts
-          const List<String> fallbackFonts = [
+        // Determine fallback fonts
+        List<String> getFallbackFonts() {
+          if (settingsProvider.useSystemFont) {
+            return const [
+              'NotoSansCJK',
+              'NotoSansArabic',
+              'GoogleSans',
+            ];
+          }
+
+          final primary = getPrimaryFontForLocale(context.locale);
+          const allFonts = [
             'GoogleSans',
             'NotoSansCJK',
             'NotoSansArabic',
           ];
+          return allFonts.where((f) => f != primary).toList();
+        }
 
+        // Shared theme component generator with Material Design Expressive
+        ThemeData createTheme(ColorScheme scheme, bool isDark) {
           return ThemeData(
             useMaterial3: true,
             colorScheme: scheme,
             focusColor: scheme.primary.withValues(alpha: 0.18),
             fontFamily: getPrimaryFontForLocale(context.locale),
-            fontFamilyFallback: fallbackFonts,
+            fontFamilyFallback: getFallbackFonts(),
 
             // Expressive Card Design - preserve M3 Expressive transparency
             cardTheme: CardThemeData(
