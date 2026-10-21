@@ -369,20 +369,21 @@ class _AppPageState extends State<AppPage> {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           if (changeLogFn != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: changeLogFn,
-                icon: const Icon(Icons.article_outlined, size: 18),
-                label: Text(
-                  'changes'.t(),
-                  style: const TextStyle(fontSize: 12),
+            Column(
+              children: [
+                TextButton.icon(
+                  onPressed: changeLogFn,
+                  icon: const Icon(Icons.article_outlined, size: 18),
+                  label: Text(
+                    'changes'.t(),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  style: TextButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.zero,
+                  ),
                 ),
-                style: TextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
-              ),
+              ],
             ),
           gap24,
           Text(infoLines),
