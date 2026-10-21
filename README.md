@@ -10,6 +10,12 @@
 
 Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
+## Download
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
+
+[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
+
 ## Features
 
 ### Currently supported App sources
@@ -33,30 +39,27 @@ Based on Material Design 3 Expressive guidelines.
 
 ### Other Additional Features
 
-- Better accessibility for screen readers.
 - Grid View.
-- Safe Mode (allows you to block unwanted changes to the application catalogue).
 - Ability to use DNS-over-HTTPS providers.
+- Searching APKPure apps directly from the app.
+- Better accessibility for screen readers.
+- Safe Mode (allows you to block unwanted changes to the app catalogue).
 <!-- - Editing basic app information after adding it (Nightly builds only). -->
 
 ### Localization
 
-Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, you can help improving Updatium's translations [here (using Weblate)](https://hosted.weblate.org/engage/updatium). Every language is welcome to Updatium, but your help is needed to make it happen.
+Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language, you can help improving Updatium's translations [here (using Weblate)](https://hosted.weblate.org/engage/updatium). Every language is welcome to Updatium, but your help is needed to make it happen.
 
-If you need any help or advice for translating Updatium into your language, or if you found any error in the translation strings, please open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help.
+If you need any help or advice for translating Updatium to your language, or if you found any error in the translation strings, please open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help.
 
 - Currently supported locales:
 [![Supported locales](https://hosted.weblate.org/widget/updatium/updatium/matrix-auto.svg)](https://hosted.weblate.org/engage/updatium/)
 
 `Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
 
-## Download
+Warning: GitHub is currently the only official place to download Updatium. Beware of unofficial sources (such as Appteka) that distribute modified APKs, which may contain more bugs, or even malware.
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
-
-[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
-
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware. If you are an administrator of an APK distribution source, please let me know you're interested in adding Updatium to your website by creating an issue.
+If you want to distribute legitimate APK files of Updatium in your app store, please contact me by creating a new issue so I can add your store as an official publisher of Updatium.
 
 ## Screenshots
 
@@ -68,16 +71,20 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 ### Q: What is Updatium?
 
-A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to be a better alternative to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variety of sources, like GitHub and APKPure.
+A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to create a better replacement to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variety of sources, like GitHub and APKPure.
 
 ### Q: Why fork Obtainium?
 
-A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved in the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
+A: One word - antisemitism. While Obtainium is a really powerful tool, its developer's problematic political views take part in the way he treats his users.
+
+Obtainium's developer intended to block people from a specific nation from getting involved in his project, and he actively closes new localization pull requests of Hebrew speakers.
+
+Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
 
 ### Q: How is Updatium different from other Obtainium forks?
 
-A: Every fork of Obtainium serves a different goal. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) was made to be a catalogue for discovering new open-source apps, while Updatium focuses on providing a better experience managing your already added apps or ready-made imported lists.
-While [ObtainX](https://github.com/bikram-agarwal/ObtainX) shares many vision aspects with Updatium, this fork focuses on being simple and easy-to-understand for both novice and tech-savvy people.
+A: Every fork of Obtainium serves a different goal. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) is a catalogue for discovering new apps, while Updatium focuses on providing a better experience managing your already added apps.
+While [ObtainX](https://github.com/bikram-agarwal/ObtainX) shares many vision aspects with Updatium, this project focuses on being simple and intuitive for both novice and tech-savvy people.
 Also, Updatium is intended to be a customizable app catalogue that everyone can adjust to their needs.
 
 ### Q: Does Updatium encourage piracy?
@@ -101,8 +108,8 @@ On Updatium:
 
 ### Q: How can I help?
 
-A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, adding new translations (or improving existing ones), design proposals and ideas. To start, you can simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
+A: There are many ways you can. It could be testing, bug reporting, adding new translations (or improving the existing ones), design and UX proposals, sharing ideas, or adding new features and improvements. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow.
 
-## Limitations
+Your contribution doesn't have to be code, even though code contributions are welcome too. LLM generated code is acceptable, as long as the user (or another LLM) reviews the code carefully before submitting it.
 
-- For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
+To start, you can simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Every contribution is welcome, and thank you for your support :)
