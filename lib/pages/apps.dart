@@ -772,7 +772,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: 'downloadProgress'.t(),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 100,
+                            width: 120,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -888,7 +888,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: 'downloadProgress'.t(),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 100,
+                      width: 120,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -1206,19 +1206,15 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ),
                   ),
                   actions: [
-                    Semantics(
-                      button: true,
-                      label: 'continue'.t(),
-                      child: TextButton(
-                        onPressed: () {
-                          for (var app in selectedApps) {
-                            app.categories = selectedCategories.toList();
-                          }
-                          appsProvider.saveApps(selectedApps.toList());
-                          Navigator.of(ctx).pop();
-                        },
-                        child: Text('continue'.t()),
-                      ),
+                    TextButton(
+                      onPressed: () {
+                        for (var app in selectedApps) {
+                          app.categories = selectedCategories.toList();
+                        }
+                        appsProvider.saveApps(selectedApps.toList());
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Text('continue'.t()),
                     ),
                   ],
                 );

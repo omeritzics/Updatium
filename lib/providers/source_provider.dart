@@ -623,7 +623,7 @@ abstract class AppSource {
       GeneratedFormTextField(
         'trackedUrl',
         label: 'trackedUrl'.t(),
-        required: false,
+        required: true,
         hint: 'https://github.com/author/app',
         additionalValidators: [(value) => httpUrlValidator(value)],
       ),

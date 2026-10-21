@@ -348,10 +348,6 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
-      if (app.app.apkUrls.isNotEmpty) {
-        infoLines =
-            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
-      }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -461,7 +457,6 @@ class _AppPageState extends State<AppPage> {
           message: app.app.url,
           child: Text(
             '${'trackedURL'.t()}: ${app.app.url}',
-            textAlign: TextAlign.start,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),

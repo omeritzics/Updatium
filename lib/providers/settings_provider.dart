@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/main.dart';
-import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -64,9 +63,6 @@ class SettingsProvider with ChangeNotifier {
     isTV =
         info.systemFeatures.contains('android.hardware.type.television') ||
         info.systemFeatures.contains('android.software.leanback');
-    if (useSystemFont) {
-      await NativeFeatures.loadSystemFont();
-    }
     notifyListeners();
   }
 
