@@ -260,7 +260,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     toggleAppSelected(App app) {
       setState(() {
         if (selectedAppIds.contains(app.id)) {
-          selectedAppIds.removeWhere((a) => a == app.id);
+          selectedAppIds.remove(app.id);
         } else {
           selectedAppIds.add(app.id);
         }
@@ -457,17 +457,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         .where(isNotTrackOnly)
         .toList();
 
-    var tempPinned = [];
-    var tempNotPinned = [];
-    for (var a in listedApps) {
-      if (a.app.pinned) {
-        tempPinned.add(a);
-      } else {
-        tempNotPinned.add(a);
-      }
-    }
-    listedApps = [...tempPinned, ...tempNotPinned];
-
     List<String?> getListedCategories() {
       var temp = listedApps.map(
         (e) => e.app.categories.isNotEmpty == true ? e.app.categories : [null],
@@ -556,8 +545,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             child: LinearProgressIndicator(
               value: appsProvider.loadingApps
                   ? null
-                  : appsProvider
-                            .getAppValues()
+                  : appsProvider.apps.values
                             .where(
                               (element) =>
                                   !(element.app.lastUpdateCheck?.isBefore(

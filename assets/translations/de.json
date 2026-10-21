@@ -191,6 +191,7 @@
     "updatesAvailable": "Aktualisierungen verfügbar",
     "updatesAvailableNotifDescription": "Benachrichtigt, wenn Aktualisierungen für eine oder mehrere von Updatium überwachte Apps verfügbar sind",
     "noNewUpdates": "Keine neuen Aktualisierungen.",
+    "noFilePickerAvailable": "No file picker available. Please install a file manager app.",
     "xHasAnUpdate": "{} hat eine Aktualisierung.",
     "appsUpdated": "App wurde aktualisiert",
     "appsNotUpdated": "Aktualisierung der Apps fehlgeschlagen",

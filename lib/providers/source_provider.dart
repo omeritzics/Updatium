@@ -28,6 +28,7 @@ import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
+import 'package:obtainium/app_sources/itchio.dart';
 import 'package:updatium/app_sources/izzyondroid.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
@@ -1172,6 +1173,7 @@ class SourceProvider {
     OpenAPK(),
     Aptoide(),
     Uptodown(),
+    ItchIO(),
     HuaweiAppGallery(),
     Tencent(),
     VivoAppStore(),
@@ -1179,6 +1181,7 @@ class SourceProvider {
     SourceForge(),
     Jenkins(),
     APKMirror(),
+    RockMods(),
     TelegramApp(),
     WhatsAppApp(),
     NeutronCode(),

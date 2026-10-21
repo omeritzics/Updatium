@@ -662,9 +662,17 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 alignment: item.alignment,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
-                          ?.entries
-                          .map((e2) {
+                  ...() sync* {
+                    var tagEntries =
+                        values[fieldKey] as Map<String, MapEntry<int, bool>>?;
+                    if (tagEntries != null) {
+                      var sorted = tagEntries.entries.toList()
+                        ..sort((a, b) => a.key
+                            .toLowerCase()
+                            .compareTo(b.key.toLowerCase()));
+                      yield* sorted;
+                    }
+                  }().map((e2) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 4,

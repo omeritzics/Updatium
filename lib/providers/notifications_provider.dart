@@ -42,7 +42,7 @@ class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? 2,
-        'updatesAvailable'.t(),
+        tr('updatesAvailable'),
         '',
         'UPDATES_AVAILABLE',
         'updatesAvailableNotifChannel'.t(),
@@ -53,6 +53,29 @@ class UpdateNotification extends UpdatiumNotification {
         ? 'noNewUpdates'.t()
         : updates.length == 1
         ? t('xHasAnUpdate', args: [updates[0].finalName])
+        : plural(
+            'xAndNMoreUpdatesAvailable',
+            updates.length - 1,
+            args: [updates[0].finalName, (updates.length - 1).toString()],
+          );
+  }
+}
+
+class TrackOnlyUpdateNotification extends UpdatiumNotification {
+  TrackOnlyUpdateNotification(List<App> updates, {int? id})
+    : super(
+        id ?? 7,
+        tr('trackOnlyUpdatesAvailable'),
+        '',
+        'UPDATES_AVAILABLE',
+        tr('updatesAvailableNotifChannel'),
+        tr('updatesAvailableNotifDescription'),
+        Importance.max,
+      ) {
+    message = updates.isEmpty
+        ? tr('noNewUpdates')
+        : updates.length == 1
+        ? tr('xHasAnUpdate', args: [updates[0].finalName])
         : plural(
             'xAndNMoreUpdatesAvailable',
             updates.length - 1,

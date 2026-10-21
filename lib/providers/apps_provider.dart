@@ -1058,14 +1058,8 @@ class AppsProvider with ChangeNotifier {
       PackageInfo? newInfo;
       var originalAssetName = app.apkUrls[app.preferredApkIndex].key
           .toLowerCase();
-      var isAPK = source_provider.endsWithExtension(
-        downloadedFile!.path,
-        source_provider.supportedApkExtensions[0],
-      );
-      var isXAPK = source_provider.endsWithExtension(
-        downloadedFile.path,
-        source_provider.supportedApkExtensions[1],
-      );
+      var isAPK = downloadedFile.path.toLowerCase().endsWith('.apk');
+      var isXAPK = downloadedFile.path.toLowerCase().endsWith('.xapk');
       var isTarball =
           originalAssetName.endsWith('.tar.gz') ||
           originalAssetName.endsWith('.tgz') ||
@@ -1114,8 +1108,9 @@ class AppsProvider with ChangeNotifier {
         }
         if (filterRegEx != null) {
           var reg = RegExp(filterRegEx);
-          selectedApks.removeWhere((apk) {
-            var shouldDelete = !reg.hasMatch(apk.uri.pathSegments.last);
+          apks.removeWhere((apk) {
+            var relativePath = apk.path.substring(apkDir!.path.length + 1);
+            var shouldDelete = !reg.hasMatch(relativePath);
             if (shouldDelete) {
               apk.delete();
             }
@@ -1330,255 +1325,13 @@ class AppsProvider with ChangeNotifier {
     // Resolve the canonical destination path once, to check every entry against.
     final destCanonical = path.canonicalize(destDir.absolute.path);
     for (final file in tarArchive.files) {
-      // Reject symlinks/hardlinks outright - never follow or materialize them,
-      // since a link target is an independent traversal vector on top of the
-      // entry name itself.
-      if (file.isSymbolicLink) {
-        logs.add(
-          'Rejected tarball entry (symlink, not supported): ${file.name}',
-        );
-        continue;
-      }
-      if (!file.isFile) {
-        continue;
-      }
-
-      // Reject absolute paths and drive-letter paths outright - a legitimate
-      // archive entry should always be relative.
-      if (path.isAbsolute(file.name) ||
-          RegExp(r'^[A-Za-z]:').hasMatch(file.name)) {
-        logs.add('Rejected tarball entry (absolute/drive path): ${file.name}');
-        continue;
-      }
-
-      // Join and normalize, then re-verify the resolved path is still inside
-      // destDir. normalize() alone only collapses '..' segments syntactically;
-      // it does not guarantee the result stays within destDir, so the
-      // isWithin check (against the canonicalized paths) is the real guard.
-      final joinedPath = path.join(destDir.path, file.name);
-      final outCanonical = path.canonicalize(path.normalize(joinedPath));
-      if (!path.isWithin(destCanonical, outCanonical) &&
-          outCanonical != destCanonical) {
-        logs.add(
-          'Rejected tarball entry (path traversal attempt): ${file.name}',
-        );
-        continue;
-      }
-
-      final outFile = File(outCanonical);
-      await outFile.create(recursive: true);
-      await outFile.writeAsBytes(file.content as List<int>);
-    }
-  }
-
-  // Parse XAPK manifest.json if present
-  Map<String, dynamic>? parseXapkManifest(Directory extractedDir) {
-    try {
-      var manifestFile = File('${extractedDir.path}/manifest.json');
-      if (manifestFile.existsSync()) {
-        var manifestContent = manifestFile.readAsStringSync();
-        var manifest = jsonDecode(manifestContent) as Map<String, dynamic>;
-
-        // Validate manifest structure
-        if (manifest.containsKey('split_apks')) {
-          // Ensure split_apks is a list
-          if (manifest['split_apks'] is! List) {
-            logs.add('Invalid XAPK manifest: split_apks is not a list');
-            return null;
-          }
-        }
-
-        return manifest;
-      }
-    } catch (e) {
-      logs.add('Failed to parse XAPK manifest: ${e.toString()}');
-    }
-    return null;
-  }
-
-  // Get device supported ABIs in order of preference
-  Future<List<String>> getDeviceAbis() async {
-    var androidInfo = await DeviceInfoPlugin().androidInfo;
-    return androidInfo.supportedAbis;
-  }
-
-  // Get device display density bucket (e.g., mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
-  String getDeviceDensityBucket() {
-    // Get device pixel ratio from Flutter
-    final views = WidgetsBinding.instance.platformDispatcher.views;
-    final pixelRatio = views.isNotEmpty ? views.first.devicePixelRatio : 2.0;
-
-    // Map pixel ratio to density buckets
-    if (pixelRatio < 1.0) return 'ldpi';
-    if (pixelRatio < 1.5) return 'mdpi';
-    if (pixelRatio < 2.0) return 'hdpi';
-    if (pixelRatio < 3.0) return 'xhdpi';
-    if (pixelRatio < 4.0) return 'xxhdpi';
-    return 'xxxhdpi';
-  }
-
-  // Filter APKs based on device architecture
-  Future<List<File>> filterApksByArchitecture(List<File> apkFiles) async {
-    if (apkFiles.isEmpty) return apkFiles;
-
-    var deviceAbis = await getDeviceAbis();
-    List<File> filteredApks = [];
-
-    // Try to match APKs with device ABI in order of preference
-    for (var abi in deviceAbis) {
-      // More precise matching: look for ABI as a separate component in filename
-      // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
-      var suffix = '';
-      if (abi.toLowerCase() == 'x86') {
-        suffix = r'(?!_?64)';
-      } else if (abi.toLowerCase() == 'armeabi') {
-        suffix = r'(?!-?v7a)';
-      }
-      var abiPattern = RegExp(
-        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + suffix + r'[-_\.]',
-      );
-      var matchingApks = apkFiles.where((file) {
-        var fileName = file.uri.pathSegments.last.toLowerCase();
-        return abiPattern.hasMatch(fileName);
-      }).toList();
-
-      if (matchingApks.isNotEmpty) {
-        filteredApks.addAll(matchingApks);
-        break; // Use the first matching ABI
-      }
-    }
-
-    // If no architecture-specific APKs found, return all APKs
-    if (filteredApks.isEmpty) {
-      return apkFiles;
-    }
-
-    // Apply density filtering if multiple APKs remain (for bundled APKs)
-    if (filteredApks.length > 1) {
-      filteredApks = await _filterByDensity(filteredApks);
-    }
-
-    return filteredApks;
-  }
-
-  // Filter APKs by device display density (for bundled APKs with density splits)
-  Future<List<File>> _filterByDensity(List<File> apkFiles) async {
-    var deviceDensity = getDeviceDensityBucket();
-
-    // Density buckets in order of preference (fallback to lower density if exact match not found)
-    var densityBuckets = [
-      'xxxhdpi',
-      'xxhdpi',
-      'xhdpi',
-      'hdpi',
-      'mdpi',
-      'ldpi',
-      'nodpi',
-    ];
-    var deviceIndex = densityBuckets.indexOf(deviceDensity);
-
-    // Try to find APKs matching device density or lower
-    for (var i = deviceIndex; i < densityBuckets.length; i++) {
-      var density = densityBuckets[i];
-      var densityPattern = RegExp(r'[-_\.]?' + density + r'[-_\.]');
-      var matchingApks = apkFiles.where((file) {
-        var fileName = file.uri.pathSegments.last.toLowerCase();
-        return densityPattern.hasMatch(fileName);
-      }).toList();
-
-      if (matchingApks.isNotEmpty) {
-        return matchingApks;
-      }
-    }
-
-    // If no density-specific APKs found, return all APKs
-    return apkFiles;
-  }
-
-  // Select appropriate APKs for installation from XAPK
-  Future<List<File>> selectApksForInstallation(
-    List<File> apkFiles,
-    String appId,
-    Map<String, dynamic>? manifest,
-  ) async {
-    if (apkFiles.isEmpty) {
-      return apkFiles;
-    }
-
-    // Prioritize APKs that start with app ID
-    File? baseApk;
-    List<File> otherApks = [];
-
-    for (var apk in apkFiles) {
-      var fileName = apk.uri.pathSegments.last;
-      if (fileName.startsWith(appId)) {
-        baseApk = apk;
-      } else {
-        otherApks.add(apk);
-      }
-    }
-
-    // If manifest exists, use it for intelligent selection
-    if (manifest != null && manifest.containsKey('split_apks')) {
-      var splitApks = manifest['split_apks'] as List;
-
-      // Build a map of APK files by their names for quick lookup
-      var apkMap = <String, File>{};
-      for (var apk in apkFiles) {
-        apkMap[apk.uri.pathSegments.last] = apk;
-      }
-
-      // Select splits based on manifest and device capabilities
-      List<File> selectedApks = [];
-
-      // Always include base APK if found
-      if (baseApk != null) {
-        selectedApks.add(baseApk);
-      }
-
-      // Select architecture-specific splits
-      var deviceAbis = await getDeviceAbis();
-      var deviceDensity = getDeviceDensityBucket();
-
-      int matchedSplits = 0;
-      int missingSplits = 0;
-
-      for (var split in splitApks) {
-        if (split is Map<String, dynamic>) {
-          var splitFile = split['file'] as String?;
-          var splitAbi = split['abi'] as String?;
-          var splitDensity = split['density'] as String?;
-
-          if (splitFile != null) {
-            if (apkMap.containsKey(splitFile)) {
-              var apk = apkMap[splitFile]!;
-
-              // Check if this split matches device capabilities
-              bool matchesAbi =
-                  splitAbi == null || deviceAbis.contains(splitAbi);
-              bool matchesDensity =
-                  splitDensity == null ||
-                  splitDensity == deviceDensity ||
-                  splitDensity == 'nodpi';
-
-              if (matchesAbi && matchesDensity) {
-                if (!selectedApks.contains(apk)) {
-                  selectedApks.add(apk);
-                  matchedSplits++;
-                }
-              }
-            } else {
-              missingSplits++;
-            }
-          }
-        }
-      }
-
-      // Log warnings for incomplete bundles
-      if (missingSplits > 0) {
-        logs.add(
-          'Warning: XAPK bundle is incomplete - $missingSplits split(s) referenced in manifest are missing',
-        );
+      if (file.isFile) {
+        final content = file.content;
+        if (content == null) continue;
+        final outPath = '${destDir.path}/${file.name}';
+        final outFile = File(outPath);
+        outFile.createSync(recursive: true);
+        outFile.writeAsBytesSync(content);
       }
 
       // If manifest-based selection failed or returned too few APKs, fallback to filename-based filtering
@@ -1741,7 +1494,21 @@ class AppsProvider with ChangeNotifier {
     if (appInfo != null &&
         newInfo.versionCode! < appInfo.versionCode! &&
         !(await canDowngradeApps())) {
-      throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
+      if (settingsProvider.showAppDowngradeError) {
+        throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
+      }
+    }
+    if (needsBGWorkaround) {
+      // The below 'await' will never return if we are in a background process
+      // To work around this, we should assume the install will be successful
+      // So we update the app's installed version first as we will never get to the later code
+      // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
+      // TODO: When fixed, update this function and the calls to it accordingly
+      apps[file.appId]!.app.installedVersion =
+          apps[file.appId]!.app.latestVersion;
+      await saveApps([
+        apps[file.appId]!.app,
+      ], attemptToCorrectInstallStatus: false);
     }
     int? code;
     if (!settingsProvider.useShizuku) {
@@ -2542,12 +2309,9 @@ class AppsProvider with ChangeNotifier {
       );
     }
     // Delete externally uninstalled Apps if needed
-    if (removedAppIds.isNotEmpty) {
-      if (removedAppIds.isNotEmpty) {
-        if (settingsProvider.removeOnExternalUninstall) {
-          await removeApps(removedAppIds);
-        }
-      }
+    if (removedAppIds.isNotEmpty &&
+        settingsProvider.removeOnExternalUninstall) {
+      await removeApps(removedAppIds);
     }
     loadingApps = false;
     notifyListeners();
@@ -3591,6 +3355,8 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     }
 
     // Filter out updates that will be installed silently (the rest go into toNotify)
+    List<App> trackOnlyToNotify = [];
+    List<App> exemptToNotify = [];
     for (var i = 0; i < updates.length; i++) {
       var canInstallSilently = await appsProvider.canInstallSilently(
         updates[i],
@@ -3600,14 +3366,32 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
           logs.add(
             'BG update task notifying for ${updates[i].id} (networkRestricted $networkRestricted, chargingRestricted: $chargingRestricted, canInstallSilently: $canInstallSilently).',
           );
-          toNotify.add(updates[i]);
+          if (updates[i].additionalSettings['trackOnly'] == true) {
+            trackOnlyToNotify.add(updates[i]);
+          } else if (
+            updates[i].additionalSettings['exemptFromBackgroundUpdates'] == true) {
+            exemptToNotify.add(updates[i]);
+          } else {
+            toNotify.add(updates[i]);
+          }
         }
       }
     }
 
-    // Send the update notification
+    // Send separate notifications to avoid one being cancelled
+    // when the other is processed
     if (toNotify.isNotEmpty) {
       notificationsProvider.notify(UpdateNotification(toNotify));
+    }
+    if (trackOnlyToNotify.isNotEmpty) {
+      notificationsProvider.notify(
+        TrackOnlyUpdateNotification(trackOnlyToNotify),
+      );
+    }
+    if (exemptToNotify.isNotEmpty) {
+      notificationsProvider.notify(
+        TrackOnlyUpdateNotification(exemptToNotify),
+      );
     }
 
     // Send the error notifications (grouped by error string)

@@ -8,14 +8,14 @@ import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
+String updatiumTempId = 'omeritzics_updatium_github.com';
 String updatiumId = 'io.github.omeritzics.updatium';
 String updatiumUrl = 'https://github.com/omeritzics/Updatium';
 Color updatiumThemeColor = const Color(0xFF3a79b7);
@@ -437,12 +437,12 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
-  bool get showOlderVersionWarning {
-    return prefs?.getBool('showOlderVersionWarning') ?? true;
+  bool get showAppDowngradeError {
+    return prefs?.getBool('showAppDowngradeError') ?? true;
   }
 
-  set showOlderVersionWarning(bool show) {
-    prefs?.setBool('showOlderVersionWarning', show);
+  set showAppDowngradeError(bool show) {
+    prefs?.setBool('showAppDowngradeError', show);
     notifyListeners();
   }
 
@@ -589,17 +589,22 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    if (remove) {
-      prefs?.remove('exportDir');
-      notifyListeners();
-      return;
+    var existingSAFPerms = (await saf.persistedUriPermissions()) ?? [];
+    var currentOneWayDataSyncDir = await getExportDir();
+    Uri? newOneWayDataSyncDir;
+    if (!remove) {
+      try {
+        newOneWayDataSyncDir = (await saf.openDocumentTree());
+      } catch (_) {
+        throw UpdatiumError(tr('noFilePickerAvailable'));
+      }
     }
-
-    // Use SAF directory picker to get content URI for DocumentFile
-    const platform = MethodChannel('io.github.omeritzics.updatium/saf');
-    final String? uri = await platform.invokeMethod('openDirectoryTree');
-    if (uri != null) {
-      prefs?.setString('exportDir', uri);
+    if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
+      if (newOneWayDataSyncDir == null) {
+        prefs?.remove('exportDir');
+      } else {
+        prefs?.setString('exportDir', newOneWayDataSyncDir.toString());
+      }
       notifyListeners();
     }
   }

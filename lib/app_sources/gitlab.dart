@@ -182,17 +182,29 @@ class GitLab extends AppSource {
           .where(
             (s) =>
                 s.key.isNotEmpty &&
-                (source_provider.hasSupportedApkExtension(s.key) ||
-                    source_provider.hasSupportedApkExtension(s.value)),
+                (s.key.toLowerCase().endsWith('.apk') ||
+                    s.key.toLowerCase().endsWith('.xapk') ||
+                    s.key.toLowerCase().endsWith('.apkm') ||
+                    s.key.toLowerCase().endsWith('.apks') ||
+                    s.value.toLowerCase().endsWith('.apk') ||
+                    s.value.toLowerCase().endsWith('.xapk') ||
+                    s.value.toLowerCase().endsWith('.apkm') ||
+                    s.value.toLowerCase().endsWith(
+                      '.apks',
+                    )), // TODO: Supported file types should be centralized somewhere and shared between sources
           )
           .toList();
       var uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
           .split('](')
           .join('\n')
-          .split('${source_provider.supportedApkExtensions[0]})')
-          .join('${source_provider.supportedApkExtensions[0]}\n')
-          .split('${source_provider.supportedApkExtensions[1]})')
-          .join('${source_provider.supportedApkExtensions[1]}\n')
+          .split('.apk)')
+          .join('.apk\n')
+          .split('.xapk)')
+          .join('.xapk\n')
+          .split('.apkm)')
+          .join('.apkm\n')
+          .split('.apks)')
+          .join('.apks\n')
           .split('\n')
           .where(
             (s) =>

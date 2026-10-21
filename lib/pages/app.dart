@@ -346,7 +346,10 @@ class _AppPageState extends State<AppPage> {
         infoLines = '${t('xIsTrackOnly', args: ['app'.t()])}\n$infoLines';
       }
       if (installedVersionIsEstimate) {
-        infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
+        var realVersion = app?.installedInfo?.versionName;
+        infoLines = realVersion != null
+            ? '${tr('pseudoVersionInUse')} (OS installed $realVersion)\n$infoLines'
+            : '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(

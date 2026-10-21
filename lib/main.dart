@@ -166,7 +166,79 @@ class Updatium extends StatefulWidget {
 }
 
 class _UpdatiumState extends State<Updatium> {
-  var existingUpdateInterval = -1;
+  var _lastUpdateInterval = -1;
+  var _lastUseFGService = false;
+  var _firstRunHandled = false;
+
+  void _manageServices(SettingsProvider settings) {
+    var interval = settings.updateInterval;
+    var useFG = settings.useFGService;
+    if (interval == _lastUpdateInterval && useFG == _lastUseFGService) return;
+    _lastUpdateInterval = interval;
+    _lastUseFGService = useFG;
+    if (interval == 0) {
+      stopForegroundService();
+      BackgroundFetch.stop();
+    } else if (useFG) {
+      BackgroundFetch.stop();
+      startForegroundService(false);
+    } else {
+      stopForegroundService();
+      BackgroundFetch.start();
+    }
+  }
+
+  void _handleFirstRun(
+    SettingsProvider settings,
+    AppsProvider apps,
+    LogsProvider logs,
+    BuildContext context,
+  ) {
+    if (settings.prefs == null) {
+      settings.initializeSettings();
+      return;
+    }
+    if (_firstRunHandled) return;
+    _firstRunHandled = true;
+    var isFirstRun = settings.checkAndFlipFirstRun();
+    if (isFirstRun) {
+      logs.add('This is the first ever run of Obtainium.');
+      if (!fdroid) {
+        getInstalledInfo(obtainiumId)
+            .then((value) {
+              if (value?.versionName != null) {
+                apps.saveApps([
+                  App(
+                    obtainiumId,
+                    obtainiumUrl,
+                    'ImranR98',
+                    'Obtainium',
+                    value!.versionName,
+                    value.versionName!,
+                    [],
+                    0,
+                    {
+                      'versionDetection': true,
+                      'apkFilterRegEx': 'fdroid',
+                      'invertAPKFilter': true,
+                    },
+                    null,
+                    false,
+                  ),
+                ], onlyIfExists: false);
+              }
+            })
+            .catchError((err) {
+              logs.add('Failed to add Obtainium on first run: $err');
+            });
+      }
+    }
+    if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
+        (settings.forcedLocale == null &&
+            context.deviceLocale != context.locale)) {
+      settings.resetLocaleSafe(context);
+    }
+  }
   SettingsProvider? _settingsProvider;
   int? _lastAppliedInterval;
   bool? _lastAppliedUseFGService;

@@ -7,6 +7,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:m3e_card_list/m3e_card_list.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -231,10 +232,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
       try {
         final result = await DocMan.pick.files(limit: 1);
         if (result.isNotEmpty) {
+          var path = result.files.single.path;
+          if (path == null) return;
           await urlListImport(
             overrideInitValid: true,
             initValue: RegExp('https?://[^"]+')
-                .allMatches(File(result.first.path).readAsStringSync())
+                .allMatches(File(path).readAsStringSync())
                 .map((e) => e.input.substring(e.start, e.end))
                 .toSet()
                 .toList()
@@ -248,6 +251,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 })
                 .join('\n'),
           );
+        }
+      }).catchError((e) {
+        if (e is PlatformException || e is MissingPluginException) {
+          showError(ObtainiumError(tr('noFilePickerAvailable')), context);
+        } else {
+          showError(e, context);
         }
       } catch (e) {
         if (!mounted) return;
@@ -553,35 +562,363 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                gap16,
-                Text(
-                  e[0],
-                  style: Theme.of(context).textTheme.titleSmall,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  e[1],
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                const SizedBox(height: 16),
+                Text(e[0]),
+                Text(e[1], style: const TextStyle(fontStyle: FontStyle.italic)),
               ],
             );
           }),
         ],
       ),
       actions: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-            onPressed: () {
-              Navigator.of(context).pop(null);
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(null);
+          },
+          child: Text(tr('ok')),
+        ),
+      ],
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class SelectionModal extends StatefulWidget {
+  SelectionModal({
+    super.key,
+    required this.entries,
+    this.selectedByDefault = true,
+    this.onlyOneSelectionAllowed = false,
+    this.titlesAreLinks = true,
+    this.title,
+    this.deselectThese = const [],
+  });
+
+  String? title;
+  Map<String, List<String>> entries;
+  bool selectedByDefault;
+  List<String> deselectThese;
+  bool onlyOneSelectionAllowed;
+  bool titlesAreLinks;
+
+  @override
+  State<SelectionModal> createState() => _SelectionModalState();
+}
+
+class _SelectionModalState extends State<SelectionModal> {
+  Map<MapEntry<String, List<String>>, bool> entrySelections = {};
+  String filterRegex = '';
+  @override
+  void initState() {
+    super.initState();
+    for (var entry in widget.entries.entries) {
+      entrySelections.putIfAbsent(
+        entry,
+        () =>
+            widget.selectedByDefault &&
+            !widget.onlyOneSelectionAllowed &&
+            !widget.deselectThese.contains(entry.key),
+      );
+    }
+    if (widget.selectedByDefault && widget.onlyOneSelectionAllowed) {
+      selectOnlyOne(widget.entries.entries.first.key);
+    }
+  }
+
+  void selectOnlyOne(String url) {
+    for (var e in entrySelections.keys) {
+      entrySelections[e] = e.key == url;
+    }
+  }
+
+  void selectAll({bool deselect = false}) {
+    for (var e in entrySelections.keys) {
+      entrySelections[e] = !deselect;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isTV = context.read<SettingsProvider>().isTV;
+    Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
+    entrySelections.forEach((key, value) {
+      var searchableText = key.value.isEmpty ? key.key : key.value[0];
+      if (filterRegex.isEmpty || RegExp(filterRegex).hasMatch(searchableText)) {
+        filteredEntrySelections.putIfAbsent(key, () => value);
+      }
+    });
+    if (filterRegex.isNotEmpty && filteredEntrySelections.isEmpty) {
+      entrySelections.forEach((key, value) {
+        var searchableText = key.value.isEmpty ? key.key : key.value[0];
+        if (filterRegex.isEmpty ||
+            RegExp(
+              filterRegex,
+              caseSensitive: false,
+            ).hasMatch(searchableText)) {
+          filteredEntrySelections.putIfAbsent(key, () => value);
+        }
+      });
+    }
+    getSelectAllButton() {
+      if (widget.onlyOneSelectionAllowed) {
+        return SizedBox.shrink();
+      }
+      var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
+      return noneSelected
+          ? TextButton(
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              onPressed: () {
+                setState(() {
+                  selectAll();
+                });
+              },
+              child: Text(tr('selectAll')),
+            )
+          : TextButton(
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              onPressed: () {
+                setState(() {
+                  selectAll(deselect: true);
+                });
+              },
+              child: Text(tr('deselectX', args: [''])),
+            );
+    }
+
+    return AlertDialog(
+      scrollable: true,
+      title: Text(widget.title ?? tr('pick')),
+      content: Column(
+        children: [
+          GeneratedForm(
+            items: [
+              [
+                GeneratedFormTextField(
+                  'filter',
+                  label: tr('filter'),
+                  required: false,
+                  additionalValidators: [
+                    (value) {
+                      return regExValidator(value);
+                    },
+                  ],
+                ),
+              ],
+            ],
+            onValueChanges: (value, valid, isBuilding) {
+              if (valid && !isBuilding) {
+                if (value['filter'] != null) {
+                  setState(() {
+                    filterRegex = value['filter'];
+                  });
+                }
+              }
             },
-            icon: const Icon(Icons.close),
-            label: Text('ok'.t()),
+          ),
+          ...filteredEntrySelections.keys.map((entry) {
+            selectThis(bool? value) {
+              setState(() {
+                value ??= false;
+                if (value! && widget.onlyOneSelectionAllowed) {
+                  selectOnlyOne(entry.key);
+                } else {
+                  entrySelections[entry] = value!;
+                }
+              });
+            }
+
+            var urlLink = InkWell(
+              onTap: !widget.titlesAreLinks
+                  ? null
+                  : () {
+                      launchUrlString(
+                        entry.key,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    entry.value.isEmpty ? entry.key : entry.value[0],
+                    style: TextStyle(
+                      decoration: widget.titlesAreLinks
+                          ? TextDecoration.underline
+                          : null,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  if (widget.titlesAreLinks)
+                    Text(
+                      Uri.parse(entry.key).host,
+                      style: const TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 12,
+                      ),
+                    ),
+                ],
+              ),
+            );
+
+            var descriptionText = entry.value.length <= 1
+                ? const SizedBox.shrink()
+                : Text(
+                    entry.value[1].length > 128
+                        ? '${entry.value[1].substring(0, 128)}...'
+                        : entry.value[1],
+                    style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 12,
+                    ),
+                  );
+
+            var selectedEntries = entrySelections.entries
+                .where((e) => e.value)
+                .toList();
+
+            var singleSelectTile = ListTile(
+              title: InkWell(
+                onTap: widget.titlesAreLinks
+                    ? null
+                    : () {
+                        selectThis(!(entrySelections[entry] ?? false));
+                      },
+                child: urlLink,
+              ),
+              subtitle: entry.value.length <= 1
+                  ? null
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectOnlyOne(entry.key);
+                        });
+                      },
+                      child: descriptionText,
+                    ),
+              leading: Radio<String>(
+                value: entry.key,
+                groupValue: selectedEntries.isEmpty
+                    ? null
+                    : selectedEntries.first.key.key,
+                onChanged: (value) {
+                  if (isTV) {
+                    Navigator.of(context).pop([entry.key]);
+                  } else {
+                    setState(() {
+                      selectOnlyOne(entry.key);
+                    });
+                  }
+                },
+              ),
+            );
+
+            var multiSelectTile = Row(
+              children: [
+                Checkbox(
+                  value: entrySelections[entry],
+                  onChanged: (value) {
+                    selectThis(value);
+                  },
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 8),
+                      InkWell(
+                        onTap: widget.titlesAreLinks
+                            ? null
+                            : () {
+                                selectThis(!(entrySelections[entry] ?? false));
+                              },
+                        child: urlLink,
+                      ),
+                      entry.value.length <= 1
+                          ? const SizedBox.shrink()
+                          : InkWell(
+                              onTap: () {
+                                selectThis(!(entrySelections[entry] ?? false));
+                              },
+                              child: descriptionText,
+                            ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              ],
+            );
+
+            return widget.onlyOneSelectionAllowed
+                ? singleSelectTile
+                : multiSelectTile;
+          }),
+          if (isTV && !widget.onlyOneSelectionAllowed) ...[
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  onPressed: entrySelections.values.where((b) => b).isEmpty
+                      ? null
+                      : () => Navigator.of(context).pop(
+                          entrySelections.entries
+                              .where((entry) => entry.value)
+                              .map((e) => e.key.key)
+                              .toList(),
+                        ),
+                  child: Text(
+                    tr(
+                      'selectX',
+                      args: [
+                        entrySelections.values
+                            .where((b) => b)
+                            .length
+                            .toString(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        getSelectAllButton(),
+        TextButton(
+          autofocus: isTV,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(tr('cancel')),
+        ),
+        TextButton(
+          onPressed: entrySelections.values.where((b) => b).isEmpty
+              ? null
+              : () {
+                  Navigator.of(context).pop(
+                    entrySelections.entries
+                        .where((entry) => entry.value)
+                        .map((e) => e.key.key)
+                        .toList(),
+                  );
+                },
+          child: Text(
+            widget.onlyOneSelectionAllowed
+                ? tr('pick')
+                : tr(
+                    'selectX',
+                    args: [
+                      entrySelections.values.where((b) => b).length.toString(),
+                    ],
+                  ),
           ),
         ),
       ],

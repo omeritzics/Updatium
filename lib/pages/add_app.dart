@@ -468,6 +468,8 @@ class AddAppPageState extends State<AddAppPage> {
                 .whereType<MapEntry<String, Map<String, List<String>>>>()
                 .toList();
 
+          if (!mounted) return;
+
         // Interleave results instead of simple reduce
         Map<String, MapEntry<String, List<String>>> res = {};
         var si = 0;
@@ -888,12 +890,29 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           ),
         ),
         gap16,
-        GeneratedForm(
+        () {
+          var formItems = pickedSource!.combinedAppSpecificSettingFormItems;
+          if (settingsProvider.includePrereleasesByDefault ||
+              settingsProvider.shizukuPretendToBeGooglePlay) {
+            for (var row in formItems) {
+              for (var item in row) {
+                if (item.key == 'includePrereleases' &&
+                    settingsProvider.includePrereleasesByDefault) {
+                  item.defaultValue = true;
+                }
+                if (item.key == 'shizukuPretendToBeGooglePlay' &&
+                    settingsProvider.shizukuPretendToBeGooglePlay) {
+                  item.defaultValue = true;
+                }
+              }
+            }
+          }
+          return GeneratedForm(
           key: Key(
             '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-$prefillVersion',
           ),
           items: [
-            ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
+            ...formItems.map((row) {
               return row.map((e) {
                 var item = e.clone();
                 if (additionalSettings.containsKey(item.key)) {
@@ -920,7 +939,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               });
             }
           },
-        ),
+        );
+      }(),
         Column(
           children: [
             gap16,
