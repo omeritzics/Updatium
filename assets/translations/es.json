@@ -87,7 +87,8 @@
     "removeSelectedApps": "Eliminar aplicaciones seleccionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "many": "",
+        "other": ""
     },
     "updateX": "Actualizar {}",
     "installX": "Instalar {}",
@@ -273,7 +274,11 @@
     "category": "Categoría",
     "noCategory": "Sin categoría",
     "noCategories": "Sin categorías",
-    "categoryDeleteQuestion": "¿Eliminar las categorías?",
+    "categoryDeleteQuestion": {
+        "one": "¿Eliminar las categorías?",
+        "many": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Todas las aplicaciones en las categorías eliminadas se marcarán como «Sin categoría».",
     "addCategory": "Añadir categoría",
     "label": "Nombre",
@@ -437,67 +442,83 @@
     "multipleSigners": "Múltiples firmas",
     "removeAppQuestion": {
         "one": "¿Eliminar la aplicación?",
-        "other": "¿Eliminar las aplicaciones?"
+        "many": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Muchas peticiones (limitado); pruebe de nuevo en {} minuto",
-        "other": "Muchas peticiones (limitado); pruebe de nuevo en {} minutos"
+        "many": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "La comprobación de actualizaciones en segundo plano se ha encontrado un {error}; se volverá a probar en {} minuto",
-        "other": "La comprobación de actualizaciones en segundo plano se ha encontrado un {error}; se volverá a probar en {} minutos"
+        "many": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "La comprobación de actualizaciones en segundo plano ha encontrado {} actualización; se le notificará si es necesario",
-        "other": "La comprobación de actualizaciones en segundo plano ha encontrado {} actualizaciones; se le notificará si es necesario"
+        "many": "",
+        "other": ""
     },
     "apps": {
         "one": "{} aplicación",
-        "other": "{} aplicaciones"
+        "many": "",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL"
+        "many": "",
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "many": "",
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "many": "",
+        "other": ""
     },
     "day": {
         "one": "{} día",
-        "other": "{} días"
+        "many": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Eliminado {n} registro (previo a = {before}, posterior a = {after})",
-        "other": "Eliminados {n} registros (previos a = {before}, posteriores a = {after})"
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} y 1 aplicación más tiene actualizaciones.",
-        "other": "{app} y {} aplicaciones más tienen actualizaciones."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} y 1 aplicación más se han actualizado.",
-        "other": "{app} y {} aplicaciones más se han actualizado."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Error al actualizar {app} y 1 aplicación más.",
-        "other": "No se han podido actualizar {app} y {} aplicaciones más."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} y 1 aplicación más podría haber sido actualizada.",
-        "other": "{app} y {} aplicaciones más podrían haber sido actualizadas."
+        "many": "",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "many": "",
+        "other": ""
     },
     "certificateHash": {
         "one": "Certificado Hash",
-        "other": "Hashes certificado"
+        "many": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Aviso Legal y de Seguridad",
     "license": "Licencia",

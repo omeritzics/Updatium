@@ -189,7 +189,6 @@
     "warning": "Figyelem",
     "sourceIsXButPackageFromYPrompt": "Az alkalmazás forrása a(z) „{}-tároló”, de a kiadási csomag innen származik: „{}”. Biztosan folytatja?",
     "updatesAvailable": "Frissítések érhetők el",
-    "trackOnlyUpdatesAvailable": "Frissítések érhetők el „Csak nyomon követett” alkalmazás(ok)hoz",
     "updatesAvailableNotifDescription": "Értesíti a felhasználót, hogy egy vagy több, az Updatium által nyomon követett alkalmazáshoz frissítések állnak rendelkezésre",
     "noNewUpdates": "Nincsenek új frissítések.",
     "noFilePickerAvailable": "Nem érhető el a fájlválasztó. Telepítsen egy fájlkezelő alkalmazást.",
@@ -274,7 +273,10 @@
     "category": "Kategória",
     "noCategory": "Nincs kategória",
     "noCategories": "Nincsenek kategóriák",
-    "categoryDeleteQuestion": "Biztosan törli a kategóriákat?",
+    "categoryDeleteQuestion": {
+        "one": "Biztosan törli a kategóriákat?",
+        "other": ""
+    },
     "categoryDeleteWarning": "A törölt kategóriákban lévő összes alkalmazás kategorizálatlanná válik.",
     "addCategory": "Kategória hozzáadása",
     "label": "Címke",
@@ -435,9 +437,6 @@
     "zippedApkFilterRegEx": "APK-fájlok szűrése a ZIP-fájlon belül",
     "includeTarballs": "Tarball fájlok (tar.gz stb.) belefoglalása",
     "tarballedApkFilterRegEx": "APK-fájlok szűrése a tarball fájlokban",
-    "googleVerificationWarningP1": "A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított” (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\n\nMivel az Updatium alkalmazás fejlesztői nem fogadják el ezt a követelményt, ezért az Updatium az említett időpont után már nem fog működni a tanúsított Android eszközökön.",
-    "googleVerificationWarningP2": "További információkért látogasson el a https://keepandroidopen.org/ weboldalra.",
-    "googleVerificationWarningP3": "Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.\n\nMindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.\n\nA nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.",
     "multipleSigners": "Többen is aláírták",
     "removeAppQuestion": {
         "one": "Biztosan eltávolítja az alkalmazást?",

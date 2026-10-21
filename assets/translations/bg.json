@@ -4,7 +4,6 @@
     "noVersionFound": "Не може да се определи версията на изданието",
     "urlMatchesNoSource": "URL не съответства на известен източник",
     "cantInstallOlderVersion": "Не може да се инсталира по- стара версия на приложение",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
@@ -272,7 +271,10 @@
     "category": "Категория",
     "noCategory": "Няма категория",
     "noCategories": "Няма категории",
-    "categoryDeleteQuestion": "Изтриване на категории?",
+    "categoryDeleteQuestion": {
+        "one": "Изтриване на категории?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Всички приложения в изтритите категории ще бъдат зададени като некатегоризирани.",
     "addCategory": "Добавяне на категория",
     "label": "Етикет",

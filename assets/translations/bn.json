@@ -4,7 +4,6 @@
     "noVersionFound": "রিলিজ ভার্সন নির্ধারণ করা সম্ভব হয়নি",
     "urlMatchesNoSource": "URL-টি কোনো পরিচিত সোর্সের সাথে মিলছে না",
     "cantInstallOlderVersion": "অ্যাপের পুরনো ভার্সন ইনস্টল করা সম্ভব নয়",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
@@ -272,7 +271,10 @@
     "category": "বিভাগ",
     "noCategory": "কোনো বিভাগ নেই",
     "noCategories": "কোনো বিভাগ নেই",
-    "categoryDeleteQuestion": "বিভাগগুলো কি মুছে ফেলবেন?",
+    "categoryDeleteQuestion": {
+        "one": "বিভাগগুলো কি মুছে ফেলবেন?",
+        "other": ""
+    },
     "categoryDeleteWarning": "মুছে ফেলা বিভাগের সব অ্যাপ 'অশ্রেণীবদ্ধ' হিসেবে সেট করা হবে।",
     "addCategory": "বিভাগ যোগ করুন",
     "label": "লেবেল",

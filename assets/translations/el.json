@@ -4,7 +4,6 @@
     "noVersionFound": "Δεν ήταν δυνατός ο καθορισμός της έκδοσης",
     "urlMatchesNoSource": "Η URL διεύθυνση δεν αντιστοιχεί σε γνωστή πηγή",
     "cantInstallOlderVersion": "Δεν είναι δυνατή η εγκατάσταση παλαιότερης έκδοσης μιας εφαρμογής",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
