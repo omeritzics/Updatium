@@ -4,7 +4,6 @@
     "noVersionFound": "Guhertoya berdanê nehat dîtin",
     "urlMatchesNoSource": "URL ne bi çavkaniyeke naskirî re têkildar nabe",
     "cantInstallOlderVersion": "Nikare guhertoyeke kevntir a sepanê saz bike",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
@@ -272,7 +271,10 @@
     "category": "Kategorî",
     "noCategory": "Bê kategorî",
     "noCategories": "Kategorî tune ne",
-    "categoryDeleteQuestion": "Kategorî jê bibin?",
+    "categoryDeleteQuestion": {
+        "one": "Kategorî jê bibin?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Hemî sepanên di kategoriyan yên jêbirî de dê werin wek bê-kategorî sazkirin.",
     "addCategory": "Kategorî zêde bike",
     "label": "Etîket",

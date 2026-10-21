@@ -28,7 +28,7 @@
     "noDescription": "Sem descrição",
     "newUrl": "New URL",
     "cancel": "Cancelar",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Continuar",
     "requiredInBrackets": "(Necessário)",
     "dropdownNoOptsError": "ERRO: O DROPDOWN DEVE TER PELO MENOS UMA OPÇÃO",
@@ -87,7 +87,8 @@
     "removeSelectedApps": "Remover aplicações selecionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "many": "",
+        "other": ""
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -273,7 +274,11 @@
     "category": "Categoria",
     "noCategory": "Sem categoria",
     "noCategories": "Sem categorias",
-    "categoryDeleteQuestion": "Deletar  categorias?",
+    "categoryDeleteQuestion": {
+        "one": "Deletar  categorias?",
+        "many": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Todas as aplicações em categorias removidas serão descategorizadas.",
     "addCategory": "Adicionar categoria",
     "label": "Etiqueta",
@@ -437,67 +442,83 @@
     "multipleSigners": "Assinantes Múltiplos",
     "removeAppQuestion": {
         "one": "Remover aplicação?",
-        "other": "Remover aplicações?"
+        "many": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Muitos pedidos (taxa de pedidos limitada) - tente novamente em {} minuto",
-        "other": "Muitos pedidos (taxa limitada) - tente novamente em {} minutos"
+        "many": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minuto",
-        "other": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minutos"
+        "many": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "A verificação de atualizações em segundo plano encontrou {} atualização, o utilizador será notificado caso necessário",
-        "other": "A verificação de atualizações em segundo plano encontrou {} atualizações, o utilizador será notificado caso necessário"
+        "many": "",
+        "other": ""
     },
     "apps": {
         "one": "{} Aplicação",
-        "other": "{} Aplicações"
+        "many": "",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URLs"
+        "many": "",
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minutos"
+        "many": "",
+        "other": ""
     },
     "hour": {
         "one": "{} hora",
-        "other": "{} horas"
+        "many": "",
+        "other": ""
     },
     "day": {
         "one": "{} dia",
-        "other": "{} dias"
+        "many": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Foi limpo {n} log (antes = {antes}, depois = {depois})",
-        "other": "Foram limpos {n} logs (antes = {antes}, depois = {depois})"
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e uma outra aplicação possui atualizações.",
-        "other": "{app} e {} outras aplicações possuem atualizações."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e uma outra aplicação foram atualizadas.",
-        "other": "{app} e {} outras aplicações foram atualizadas."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Falha ao atualizar {app} e mais 1 aplicação.",
-        "other": "Falha ao atualizar {app} e {} outras aplicações."
+        "many": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e uma outra aplicação podem ter sido atualizadas.",
-        "other": "{app} e {} outras aplicações podem ter sido atualizadas."
+        "many": "",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APKs"
+        "many": "",
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash do Certificado",
-        "other": "Certificado Hashes"
+        "many": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Aviso de Segurança e Legal",
     "license": "Licença",
@@ -550,8 +571,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

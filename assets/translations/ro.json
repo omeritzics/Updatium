@@ -4,7 +4,6 @@
     "noVersionFound": "Nu s-a putut determina versiunea lansării",
     "urlMatchesNoSource": "URL-ul nu se potrivește cu o sursă cunoscută",
     "cantInstallOlderVersion": "Nu se poate instala o versiune mai veche a unei aplicații",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
@@ -28,7 +27,7 @@
     "noDescription": "Fără descriere",
     "newUrl": "New URL",
     "cancel": "Anulează",
-    "cancelling": "Cancelling",
+    "cancelling": "",
     "continue": "Continuă",
     "requiredInBrackets": "(obligatoriu)",
     "dropdownNoOptsError": "EROARE: MENIUL DROPDOWN TREBUIE SĂ AIBĂ CEL PUȚIN O OPȚIUNE",
@@ -87,7 +86,8 @@
     "removeSelectedApps": "Eliminați aplicațiile selectate",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "few": "",
+        "other": ""
     },
     "updateX": "Actualizează {}",
     "installX": "Instalează {}",
@@ -272,7 +272,11 @@
     "category": "Categorie",
     "noCategory": "Fără categorie",
     "noCategories": "Nu există categorii",
-    "categoryDeleteQuestion": "Ștergeți categoriile?",
+    "categoryDeleteQuestion": {
+        "one": "Ștergeți categoriile?",
+        "few": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Toate aplicațiile din categoriile șterse vor fi setate ca necategorizate.",
     "addCategory": "Adaugă categorie",
     "label": "Etichetă",
@@ -436,67 +440,83 @@
     "multipleSigners": "Semnatari Multipli",
     "removeAppQuestion": {
         "one": "Eliminați aplicația?",
-        "other": "Eliminați aplicațiile?"
+        "few": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Prea multe cereri (limitat la rată) - încercați din nou în {} minut",
-        "other": "Prea multe cereri (limitat la rată) - încercați din nou în {} minute"
+        "few": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {} minut",
-        "other": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {} minute"
+        "few": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Verificarea actualizărilor în fundal a găsit {} actualizare - va notifica utilizatorul dacă este necesar",
-        "other": "Verificarea actualizărilor în fundal a găsit {} actualizări - va notifica utilizatorul dacă este necesar"
+        "few": "",
+        "other": ""
     },
     "apps": {
         "one": "{} Aplicație",
-        "other": "{} Aplicații"
+        "few": "",
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL-uri"
+        "few": "",
+        "other": ""
     },
     "minute": {
         "one": "{} minut",
-        "other": "{} minute"
+        "few": "",
+        "other": ""
     },
     "hour": {
         "one": "{} oră",
-        "other": "{} ore"
+        "few": "",
+        "other": ""
     },
     "day": {
         "one": "{} zi",
-        "other": "{} zile"
+        "few": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Șters {n} jurnal (înainte = {before}, după = {after})",
-        "other": "Șterse {n} jurnale (înainte = {before}, după = {after})"
+        "few": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} și încă 1 aplicație mai are actualizări.",
-        "other": "{app} și încă {} aplicații mai au actualizări."
+        "few": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} și încă 1 aplicație a fost actualizată.",
-        "other": "{app} și încă {} aplicații au fost actualizate."
+        "few": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Eșec la actualizarea {app} și încă 1 aplicație.",
-        "other": "Eșec la actualizarea {app} și încă {} aplicații."
+        "few": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} și încă 1 aplicație ar putea fi fost actualizată.",
-        "other": "{app} și încă {} aplicații ar putea fi fost actualizate."
+        "few": "",
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK-uri"
+        "few": "",
+        "other": ""
     },
     "certificateHash": {
         "one": "Hash Certificat",
-        "other": "Hash-uri Certificat"
+        "few": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Renunțare la Securitate și Aspecte Legale",
     "license": "Licență",
@@ -549,8 +569,8 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
+    "cancelDownload": "",
+    "cancelDownloadPrompt": "",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

@@ -4,7 +4,6 @@
     "noVersionFound": "Hindi matukoy ang bersyon ng release",
     "urlMatchesNoSource": "Hindi tumutugma ang URL sa kilalang source",
     "cantInstallOlderVersion": "Hindi maaring mag-install ng mas lumang bersyon ng app",
-    "showOlderVersionWarning": "Show older version warning",
     "showBatteryOptimizationPrompt": "Show battery optimization prompt",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
