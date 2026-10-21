@@ -477,11 +477,24 @@ void main() {
   );
 
   test('only timestamp changes qualify for compact persistence', () {
-    final original = _app();
+    final store = AppCheckStore('unused.db');
+    final original = _app().copyWith(categories: ['Tools']);
+    store.rememberRecord(original.id, 'revision', original.toJson());
     final checked = original.copyWith(
       lastUpdateCheck: DateTime.utc(2026, 2, 1),
     );
-    expect(onlyAppCheckTimeChanged(original, checked), isTrue);
+    expect(store.onlyCheckTimeDiffersFromRecord(original.id, checked), isTrue);
+    // The remembered record is a copy, so editing the app it was written from
+    // in place can't make that app look already saved.
+    original.categories.add('Games');
+    original.additionalSettings['onDemandOnly'] = true;
+    expect(
+      store.onlyCheckTimeDiffersFromRecord(
+        original.id,
+        original.copyWith(lastUpdateCheck: DateTime.utc(2026, 2, 1)),
+      ),
+      isFalse,
+    );
     for (final changed in [
       checked.copyWith(latestVersion: '2.0'),
       checked.copyWith(installedVersion: '1.0'),
@@ -498,9 +511,72 @@ void main() {
       ),
       checked.copyWith(lastUpdateCheck: null),
     ]) {
-      expect(onlyAppCheckTimeChanged(original, changed), isFalse);
+      expect(
+        store.onlyCheckTimeDiffersFromRecord(original.id, changed),
+        isFalse,
+      );
     }
+    // Nothing is known about a record that was never read or written.
+    expect(
+      store.onlyCheckTimeDiffersFromRecord('org.other.app', checked),
+      isFalse,
+    );
   });
+
+  test(
+    'a change already made to the in-memory app still reaches disk (#307)',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'folderCriteriaMigrationVersion': 1000,
+      });
+      final directory = await _tempDirectory();
+      final provider = _StorageProvider()
+        ..cachedAppsDir = directory
+        ..appCheckStore = AppCheckStore('${directory.path}/checks.db');
+      provider.settingsProvider.prefs = await SharedPreferences.getInstance();
+      addTearDown(() async {
+        await provider.appCheckStore?.close();
+      });
+      const channel = MethodChannel('dev.imranr.obtainium/device_apps');
+      messenger.setMockMethodCallHandler(channel, (_) async => null);
+      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+      Future<void> save(App app) => provider.saveApps(
+        [app],
+        onlyIfExists: false,
+        attemptToCorrectInstallStatus: false,
+        updateInstalledInfo: false,
+        autoExportAfterSave: false,
+      );
+      Future<App> reloaded() async {
+        provider.apps.clear();
+        await provider.loadApps(singleId: _app().id, silent: true);
+        return provider.apps[_app().id]!.app;
+      }
+
+      await save(_app());
+      // As a failed install records a blocking problem: the in-memory app is
+      // replaced first, then that same app is saved.
+      final listing = provider.apps[_app().id]!;
+      listing.app = listing.app.copyWith(
+        additionalSettings: {
+          ...listing.app.additionalSettings,
+          needsAttentionCodeKey: needsAttentionIdChanged,
+          needsAttentionDetailKey: 'org.example.other',
+        },
+      );
+      await save(listing.app);
+      expect(
+        (await reloaded()).additionalSettings[needsAttentionCodeKey],
+        needsAttentionIdChanged,
+      );
+
+      // As the folder and On-Demand actions do: edited in place, then saved.
+      final App live = provider.apps[_app().id]!.app;
+      live.additionalSettings['onDemandOnly'] = true;
+      await save(live);
+      expect((await reloaded()).additionalSettings['onDemandOnly'], true);
+    },
+  );
 
   test(
     'saving a check keeps JSON untouched and targeted reload sees the timestamp',

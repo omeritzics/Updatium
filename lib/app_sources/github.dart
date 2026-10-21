@@ -617,9 +617,10 @@ class GitHub extends AppSource {
     return hasValidatedPAT(creds, settingsProvider);
   }
 
-  String buildVerificationMode(
+  /// The mode the app's own settings ask for, before [buildVerificationMode]
+  /// checks there is a validated token to verify with.
+  static String configuredBuildVerificationMode(
     Map<String, dynamic> additionalSettings,
-    SettingsProvider settingsProvider,
   ) {
     final String mode =
         additionalSettings[buildVerificationModeKey]?.toString() ??
@@ -629,7 +630,16 @@ class GitHub extends AppSource {
     if (mode != buildVerificationAudit && mode != buildVerificationEnforce) {
       return buildVerificationOff;
     }
-    if (!canVerifyAttestations(additionalSettings, settingsProvider)) {
+    return mode;
+  }
+
+  String buildVerificationMode(
+    Map<String, dynamic> additionalSettings,
+    SettingsProvider settingsProvider,
+  ) {
+    final String mode = configuredBuildVerificationMode(additionalSettings);
+    if (mode == buildVerificationOff ||
+        !canVerifyAttestations(additionalSettings, settingsProvider)) {
       return buildVerificationOff;
     }
     return mode;

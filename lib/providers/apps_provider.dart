@@ -1113,6 +1113,54 @@ Future<List<PackageInfo>> getAllInstalledInfo({bool light = false}) async {
   }
 }
 
+/// How an app about to be added will be named and drawn once saved; see
+/// [AppsProviderLifecycle.newAppLook].
+class NewAppLook {
+  const NewAppLook({required this.name, this.icon, this.downloadedIcon});
+
+  final String name;
+  final Uint8List? icon;
+
+  /// [icon], when it was downloaded for this and isn't stored yet. Adding the
+  /// app stores it ([AppsProviderLifecycle.storeDeducedAppIcon]) rather than
+  /// downloading it again.
+  final Uint8List? downloadedIcon;
+}
+
+/// [app], just fetched, with how its installed version is read recorded, as
+/// Add app has always saved it (see [AppsProvider.addNewListing]).
+///
+/// A track-only app takes its installed version from the device, or is marked
+/// as not knowing its package yet. Otherwise, an app whose version can't be
+/// compared with the installed one starts as up to date.
+Future<App> appPreparedForAdding(App app) async {
+  app.additionalSettings['useVersionCodeAsOSVersion'] =
+      app.versionDetectionMode == VersionDetectionMode.versionCode;
+  if (app.additionalSettings['trackOnly'] == true) {
+    app = app.copyWith(installedVersion: null);
+    if (isTempId(app)) {
+      app.additionalSettings['trackOnlyTemporaryPackageId'] = true;
+      app.additionalSettings['trackOnlyUndeterminedInstalledVersion'] = true;
+    } else {
+      app.additionalSettings['trackOnlyTemporaryPackageId'] = false;
+      final installedInfo = await getInstalledInfo(app.id, printErr: false);
+      if (installedInfo != null) {
+        app = app.copyWith(
+          installedVersion: app.usesVersionCodeAsOsVersion
+              ? installedInfo.versionCode.toString()
+              : installedInfo.versionName,
+        );
+        app.additionalSettings['trackOnlyUndeterminedInstalledVersion'] = false;
+      } else {
+        app.additionalSettings['trackOnlyUndeterminedInstalledVersion'] = true;
+      }
+    }
+  } else if (!app.usesStandardVersionDetection) {
+    app = app.copyWith(installedVersion: app.latestVersion);
+  }
+  return app;
+}
+
 Future<PackageInfo?> getInstalledInfo(
   String? packageName, {
   bool printErr = true,
@@ -1244,6 +1292,25 @@ AppInMemory? sameStoreListingIn(
   return null;
 }
 
+/// Returns [app] carrying the listing ID it should be stored under in
+/// [listings].
+///
+/// The first listing of a package keeps a null listing ID (key = package ID).
+/// Any further store for that package gets a stable `package@Source` ID,
+/// suffixed if that is somehow taken, so the two records never collide.
+App allocateListingIdIn(AppListings listings, App app) {
+  if (app.listingId != null) return app;
+  if (!listings.containsListingKey(app.id)) return app;
+  final String base = appListingKey(app.id, sourceIdentifierForApp(app));
+  if (!listings.containsListingKey(base)) return app.copyWith(listingId: base);
+  for (int suffix = 2; ; suffix++) {
+    final String candidate = '$base$appListingKeySeparator$suffix';
+    if (!listings.containsListingKey(candidate)) {
+      return app.copyWith(listingId: candidate);
+    }
+  }
+}
+
 /// Null requests a full reconciliation; an empty list means no reload work.
 List<String>? appIdsForResumeReload({
   required DateTime now,
@@ -1298,6 +1365,10 @@ class AppsProvider with ChangeNotifier {
 
   // Serializes concurrent loadApps() calls without busy-waiting.
   Completer<void>? appsLoadingCompleter;
+
+  // Completes once the launch-time loadApps() has run, or init has finished or
+  // failed without one. See [waitForInitialLoad].
+  final Completer<void> _initialLoadDone = Completer<void>();
 
   // Coalesces bursts of saveApps()/removeApps() into a single auto-export.
   Timer? _autoExportDebounce;
@@ -1533,6 +1604,17 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
+  /// Waits for the launch-time [loadApps], including the stretch of init
+  /// before it starts, when [waitForAppsToLoad] has nothing to wait on yet.
+  ///
+  /// For UI entry points that can run on a cold start - a deep link above
+  /// all - which would otherwise read the still-empty library as the real one.
+  /// Not for anything that init itself awaits, which would deadlock.
+  Future<void> waitForInitialLoad() async {
+    await _initialLoadDone.future;
+    await waitForAppsToLoad();
+  }
+
   /// Schedules a debounced automatic export. Coalesces the many per-app
   /// save/remove operations that happen in bursts into a single export.
   /// No-op (cheaply returns) if auto-export is disabled inside [export].
@@ -1658,6 +1740,7 @@ class AppsProvider with ChangeNotifier {
       }
       if (!isBg) {
         await loadApps();
+        _completeInitialLoad();
         // One-shot legacy user-icon migration: kept OFF the cold-start critical
         // path so it never delays the first app-list render. It also self-skips
         // on later launches via a prefs flag (see the method).
@@ -1675,12 +1758,18 @@ class AppsProvider with ChangeNotifier {
       } else {
         await migrateUserIconsFromLegacyCacheDir();
       }
+      _completeInitialLoad();
     }().catchError((e) {
       initError = e.toString();
+      _completeInitialLoad();
       unawaited(
         logs.add('AppsProvider async init error: $e', level: LogLevel.error),
       );
     });
+  }
+
+  void _completeInitialLoad() {
+    if (!_initialLoadDone.isCompleted) _initialLoadDone.complete();
   }
 
   @override
@@ -1706,23 +1795,9 @@ class AppsProvider with ChangeNotifier {
     super.dispose();
   }
 
-  /// Returns [app] carrying the listing ID it should be stored under.
-  ///
-  /// The first listing of a package keeps a null listing ID (key = package ID).
-  /// Any further store for that package gets a stable `package@Source` ID,
-  /// suffixed if that is somehow taken, so the two records never collide.
-  App withAllocatedListingId(App app) {
-    if (app.listingId != null) return app;
-    if (!apps.containsListingKey(app.id)) return app;
-    final String base = appListingKey(app.id, sourceIdentifierForApp(app));
-    if (!apps.containsListingKey(base)) return app.copyWith(listingId: base);
-    for (int suffix = 2; ; suffix++) {
-      final String candidate = '$base$appListingKeySeparator$suffix';
-      if (!apps.containsListingKey(candidate)) {
-        return app.copyWith(listingId: candidate);
-      }
-    }
-  }
+  /// Returns [app] carrying the listing ID it should be stored under in the
+  /// library; see [allocateListingIdIn].
+  App withAllocatedListingId(App app) => allocateListingIdIn(apps, app);
 
   Future<List<List<String>>> addAppsByURL(
     List<String> urls, {
@@ -1732,6 +1807,7 @@ class AppsProvider with ChangeNotifier {
       urls,
       alreadyAddedUrls: apps.values.map((e) => e.app.url).toSet(),
       sourceOverride: sourceOverride,
+      includePrereleases: settingsProvider.includePrereleasesByDefault,
     );
     final List<App> pps = results[0];
     final Map<String, dynamic> errorsMap = results[1];
@@ -1747,9 +1823,62 @@ class AppsProvider with ChangeNotifier {
         .toList();
     return errors;
   }
+
+  /// Saves [app], just fetched by [SourceProvider.getApp], as a new listing,
+  /// and returns it as saved. Add app's own steps, shared so that every way of
+  /// adding an app ends the same: [appPreparedForAdding], then saved under its
+  /// own listing ID and put in any matching smart folders.
+  Future<App> addNewListing(App app) async {
+    // Tracking this package from a second store needs its own listing ID
+    // so the two records never overwrite each other.
+    app = withAllocatedListingId(await appPreparedForAdding(app));
+    await saveApps([app], onlyIfExists: false);
+    final App? liveApp = apps[app.listingKey]?.app;
+    if (liveApp != null) {
+      await assignMatchingFoldersToAppIfNeeded(liveApp);
+    }
+    return app;
+  }
+
+  /// Saves apps already fetched for an add ([SourceProvider.getAppByURLNaive])
+  /// through [addNewListing], skipping any whose store listing is tracked by
+  /// now. Returns those saved.
+  ///
+  /// [downloadedIcons], by package ID, are the icons already downloaded to
+  /// show them ([NewAppLook.downloadedIcon]); they're kept as the apps' icons
+  /// instead of being downloaded again.
+  Future<List<App>> addFetchedApps(
+    List<App> fetched, {
+    Map<String, Uint8List> downloadedIcons = const {},
+  }) async {
+    final List<App> added = [];
+    for (final App app in fetched) {
+      if (sameStoreListingIn(apps, app) != null) continue;
+      final App listing = await addNewListing(app);
+      final Uint8List? icon = downloadedIcons[listing.id];
+      if (icon != null) await storeDeducedAppIcon(listing.id, icon);
+      added.add(listing);
+    }
+    return added;
+  }
 }
 
-Future<void> _runBGInstallMode(
+/// The WorkManager constraints every background task runs under, from the
+/// user's Wi-Fi-only and charging-only settings.
+Constraints _bgTaskConstraints(SettingsProvider settings) => Constraints(
+  networkType: settings.bgUpdatesOnWiFiOnly
+      ? NetworkType.unmetered
+      : NetworkType.connected,
+  requiresCharging: settings.bgUpdatesWhileChargingOnly,
+  requiresBatteryNotLow: false,
+  requiresDeviceIdle: false,
+  requiresStorageNotLow: false,
+);
+
+/// Installs [appIds] silently, and returns whether any of them is still
+/// waiting afterwards (postponed because the screen is on, or failed), so the
+/// next wake-up tries again.
+Future<bool> _runBGInstallMode(
   List<String> appIds,
   AppsProvider appsProvider,
   NotificationsProvider notificationsProvider,
@@ -1758,7 +1887,7 @@ Future<void> _runBGInstallMode(
   unawaited(logs.add('BG install task: Started.'));
   if (appIds.isEmpty) {
     unawaited(logs.add('BG install task: No pending installs.'));
-    return;
+    return false;
   }
   if (await NativeFeatures.isDeviceInteractive()) {
     unawaited(
@@ -1766,40 +1895,12 @@ Future<void> _runBGInstallMode(
         'BG install task: Device is active (screen on). Postponing background installations.',
       ),
     );
-    final retryName =
-        'interactive_retry_${DateTime.now().millisecondsSinceEpoch}';
-    try {
-      await Workmanager().registerOneOffTask(
-        retryName,
-        retryName,
-        initialDelay: const Duration(minutes: 15),
-        constraints: Constraints(
-          networkType: appsProvider.settingsProvider.bgUpdatesOnWiFiOnly
-              ? NetworkType.unmetered
-              : NetworkType.connected,
-          requiresCharging:
-              appsProvider.settingsProvider.bgUpdatesWhileChargingOnly,
-          requiresBatteryNotLow: false,
-          requiresDeviceIdle: false,
-          requiresStorageNotLow: false,
-        ),
-      );
-      unawaited(
-        logs.add('BG install task: Scheduled $retryName in 15 minutes.'),
-      );
-    } catch (e) {
-      unawaited(
-        logs.add(
-          'BG install task: Could not schedule interactive retry: $e',
-          level: LogLevel.warning,
-        ),
-      );
-    }
-    return;
+    return true;
   }
   unawaited(
     logs.add('BG install task: Installing ${appIds.length} apps silently.'),
   );
+  bool failed = false;
   try {
     await appsProvider.downloadAndInstallLatestApps(
       appIds,
@@ -1809,10 +1910,22 @@ Future<void> _runBGInstallMode(
     );
   } catch (e) {
     if (e is MultiAppMultiError) {
+      // The apps that did install are no longer pending, so the next wake-up
+      // attempts only the ones that failed.
+      failed = true;
       e.idsByErrorString.forEach((key, value) {
+        final String failure = e.errorsAppsString(key, value);
+        // Logged as well as notified: otherwise a failed download reads as a
+        // clean "Done installing updates" in the log (#317).
+        unawaited(
+          logs.add(
+            'BG install task: Failed: $failure',
+            level: LogLevel.warning,
+          ),
+        );
         unawaited(
           notificationsProvider.notify(
-            ErrorInstallingUpdatesNotification(e.errorsAppsString(key, value)),
+            ErrorInstallingUpdatesNotification(failure),
           ),
         );
       });
@@ -1822,6 +1935,7 @@ Future<void> _runBGInstallMode(
     }
   }
   unawaited(logs.add('BG install task: Done installing updates.'));
+  return failed;
 }
 
 /// Background update check and installation orchestrator.
@@ -1841,35 +1955,40 @@ Future<void> bgUpdateCheck(
 }) async {
   final bgLogs = logs ?? LogsProvider();
   WidgetsFlutterBinding.ensureInitialized();
+  params ??= {};
+  final SettingsProvider settingsProvider = settings ?? SettingsProvider();
+  await settingsProvider.initializeSettings();
+
+  // This task wakes every 15 minutes, not once per update interval, so most
+  // wake-ups have nothing to do: no check is due and no background install is
+  // waiting (see [bgNextCheckDue], cleared while one is). Deciding that first,
+  // before loading translations or any app record, keeps those wake-ups to a
+  // settings read and one log line. Skipping the app records also avoids the
+  // check timestamp database, whose contention made a concurrent foreground
+  // load wait on a lock. An explicit request (manual check, or a retry carrying
+  // its own list) always proceeds.
+  final DateTime? nextDue = settingsProvider.bgNextCheckDue;
+  if (!forceAll &&
+      params['toCheck'] == null &&
+      nextDue != null &&
+      DateTime.now().isBefore(nextDue)) {
+    unawaited(
+      bgLogs.add('BG task $taskId: Nothing due before $nextDue; skipped.'),
+    );
+    return;
+  }
+
   await EasyLocalization.ensureInitialized();
   await TranslationLoader.load();
-  params ??= {};
   unawaited(bgLogs.add('BG task started $taskId: $params'));
 
   final NotificationsProvider notificationsProvider =
       notifs ?? NotificationsProvider();
   final AppsProvider appsProvider = AppsProvider(
     isBg: true,
-    settingsProvider: settings,
+    settingsProvider: settingsProvider,
     logsProvider: bgLogs,
   );
-  await appsProvider.settingsProvider.initializeSettings();
-
-  // Android wakes this task on its own cadence, not the user's check interval,
-  // so most wake-ups have nothing due. Returning here keeps those from reading
-  // every app record and opening the check timestamp database - the contention
-  // that made a concurrent foreground load wait on a database lock. An explicit
-  // request (manual check, or a retry carrying its own list) always proceeds.
-  final DateTime? nextDue = appsProvider.settingsProvider.bgNextCheckDue;
-  if (!forceAll &&
-      params['toCheck'] == null &&
-      nextDue != null &&
-      DateTime.now().isBefore(nextDue)) {
-    unawaited(
-      bgLogs.add('BG update task: Nothing due before $nextDue; skipped load.'),
-    );
-    return;
-  }
 
   await appsProvider.loadApps();
 
@@ -1917,9 +2036,17 @@ Future<void> bgUpdateCheck(
       !netResult.contains(ConnectivityResult.wifi) &&
       !netResult.contains(ConnectivityResult.ethernet);
 
+  // "While charging" means plugged in. A phone plugged in at 100% reports
+  // full, and one held at a charge limit (Samsung's "Protect battery", say)
+  // reports connectedNotCharging; neither is actively charging, and treating
+  // them as unplugged meant installs never ran overnight.
   final chargingRestricted =
       appsProvider.settingsProvider.bgUpdatesWhileChargingOnly &&
-      (await Battery().batteryState) != BatteryState.charging;
+      !const {
+        BatteryState.charging,
+        BatteryState.full,
+        BatteryState.connectedNotCharging,
+      }.contains(await Battery().batteryState);
 
   if (networkRestricted) {
     unawaited(bgLogs.add('BG update task: Network restriction in effect.'));
@@ -2056,20 +2183,39 @@ Future<void> bgUpdateCheck(
       ),
     );
   }
-  if (canInstall) {
-    await _runBGInstallMode(
-      silentlyInstallable,
-      appsProvider,
-      notificationsProvider,
-      bgLogs,
-    );
+  // Whether a background install is still waiting after this run: one that
+  // failed or was postponed for the screen, or one held back by the charging or
+  // Wi-Fi limit. That last case is the foreground service's: WorkManager does
+  // not start this task until both limits are met.
+  final bool installWaiting = canInstall
+      ? await _runBGInstallMode(
+          silentlyInstallable,
+          appsProvider,
+          notificationsProvider,
+          bgLogs,
+        )
+      : appsProvider
+            .findExistingUpdates(installedOnly: true, excludeOnDemandOnly: true)
+            .isNotEmpty;
+  // A retry carrying its own list never looked at the other pending installs,
+  // so it leaves the due time as its saves left it (cleared) and the next
+  // wake-up works it out in full.
+  if (params['toCheck'] == null) {
+    // Recorded after every save this run has made, so the next wake-up can
+    // skip its load. Cleared by [AppsProvider.markAppsChanged] on any later
+    // change, and left clear while an install is waiting, so the next wake-up
+    // tries it again rather than the next due check (#317). A run Android
+    // stops midway never gets here, so the due time stays clear or already past
+    // and the next wake-up runs too, resuming the partial downloads where the
+    // server allows it.
+    appsProvider.settingsProvider.bgNextCheckDue = installWaiting
+        ? null
+        : appsProvider.earliestNextUpdateCheckDue();
   }
-  // Recorded after every save this run has made, so the next wake-up can skip
-  // its load. Cleared by [AppsProvider.markAppsChanged] on any later change.
-  appsProvider.settingsProvider.bgNextCheckDue = appsProvider
-      .earliestNextUpdateCheckDue();
-  // This engine is about to go away. Leaving the handle open left a connection
-  // holding the file against the next engine and the UI isolate.
+  // This engine is about to go away, so close its own connection rather than
+  // leave it open for the life of the process. Closing is only safe because
+  // each engine has a connection of its own (see [AppCheckStore]): a shared
+  // one closed the UI isolate's too (#317).
   await appsProvider.appCheckStore?.close();
   unawaited(bgLogs.add('BG task completed $taskId.'));
   AppsProvider._eventsController.add(null);
@@ -2157,16 +2303,7 @@ _bgRunUpdateCheck(
       retryName,
       retryName,
       initialDelay: Duration(seconds: retryAfterXSeconds),
-      constraints: Constraints(
-        networkType: appsProvider.settingsProvider.bgUpdatesOnWiFiOnly
-            ? NetworkType.unmetered
-            : NetworkType.connected,
-        requiresCharging:
-            appsProvider.settingsProvider.bgUpdatesWhileChargingOnly,
-        requiresBatteryNotLow: false,
-        requiresDeviceIdle: false,
-        requiresStorageNotLow: false,
-      ),
+      constraints: _bgTaskConstraints(appsProvider.settingsProvider),
       inputData: {
         'toCheck': toRetry
             .map((entry) => {'key': entry.key, 'value': entry.value})

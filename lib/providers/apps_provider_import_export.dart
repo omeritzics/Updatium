@@ -48,6 +48,144 @@ class BackupContent {
   const BackupContent({required this.apps, this.settingsMap, this.schema});
 }
 
+/// One app for Import from URL list to add: a typed URL, or an app that an
+/// `obtainium://` link or app JSON described ([seed]). All of them are
+/// fetched and saved the same way (see [fetchUrlImportEntry]).
+class UrlImportEntry {
+  const UrlImportEntry(this.url, {this.seed});
+
+  final String url;
+  final App? seed;
+}
+
+/// What an Import from URL list does with each entry, before anything is
+/// fetched.
+class UrlImportPlan {
+  /// Entries to fetch, once each, in the order given.
+  final List<UrlImportEntry> toFetch;
+
+  /// Listings already tracked from one of the entries.
+  final List<AppInMemory> alreadyTracked;
+
+  const UrlImportPlan({required this.toFetch, required this.alreadyTracked});
+}
+
+/// Sorts [entries] into ones [listings] already tracks, which can be shown
+/// right away, and ones whose app has to be fetched first.
+///
+/// An add never overwrites: saving over a tracked app would wipe its latest
+/// version, pin, categories, folders and the user's settings edits. The same
+/// package from a different store becomes a further listing, as in every add
+/// flow; replacing a listing's store is the swap-source flow's job.
+///
+/// A typed URL matches on the URL the listing is stored under (the source's
+/// standard form), which is all that can be known before fetching. An entry
+/// that names its package matches on that package from the same store
+/// ([sameStoreListingIn]), the way a link always has: one URL can build two
+/// packages (a GitHub repo's `.gh` and `.offline` APKs). Anything else tracked
+/// is only found once fetched.
+UrlImportPlan planUrlImport(
+  AppListings listings,
+  List<UrlImportEntry> entries,
+  SourceProvider sourceProvider,
+) {
+  final Map<String, AppInMemory> byUrl = {
+    for (final AppInMemory listing in listings.values) listing.app.url: listing,
+  };
+  final List<UrlImportEntry> toFetch = [];
+  final List<AppInMemory> alreadyTracked = [];
+  final Set<String> seen = {};
+  for (final UrlImportEntry entry in entries) {
+    final String url = entry.url;
+    String standardUrl = url;
+    try {
+      standardUrl = sourceProvider.getSource(url).standardizeUrl(url);
+    } catch (_) {
+      // Fetching it reports what is wrong with it.
+    }
+    final App? seed = entry.seed;
+    final bool namesPackage = seed != null && !isTempId(seed);
+    if (!seen.add(namesPackage ? '$standardUrl ${seed.id}' : standardUrl)) {
+      continue;
+    }
+    final AppInMemory? tracked = namesPackage
+        ? sameStoreListingIn(listings, seed)
+        : byUrl[standardUrl] ?? byUrl[url];
+    if (tracked == null) {
+      toFetch.add(entry);
+    } else if (!alreadyTracked.contains(tracked)) {
+      alreadyTracked.add(tracked);
+    }
+  }
+  return UrlImportPlan(toFetch: toFetch, alreadyTracked: alreadyTracked);
+}
+
+/// The settings a link's or JSON's [seed] app is fetched with: its own, as
+/// Add app's fields would be filled in, with its package ID as the custom App
+/// ID. A temporary ID is left out, so the real one is looked up as for a URL.
+///
+/// Folder memberships are left out: they name folders on the phone the app
+/// came from. Smart folders still apply once it's saved.
+Map<String, dynamic> urlImportSettingsFor(App seed) {
+  final App copy = seed.deepCopy();
+  clearAllFoldersFromApp(copy);
+  return {...copy.additionalSettings, if (!isTempId(seed)) 'appId': seed.id};
+}
+
+/// Fetches [entry]'s app the way Import from URL list fetches a typed URL
+/// ([SourceProvider.getAppByURLNaive], looking up the package ID). A link's or
+/// JSON's app also brings what Add app would ask for: its settings (see
+/// [urlImportSettingsFor]), a source it forces, and its categories.
+Future<App> fetchUrlImportEntry(
+  SourceProvider sourceProvider,
+  UrlImportEntry entry, {
+  required bool includePrereleases,
+}) async {
+  final App? seed = entry.seed;
+  final String? forcedSource = seed?.overrideSource;
+  final App app = await sourceProvider.getAppByURLNaive(
+    entry.url,
+    sourceOverride: forcedSource == null
+        ? null
+        : sourceProvider.getSource(entry.url, overrideSource: forcedSource),
+    inferAppIds: true,
+    includePrereleases: includePrereleases,
+    settings: seed == null ? const {} : urlImportSettingsFor(seed),
+  );
+  return seed == null ? app : app.copyWith(categories: seed.categories);
+}
+
+/// A link's payload laid out for reading: indented, with each app's
+/// `additionalSettings` expanded. The format carries that as a JSON string
+/// inside the JSON, which reads as a wall of escapes. Display only; a payload
+/// that doesn't decode comes back as it was.
+String readableLinkPayload(String payload) {
+  Object? expand(Object? value) {
+    if (value is List) return value.map(expand).toList();
+    if (value is Map) {
+      return value.map((Object? key, Object? field) {
+        if (key == 'additionalSettings' && field is String) {
+          try {
+            return MapEntry(key, jsonDecode(field));
+          } catch (_) {
+            // Shown as the string it is.
+          }
+        }
+        return MapEntry(key, expand(field));
+      });
+    }
+    return value;
+  }
+
+  try {
+    return const JsonEncoder.withIndent(
+      '  ',
+    ).convert(expand(jsonDecode(payload)));
+  } catch (_) {
+    return payload;
+  }
+}
+
 /// Import/export of app configurations for [AppsProvider].
 extension AppsProviderImportExport on AppsProvider {
   /// Builds an exportable JSON map containing app data and optionally settings.
@@ -245,6 +383,10 @@ extension AppsProviderImportExport on AppsProvider {
   /// the result is OOTB-ObtainX-plus-whatever-the-backup-contains rather than
   /// the backup merged on top of whatever was there before. It never touches
   /// installed apps or their on-device data — only ObtainX's own state.
+  ///
+  /// File import and restore overwrite on purpose. Apps that are only added,
+  /// never overwriting (links, Import from URL list), go through
+  /// [AppsProvider.addFetchedApps] instead.
   Future<MapEntry<List<App>, bool>> import(
     String appsJSON, {
     Set<String>? selectedAppIds,

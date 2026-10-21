@@ -218,6 +218,51 @@ class MainActivity : FlutterActivity() {
                 }
             }
         }
+
+        private val releaseCacheSweepLock = Any()
+        private var orphanedReleaseCacheSweepStarted = false
+
+        /// Copies in cache/releases are removed when the install session ends.
+        /// A self-update kills the process before that delete runs, and so does
+        /// any other death during the handoff, so the copies stay until something
+        /// sweeps them. Run once per process, before a new install can create a
+        /// copy: drop anything already older than the installer's read window,
+        /// and schedule the rest for when that window has passed. A restart
+        /// while an installer still has not opened the content:// URI then
+        /// keeps the file until the same delay the handoff itself uses.
+        private fun sweepOrphanedReleaseCache(context: Context) {
+            synchronized(releaseCacheSweepLock) {
+                if (orphanedReleaseCacheSweepStarted) return
+                orphanedReleaseCacheSweepStarted = true
+            }
+            val releasesDir = File(context.cacheDir, RELEASE_DIR)
+            if (!releasesDir.isDirectory) return
+            val cachedFiles = releasesDir.listFiles() ?: return
+            val now = System.currentTimeMillis()
+            val handler = Handler(Looper.getMainLooper())
+            for (cachedFile in cachedFiles) {
+                if (!cachedFile.isFile) continue
+                val ageMs = now - cachedFile.lastModified()
+                if (ageMs >= UNTRACKED_RELEASE_FILE_CLEANUP_DELAY_MS) {
+                    try {
+                        cachedFile.delete()
+                    } catch (_: Exception) {
+                    }
+                    continue
+                }
+                val remainingMs = if (ageMs < 0L) {
+                    UNTRACKED_RELEASE_FILE_CLEANUP_DELAY_MS
+                } else {
+                    UNTRACKED_RELEASE_FILE_CLEANUP_DELAY_MS - ageMs
+                }
+                handler.postDelayed({
+                    try {
+                        cachedFile.delete()
+                    } catch (_: Exception) {
+                    }
+                }, remainingMs)
+            }
+        }
     }
 
     private class InstallWatcher(
@@ -263,6 +308,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installNativeCrashHandler(this)
         super.onCreate(savedInstanceState)
+        sweepOrphanedReleaseCache(applicationContext)
         // Keep observing while the activity is covered or recreated. A new
         // process performs a full Dart load before relying on this journal.
         if (packageChangeReceiver == null) {

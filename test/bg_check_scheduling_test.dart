@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:obtainium/providers/apps_provider.dart';
@@ -6,7 +7,7 @@ import 'package:obtainium/providers/settings_provider.dart';
 import 'package:obtainium/providers/source_provider.dart';
 import 'package:obtainium/services/app_check_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class _DueTestProvider implements AppsProvider {
   @override
@@ -66,6 +67,33 @@ class _FailingFactory implements DatabaseFactory {
   Future<Database> openDatabase(String path, {OpenDatabaseOptions? options}) {
     opens++;
     return Future<Database>.error(StateError('database is locked'));
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    return super.noSuchMethod(invocation);
+  }
+}
+
+/// Opens real (FFI) databases, keeping each one and the options it was opened
+/// with, so a test can close a connection behind the store's back the way
+/// another engine sharing it would.
+class _RecordingFactory implements DatabaseFactory {
+  final List<Database> opened = [];
+  final List<OpenDatabaseOptions?> options = [];
+
+  @override
+  Future<Database> openDatabase(
+    String path, {
+    OpenDatabaseOptions? options,
+  }) async {
+    this.options.add(options);
+    final Database database = await databaseFactoryFfi.openDatabase(
+      path,
+      options: options,
+    );
+    opened.add(database);
+    return database;
   }
 
   @override
@@ -173,6 +201,51 @@ void main() {
       );
 
       expect(provider.earliestNextUpdateCheckDue(), isNull);
+    });
+  });
+
+  group('AppCheckStore connection', () {
+    late Directory directory;
+
+    setUp(() {
+      sqfliteFfiInit();
+      directory = Directory.systemTemp.createTempSync('app_checks_test');
+    });
+
+    tearDown(() {
+      directory.deleteSync(recursive: true);
+    });
+
+    test('opens a connection of its own, not the shared instance', () async {
+      final factory = _RecordingFactory();
+      final store = AppCheckStore(
+        '${directory.path}/app_checks.db',
+        factory: factory,
+      );
+
+      await store.read();
+      await store.close();
+
+      expect(factory.options.single?.singleInstance, isFalse);
+    });
+
+    test('reopens a connection that was closed under it', () async {
+      final factory = _RecordingFactory();
+      final store = AppCheckStore(
+        '${directory.path}/app_checks.db',
+        factory: factory,
+      );
+      await store.save([
+        {'id': 'a', 'revision': 'r1', 'checked': 1},
+      ]);
+
+      // What a background engine did to the UI isolate's shared connection.
+      await factory.opened.single.close();
+
+      expect((await store.read()).keys, ['a']);
+      expect(factory.opened, hasLength(2));
+      expect(store.isAvailable, isTrue);
+      await store.close();
     });
   });
 

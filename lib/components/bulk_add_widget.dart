@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:expressive_loading_indicator/expressive_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:obtainium/components/app_bottom_sheet.dart';
-import 'package:obtainium/components/generated_form_renderer.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:obtainium/app_sources/apkmirror.dart';
 import 'package:obtainium/app_sources/apkpure.dart';
@@ -2336,6 +2335,9 @@ class BulkAddWidgetState extends State<BulkAddWidget> {
     });
 
     final logsProvider = context.read<LogsProvider>();
+    final bool includePrereleases = context
+        .read<SettingsProvider>()
+        .includePrereleasesByDefault;
     final sourceProvider = SourceProvider();
     final apkMirrorSource = APKMirror();
     final apkPureSource = APKPure();
@@ -2367,11 +2369,12 @@ class BulkAddWidgetState extends State<BulkAddWidget> {
       final String storeName =
           _selectedSources[app.info.packageName] ?? app.bestStore;
       final source = sourceFor(storeName);
-      final settings = getDefaultValuesFromFormItems(
-        source.combinedAppSpecificSettingFormItems,
+      final settings = newAppDefaultSettings(
+        source,
+        includePrereleases: includePrereleases,
       );
-      // Force the known package name so store inference can't substitute a
-      // wrong ID (e.g. APKMirror scraping the wrong package from page HTML).
+      // Force the known package name: it's the one the stores were scanned
+      // for, so a store's own lookup can only cost a request or disagree.
       settings['appId'] = app.info.packageName;
 
       try {

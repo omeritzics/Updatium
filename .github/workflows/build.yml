@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -31,7 +31,7 @@ jobs:
           # toolchain must be fixed (a floating `channel: stable` would break it).
           # Keep this EQUAL to the .flutter submodule commit referenced by the
           # fdroiddata recipe; bump both together when upgrading Flutter.
-          flutter-version: 3.47.5
+          flutter-version: 3.47.6
           cache: true
 
       - name: Cache Gradle packages
@@ -130,7 +130,7 @@ jobs:
           subject-path: 'build/app/outputs/flutter-apk/ObtainX-*.apk'
 
       - name: Upload APKs
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: obtainx-apks-v${{ steps.extract_version.outputs.version }}
           path: |

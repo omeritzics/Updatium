@@ -22,7 +22,7 @@ import 'package:obtainium/components/themes_settings_section.dart';
 import 'package:obtainium/components/generated_form_renderer.dart';
 import 'package:obtainium/components/tv_slider_wrapper.dart';
 import 'package:obtainium/components/ui_widgets.dart'
-    show AppSwitch, AppSwitchListTile;
+    show AppSwitch, AppSwitchListTile, ExplainedWhenOff;
 import 'package:obtainium/custom_errors.dart';
 import 'package:obtainium/installers/shizuku_plugin.dart';
 import 'package:obtainium/main.dart';
@@ -42,7 +42,7 @@ import 'package:obtainium/theme/app_form_field_styles.dart';
 import 'package:obtainium/theme/app_theme_accent.dart';
 import 'package:obtainium/theme/m3e_expressive_list.dart';
 import 'package:obtainium/widgets/app_toast.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:obtainium/services/pick_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -125,21 +125,6 @@ class SettingsPageState extends State<SettingsPage> {
     'appearance',
     'interaction',
     'categories',
-  ];
-
-  static const List<int> updateIntervalNodes = [
-    15,
-    30,
-    60,
-    120,
-    180,
-    360,
-    720,
-    1440,
-    4320,
-    10080,
-    20160,
-    43200,
   ];
 
   @override
@@ -1057,7 +1042,6 @@ class _UpdatesSection extends StatelessWidget {
 
   static int _updateSettingsHash(SettingsProvider sp) => Object.hash(
     sp.updateInterval,
-    sp.updateIntervalSliderVal,
     sp.useFGService,
     sp.enableBackgroundUpdates,
     sp.bgUpdatesOnWiFiOnly,
@@ -1318,16 +1302,20 @@ class _UpdateIntervalSliderState extends State<_UpdateIntervalSlider> {
     super.dispose();
   }
 
+  static const List<int> _stops = SettingsProvider.updateIntervalStops;
+
+  /// Position 0 is never; the stop at index n sits at n + 1.
   int _intervalForVal(double val) {
-    final int index = val.round().clamp(
-      0,
-      SettingsPageState.updateIntervalNodes.length,
-    );
+    final int index = val.round().clamp(0, _stops.length);
     if (index == 0) {
       return 0;
     }
-    return SettingsPageState.updateIntervalNodes[index - 1];
+    return _stops[index - 1];
   }
+
+  /// [SettingsProvider.updateInterval] is always a stop or 0, so this is exact.
+  double _valForInterval(int minutes) =>
+      minutes == 0 ? 0 : (_stops.indexOf(minutes) + 1).toDouble();
 
   String _labelForVal(double val) {
     final int minutes = _intervalForVal(val);
@@ -1347,8 +1335,8 @@ class _UpdateIntervalSliderState extends State<_UpdateIntervalSlider> {
   Widget build(BuildContext context) {
     final double sliderVal =
         _dragValue ??
-        context.select<SettingsProvider, double>(
-          (s) => s.updateIntervalSliderVal,
+        _valForInterval(
+          context.select<SettingsProvider, int>((s) => s.updateInterval),
         );
     final String label = _labelForVal(sliderVal);
     final isTV = context.read<SettingsProvider>().isTV;
@@ -1380,16 +1368,14 @@ class _UpdateIntervalSliderState extends State<_UpdateIntervalSlider> {
                 TVSliderWrapper(
                   value: sliderVal,
                   min: 0,
-                  max: SettingsPageState.updateIntervalNodes.length.toDouble(),
-                  divisions: SettingsPageState.updateIntervalNodes.length,
+                  max: _stops.length.toDouble(),
+                  divisions: _stops.length,
                   onChanged: (double value) {
                     setState(() => _dragValue = value);
                   },
                   onChangeEnd: (double value) {
-                    final SettingsProvider sp = context
-                        .read<SettingsProvider>();
-                    sp.updateIntervalSliderVal = value;
-                    sp.updateInterval = _intervalForVal(value);
+                    context.read<SettingsProvider>().updateInterval =
+                        _intervalForVal(value);
                     setState(() => _dragValue = null);
                   },
                   child: SliderTheme(
@@ -1407,22 +1393,16 @@ class _UpdateIntervalSliderState extends State<_UpdateIntervalSlider> {
                     ),
                     child: Slider(
                       focusNode: isTV ? _sliderFocusNode : null,
-                      value: sliderVal.clamp(
-                        0,
-                        SettingsPageState.updateIntervalNodes.length.toDouble(),
-                      ),
-                      max: SettingsPageState.updateIntervalNodes.length
-                          .toDouble(),
-                      divisions: SettingsPageState.updateIntervalNodes.length,
+                      value: sliderVal.clamp(0, _stops.length.toDouble()),
+                      max: _stops.length.toDouble(),
+                      divisions: _stops.length,
                       label: label,
                       onChanged: (double value) {
                         setState(() => _dragValue = value);
                       },
                       onChangeEnd: (double value) {
-                        final SettingsProvider sp = context
-                            .read<SettingsProvider>();
-                        sp.updateIntervalSliderVal = value;
-                        sp.updateInterval = _intervalForVal(value);
+                        context.read<SettingsProvider>().updateInterval =
+                            _intervalForVal(value);
                         setState(() => _dragValue = null);
                       },
                     ),
@@ -2108,26 +2088,34 @@ class _CustomFontTile extends StatelessWidget {
       );
       if (proceed != true) return;
 
-      final PlatformFile? picked = await FilePicker.pickFile(
-        type: FileType.custom,
-        allowedExtensions: ['ttf', 'otf'],
-      );
-      if (picked == null || picked.path == null) return;
-      final String pickedPath = picked.path!;
+      // Any file: fonts have no MIME type every phone agrees on. What isn't a
+      // TTF or OTF font is turned down below.
+      final PickedDocument? picked = await pickFile();
+      if (picked == null) return;
+      final Uint8List bytes = picked.bytes;
+      final String? pickedName = picked.name;
+      final String? nameExt = pickedName != null && pickedName.contains('.')
+          ? pickedName.split('.').last.toLowerCase()
+          : null;
+      if (nameExt != null && nameExt != 'ttf' && nameExt != 'otf') {
+        throw FormatException('Not a TTF or OTF font: $pickedName');
+      }
+      // With no name to go by, an OpenType font with CFF outlines starts with
+      // `OTTO`; the others are TrueType.
+      final String ext =
+          nameExt ??
+          (bytes.length >= 4 && ascii.decode(bytes.sublist(0, 4)) == 'OTTO'
+              ? 'otf'
+              : 'ttf');
 
       final Directory appDocDir = await getApplicationDocumentsDirectory();
       final Directory fontsDir = Directory('${appDocDir.path}/fonts');
       await fontsDir.create(recursive: true);
-      final String ext = pickedPath.split('.').last.toLowerCase();
       final String targetPath = '${fontsDir.path}/custom_font.$ext';
-
-      final File sourceFile = File(pickedPath);
-      final Uint8List bytes = await sourceFile.readAsBytes();
 
       // Read font name from metadata
       final String? parsedName = _readFontName(bytes);
-      final String displayName =
-          parsedName ?? pickedPath.split(Platform.pathSeparator).last;
+      final String displayName = parsedName ?? pickedName ?? 'custom_font.$ext';
 
       // Verify the font by temporarily loading it
       final FontLoader fontLoader = FontLoader('TempCustomFontTest');
@@ -2628,7 +2616,7 @@ class _IntegrationsSection extends StatefulWidget {
 class _IntegrationsSectionState extends State<_IntegrationsSection>
     with WidgetsBindingObserver {
   bool _appManagerInstalled = false;
-  bool _letMeDowngradeInstalled = false;
+  bool _downgradeModuleInstalled = false;
   bool _loading = true;
   late final TextEditingController _virusTotalApiKeyController;
   // Stored pref value as of the last sync - see [didChangeDependencies].
@@ -2700,14 +2688,14 @@ class _IntegrationsSectionState extends State<_IntegrationsSection>
   }
 
   Future<void> _checkInstalledApps() async {
-    final results = await Future.wait([
+    final (appManagerInfo, downgradeModuleInstalled) = await (
       getInstalledInfo('io.github.muntashirakon.AppManager'),
-      getInstalledInfo('com.berdik.letmedowngrade'),
-    ]);
+      isDowngradeModuleInstalled(),
+    ).wait;
     if (mounted) {
       setState(() {
-        _appManagerInstalled = results[0] != null;
-        _letMeDowngradeInstalled = results[1] != null;
+        _appManagerInstalled = appManagerInfo != null;
+        _downgradeModuleInstalled = downgradeModuleInstalled;
         _loading = false;
       });
     }
@@ -2717,7 +2705,7 @@ class _IntegrationsSectionState extends State<_IntegrationsSection>
     sp.openAppInfoInAppManager,
     sp.beforeNewInstallsShareToAppVerifier,
     sp.enableVirusTotalScanning,
-    sp.enableLetMeDowngrade,
+    sp.enableDowngradeModules,
     sp.installerMode,
     sp.shizukuPretendToBeGooglePlay,
     // The API key drives the field text and, with its validation fingerprint,
@@ -2737,57 +2725,53 @@ class _IntegrationsSectionState extends State<_IntegrationsSection>
     return M3eExpressiveSettingsCard(
       colorScheme: cs,
       items: [
-        ListTile(
-          title: Text(
-            tr('openAppInfoInAppManager'),
-            style: TextStyle(
-              color: _loading
-                  ? cs.onSurface.withValues(alpha: 0.38)
-                  : _appManagerInstalled
-                  ? null
-                  : cs.onSurface.withValues(alpha: 0.38),
-            ),
-          ),
-          onTap: !_loading && !_appManagerInstalled
-              ? () => ScaffoldMessenger.of(context).showSnackBar(
-                  buildAppSnackBar(
-                    context,
-                    tr('appManagerNotInstalledSnackbar'),
-                    type: ToastType.warning,
-                  ),
-                )
+        ExplainedWhenOff(
+          reason: !_loading && !_appManagerInstalled
+              ? tr('appManagerNotInstalledSnackbar')
               : null,
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                tooltip: tr('about'),
-                onPressed: () {
-                  launchUrlString(
-                    tr('aboutAppManagerUrl'),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-                style: IconButton.styleFrom(
-                  foregroundColor: cs.onSurfaceVariant,
-                  iconSize: 20,
-                  padding: const EdgeInsets.all(4),
-                  minimumSize: const Size(32, 32),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: VisualDensity.compact,
+          child: ListTile(
+            title: Text(
+              tr('openAppInfoInAppManager'),
+              style: TextStyle(
+                color: _loading
+                    ? cs.onSurface.withValues(alpha: 0.38)
+                    : _appManagerInstalled
+                    ? null
+                    : cs.onSurface.withValues(alpha: 0.38),
+              ),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  tooltip: tr('about'),
+                  onPressed: () {
+                    launchUrlString(
+                      tr('aboutAppManagerUrl'),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  },
+                  style: IconButton.styleFrom(
+                    foregroundColor: cs.onSurfaceVariant,
+                    iconSize: 20,
+                    padding: const EdgeInsets.all(4),
+                    minimumSize: const Size(32, 32),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  icon: const Icon(Icons.open_in_new_rounded),
                 ),
-                icon: const Icon(Icons.open_in_new_rounded),
-              ),
-              AppSwitch(
-                value:
-                    !_loading &&
-                    _appManagerInstalled &&
-                    sp.openAppInfoInAppManager,
-                onChanged: !_loading && _appManagerInstalled
-                    ? (bool value) => sp.openAppInfoInAppManager = value
-                    : null,
-              ),
-            ],
+                AppSwitch(
+                  value:
+                      !_loading &&
+                      _appManagerInstalled &&
+                      sp.openAppInfoInAppManager,
+                  onChanged: !_loading && _appManagerInstalled
+                      ? (bool value) => sp.openAppInfoInAppManager = value
+                      : null,
+                ),
+              ],
+            ),
           ),
         ),
         ListTile(
@@ -2815,57 +2799,40 @@ class _IntegrationsSectionState extends State<_IntegrationsSection>
             ],
           ),
         ),
-        ListTile(
-          title: Text(
-            tr('enableLetMeDowngrade'),
-            style: TextStyle(
-              color: _loading
-                  ? cs.onSurface.withValues(alpha: 0.38)
-                  : _letMeDowngradeInstalled
-                  ? null
-                  : cs.onSurface.withValues(alpha: 0.38),
-            ),
-          ),
-          onTap: !_loading && !_letMeDowngradeInstalled
-              ? () => ScaffoldMessenger.of(context).showSnackBar(
-                  buildAppSnackBar(
-                    context,
-                    tr('letMeDowngradeNotInstalledSnackbar'),
-                    type: ToastType.warning,
-                  ),
-                )
+        ExplainedWhenOff(
+          reason: !_loading && !_downgradeModuleInstalled
+              ? tr('downgradeModuleNotInstalledSnackbar')
               : null,
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                tooltip: tr('about'),
-                onPressed: () {
-                  launchUrlString(
-                    tr('aboutLetMeDowngradeUrl'),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-                style: IconButton.styleFrom(
-                  foregroundColor: cs.onSurfaceVariant,
-                  iconSize: 20,
-                  padding: const EdgeInsets.all(4),
-                  minimumSize: const Size(32, 32),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: VisualDensity.compact,
+          child: ListTile(
+            title: Text(
+              tr('enableDowngradeModules'),
+              style: TextStyle(
+                color: _loading
+                    ? cs.onSurface.withValues(alpha: 0.38)
+                    : _downgradeModuleInstalled
+                    ? null
+                    : cs.onSurface.withValues(alpha: 0.38),
+              ),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                HelpHintIcon(
+                  message: tr('downgradeModulesTooltip'),
+                  size: 20,
+                  padding: EdgeInsets.zero,
                 ),
-                icon: const Icon(Icons.open_in_new_rounded),
-              ),
-              AppSwitch(
-                value:
-                    !_loading &&
-                    _letMeDowngradeInstalled &&
-                    sp.enableLetMeDowngrade,
-                onChanged: !_loading && _letMeDowngradeInstalled
-                    ? (bool value) => sp.enableLetMeDowngrade = value
-                    : null,
-              ),
-            ],
+                AppSwitch(
+                  value:
+                      !_loading &&
+                      _downgradeModuleInstalled &&
+                      sp.enableDowngradeModules,
+                  onChanged: !_loading && _downgradeModuleInstalled
+                      ? (bool value) => sp.enableDowngradeModules = value
+                      : null,
+                ),
+              ],
+            ),
           ),
         ),
         Builder(
@@ -2874,32 +2841,35 @@ class _IntegrationsSectionState extends State<_IntegrationsSection>
                 sp.getSettingString(virusTotalApiKeyKey) ?? '';
             final bool hasValidatedKey =
                 savedApiKey.isNotEmpty && hasValidatedApiKey(savedApiKey, sp);
-            return ListTile(
-              title: Text(tr('enableVirusTotalScanning')),
-              onTap: !hasValidatedKey
-                  ? () => ScaffoldMessenger.of(context).showSnackBar(
-                      buildAppSnackBar(
-                        context,
-                        tr('virusTotalNotValidatedSnackbar'),
-                        type: ToastType.warning,
-                      ),
-                    )
-                  : null,
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  HelpHintIcon(
-                    message: tr('virusTotalScanningTooltip'),
-                    size: 20,
-                    padding: EdgeInsets.zero,
+            return ExplainedWhenOff(
+              reason: hasValidatedKey
+                  ? null
+                  : tr('virusTotalNotValidatedSnackbar'),
+              child: ListTile(
+                title: Text(
+                  tr('enableVirusTotalScanning'),
+                  style: TextStyle(
+                    color: hasValidatedKey
+                        ? null
+                        : cs.onSurface.withValues(alpha: 0.38),
                   ),
-                  AppSwitch(
-                    value: hasValidatedKey && sp.enableVirusTotalScanning,
-                    onChanged: hasValidatedKey
-                        ? (bool value) => sp.enableVirusTotalScanning = value
-                        : null,
-                  ),
-                ],
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    HelpHintIcon(
+                      message: tr('virusTotalScanningTooltip'),
+                      size: 20,
+                      padding: EdgeInsets.zero,
+                    ),
+                    AppSwitch(
+                      value: hasValidatedKey && sp.enableVirusTotalScanning,
+                      onChanged: hasValidatedKey
+                          ? (bool value) => sp.enableVirusTotalScanning = value
+                          : null,
+                    ),
+                  ],
+                ),
               ),
             );
           },

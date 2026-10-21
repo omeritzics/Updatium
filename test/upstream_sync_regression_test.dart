@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:obtainium/app_sources/fdroid.dart';
 import 'package:obtainium/app_sources/fdroidrepo.dart';
@@ -12,11 +13,10 @@ import 'package:obtainium/installers/dhizuku_installer.dart';
 import 'package:obtainium/installers/installer.dart';
 import 'package:obtainium/installers/shizuku_installer.dart';
 import 'package:obtainium/layout_breakpoints.dart';
-import 'package:obtainium/providers/apps_provider_import_export.dart';
-import 'package:obtainium/providers/apps_provider_install.dart';
-import 'package:obtainium/providers/apps_provider_updates.dart';
+import 'package:obtainium/providers/apps_provider.dart';
 import 'package:obtainium/providers/settings_provider.dart';
 import 'package:obtainium/providers/source_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer_platform_interface.dart';
 
 class _RecordingShizukuPlatform extends ShizukuApkInstallerPlatform {
@@ -42,6 +42,18 @@ class _RecordingShizukuPlatform extends ShizukuApkInstallerPlatform {
     receivedFakeInstallSource = fakeInstallSource;
     return installSuccessCode;
   }
+}
+
+/// An [AppsProvider] carrying only settings, for extension methods that read
+/// nothing else; the real constructor starts storage and package setup.
+class _SettingsOnlyAppsProvider implements AppsProvider {
+  _SettingsOnlyAppsProvider(this.settingsProvider);
+
+  @override
+  SettingsProvider settingsProvider;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 App _buildTestApp({
@@ -338,6 +350,43 @@ void main() {
       isFalse,
     );
   });
+
+  // The v1.6.8 sync restored upstream's LMD-only canDowngradeApps, which
+  // silently dropped the ObtainX settings switch (#327 added CorePatch).
+  test(
+    'any downgrade module lifts the downgrade block while its switch is on',
+    () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final SettingsProvider settings = SettingsProvider()
+        ..prefs = await SharedPreferences.getInstance();
+      final AppsProvider appsProvider = _SettingsOnlyAppsProvider(settings);
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      const channel = MethodChannel('dev.imranr.obtainium/device_apps');
+      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+      String? installedModule;
+      messenger.setMockMethodCallHandler(channel, (MethodCall call) async {
+        if (call.method != 'getInstalledPackageInfo') return null;
+        final Object? packageName = (call.arguments as Map)['packageName'];
+        return packageName == installedModule
+            ? <String, Object?>{'packageName': packageName}
+            : null;
+      });
+
+      expect(await appsProvider.canDowngradeApps(), isFalse);
+      for (final String module in const [
+        'com.berdik.letmedowngrade',
+        'com.coderstory.toolkit',
+        'org.lsposed.corepatch',
+      ]) {
+        installedModule = module;
+        settings.enableDowngradeModules = true;
+        expect(await appsProvider.canDowngradeApps(), isTrue, reason: module);
+        settings.enableDowngradeModules = false;
+        expect(await appsProvider.canDowngradeApps(), isFalse, reason: module);
+      }
+    },
+  );
 
   test(
     'privileged installers select and configure their own backend',

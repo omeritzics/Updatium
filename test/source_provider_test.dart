@@ -62,9 +62,8 @@ class _StubAPKMirror extends APKMirror {
   }
 
   // tryInferringAppId hits the network in the real APKMirror; short-circuit
-  // it so tests never reach out. We always pass an explicit appId via the
-  // currentApp/additionalSettings path anyway, so this never fires — it's
-  // here as a safety net.
+  // it so tests never reach out. Adding an app without an explicit appId
+  // reaches it.
   @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
@@ -118,6 +117,15 @@ class _StubSource extends AppSource {
   }
 }
 
+/// Like GitHub: offers the per-app "Include prereleases" switch.
+class _StubPrereleaseSource extends _StubSource {
+  @override
+  List<List<GeneratedFormItem>>
+  get additionalSourceAppSpecificSettingFormItems => [
+    [GeneratedFormSwitch('includePrereleases', label: 'Include prereleases')],
+  ];
+}
+
 class _StubFDroid extends FDroid {
   _StubFDroid(
     this.pageHtml, {
@@ -139,6 +147,66 @@ class _StubFDroid extends FDroid {
   }) async {
     return Response(pageHtml, 200);
   }
+}
+
+class _CountingFDroid extends FDroid {
+  _CountingFDroid(this.pageHtml, {this.pageStatusCode = 200});
+
+  final String pageHtml;
+  final int pageStatusCode;
+  int pageRequestCount = 0;
+
+  @override
+  Future<Response> sourceRequest(
+    String url,
+    Map<String, dynamic> additionalSettings, {
+    bool followRedirects = true,
+    Object? postBody,
+  }) async {
+    pageRequestCount++;
+    return Response(pageHtml, pageStatusCode);
+  }
+}
+
+const String _rethinkAbiPageHtml = '''
+<ul>
+<li class="package-version">
+  <div class="package-version-header">
+    <a name="v0.5.7"></a>
+    <a name="699"></a>
+  </div>
+  <code class="package-nativecode">x86_64</code>
+</li>
+<li class="package-version">
+  <div class="package-version-header">
+    <a name="v0.5.7"></a>
+    <a name="693"></a>
+  </div>
+  <code class="package-nativecode">arm64-v8a</code>
+</li>
+<li class="package-version">
+  <div class="package-version-header">
+    <a name="v0.5.7"></a>
+    <a name="692"></a>
+  </div>
+  <code class="package-nativecode">armeabi-v7a</code>
+</li>
+</ul>
+''';
+
+Response _rethinkPackagesResponse() {
+  return Response(
+    jsonEncode({
+      'packageName': 'com.celzero.bravedns',
+      'suggestedVersionCode': 699,
+      'packages': [
+        {'versionName': 'v0.5.7', 'versionCode': 699},
+        {'versionName': 'v0.5.7', 'versionCode': 693},
+        {'versionName': 'v0.5.7', 'versionCode': 692},
+      ],
+    }),
+    200,
+  );
 }
 
 class _StubFDroidVerification extends FDroid {
@@ -1243,6 +1311,130 @@ void main() {
     },
   );
 
+  test(
+    'F-Droid prefers the device ABI over the suggested version code',
+    () async {
+      final details = await _CountingFDroid(_rethinkAbiPageHtml)
+          .getAPKUrlsFromFDroidPackagesAPIResponse(
+            _rethinkPackagesResponse(),
+            'https://f-droid.org/repo/com.celzero.bravedns',
+            'https://f-droid.org/packages/com.celzero.bravedns',
+            'F-Droid',
+            additionalSettings: <String, dynamic>{
+              'trySelectingSuggestedVersionCode': true,
+            },
+          );
+
+      expect(details.apkUrls, hasLength(1));
+      expect(
+        details.apkUrls.single.value,
+        'https://f-droid.org/repo/com.celzero.bravedns_693.apk',
+      );
+      expect(details.versionCode, 693);
+    },
+  );
+
+  test('F-Droid rechecks ABI when the version name is unchanged', () async {
+    final source = _CountingFDroid(_rethinkAbiPageHtml);
+    source.previouslyCheckedApp = const App(
+      id: 'com.celzero.bravedns',
+      url: 'https://f-droid.org/packages/com.celzero.bravedns',
+      author: 'F-Droid',
+      name: 'Rethink',
+      latestVersion: 'v0.5.7',
+      apkUrls: <MapEntry<String, String>>[
+        MapEntry(
+          'com.celzero.bravedns_699.apk',
+          'https://f-droid.org/repo/com.celzero.bravedns_699.apk',
+        ),
+      ],
+      preferredApkIndex: 0,
+      additionalSettings: <String, dynamic>{
+        'trySelectingSuggestedVersionCode': true,
+      },
+      rawLatestVersionFromSource: 'v0.5.7',
+    );
+
+    final details = await source.getAPKUrlsFromFDroidPackagesAPIResponse(
+      _rethinkPackagesResponse(),
+      'https://f-droid.org/repo/com.celzero.bravedns',
+      'https://f-droid.org/packages/com.celzero.bravedns',
+      'F-Droid',
+      additionalSettings: <String, dynamic>{
+        'trySelectingSuggestedVersionCode': true,
+      },
+    );
+
+    expect(source.pageRequestCount, 1);
+    expect(
+      details.apkUrls.single.value,
+      'https://f-droid.org/repo/com.celzero.bravedns_693.apk',
+    );
+  });
+
+  test(
+    'F-Droid does not replace a saved APK with the suggested build when ABI data is missing',
+    () async {
+      final source = _CountingFDroid('', pageStatusCode: 404);
+      source.previouslyCheckedApp = const App(
+        id: 'com.celzero.bravedns',
+        url: 'https://f-droid.org/packages/com.celzero.bravedns',
+        author: 'F-Droid',
+        name: 'Rethink',
+        latestVersion: 'v0.5.7',
+        apkUrls: <MapEntry<String, String>>[
+          MapEntry(
+            'com.celzero.bravedns_693.apk',
+            'https://f-droid.org/repo/com.celzero.bravedns_693.apk',
+          ),
+        ],
+        preferredApkIndex: 0,
+        additionalSettings: <String, dynamic>{},
+        rawLatestVersionFromSource: 'v0.5.7',
+      );
+
+      final details = await source.getAPKUrlsFromFDroidPackagesAPIResponse(
+        _rethinkPackagesResponse(),
+        'https://f-droid.org/repo/com.celzero.bravedns',
+        'https://f-droid.org/packages/com.celzero.bravedns',
+        'F-Droid',
+        additionalSettings: <String, dynamic>{
+          'trySelectingSuggestedVersionCode': true,
+        },
+      );
+
+      expect(
+        details.apkUrls.single.value,
+        'https://f-droid.org/repo/com.celzero.bravedns_693.apk',
+      );
+    },
+  );
+
+  test(
+    'F-Droid keeps every ABI choice when suggested selection has no architecture data',
+    () async {
+      final details = await _CountingFDroid('', pageStatusCode: 404)
+          .getAPKUrlsFromFDroidPackagesAPIResponse(
+            _rethinkPackagesResponse(),
+            'https://f-droid.org/repo/com.celzero.bravedns',
+            'https://f-droid.org/packages/com.celzero.bravedns',
+            'F-Droid',
+            additionalSettings: <String, dynamic>{
+              'trySelectingSuggestedVersionCode': true,
+            },
+          );
+
+      expect(
+        details.apkUrls.map((apk) => apk.value),
+        containsAll(<String>[
+          'https://f-droid.org/repo/com.celzero.bravedns_699.apk',
+          'https://f-droid.org/repo/com.celzero.bravedns_693.apk',
+          'https://f-droid.org/repo/com.celzero.bravedns_692.apk',
+        ]),
+      );
+    },
+  );
+
   test('source name replaces stale package-id app name', () async {
     final newApp = await SourceProvider().getApp(
       _StubSource(),
@@ -1519,6 +1711,129 @@ void main() {
       expect(app.latestVersion, '4.8.3');
     },
   );
+
+  test('a URL-list fetch looks up the package ID only when asked', () async {
+    // Like GitHub: the URL carries no package ID, and finding it is optional.
+    final source = _StubSource()..appIdInferIsOptional = true;
+    Future<App> fetched({required bool inferAppIds}) =>
+        SourceProvider().getAppByURLNaive(
+          'https://example.com/app',
+          sourceOverride: source,
+          inferAppIds: inferAppIds,
+        );
+
+    expect((await fetched(inferAppIds: true)).id, 'org.example.app');
+    // Without the lookup (GitHub stars, batch search), a temporary ID.
+    expect(
+      (await fetched(inferAppIds: false)).id,
+      matches(RegExp(r'^[0-9a-f]{12}$')),
+    );
+    final List<dynamic> batch = await SourceProvider().getAppsByURLNaive([
+      'https://example.com/app',
+    ], sourceOverride: source);
+    expect(
+      (batch[0] as List<App>).single.id,
+      matches(RegExp(r'^[0-9a-f]{12}$')),
+    );
+  });
+
+  test(
+    'a URL-list fetch includes prereleases when that is the default',
+    () async {
+      final source = _StubPrereleaseSource();
+      Future<App> fetched({required bool includePrereleases}) =>
+          SourceProvider().getAppByURLNaive(
+            'https://example.com/app',
+            sourceOverride: source,
+            includePrereleases: includePrereleases,
+          );
+
+      expect(
+        (await fetched(
+          includePrereleases: true,
+        )).additionalSettings['includePrereleases'],
+        true,
+      );
+      expect(
+        (await fetched(
+          includePrereleases: false,
+        )).additionalSettings['includePrereleases'],
+        false,
+      );
+      // A source without the option doesn't gain it.
+      final App plain = await SourceProvider().getAppByURLNaive(
+        'https://example.com/app',
+        sourceOverride: _StubSource(),
+        includePrereleases: true,
+      );
+      expect(plain.additionalSettings.containsKey('includePrereleases'), false);
+    },
+  );
+
+  test('a batch add includes prereleases when that is the default', () async {
+    // Batch search adds and GitHub Stars imports go through here.
+    Future<App> added({required bool includePrereleases}) async {
+      final List<dynamic> batch = await SourceProvider().getAppsByURLNaive(
+        ['https://example.com/app'],
+        sourceOverride: _StubPrereleaseSource(),
+        includePrereleases: includePrereleases,
+      );
+      return (batch[0] as List<App>).single;
+    }
+
+    expect(
+      (await added(
+        includePrereleases: true,
+      )).additionalSettings['includePrereleases'],
+      true,
+    );
+    expect(
+      (await added(
+        includePrereleases: false,
+      )).additionalSettings['includePrereleases'],
+      false,
+    );
+  });
+
+  test("a link's settings go over the defaults, its package ID over the "
+      'lookup', () async {
+    final App app = await SourceProvider().getAppByURLNaive(
+      'https://example.com/app',
+      sourceOverride: _StubPrereleaseSource(),
+      inferAppIds: true,
+      includePrereleases: true,
+      settings: {
+        'includePrereleases': false,
+        'apkFilterRegEx': r'^example\.apk$',
+        'appId': 'org.from.link',
+      },
+    );
+
+    expect(app.id, 'org.from.link');
+    expect(app.additionalSettings['includePrereleases'], false);
+    expect(app.additionalSettings['apkFilterRegEx'], r'^example\.apk$');
+  });
+
+  test('a track-only source looks up the package ID only if it says '
+      'so', () async {
+    // Like APKMirror: every app is track-only, and the store page names the
+    // package.
+    Future<App> fetched({required bool evenWhenTrackOnly}) =>
+        SourceProvider().getAppByURLNaive(
+          'https://example.com/app',
+          sourceOverride: _StubSource()
+            ..enforceTrackOnly = true
+            ..appIdInferIsOptional = true
+            ..inferAppIdEvenWhenTrackOnly = evenWhenTrackOnly,
+          inferAppIds: true,
+        );
+
+    expect((await fetched(evenWhenTrackOnly: true)).id, 'org.example.app');
+    expect(
+      (await fetched(evenWhenTrackOnly: false)).id,
+      matches(RegExp(r'^[0-9a-f]{12}$')),
+    );
+  });
 
   test(
     'source codes follow the filtered and selected APK through reload',

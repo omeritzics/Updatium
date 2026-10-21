@@ -7,36 +7,34 @@ ObtainX is a modern and supercharged fork of Obtainium. Re-engineered with a stu
 > [!TIP]
 > Curious how ObtainX stacks up against Obtainium? Check out my side-by-side [ObtainX vs Obtainium comparison](docs/Difference_with_Obtainium.md) featuring full interface screenshots.
 
+## 🏆 Featured & Recognized
+
 <p align="center">
-  <!-- Stack / Technical Chips -->
-  <img alt="Android API" src="https://img.shields.io/badge/Api%2021+-50f270?logo=android&logoColor=black&style=for-the-badge"/>
-  <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white&style=for-the-badge"/>
-  <img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white&style=for-the-badge"/>
-  <img alt="Material You" src="https://custom-icon-badges.demolab.com/badge/material%20you-lightblue?style=for-the-badge&logoColor=333&logo=material-you"/>
-  <br/>
-  <!-- Dynamic Lines of Code Badge -->
-  <img alt="Lines of Code" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fbikram-agarwal%2FObtainX%2Flines&style=for-the-badge&color=aeff4d&labelColor=4b731a&label=Lines%20of%20code"/>
-  <!-- Forks -->
-  <a href="https://github.com/bikram-agarwal/ObtainX/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/bikram-agarwal/ObtainX?color=DAA520&style=for-the-badge&labelColor=664D0F"/></a>
-  <!-- Stars -->
-  <a href="https://github.com/bikram-agarwal/ObtainX/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/bikram-agarwal/ObtainX?color=ffff00&style=for-the-badge&labelColor=a1a116"/></a>
-  <a href="https://github.com/bikram-agarwal/ObtainX/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/bikram-agarwal/ObtainX/total?color=00bcd4&style=for-the-badge&labelColor=006064"/></a>
-  <br/>
-  <!-- Distribution Badges -->
-  <a href="https://github.com/bikram-agarwal/ObtainX/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/bikram-agarwal/ObtainX?color=a1168e&include_prereleases&logo=github&style=for-the-badge&labelColor=700f63"/></a>
-  <a href="https://f-droid.org/packages/dev.bikram.obtainx"><img alt="F-Droid" src="https://img.shields.io/f-droid/v/dev.bikram.obtainx?color=a1168e&logo=FDROID&style=for-the-badge&labelColor=700f63"/></a>
-  <br/>
+  <strong>Featured in "Best Android Apps — May 2026!"</strong><br/>
+  By <b>HowToMen</b>
+</p>
+
+<p align="center">
+    <a href="https://youtu.be/B59glf2bweo?t=468"><img width="50%" alt="ObtainX: Best Android Apps - May 2026!" src="docs/assets/feature_htm.webp" /></a>
+</p>
+
+<p align="center">
   <a href="https://trendshift.io/repositories/38553" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/38553/daily?language=Dart" alt="bikram-agarwal%2FObtainX | Trendshift" width="250" height="55"/></a>
 </p>
 
-<p align="center">
-<strong>Featured by HowToMen: Best Android Apps - May 2026! 🎊</strong><br/>
-  <a href="https://youtu.be/B59glf2bweo?t=468"><img width="50%" alt="ObtainX: Best Android Apps - May 2026!" src="docs/assets/feature_htm.webp" /></a>
-</p>
-
-## 📦 Installation
+## 📦 Downloads
 [<img src="docs/assets/badge_fdroid.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/dev.bikram.obtainx)
 [<img src="docs/assets/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/bikram-agarwal/ObtainX/releases/latest)
+
+<details><summary>Verification info</summary>
+
+- Package ID: `dev.bikram.obtainx`
+- SHA-256 hash of signing certificate:
+  ```text
+  64:37:E8:BE:94:51:BD:7D:02:21:55:11:D3:E5:04:A8:8C:50:BE:72:B6:DD:05:AC:4B:5B:87:F5:A2:05:B6:87
+  ```
+- Note: The above signature is also valid for the F-Droid flavour of ObtainX, thanks to [reproducible builds](https://f-droid.org/docs/Reproducible_Builds/).
+</details>
 
 ## 🔄 Seamlessly bring your data from Obtainium
 
@@ -80,6 +78,10 @@ The same apps can be tracked from multiple stores — independently, simultaneou
 
 - **🧩 Advanced filter / RegEx assist** — A built-in helper walks you through building regex filters on any field that supports them. No regex knowledge required. Full details in the [Additional options guide](docs/additional-options-guide.md).
 - **⏭️ Skip version** — Skip a specific release you don't want without marking the app as "updated." The next release will still show up normally.
+- **🚩 Needs attention** — Never lose broken apps in a long list again. Apps with issues — like signature mismatches, broken filters, or renamed repos — automatically float to the top of list with clear, plain-English fixes. Once resolved, they drop right back into place.
+
+- **⬇️ Deliberate downgrades** — Need to jump off a buggy pre-release back to stable, or deal with a developer rolling back a release? When an app's source build is older than what you have installed, ObtainX provides an explicit Downgrade button with data-safety warnings. It keeps downgrades out of your update badges and background syncs, and adds support for CorePatch alongside Let Me Downgrade.
+
 - **💾 Save assets** — Option to automatically save update assets (e.g. APKs) to your chosen folder, during update process itself.
 
 ### 🎨 Interface & Experience
@@ -233,4 +235,25 @@ Read the original Obtainium [README here](https://github.com/ImranR98/Obtainium/
 
 ---
 
-Made with ❤️ by Bikram Agarwal
+<p align="center">
+  <!-- Stack / Technical Chips -->
+  <img alt="Android API" src="https://img.shields.io/badge/Api%2021+-50f270?logo=android&logoColor=black&style=for-the-badge"/>
+  <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white&style=for-the-badge"/>
+  <img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white&style=for-the-badge"/>
+  <img alt="Material You" src="https://custom-icon-badges.demolab.com/badge/material%20you-lightblue?style=for-the-badge&logoColor=333&logo=material-you"/>
+  <br/>
+  <!-- Dynamic Lines of Code Badge -->
+  <img alt="Lines of Code" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fbikram-agarwal%2FObtainX%2Flines&style=for-the-badge&color=aeff4d&labelColor=4b731a&label=Lines%20of%20code"/>
+  <!-- Forks -->
+  <a href="https://github.com/bikram-agarwal/ObtainX/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/bikram-agarwal/ObtainX?color=DAA520&style=for-the-badge&labelColor=664D0F"/></a>
+  <!-- Stars -->
+  <a href="https://github.com/bikram-agarwal/ObtainX/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/bikram-agarwal/ObtainX?color=ffff00&style=for-the-badge&labelColor=a1a116"/></a>
+  <a href="https://github.com/bikram-agarwal/ObtainX/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/bikram-agarwal/ObtainX/total?color=00bcd4&style=for-the-badge&labelColor=006064"/></a>
+  <br/>
+  <!-- Distribution Badges -->
+  <a href="https://github.com/bikram-agarwal/ObtainX/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/bikram-agarwal/ObtainX?color=a1168e&include_prereleases&logo=github&style=for-the-badge&labelColor=700f63"/></a>
+  <a href="https://f-droid.org/packages/dev.bikram.obtainx"><img alt="F-Droid" src="https://img.shields.io/f-droid/v/dev.bikram.obtainx?color=a1168e&logo=FDROID&style=for-the-badge&labelColor=700f63"/></a>
+  <br/>
+  Made with ❤️ by Bikram Agarwal
+</p>
+

@@ -1,6 +1,5 @@
 import 'dart:async' show unawaited;
 import 'dart:io' show File;
-import 'dart:math' show max;
 import 'dart:ui' show PlatformDispatcher, PointerDeviceKind;
 
 import 'package:flutter/material.dart';
@@ -181,8 +180,14 @@ Future<void> loadTranslations() async {
 /// Unique task name used by WorkManager for periodic background update checks.
 const _workManagerTaskName = 'obtainiumBgUpdateCheck';
 
-/// WorkManager refuses anything shorter, and silently clamps to it.
-const int _minimumWorkManagerIntervalMinutes = 15;
+/// How often the background task wakes to see whether anything needs doing,
+/// whether WorkManager or the foreground service runs it. It is not the update
+/// interval: each app is still checked only once per interval, and a wake-up
+/// with nothing to do returns before any real work. Waking this often is what
+/// lets a check or install that missed its moment (unplugged, off Wi-Fi, a
+/// failed or cut-off download) catch up within minutes rather than a whole
+/// interval later (#317). It is also the shortest period WorkManager allows.
+const Duration _backgroundWakePeriod = Duration(minutes: 15);
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
@@ -298,9 +303,23 @@ class Obtainium extends StatefulWidget {
 class _ObtainiumState extends State<Obtainium> with WidgetsBindingObserver {
   var existingUpdateInterval = -1;
 
-  /// Interval the periodic task is currently registered for, so [build] does
-  /// not re-register it on every rebuild.
+  /// Registration currently applied to the periodic task, so [build] does not
+  /// re-register it on every rebuild. Charging and unmetered network are part
+  /// of the WorkManager request: Android holds the task until they are met
+  /// instead of waking ObtainX to skip the run.
   int? _scheduledIntervalMinutes;
+  bool? _scheduledRequiresCharging;
+  bool? _scheduledUnmeteredNetwork;
+
+  /// Latest registration requested, including one that has not reached
+  /// WorkManager yet. Kept apart from the applied values so a slow first
+  /// register (prefs not loaded, charging requirement still off) cannot
+  /// finish after the real settings and put the old constraints back.
+  int? _desiredIntervalMinutes;
+  bool? _desiredRequiresCharging;
+  bool? _desiredUnmeteredNetwork;
+  bool _workManagerScheduleInFlight = false;
+  int _workManagerGeneration = 0;
 
   // Guards the lazy, one-shot attempt to adopt the device's explicit system
   // font family. Kicked off from [build] off the cold-start critical path; the
@@ -355,32 +374,87 @@ class _ObtainiumState extends State<Obtainium> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _scheduleWorkManager(int intervalMinutes) async {
-    // Wake on the user's own interval rather than every 15 minutes only to find
-    // nothing is due. Android still decides when within the period to run, and
-    // clamps anything below its floor.
-    if (_scheduledIntervalMinutes == intervalMinutes) return;
-    _scheduledIntervalMinutes = intervalMinutes;
-    await Workmanager().registerPeriodicTask(
-      _workManagerTaskName,
-      _workManagerTaskName,
-      frequency: Duration(
-        minutes: max(_minimumWorkManagerIntervalMinutes, intervalMinutes),
-      ),
-      constraints: Constraints(
-        networkType: NetworkType.connected,
-        requiresBatteryNotLow: false,
-        requiresDeviceIdle: false,
-        requiresStorageNotLow: false,
-      ),
-      // `keep` pins the task to whatever frequency it was first registered
-      // with, so a changed interval would never reach an existing install.
-      existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
-    );
+  Future<void> _scheduleWorkManager({
+    required bool requiresCharging,
+    required bool unmeteredNetworkOnly,
+  }) async {
+    // Every [_backgroundWakePeriod], not the update interval: 2.20 woke only
+    // once per interval, and then anything that missed its moment waited a
+    // whole interval for the next try (#317). Android still decides when within
+    // the period to run. Charging and Wi-Fi limits are constraints on the wake,
+    // so while unplugged or off Wi-Fi it doesn't run at all.
+    final int intervalMinutes = _backgroundWakePeriod.inMinutes;
+    if (_desiredIntervalMinutes == intervalMinutes &&
+        _desiredRequiresCharging == requiresCharging &&
+        _desiredUnmeteredNetwork == unmeteredNetworkOnly &&
+        (_workManagerScheduleInFlight ||
+            (_scheduledIntervalMinutes == intervalMinutes &&
+                _scheduledRequiresCharging == requiresCharging &&
+                _scheduledUnmeteredNetwork == unmeteredNetworkOnly))) {
+      return;
+    }
+    _desiredIntervalMinutes = intervalMinutes;
+    _desiredRequiresCharging = requiresCharging;
+    _desiredUnmeteredNetwork = unmeteredNetworkOnly;
+    _workManagerGeneration++;
+    if (_workManagerScheduleInFlight) return;
+    _workManagerScheduleInFlight = true;
+    try {
+      while (true) {
+        final int generationAtStart = _workManagerGeneration;
+        final int? intervalMinutesToRegister = _desiredIntervalMinutes;
+        final bool? requiresChargingToRegister = _desiredRequiresCharging;
+        final bool? unmeteredNetworkToRegister = _desiredUnmeteredNetwork;
+        if (intervalMinutesToRegister == null ||
+            requiresChargingToRegister == null ||
+            unmeteredNetworkToRegister == null) {
+          break;
+        }
+        await Workmanager().registerPeriodicTask(
+          _workManagerTaskName,
+          _workManagerTaskName,
+          frequency: Duration(minutes: intervalMinutesToRegister),
+          constraints: Constraints(
+            networkType: unmeteredNetworkToRegister
+                ? NetworkType.unmetered
+                : NetworkType.connected,
+            requiresCharging: requiresChargingToRegister,
+            requiresBatteryNotLow: false,
+            requiresDeviceIdle: false,
+            requiresStorageNotLow: false,
+          ),
+          // `keep` pins the task to whatever it was first registered with, so
+          // neither changed constraints nor the move back from 2.20's
+          // interval-long period would reach an existing install.
+          existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
+        );
+        if (generationAtStart != _workManagerGeneration) {
+          // A newer request, or a cancel, landed while this register was in
+          // flight. A late register would otherwise restore the old constraints
+          // after cancel, so undo it and apply whatever is desired now.
+          if (_desiredIntervalMinutes == null) {
+            await Workmanager().cancelByUniqueName(_workManagerTaskName);
+          }
+          continue;
+        }
+        _scheduledIntervalMinutes = intervalMinutesToRegister;
+        _scheduledRequiresCharging = requiresChargingToRegister;
+        _scheduledUnmeteredNetwork = unmeteredNetworkToRegister;
+        break;
+      }
+    } finally {
+      _workManagerScheduleInFlight = false;
+    }
   }
 
   Future<void> _cancelWorkManager() async {
+    _workManagerGeneration++;
+    _desiredIntervalMinutes = null;
+    _desiredRequiresCharging = null;
+    _desiredUnmeteredNetwork = null;
     _scheduledIntervalMinutes = null;
+    _scheduledRequiresCharging = null;
+    _scheduledUnmeteredNetwork = null;
     await Workmanager().cancelByUniqueName(_workManagerTaskName);
   }
 
@@ -449,7 +523,9 @@ class _ObtainiumState extends State<Obtainium> with WidgetsBindingObserver {
           playSound: false,
         ),
         foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(900000),
+          eventAction: ForegroundTaskEventAction.repeat(
+            _backgroundWakePeriod.inMilliseconds,
+          ),
           autoRunOnBoot: true,
           autoRunOnMyPackageReplaced: true,
           allowWakeLock: true,
@@ -717,6 +793,8 @@ class _ObtainiumState extends State<Obtainium> with WidgetsBindingObserver {
       (s) => Object.hash(
         s.updateInterval,
         s.useFGService,
+        s.bgUpdatesWhileChargingOnly,
+        s.bgUpdatesOnWiFiOnly,
         s.prefs == null,
         s.forcedLocale,
         s.appAccentColorSource,
@@ -775,7 +853,12 @@ class _ObtainiumState extends State<Obtainium> with WidgetsBindingObserver {
         startForegroundService(false);
       } else {
         stopForegroundService();
-        unawaited(_scheduleWorkManager(settingsProvider.updateInterval));
+        unawaited(
+          _scheduleWorkManager(
+            requiresCharging: settingsProvider.bgUpdatesWhileChargingOnly,
+            unmeteredNetworkOnly: settingsProvider.bgUpdatesOnWiFiOnly,
+          ),
+        );
       }
     }
     if (settingsProvider.prefs == null) {

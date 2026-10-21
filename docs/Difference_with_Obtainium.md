@@ -22,6 +22,7 @@
   - [Folders](#folders)
   - [On-Demand Only](#on-demand-only)
   - [Clearer app statuses](#clearer-app-statuses)
+  - [Needs attention](#needs-attention)
   - [Installer choice - why this fork exists](#installer-choice---why-this-fork-exists)
 - [More features worth knowing](#more-features-worth-knowing)
 
@@ -52,6 +53,11 @@
         <td>Ease of Update</td>
         <td>• Button at center of app row, can misalign per row.<br>• Update-all button at the top of apps list<br>• Updates scattered across individual groups<br>• Can't quickly say how many updates are available<br>• OOTB version comparison seems to be buggy.</td>
         <td>• Button at right end, in perfect alignment<br>• Update-all button at the bottom, within easy thumb reach<br>• Unified Updates group at the top<br>• Upate button shows count of available upates<br>• OOTB version comparison is smarter.</td>
+    </tr>
+    <tr>
+        <td>Apps that need your action</td>
+        <td>✗</td>
+        <td>✓ <a href="#needs-attention">Needs attention</a> group above everything else, listing every app stuck on a problem only you can fix</td>
     </tr>
     <tr>
         <td>Bulk Update</td>
@@ -311,6 +317,11 @@ ObtainX's filters provide tri-state options (neutral/include/exclude) plus Any/A
         <td>Skip version</td>
         <td>✗</td>
         <td>✓</td>
+    </tr>
+    <tr>
+        <td>Downgrade</td>
+        <td>Only by showing the older release as an "update" (with <i>Hide downgrades as updates</i> off)</td>
+        <td>• Dedicated Downgrade button when the device is ahead of the source<br>• Warns first that the older version keeps the app's data<br>• Kept out of the update count and background updates<br>• Track-only apps can <i>Mark downgraded</i></td>
     </tr>
     <tr>
         <td>Changelog view</td>
@@ -842,6 +853,20 @@ ObtainX surfaces **finer-grained states** rather than forcing every situation in
         </td>
     </tr>
 </table>
+
+---
+
+### Needs attention
+
+Some problems can't fix themselves; they need you. ObtainX gathers those apps into a **Needs attention** group at the top of the apps list, above Updates. Each app's page explains the problem in plain words:
+
+- **Filter no longer matches**: a version or file filter you set rules out every release. ObtainX stops offering the old release until you edit the filter or a matching release appears.
+- **Package ID changed**: the downloaded APK's package ID isn't the one being tracked.
+- **Install rejected**: the build doesn't fit this device, or it's signed with a different key than the installed app.
+- **Flagged or unverified**: VirusTotal flagged the release, or it failed a reproducible-build or attestation check you enforce. Background updates skip it instead of downloading it again.
+- **Repository renamed**: the tracked repo moved. Tap *Update URL* to follow it.
+
+An app leaves the group by itself once the problem is resolved, for example by a newer release, an edited filter, or a successful install. Obtainium has no equivalent.
 
 ---
 

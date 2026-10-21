@@ -153,7 +153,8 @@ const bool debugForceFlaggedMalwareScan = false;
 // ── Build-verification enforcement (reproducible builds + GitHub attestation) ──
 // Pure predicates/messages that decide whether an install must be blocked
 // because the source did not meet an enabled verification requirement. The
-// status constants + reproducibleBuildStatusFromBool() live in source_provider.
+// status constants, reproducibleBuildStatusFromBool() and
+// reproducibleBuildStatusForEnforcement() live in source_provider.
 
 bool reproducibleBuildVerificationApplies(AppSource source) {
   return source is FDroid || source is FDroidRepo || source is IzzyOnDroid;
@@ -162,11 +163,6 @@ bool reproducibleBuildVerificationApplies(AppSource source) {
 bool reproducibleBuildEnforcementApplies(App app, AppSource source) {
   return app.additionalSettings['enforceReproducibleBuilds'] == true &&
       reproducibleBuildVerificationApplies(source);
-}
-
-String reproducibleBuildStatusForEnforcement(App app) {
-  return app.latestReproducibleStatus ??
-      reproducibleBuildStatusFromBool(app.latestIsReproducible);
 }
 
 bool reproducibleBuildEnforcementBlocksInstall(App app, AppSource source) {
@@ -266,8 +262,8 @@ String storeFacingDownloadDisplayNameForApp(
 }
 
 /// True when the stock Android installer is being asked to install a lower
-/// version code. Shizuku and third-party installers handle their own downgrade
-/// capabilities and must not be blocked by the stock-installer warning.
+/// version code. Other installers are not pre-checked: a third-party installer
+/// may be able to downgrade, and Shizuku/Dhizuku get Android's own refusal.
 bool isStockInstallerDowngrade({
   required int? installedVersionCode,
   required int? newVersionCode,
@@ -278,6 +274,38 @@ bool isStockInstallerDowngrade({
       newVersionCode != null &&
       newVersionCode < installedVersionCode;
 }
+
+/// Package ids of LSPosed modules that lift Android's version-downgrade block:
+/// Let Me Downgrade, and CorePatch under its legacy and "Core Patch N" ids
+/// (#327). They patch the system package manager itself (root + LSPosed), so an
+/// install needs nothing from ObtainX beyond skipping its own downgrade check.
+/// CorePatch's other bypasses (mismatched signatures, modified APKs) need not
+/// even that: ObtainX never blocks those before handing the install to Android.
+const List<String> downgradeModulePackageIds = [
+  'com.berdik.letmedowngrade',
+  'com.coderstory.toolkit',
+  'org.lsposed.corepatch',
+];
+
+/// Whether any of [downgradeModulePackageIds] is installed. Only installation
+/// is visible from here: a module that is installed but not enabled in LSPosed
+/// still counts, and Android then rejects the downgrade itself.
+Future<bool> isDowngradeModuleInstalled() async {
+  final List<PackageInfo?> modules = await Future.wait(
+    downgradeModulePackageIds.map(getInstalledInfo),
+  );
+  return modules.any((PackageInfo? info) => info != null);
+}
+
+/// Whether the installer in [installerModeKey] can put an older version over a
+/// newer one. A third-party installer decides for itself (a root one such as
+/// InstallerX can), so ObtainX lets it try. The stock installer, Shizuku and
+/// Dhizuku never request a downgrade, so Android refuses one unless a
+/// downgrade module is usable.
+bool installerCanDowngrade({
+  required String installerModeKey,
+  required bool downgradeModuleUsable,
+}) => installerModeKey == 'external' || downgradeModuleUsable;
 
 /// App download, install, and on-device package operations for [AppsProvider].
 extension AppsProviderInstall on AppsProvider {
@@ -408,6 +436,60 @@ extension AppsProviderInstall on AppsProvider {
     }
   }
 
+  Future<void> _rememberBlockingAttention(
+    String listingKey,
+    String code, {
+    String? detail,
+  }) async {
+    final AppInMemory? listing = apps[listingKey];
+    if (listing == null) return;
+    final Map<String, dynamic> settings = Map<String, dynamic>.from(
+      listing.app.additionalSettings,
+    );
+    setNeedsAttention(settings, code, detail: detail);
+    listing.app = listing.app.copyWith(additionalSettings: settings);
+    await saveApps(
+      [listing.app],
+      attemptToCorrectInstallStatus: false,
+      updateInstalledInfo: false,
+    );
+  }
+
+  /// Whether [app]'s current release already failed a pre-install check that
+  /// fails the same way every time, with that check still on. Background runs
+  /// leave such an app in Needs attention rather than download the release
+  /// again just to fail again; an update started by hand still runs the check.
+  @visibleForTesting
+  bool verificationWouldBlockAgain(App app) {
+    if (!appHasBlockingAttention(app)) return false;
+    AppSource source() =>
+        SourceProvider().getSource(app.url, overrideSource: app.overrideSource);
+    return switch (app.additionalSettings[needsAttentionCodeKey]) {
+      needsAttentionMalwareFlagged => willScanApkWithVirusTotal(app),
+      needsAttentionNotReproducible =>
+        reproducibleBuildEnforcementBlocksInstall(app, source()),
+      needsAttentionNoAttestation => githubAttestationEnforcementBlocksInstall(
+        app,
+        source(),
+        settingsProvider,
+      ),
+      _ => false,
+    };
+  }
+
+  Future<Never> _throwRecordedInstallError(
+    String listingKey,
+    int errorCode,
+  ) async {
+    // Matched on the status code: the message is the enum's name
+    // ('failureIncompatible'), which a search for 'INCOMPATIBLE' never found.
+    final String? attentionCode = installFailureNeedsAttentionCode(errorCode);
+    if (attentionCode != null) {
+      await _rememberBlockingAttention(listingKey, attentionCode);
+    }
+    throw InstallError(errorCode);
+  }
+
   /// Returns the renamed file and the resolved app; callers must use the
   /// returned app's ID since [App] is immutable.
   Future<(File, App)> handleAPKIDChange(
@@ -425,6 +507,11 @@ extension AppsProviderInstall on AppsProvider {
         throw ObtainiumError(tr('couldNotGetIdFromApk'))..url = app.url;
       }
       if (apps[app.listingKey] != null && !isTempIdBool && !app.allowIdChange) {
+        await _rememberBlockingAttention(
+          app.listingKey,
+          needsAttentionIdChanged,
+          detail: actualPackageName,
+        );
         throw IDChangedError(actualPackageName)..url = app.url;
       }
       final idChangeWasAllowed = app.allowIdChange;
@@ -894,8 +981,12 @@ extension AppsProviderInstall on AppsProvider {
     }
   }
 
+  /// Whether a stock-installer downgrade should go to Android rather than be
+  /// blocked up front. The settings switch is ObtainX-only and an upstream sync
+  /// once dropped it from here, leaving the switch dead; keep both checks.
   Future<bool> canDowngradeApps() async =>
-      (await getInstalledInfo('com.berdik.letmedowngrade')) != null;
+      settingsProvider.enableDowngradeModules &&
+      await isDowngradeModuleInstalled();
 
   Future<void> unzipFile(String filePath, String destinationPath) async {
     await ZipFile.extractToDirectory(
@@ -987,7 +1078,7 @@ extension AppsProviderInstall on AppsProvider {
             _awaitThirdPartyInstallConfirmation(dir.appId);
           }
           if (result.isError) {
-            throw InstallError(result.errorCode ?? -1);
+            await _throwRecordedInstallError(dir.appId, result.errorCode ?? -1);
           }
           if (result.isSuccess) {
             somethingInstalled = true;
@@ -1222,7 +1313,7 @@ extension AppsProviderInstall on AppsProvider {
       }
     }
     if (result.isError) {
-      throw InstallError(result.errorCode!);
+      await _throwRecordedInstallError(file.appId, result.errorCode!);
     }
     final AppInMemory? entryToSave = apps[file.appId];
     if (installed && entryToSave != null) {
@@ -1467,7 +1558,15 @@ extension AppsProviderInstall on AppsProvider {
           apps[id]!.app = apps[id]!.app.copyWith(preferredApkIndex: urlInd);
           await saveApps([apps[id]!.app]);
         }
-        if (allowUserInteraction ||
+        if (!allowUserInteraction &&
+            verificationWouldBlockAgain(apps[id]!.app)) {
+          unawaited(
+            logs.add(
+              'Skipping background update of $id: this release already failed '
+              'a pre-install check (${apps[id]!.app.additionalSettings[needsAttentionCodeKey]}).',
+            ),
+          );
+        } else if (allowUserInteraction ||
             await canInstallSilentlyInBackground(apps[id]!.app)) {
           appsToInstall.add(id);
         }
@@ -2304,6 +2403,16 @@ extension AppsProviderInstall on AppsProvider {
       return _MalwareScanGateDecision.declined;
     }
     if (deleteDownloadOnSkip) cleanupOnSkip();
+    // A flagged APK is flagged again on every background retry, so without this
+    // the app silently stops updating. A scan that only failed to finish isn't
+    // recorded: the next try can get a verdict.
+    if (status == malwareScanStatusFlagged) {
+      await _rememberBlockingAttention(
+        app.listingKey,
+        needsAttentionMalwareFlagged,
+        detail: app.latestVersion,
+      );
+    }
     throw MalwareScanBlockedError(status, detail, appName: app.finalName);
   }
 
@@ -2393,8 +2502,13 @@ extension AppsProviderInstall on AppsProvider {
   ) async {
     // Feature OFF (or non-Android): keep the bundle after a failed install so a
     // retry can reuse it — delete only when something installed or the version
-    // was skipped (parity with main's !saveApkCopies branch).
-    if (!Platform.isAndroid || !settingsProvider.saveDownloadedApkCopies) {
+    // was skipped (parity with main's !saveApkCopies branch). With no save
+    // folder ever picked, the feature is off too, as the Import/Export page
+    // shows it; keeping bundles for recovery is for a folder that can't be
+    // reached.
+    if (!Platform.isAndroid ||
+        !settingsProvider.saveDownloadedApkCopies ||
+        await settingsProvider.getApkSaveDir(requireAccess: false) == null) {
       final App? appForSave = apps[dir.appId]?.app;
       final bool skipLatest =
           appForSave != null && isSkipActiveForCurrentLatest(appForSave);
@@ -2546,9 +2660,18 @@ extension AppsProviderInstall on AppsProvider {
       overrideSource: app.overrideSource,
     );
 
-    // Reproducible-build enforcement.
+    // Reproducible-build enforcement. Only a "not reproducible" verdict is
+    // final for this release; no data yet, or a failed lookup, can pass later.
     if (reproducibleBuildEnforcementBlocksInstall(app, source)) {
       cleanupOnSkip();
+      if (reproducibleBuildStatusForEnforcement(app) ==
+          reproducibleBuildStatusNotReproducible) {
+        await _rememberBlockingAttention(
+          appId,
+          needsAttentionNotReproducible,
+          detail: app.latestVersion,
+        );
+      }
       throw ObtainiumError(reproducibleBuildEnforcedBlockedMessage());
     }
 
@@ -2574,6 +2697,15 @@ extension AppsProviderInstall on AppsProvider {
           ) &&
           attestationStatus != githubAttestationStatusVerified) {
         cleanupOnSkip();
+        // No attestation for this file stays that way; a lookup that failed
+        // can succeed next time.
+        if (attestationStatus == githubAttestationStatusUnsupported) {
+          await _rememberBlockingAttention(
+            appId,
+            needsAttentionNoAttestation,
+            detail: app.latestVersion,
+          );
+        }
         throw ObtainiumError(
           githubAttestationEnforcedBlockedMessage(attestationStatus),
         );

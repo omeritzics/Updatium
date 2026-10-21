@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' show log;
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:easy_localization/easy_localization.dart';
@@ -95,6 +96,22 @@ List<SwipeAction> swipeActionsSortedByLocalizedLabel() {
     return labelFirst.compareTo(labelSecond);
   });
   return actions;
+}
+
+/// [minutes] moved to the nearest of [SettingsProvider.updateIntervalStops],
+/// or 0 (never) if it isn't positive.
+///
+/// Nearest by ratio, not difference: the stops roughly double, so 225 minutes
+/// is closer to 180 than to 360. A tie goes to the shorter interval.
+int snapUpdateInterval(int minutes) {
+  if (minutes <= 0) return 0;
+  int nearest = SettingsProvider.updateIntervalStops.first;
+  for (final int stop in SettingsProvider.updateIntervalStops) {
+    if (log(stop / minutes).abs() < log(nearest / minutes).abs()) {
+      nearest = stop;
+    }
+  }
+  return nearest;
 }
 
 class SettingsProvider with ChangeNotifier {
@@ -873,23 +890,44 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int get updateInterval {
-    return prefs?.getInt('updateInterval') ?? 360;
-  }
+  /// The background check intervals the settings slider offers, in minutes.
+  /// 0 (never, manual only) sits below the first.
+  static const List<int> updateIntervalStops = [
+    15,
+    30,
+    60,
+    120,
+    180,
+    360,
+    720,
+    1440,
+    4320,
+    10080,
+    20160,
+    43200,
+  ];
+
+  /// The interval checks run at, always one of [updateIntervalStops] or 0.
+  ///
+  /// Obtainium's slider also lands between stops (225 minutes, say), and such
+  /// a value arrives with a restored Obtainium backup. Snapping it here means
+  /// the slider shows the interval the scheduler actually uses.
+  int get updateInterval =>
+      snapUpdateInterval(prefs?.getInt('updateInterval') ?? 360);
 
   set updateInterval(int min) {
-    prefs?.setInt('updateInterval', min);
+    final int stop = snapUpdateInterval(min);
+    prefs?.setInt('updateInterval', stop);
+    // Never read here: the interval is the only source. Obtainium (and builds
+    // before 2.21) position the slider from this instead, so it's kept in step
+    // for a backup restored there: the stop at index n sits at n + 1, and
+    // never (0) at 0, which indexOf's -1 gives.
+    prefs?.setDouble(
+      'updateIntervalSliderVal',
+      (updateIntervalStops.indexOf(stop) + 1).toDouble(),
+    );
     // The cached due time was derived from the old interval.
     bgNextCheckDue = null;
-    notifyListeners();
-  }
-
-  double get updateIntervalSliderVal {
-    return prefs?.getDouble('updateIntervalSliderVal') ?? 6.0;
-  }
-
-  set updateIntervalSliderVal(double val) {
-    prefs?.setDouble('updateIntervalSliderVal', val);
     notifyListeners();
   }
 
@@ -1413,11 +1451,14 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get enableLetMeDowngrade {
+  /// Whether an installed downgrade module (Let Me Downgrade or CorePatch) lets
+  /// stock-installer downgrades through to Android. The pref key predates
+  /// CorePatch support and stays as-is so existing prefs and backups carry over.
+  bool get enableDowngradeModules {
     return prefs?.getBool('enableLetMeDowngrade') ?? true;
   }
 
-  set enableLetMeDowngrade(bool value) {
+  set enableDowngradeModules(bool value) {
     prefs?.setBool('enableLetMeDowngrade', value);
     notifyListeners();
   }
