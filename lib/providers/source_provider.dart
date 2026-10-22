@@ -91,7 +91,7 @@ const List<String> supportedApkExtensions = ['.apk', '.xapk'];
 
 // Check if a filename has a supported APK extension (case-insensitive)
 bool hasSupportedApkExtension(String filename) {
-  var lower = filename.toLowerCase();
+  final lower = filename.toLowerCase();
   return supportedApkExtensions.any((ext) => lower.endsWith(ext));
 }
 
@@ -201,7 +201,7 @@ class App {
   );
 
   factory App.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> originalJSON = Map.from(json);
+    final Map<String, dynamic> originalJSON = Map.from(json);
     try {
       json = appJSONCompatibilityModifiers(json);
     } catch (e) {
@@ -274,7 +274,7 @@ class App {
 
 /// Ensures the URL is well-formed and starts with HTTPS.
 String preStandardizeUrl(String url) {
-  var firstDotIndex = url.indexOf('.');
+  final firstDotIndex = url.indexOf('.');
   if (!(firstDotIndex >= 0 && firstDotIndex != url.length - 1)) {
     throw UnsupportedURLError();
   }
@@ -282,21 +282,21 @@ String preStandardizeUrl(String url) {
       url.toLowerCase().indexOf('https://') != 0) {
     url = 'https://$url';
   }
-  var uri = Uri.tryParse(url);
+  final uri = Uri.tryParse(url);
   if (uri == null) {
     return url;
   }
 
   // Clean up duplicate/empty slashes in the path segment only, leaving query parameters/fragment intact
-  var pathSegments = uri.pathSegments.where((s) => s.isNotEmpty).toList();
-  var trailingSlash =
+  final pathSegments = uri.pathSegments.where((s) => s.isNotEmpty).toList();
+  final trailingSlash =
       ((uri.path.endsWith('/') || (uri.path.isEmpty && url.endsWith('/'))) &&
       uri.queryParameters.isEmpty);
 
   // Only normalize duplicate slashes in the scheme/host/path portion; leave the
   // query string and fragment untouched so any slashes they contain (e.g. a URL
   // passed as a query parameter) aren't mangled.
-  var cleanedUri = uri.replace(pathSegments: pathSegments);
+  final cleanedUri = uri.replace(pathSegments: pathSegments);
 
   var result = cleanedUri.toString();
   if (trailingSlash && !result.endsWith('/')) {
@@ -333,11 +333,11 @@ Map<String, dynamic> getDefaultValuesFromFormItems(
 
 List<MapEntry<String, String>> getApkUrlsFromUrls(List<String> urls) =>
     urls.map((e) {
-      var segments = e.split('/').where((el) => el.trim().isNotEmpty).toList();
+      final segments = e.split('/').where((el) => el.trim().isNotEmpty).toList();
       if (segments.isEmpty) {
         return MapEntry(e, e);
       }
-      var apkSegs = segments.where(hasSupportedApkExtension);
+      final apkSegs = segments.where(hasSupportedApkExtension);
       return MapEntry(apkSegs.isNotEmpty ? apkSegs.last : segments.last, e);
     }).toList();
 
@@ -346,7 +346,7 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
   List<MapEntry<String, String>> apkUrls,
 ) async {
   if (apkUrls.length > 1) {
-    var abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
+    final abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
     for (var abi in abis) {
       // More precise matching: look for ABI as a separate component in filename
       // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
@@ -356,11 +356,11 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
       } else if (abi.toLowerCase() == 'armeabi') {
         suffix = r'(?!-?v7a)';
       }
-      var abiPattern = RegExp(
+      final abiPattern = RegExp(
         r'(^|[-_\.])' + RegExp.escape(abi) + suffix + r'($|[-_\.])',
         caseSensitive: false,
       );
-      var urls2 = apkUrls
+      final urls2 = apkUrls
           .where((element) => abiPattern.hasMatch(element.key))
           .toList();
       if (urls2.isNotEmpty && urls2.length < apkUrls.length) {
@@ -376,13 +376,13 @@ List<MapEntry<String, String>> preferApkOverXapk(
   List<MapEntry<String, String>> apkUrls,
 ) {
   if (apkUrls.length > 1) {
-    var apks = apkUrls
+    final apks = apkUrls
         .where((e) => e.key.toLowerCase().endsWith('.apk'))
         .toList();
-    var xapks = apkUrls
+    final xapks = apkUrls
         .where((e) => e.key.toLowerCase().endsWith('.xapk'))
         .toList();
-    var others = apkUrls
+    final others = apkUrls
         .where(
           (e) =>
               !e.key.toLowerCase().endsWith('.apk') &&
@@ -422,10 +422,10 @@ sourceRequestStreamResponse(
   const maxRedirects = 10;
   List<Cookie> cookies = [];
   while (redirectCount < maxRedirects) {
-    var httpClient = createHttpClient(
+    final httpClient = createHttpClient(
       additionalSettings['allowInsecure'] == true,
     );
-    var request = await httpClient.openUrl(method, currentUrl);
+    final request = await httpClient.openUrl(method, currentUrl);
     if (requestHeaders != null) {
       requestHeaders.forEach((key, value) {
         request.headers.set(key, value);
@@ -572,11 +572,11 @@ abstract class AppSource {
       url,
       additionalSettingsPlusSourceConfig,
     );
-    var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders =
+    final method = postBody == null ? 'GET' : 'POST';
+    final requestHeaders =
         await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
 
-    var streamedResponseUrlWithResponseAndClient =
+    final streamedResponseUrlWithResponseAndClient =
         await sourceRequestStreamResponse(
           method,
           url,
@@ -586,7 +586,7 @@ abstract class AppSource {
           postBody: postBody,
         );
 
-    var response = await httpClientResponseStreamToFinalResponse(
+    final response = await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
       method,
       streamedResponseUrlWithResponseAndClient.key.toString(),
@@ -1049,7 +1049,7 @@ String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
     return 'invalidInput'.t();
   }
-  var num = int.tryParse(value);
+  final num = int.tryParse(value);
   if (num == null) {
     return 'invalidInput'.t();
   }
@@ -1098,13 +1098,13 @@ String? extractVersion(
 ) {
   if (versionExtractionRegEx?.isNotEmpty == true) {
     String? version = stringToCheck;
-    var match = RegExp(versionExtractionRegEx!).allMatches(version);
+    final match = RegExp(versionExtractionRegEx!).allMatches(version);
     if (match.isEmpty) {
       throw NoVersionError();
     }
     matchGroupString = matchGroupString?.trim() ?? '';
     if (matchGroupString.isEmpty) {
-      matchGroupString = "0";
+      matchGroupString = '0';
     }
     version = replaceMatchGroupsInString(match.last, matchGroupString);
     if (version?.isNotEmpty != true) {
@@ -1123,9 +1123,9 @@ List<MapEntry<String, String>> filterApks(
   bool? invert,
 ) {
   if (apkFilterRegEx?.isNotEmpty == true) {
-    var reg = RegExp(apkFilterRegEx!);
+    final reg = RegExp(apkFilterRegEx!);
     apkUrls = apkUrls.where((element) {
-      var hasMatch = reg.hasMatch(element.key);
+      final hasMatch = reg.hasMatch(element.key);
       return invert == true ? !hasMatch : hasMatch;
     }).toList();
   }
@@ -1283,11 +1283,11 @@ class SourceProvider {
     String Function(String, RegExpMatch)? transform,
   }) {
     // Use cached regex if available, otherwise compile and cache it
-    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
+    final RegExp standardUrlRegEx = _regexCache.putIfAbsent(
       pattern,
       () => RegExp(pattern, caseSensitive: false),
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    final RegExpMatch? match = standardUrlRegEx.firstMatch(url);
     if (match == null) {
       if (sourceName != null) {
         throw InvalidURLError(sourceName);
@@ -1309,9 +1309,9 @@ class SourceProvider {
     int authorIndex = 0,
     int? nameIndex,
   }) {
-    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
-    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    String name = nameIndex != null
+    final String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
+    final List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
+    final String name = nameIndex != null
         ? names[nameIndex]
         : names.sublist(authorIndex + 1).join('/');
     return AppNames(names[authorIndex], name);
@@ -1347,7 +1347,7 @@ class SourceProvider {
           ? editedTrackedUrl
           : url,
     );
-    APKDetails apk = await source.getLatestAPKDetails(
+    final APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
       additionalSettings,
     );
@@ -1355,7 +1355,7 @@ class SourceProvider {
     if (source.runtimeType !=
             HTML().runtimeType && // Some sources do it separately
         source.runtimeType != SourceForge().runtimeType) {
-      String? extractedVersion = extractVersion(
+      final String? extractedVersion = extractVersion(
         additionalSettings['versionExtractionRegEx'] as String?,
         additionalSettings['matchGroupToUse'] as String?,
         apk.version,
@@ -1380,7 +1380,7 @@ class SourceProvider {
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
     }
-    var sp = SettingsProvider();
+    final sp = SettingsProvider();
     await sp.initializeSettings();
     if (sp.preferApkOverXapk) {
       apk.apkUrls = preferApkOverXapk(apk.apkUrls);
@@ -1402,7 +1402,7 @@ class SourceProvider {
     if (IconUrl == null || IconUrl.isEmpty) {
       additionalSettings.remove('IconUrl');
     }
-    App finalApp = App(
+    final App finalApp = App(
       currentApp?.id ??
           ((additionalSettings['appId'] != null)
               ? additionalSettings['appId']

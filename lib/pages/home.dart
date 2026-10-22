@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
         // If user declined, exit the app
         if (accepted != true) {
-          SystemNavigator.pop();
+          await SystemNavigator.pop();
           return;
         }
       }
@@ -143,13 +143,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Future<void> initDeepLinks() async {
     _appLinks = AppLinks();
 
-    goToAddApp(String data) async {
+    Future<void> goToAddApp(String data) async {
       final settingsProvider = context.read<SettingsProvider>();
       if (settingsProvider.safeMode) {
         showError(UpdatiumError('safeModeAddAppDisabled'.t()), context);
         return;
       }
-      switchToPage(1);
+      await switchToPage(1);
       final pages = getPages(settingsProvider);
       while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
               ?.currentState ==
@@ -160,9 +160,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ?.linkFn(data);
     }
 
-    goToExistingApp(String appId) async {
+    Future<void> goToExistingApp(String appId) async {
       // Go to Apps page
-      switchToPage(0);
+      await switchToPage(0);
       final settingsProvider = context.read<SettingsProvider>();
       final pages = getPages(settingsProvider);
       while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
@@ -175,24 +175,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ?.openAppById(appId);
     }
 
-    interpretLink(Uri uri) async {
+    Future<void> interpretLink(Uri uri) async {
       isLinkActivity = true;
-      var action = uri.host;
-      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      final action = uri.host;
+      final data = uri.path.length > 1 ? uri.path.substring(1) : '';
       try {
         if (action == 'add') {
           // Ensure apps are loaded
-          AppsProvider appsProvider = context.read<AppsProvider>();
+          final AppsProvider appsProvider = context.read<AppsProvider>();
           while (appsProvider.loadingApps) {
             await Future.delayed(const Duration(milliseconds: 10));
           }
 
           // See if we already have this app
-          String standardizedUrl = SourceProvider()
+          final String standardizedUrl = SourceProvider()
               .getSource(data)
               .standardizeUrl(data);
 
-          AppInMemory? existingApp = appsProvider.apps.values
+          final AppInMemory? existingApp = appsProvider.apps.values
               .where((AppInMemory a) => a.app.url == standardizedUrl)
               .firstOrNull;
 
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             await goToAddApp(data);
           }
         } else if (action == 'app' || action == 'apps') {
-          var dataStr = Uri.decodeComponent(data);
+          final dataStr = Uri.decodeComponent(data);
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
@@ -211,8 +211,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ) ==
               true) {
             // ignore: use_build_context_synchronously
-            var appsProvider = context.read<AppsProvider>();
-            var result = await appsProvider.import(
+            final appsProvider = context.read<AppsProvider>();
+            final result = await appsProvider.import(
               action == 'app'
                   ? '{ "apps": [$dataStr] }'
                   : '{ "apps": $dataStr }',
@@ -235,24 +235,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }
 
-    interpretUpdatiumLink(Uri uri) async {
+    Future<void> interpretUpdatiumLink(Uri uri) async {
       isLinkActivity = true;
-      var action = uri.host;
-      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      final action = uri.host;
+      final data = uri.path.length > 1 ? uri.path.substring(1) : '';
       try {
         if (action == 'add') {
           // Ensure apps are loaded
-          AppsProvider appsProvider = context.read<AppsProvider>();
+          final AppsProvider appsProvider = context.read<AppsProvider>();
           while (appsProvider.loadingApps) {
             await Future.delayed(const Duration(milliseconds: 10));
           }
 
           // See if we already have this app
-          String standardizedUrl = SourceProvider()
+          final String standardizedUrl = SourceProvider()
               .getSource(data)
               .standardizeUrl(data);
 
-          AppInMemory? existingApp = appsProvider.apps.values
+          final AppInMemory? existingApp = appsProvider.apps.values
               .where((AppInMemory a) => a.app.url == standardizedUrl)
               .firstOrNull;
 
@@ -296,7 +296,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void setIsReversing(int targetIndex) {
-    bool reversing =
+    final bool reversing =
         selectedIndexHistory.isNotEmpty &&
         selectedIndexHistory.last > targetIndex;
     setState(() {
@@ -321,7 +321,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         (selectedIndexHistory.isNotEmpty &&
             selectedIndexHistory.last != index)) {
       setState(() {
-        int existingInd = selectedIndexHistory.indexOf(index);
+        final int existingInd = selectedIndexHistory.indexOf(index);
         if (existingInd >= 0) {
           selectedIndexHistory.removeAt(existingInd);
         }
@@ -391,8 +391,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<NavigationPageItem> pages,
   ) {
     return pages.asMap().entries.map((entry) {
-      int index = entry.key;
-      var page = entry.value;
+      final int index = entry.key;
+      final page = entry.value;
       return NavigationDestination(
         icon: _buildAnimatedIcon(page, index),
         label: page.title,
@@ -404,8 +404,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<NavigationPageItem> pages,
   ) {
     return pages.asMap().entries.map((entry) {
-      int index = entry.key;
-      var page = entry.value;
+      final int index = entry.key;
+      final page = entry.value;
       return NavigationRailDestination(
         icon: _buildAnimatedIcon(page, index),
         label: Text(page.title),
@@ -415,8 +415,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    AppsProvider appsProvider = context.watch<AppsProvider>();
-    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+    final AppsProvider appsProvider = context.watch<AppsProvider>();
+    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
 
     final pages = getPages(settingsProvider);
 
@@ -555,9 +555,9 @@ class _ImportDialogState extends State<_ImportDialog> {
           children: [
             ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  leading: const Icon(Icons.info_outlined),
-                  title: const Text('Raw JSON'),
+                return const ListTile(
+                  leading: Icon(Icons.info_outlined),
+                  title: Text('Raw JSON'),
                 );
               },
               body: Padding(

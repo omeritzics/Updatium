@@ -94,8 +94,8 @@ class _AppPageState extends State<AppPage> {
     if (app?.app.hasPendingRepoRename != true) {
       return const SizedBox.shrink();
     }
-    var appValue = app!;
-    var pendingUrl = appValue.app.pendingRepoRenameUrl!;
+    final appValue = app!;
+    final pendingUrl = appValue.app.pendingRepoRenameUrl!;
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
     return Column(
@@ -211,7 +211,7 @@ class _AppPageState extends State<AppPage> {
                           pendingUrl,
                         );
                         if (mounted) {
-                          onUpdate(appValue.app.id);
+                          await onUpdate(appValue.app.id);
                         }
                       },
                       child: Text(t('updateUrl')),
@@ -233,7 +233,7 @@ class _AppPageState extends State<AppPage> {
   }
 
   Future<void> getUpdate(String id, {bool resetVersion = false}) async {
-    var appsProvider = context.read<AppsProvider>();
+    final appsProvider = context.read<AppsProvider>();
     try {
       setState(() {
         updating = true;
@@ -246,7 +246,7 @@ class _AppPageState extends State<AppPage> {
           appsProvider.apps[id]?.app.installedVersion =
               appsProvider.apps[id]?.app.latestVersion;
         }
-        appsProvider.saveApps([appsProvider.apps[id]!.app]);
+        await appsProvider.saveApps([appsProvider.apps[id]!.app]);
       }
     } catch (err) {
       if (!mounted) return;
@@ -260,14 +260,14 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    var appsProvider = context.watch<AppsProvider>();
-    var settingsProvider = context.watch<SettingsProvider>();
+    final appsProvider = context.watch<AppsProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
 
-    bool areDownloadsRunning = appsProvider.areDownloadsRunning();
+    final bool areDownloadsRunning = appsProvider.areDownloadsRunning();
 
-    var sourceProvider = SourceProvider();
-    AppInMemory? app = appsProvider.apps[widget.appId]?.deepCopy();
-    var source = app != null
+    final sourceProvider = SourceProvider();
+    final AppInMemory? app = appsProvider.apps[widget.appId]?.deepCopy();
+    final source = app != null
         ? sourceProvider.getSource(
             app.app.url,
             overrideSource: app.app.overrideSource,
@@ -318,13 +318,13 @@ class _AppPageState extends State<AppPage> {
       prevApp = app;
       getUpdate(app.app.id);
     }
-    var trackOnly = app.app.additionalSettings['trackOnly'] == true;
+    final trackOnly = app.app.additionalSettings['trackOnly'] == true;
 
-    bool installedVersionIsEstimate = isVersionPseudo(app.app);
+    final bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
-    getInfoColumn() {
+    Column getInfoColumn() {
       String versionLines = '';
-      bool installed = app.app.installedVersion != null;
+      final bool installed = app.app.installedVersion != null;
       versionLines = '${'latestVersion'.t()}: ${app.app.latestVersion}';
       if (installed) {
         versionLines +=
@@ -348,7 +348,7 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
-      var changeLogFn = getChangeLogFn(context, app.app);
+      final changeLogFn = getChangeLogFn(context, app.app);
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -423,7 +423,7 @@ class _AppPageState extends State<AppPage> {
               ).showSnackBar(SnackBar(content: Text('copiedToClipboard'.t())));
             },
             child: Markdown(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               styleSheet: MarkdownStyleSheet(
                 blockquoteDecoration: BoxDecoration(
@@ -450,7 +450,7 @@ class _AppPageState extends State<AppPage> {
       );
     }
 
-    getFullInfoColumn({bool small = false}) => Column(
+    Column getFullInfoColumn({bool small = false}) => Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -481,17 +481,17 @@ class _AppPageState extends State<AppPage> {
       ],
     );
 
-    showAdditionalOptionsDialog() async {
+    Future<Map<String, dynamic>?> showAdditionalOptionsDialog() async {
       return await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
-          Map<String, dynamic> localValues = {};
-          var items = (source?.combinedAppSpecificSettingFormItems ?? [])
+          final Map<String, dynamic> localValues = {};
+          final items = (source?.combinedAppSpecificSettingFormItems ?? [])
               .map((row) {
                 row = row
                     .where((e) => e.key != 'appId') // id is not user-editable
                     .map((e) {
-                      var item = e.clone();
+                      final item = e.clone();
                       if (app.app.additionalSettings.containsKey(item.key)) {
                         item.defaultValue =
                             app.app.additionalSettings[item.key];
@@ -569,7 +569,7 @@ class _AppPageState extends State<AppPage> {
       );
     }
 
-    handleAdditionalOptionChanges(Map<String, dynamic>? values) {
+    void handleAdditionalOptionChanges(Map<String, dynamic>? values) {
       if (values != null) {
         // appName/author are overrides — handled by the generic settings
         // loop below (written into additionalSettings), NOT the raw
@@ -583,10 +583,10 @@ class _AppPageState extends State<AppPage> {
         }
 
         // Handle additional settings
-        Map<String, dynamic> originalSettings = Map.from(
+        final Map<String, dynamic> originalSettings = Map.from(
           app.app.additionalSettings,
         );
-        var sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
+        final sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
         for (var row in sourceItems) {
           for (var item in row) {
             if (values[item.key] != null) {
@@ -607,18 +607,18 @@ class _AppPageState extends State<AppPage> {
           app.app.additionalSettings.remove('author');
         }
 
-        var versionDetectionEnabled =
+        final versionDetectionEnabled =
             app.app.additionalSettings['versionDetection'] == true &&
             originalSettings['versionDetection'] != true;
-        var releaseDateVersionEnabled =
+        final releaseDateVersionEnabled =
             app.app.additionalSettings['releaseDateAsVersion'] == true &&
             originalSettings['releaseDateAsVersion'] != true;
-        var releaseDateVersionDisabled =
+        final releaseDateVersionDisabled =
             app.app.additionalSettings['releaseDateAsVersion'] != true &&
             originalSettings['releaseDateAsVersion'] == true;
         if (releaseDateVersionEnabled) {
           if (app.app.releaseDate != null) {
-            bool isUpdated = app.app.installedVersion == app.app.latestVersion;
+            final bool isUpdated = app.app.installedVersion == app.app.latestVersion;
             app.app.latestVersion = app.app.releaseDate!.microsecondsSinceEpoch
                 .toString();
             if (isUpdated) {
@@ -639,7 +639,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() {
+    FloatingActionButton? getInstallOrUpdateButton() {
       if (app.downloadProgress != null) {
         final isInstalling = app.downloadProgress! < 0;
         final progress = (app.downloadProgress! / 100).clamp(0.0, 1.0);
@@ -675,7 +675,7 @@ class _AppPageState extends State<AppPage> {
                       app.app.finalName,
                       0,
                     ).id;
-                    np.cancel(notifId);
+                    await np.cancel(notifId);
                   }
                 },
           icon: SizedBox(
@@ -721,11 +721,11 @@ class _AppPageState extends State<AppPage> {
       return FloatingActionButton.extended(
         onPressed: () async {
           try {
-            var successMessage = app.app.installedVersion == null
+            final successMessage = app.app.installedVersion == null
                 ? 'installed'.t()
                 : 'appsUpdated'.t();
             settingsProvider.heavyImpact();
-            var res = await appsProvider.downloadAndInstallLatestApps([
+            final res = await appsProvider.downloadAndInstallLatestApps([
               app.app.id,
             ], globalNavigatorKey.currentContext);
             if (!mounted) return;
@@ -737,9 +737,9 @@ class _AppPageState extends State<AppPage> {
             }
             if (res.isNotEmpty) {
               // ignore: use_build_context_synchronously
-              var np = context.read<NotificationsProvider>();
-              np.cancel(UpdateNotification([]).id);
-              np.cancel(
+              final np = context.read<NotificationsProvider>();
+              await np.cancel(UpdateNotification([]).id);
+              await np.cancel(
                 SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
               );
             }
@@ -872,8 +872,8 @@ class _AppPageState extends State<AppPage> {
                       children: [
                         getFullInfoColumn(),
                         if (app.downloadProgress != null)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(
+                          const Padding(
+                            padding: EdgeInsetsDirectional.only(
                               bottom: 32,
                             ),
                           ),

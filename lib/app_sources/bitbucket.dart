@@ -55,20 +55,20 @@ class Bitbucket extends AppSource {
   Future<String?> getAPITokenIfAny(
     Map<String, dynamic> additionalSettings,
   ) async {
-    SettingsProvider settingsProvider = SettingsProvider();
+    final SettingsProvider settingsProvider = SettingsProvider();
     await settingsProvider.initializeSettings();
-    var sourceConfig = await getSourceConfigValues(
+    final sourceConfig = await getSourceConfigValues(
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['bitbucketAPITokenLabel'];
+    final String? creds = sourceConfig['bitbucketAPITokenLabel'];
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
   Future<Map<String, String>?> getAuthHeaders(
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? apiToken = await getAPITokenIfAny(additionalSettings);
+    final String? apiToken = await getAPITokenIfAny(additionalSettings);
     if (apiToken != null && apiToken.isNotEmpty) {
       // Bitbucket API tokens use Basic Auth: email:api_token
       // The format expected is email:api_token base64 encoded
@@ -85,19 +85,19 @@ class Bitbucket extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    var url =
+    final url =
         'https://api.${hosts[0]}/2.0/repositories?q=${Uri.encodeQueryComponent(query)}';
-    var res = await sourceRequest(url, {});
+    final res = await sourceRequest(url, {});
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var json = jsonDecode(res.body);
-    var repos = json['values'] as List<dynamic>? ?? [];
-    Map<String, List<String>> results = {};
+    final json = jsonDecode(res.body);
+    final repos = json['values'] as List<dynamic>? ?? [];
+    final Map<String, List<String>> results = {};
     for (var element in repos) {
-      var fullName = element['full_name'] as String?;
-      var name = element['name'] as String? ?? '';
-      var description =
+      final fullName = element['full_name'] as String?;
+      final name = element['name'] as String? ?? '';
+      final description =
           element['description'] as String? ?? 'noDescription'.t();
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
@@ -116,12 +116,12 @@ class Bitbucket extends AppSource {
     String url, {
     bool forAPKDownload = false,
   }) async {
-    var headers = await getAuthHeaders(additionalSettings);
+    final headers = await getAuthHeaders(additionalSettings);
     return headers;
   }
 
   AppNames getAppNames(String standardUrl) {
-    var pathSegments = Uri.parse(standardUrl).pathSegments;
+    final pathSegments = Uri.parse(standardUrl).pathSegments;
     if (pathSegments.length >= 2) {
       return AppNames(pathSegments[0], pathSegments[1]);
     }
@@ -133,59 +133,59 @@ class Bitbucket extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var names = getAppNames(standardUrl);
-    String workspace = names.author;
-    String repoSlug = names.name;
-    bool trackOnly = additionalSettings['trackOnly'] == true;
+    final names = getAppNames(standardUrl);
+    final String workspace = names.author;
+    final String repoSlug = names.name;
+    final bool trackOnly = additionalSettings['trackOnly'] == true;
 
     if (!trackOnly) {
       // Try downloads first (similar to GitHub/GitLab releases)
-      var downloadsUrl =
+      final downloadsUrl =
           'https://api.${hosts[0]}/2.0/repositories/$workspace/$repoSlug/downloads';
-      Response downloadsRes = await sourceRequest(
+      final Response downloadsRes = await sourceRequest(
         downloadsUrl,
         additionalSettings,
       );
 
       if (downloadsRes.statusCode == 200) {
-        var downloadsJson = jsonDecode(downloadsRes.body);
-        var downloads = downloadsJson['values'] as List<dynamic>? ?? [];
+        final downloadsJson = jsonDecode(downloadsRes.body);
+        final downloads = downloadsJson['values'] as List<dynamic>? ?? [];
 
         if (downloads.isNotEmpty) {
-          var apkDownloads = downloads.where((d) {
-            var name = (d['name'] ?? '') as String;
+          final apkDownloads = downloads.where((d) {
+            final name = (d['name'] ?? '') as String;
             return source_provider.hasSupportedApkExtension(name);
           }).toList();
 
           if (apkDownloads.isNotEmpty) {
             // Sort by created_on date (newest first)
             apkDownloads.sort((a, b) {
-              var aDate = a['created_on'] ?? '';
-              var bDate = b['created_on'] ?? '';
+              final aDate = a['created_on'] ?? '';
+              final bDate = b['created_on'] ?? '';
               return bDate.toString().compareTo(aDate.toString());
             });
 
-            var latestDownload = apkDownloads.first;
-            var version = latestDownload['name'] as String?;
+            final latestDownload = apkDownloads.first;
+            final version = latestDownload['name'] as String?;
             // Extract version from filename if possible
-            var versionMatch = RegExp(
+            final versionMatch = RegExp(
               r'(\d+(\.\d+)+)',
             ).firstMatch(version ?? '');
-            var extractedVersion =
+            final extractedVersion =
                 versionMatch?.group(0) ?? version ?? 'unknown';
 
-            var apkUrls = <MapEntry<String, String>>[];
+            final apkUrls = <MapEntry<String, String>>[];
 
             for (var download in apkDownloads) {
-              var name = download['name'] as String? ?? 'unknown';
-              var url = download['links']?['self']?['href'] as String? ?? '';
+              final name = download['name'] as String? ?? 'unknown';
+              final url = download['links']?['self']?['href'] as String? ?? '';
               if (url.isNotEmpty &&
                   source_provider.hasSupportedApkExtension(name)) {
                 apkUrls.add(MapEntry(name, url));
               }
             }
 
-            var createdAt = latestDownload['created_on'];
+            final createdAt = latestDownload['created_on'];
             DateTime? releaseDate;
             if (createdAt != null) {
               try {
@@ -205,24 +205,24 @@ class Bitbucket extends AppSource {
     }
 
     // Fallback to tags if no downloads or trackOnly mode
-    var tagsUrl =
+    final tagsUrl =
         'https://api.${hosts[0]}/2.0/repositories/$workspace/$repoSlug/refs/tags?sort=-target.date';
-    Response tagsRes = await sourceRequest(tagsUrl, additionalSettings);
+    final Response tagsRes = await sourceRequest(tagsUrl, additionalSettings);
 
     if (tagsRes.statusCode != 200) {
       throw getUpdatiumHttpError(tagsRes);
     }
 
-    var tagsJson = jsonDecode(tagsRes.body);
-    var tags = tagsJson['values'] as List<dynamic>? ?? [];
+    final tagsJson = jsonDecode(tagsRes.body);
+    final tags = tagsJson['values'] as List<dynamic>? ?? [];
 
     if (tags.isEmpty) {
       throw NoReleasesError();
     }
 
-    var latestTag = tags.first;
-    var version = latestTag['name'] as String? ?? 'unknown';
-    var target = latestTag['target'] as Map<String, dynamic>?;
+    final latestTag = tags.first;
+    final version = latestTag['name'] as String? ?? 'unknown';
+    final target = latestTag['target'] as Map<String, dynamic>?;
     DateTime? releaseDate;
     if (target != null && target['date'] != null) {
       try {
@@ -247,11 +247,11 @@ class Bitbucket extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     // Bitbucket download links may need auth
-    var authHeaders = await getAuthHeaders(additionalSettings);
+    final authHeaders = await getAuthHeaders(additionalSettings);
     if (authHeaders != null &&
         authHeaders.containsKey(HttpHeaders.authorizationHeader)) {
       // If URL already has query params, append auth
-      var uri = Uri.parse(assetUrl);
+      final uri = Uri.parse(assetUrl);
       if (uri.queryParameters.isNotEmpty) {
         return assetUrl;
       }

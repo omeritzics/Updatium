@@ -19,7 +19,7 @@ class DirectAPKLink extends AppSource {
           'defaultPseudoVersioningMethod',
           [
             MapEntry('partialAPKHash', 'partialAPKHash'.t()),
-            MapEntry('ETag', 'ETag'),
+            const MapEntry('ETag', 'ETag'),
           ],
           label: 'defaultPseudoVersioningMethod'.t(),
           defaultValue: 'partialAPKHash',
@@ -66,7 +66,7 @@ class DirectAPKLink extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var additionalSettingsNew = getDefaultValuesFromFormItems(
+    final additionalSettingsNew = getDefaultValuesFromFormItems(
       html.combinedAppSpecificSettingFormItems,
     );
     for (var s in additionalSettings.keys) {

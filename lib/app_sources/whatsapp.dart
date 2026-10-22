@@ -20,19 +20,19 @@ class WhatsAppApp extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       'https://www.whatsapp.com/android',
       additionalSettings,
     );
     if (res.statusCode == 200) {
-      var http = parse(res.body);
+      final http = parse(res.body);
       var version = '';
       String? apkUrl;
 
       // Look for the APK download link in the page
-      var apkLink = http.querySelector('a[href*=".apk"]');
+      final apkLink = http.querySelector('a[href*=".apk"]');
       if (apkLink != null) {
-        var href = apkLink.attributes['href'];
+        final href = apkLink.attributes['href'];
         if (href != null) {
           apkUrl = href;
           // Try to extract version from URL or use the CDN URL pattern
@@ -47,7 +47,7 @@ class WhatsAppApp extends AppSource {
       apkUrl ??= 'https://www.whatsapp.com/android/current/WhatsApp.apk';
 
       // Try to extract version from the page content
-      var versionElement = http.querySelector(
+      final versionElement = http.querySelector(
         '.version-number, [data-version]',
       );
       if (versionElement != null) {
@@ -56,7 +56,7 @@ class WhatsAppApp extends AppSource {
 
       // If version not found, try to extract from the APK URL
       if (version.isEmpty) {
-        var versionMatch = RegExp(r'(\d+\.\d+\.\d+)').firstMatch(apkUrl);
+        final versionMatch = RegExp(r'(\d+\.\d+\.\d+)').firstMatch(apkUrl);
         if (versionMatch != null) {
           version = versionMatch.group(1) ?? '';
         }
@@ -64,7 +64,7 @@ class WhatsAppApp extends AppSource {
 
       // Final fallback - if still no version, use the version code from URL
       if (version.isEmpty) {
-        var versionCodeMatch = RegExp(r'_(\d+)_').firstMatch(apkUrl);
+        final versionCodeMatch = RegExp(r'_(\d+)_').firstMatch(apkUrl);
         if (versionCodeMatch != null) {
           version = versionCodeMatch.group(1) ?? '';
         }

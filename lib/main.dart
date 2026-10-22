@@ -82,7 +82,7 @@ Future<void> loadTranslations() async {
   await QuickLocalizationController.initQuickLocation();
   try {
     await SettingsProvider().initializeSettings();
-    var forceLocale = SettingsProvider().forcedLocale;
+    final forceLocale = SettingsProvider().forcedLocale;
     final controller = QuickLocalizationController(
       saveLocale: true,
       forceLocale: forceLocale,
@@ -113,7 +113,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     // Load Let's Encrypt certificate for network compatibility
-    ByteData data = await PlatformAssetBundle().load(
+    final ByteData data = await PlatformAssetBundle().load(
       'assets/ca/lets-encrypt-r3.pem',
     );
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
@@ -132,7 +132,7 @@ void main() async {
         systemStatusBarContrastEnforced: false,
       ),
     );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
   final np = NotificationsProvider();
   await np.initialize();
@@ -155,7 +155,7 @@ void main() async {
       ),
     ),
   );
-  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+  await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class Updatium extends StatefulWidget {
@@ -199,7 +199,7 @@ class _UpdatiumState extends State<Updatium> {
     }
     if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
       // ignore: use_build_context_synchronously
-      var settingsProvider = context.read<SettingsProvider>();
+      final settingsProvider = context.read<SettingsProvider>();
       if (settingsProvider.showBatteryOptimizationPrompt) {
         await FlutterForegroundTask.requestIgnoreBatteryOptimization();
       }
@@ -227,11 +227,11 @@ class _UpdatiumState extends State<Updatium> {
       ),
       (String taskId) async {
         await bgUpdateCheck(taskId, null);
-        BackgroundFetch.finish(taskId);
+        await BackgroundFetch.finish(taskId);
       },
       (String taskId) async {
-        context.read<LogsProvider>().add('BG update task timed out.');
-        BackgroundFetch.finish(taskId);
+        await context.read<LogsProvider>().add('BG update task timed out.');
+        await BackgroundFetch.finish(taskId);
       },
     );
     if (!mounted) return;
@@ -239,10 +239,10 @@ class _UpdatiumState extends State<Updatium> {
 
   @override
   Widget build(BuildContext context) {
-    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    AppsProvider appsProvider = context.read<AppsProvider>();
-    LogsProvider logs = context.read<LogsProvider>();
-    NotificationsProvider notifs = context.read<NotificationsProvider>();
+    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+    final AppsProvider appsProvider = context.read<AppsProvider>();
+    final LogsProvider logs = context.read<LogsProvider>();
+    final NotificationsProvider notifs = context.read<NotificationsProvider>();
 
     // Toggle between Foreground Service and Background Fetch
     // Only re-apply when the relevant settings actually change, not on
@@ -262,7 +262,7 @@ class _UpdatiumState extends State<Updatium> {
     if (settingsProvider.prefs == null) {
       settingsProvider.initializeSettings();
     } else {
-      bool isFirstRun = settingsProvider.checkAndFlipFirstRun();
+      final bool isFirstRun = settingsProvider.checkAndFlipFirstRun();
       if (isFirstRun) {
         logs.add('This is the first ever run of Updatium.');
         // Auto-add Updatium to tracked apps list on first run
@@ -448,7 +448,7 @@ class _UpdatiumState extends State<Updatium> {
             ),
 
             // Modern progress indicator
-            progressIndicatorTheme: ProgressIndicatorThemeData(
+            progressIndicatorTheme: const ProgressIndicatorThemeData(
               // ignore: deprecated_member_use
               year2023: false,
             ),

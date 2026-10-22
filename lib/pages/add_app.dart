@@ -91,12 +91,12 @@ class AddAppPageState extends State<AddAppPage> {
             pickedSource?.runtimeType != source?.runtimeType) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
-          var additionalSettings = source != null
+          final additionalSettings = source != null
               ? getDefaultValuesFromFormItems(
                   source.combinedAppSpecificSettingFormItems,
                 )
               : {};
-          var sp = settingsProvider;
+          final sp = settingsProvider;
           if (sp.includePrereleasesByDefault) {
             additionalSettings['includePrereleases'] = true;
           }
@@ -351,13 +351,13 @@ class AddAppPageState extends State<AddAppPage> {
     setState(() {
       searching = true;
     });
-    var sourceStrings = <String, List<String>>{};
+    final sourceStrings = <String, List<String>>{};
     sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
       sourceStrings[s.name] = [s.name];
     });
-    SettingsProvider settingsProvider = context.read<SettingsProvider>();
+    final SettingsProvider settingsProvider = context.read<SettingsProvider>();
     try {
-      var searchSources =
+      final searchSources =
           await showDialog<List<String>?>(
             context: context,
             builder: (BuildContext ctx) {
@@ -375,7 +375,7 @@ class AddAppPageState extends State<AddAppPage> {
         settingsProvider.searchDeselected = sourceStrings.keys
             .where((s) => !searchSources.contains(s))
             .toList();
-        List<MapEntry<String, Map<String, List<String>>>> results =
+        final List<MapEntry<String, Map<String, List<String>>>> results =
             (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
                   sourceProvider.sources
                       .where((e) => searchSources.contains(e.name))
@@ -456,7 +456,7 @@ class AddAppPageState extends State<AddAppPage> {
                             if (!mounted) return null;
                             showError(err, context);
                           } else {
-                            LogsProvider().add(
+                            await LogsProvider().add(
                               'Search error for ${e.name}: ${err.toString()}',
                               level: LogLevels.error,
                             );
@@ -469,16 +469,16 @@ class AddAppPageState extends State<AddAppPage> {
                 .toList();
 
         // Interleave results instead of simple reduce
-        Map<String, MapEntry<String, List<String>>> res = {};
+        final Map<String, MapEntry<String, List<String>>> res = {};
         var si = 0;
         var done = false;
         while (!done) {
           done = true;
           for (var r in results) {
-            var sourceName = r.key;
+            final sourceName = r.key;
             if (r.value.length > si) {
               done = false;
-              var singleRes = r.value.entries.elementAt(si);
+              final singleRes = r.value.entries.elementAt(si);
               res[singleRes.key] = MapEntry(sourceName, singleRes.value);
             }
           }
@@ -487,7 +487,7 @@ class AddAppPageState extends State<AddAppPage> {
         if (res.isEmpty) {
           throw UpdatiumError('noResults'.t());
         }
-        List<String>? selectedUrls = res.isEmpty
+        final List<String>? selectedUrls = res.isEmpty
             ? []
             : await showDialog<List<String>?>(
                 context: context,
@@ -501,7 +501,7 @@ class AddAppPageState extends State<AddAppPage> {
               );
         if (!mounted) return;
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
-          var sourceName = res[selectedUrls[0]]?.key;
+          final sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
             selectedUrls[0],
             true,
@@ -510,7 +510,7 @@ class AddAppPageState extends State<AddAppPage> {
             overrideSource: sourceName,
           );
           if (!mounted) return;
-          showDialog(
+          await showDialog(
             context: context,
             builder: (context) => AddAppConfirmationPage(
               initialUrl: selectedUrls[0],
@@ -540,9 +540,9 @@ class AddAppPageState extends State<AddAppPage> {
             title: Text('addApp'.t()),
             bottom:
                 (pickedSource != null || searching || searchQuery.isNotEmpty)
-                ? PreferredSize(
-                    preferredSize: const Size.fromHeight(8),
-                    child: Padding(padding: const EdgeInsets.only(top: 4)),
+                ? const PreferredSize(
+                    preferredSize: Size.fromHeight(8),
+                    child: Padding(padding: EdgeInsets.only(top: 4)),
                   )
                 : null,
           ),
@@ -655,7 +655,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   Future<void> prefillAppInfo() async {
     if (userInput.isEmpty || pickedSource == null) return;
     try {
-      App app = await sourceProvider.getApp(
+      final App app = await sourceProvider.getApp(
         pickedSource!,
         userInput.trim(),
         additionalSettings,
@@ -692,19 +692,19 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppsProvider appsProvider = context.read<AppsProvider>();
-    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    NotificationsProvider notificationsProvider = context
+    final AppsProvider appsProvider = context.read<AppsProvider>();
+    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+    final NotificationsProvider notificationsProvider = context
         .read<NotificationsProvider>();
 
     Future<bool> getTrackOnlyConfirmationIfNeeded(
       bool userPickedTrackOnly, {
       bool ignoreHideSetting = false,
     }) async {
-      var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
+      final useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
-        var values = await showDialog<Map<String, dynamic>?>(
+        final values = await showDialog<Map<String, dynamic>?>(
           context: context,
           builder: (BuildContext ctx) {
             Map<String, dynamic> localValues = {'hide': false};
@@ -752,7 +752,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       }
     }
 
-    getReleaseDateAsVersionConfirmationIfNeeded(
+    Future<bool> getReleaseDateAsVersionConfirmationIfNeeded(
       bool userPickedTrackOnly,
     ) async {
       return (!(additionalSettings['releaseDateAsVersion'] == true &&
@@ -778,18 +778,18 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               null));
     }
 
-    addApp() async {
+    Future<void> addApp() async {
       setState(() {
         gettingAppInfo = true;
       });
       try {
-        var userPickedTrackOnly = additionalSettings['trackOnly'] == true;
+        final userPickedTrackOnly = additionalSettings['trackOnly'] == true;
         App? app;
         if ((await getTrackOnlyConfirmationIfNeeded(userPickedTrackOnly)) &&
             (await getReleaseDateAsVersionConfirmationIfNeeded(
               userPickedTrackOnly,
             ))) {
-          var trackOnly = userPickedTrackOnly;
+          final trackOnly = userPickedTrackOnly;
           app = await sourceProvider.getApp(
             pickedSource!,
             userInput.trim(),
@@ -802,7 +802,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
             if (!mounted) return;
             if (!mounted) return;
-            var apkUrl = await appsProvider.confirmAppFileUrl(
+            final apkUrl = await appsProvider.confirmAppFileUrl(
               app,
               context,
               false,
@@ -818,7 +818,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 .toList()
                 .indexOf(apkUrl.value);
             if (!mounted) return;
-            var downloadedArtifact = await appsProvider.downloadApp(
+            final downloadedArtifact = await appsProvider.downloadApp(
               app,
               globalNavigatorKey.currentContext,
               notificationsProvider: notificationsProvider,
@@ -895,7 +895,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           items: [
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
-                var item = e.clone();
+                final item = e.clone();
                 if (additionalSettings.containsKey(item.key)) {
                   item.defaultValue = additionalSettings[item.key];
                 }
@@ -904,7 +904,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             }),
             ...(pickedSourceOverride != null
                 ? pickedSource!.sourceConfigSettingFormItems.map((e) {
-                    var item = e.clone();
+                    final item = e.clone();
                     if (additionalSettings.containsKey(item.key)) {
                       item.defaultValue = additionalSettings[item.key];
                     }
@@ -1086,9 +1086,9 @@ class _SelectionModalState extends State<SelectionModal> {
 
   @override
   Widget build(BuildContext context) {
-    Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
+    final Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
     entrySelections.forEach((key, value) {
-      var searchableText = key.value.isEmpty ? key.key : key.value[0];
+      final searchableText = key.value.isEmpty ? key.key : key.value[0];
       try {
         if (filterRegex.isEmpty ||
             RegExp(
@@ -1109,7 +1109,7 @@ class _SelectionModalState extends State<SelectionModal> {
       if (widget.onlyOneSelectionAllowed) {
         return const SizedBox.shrink();
       }
-      var noneSelected = entrySelections.values.every((v) => v == false);
+      final noneSelected = entrySelections.values.every((v) => v == false);
       return noneSelected
           ? TextButton(
               onPressed: () => setState(selectAll),
@@ -1219,21 +1219,21 @@ class _SelectionModalState extends State<SelectionModal> {
                         },
                         child: Column(
                           children: filteredEntrySelections.keys.map((entry) {
-                            Widget urlLink = Column(
+                            final Widget urlLink = Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   entry.value.isEmpty
                                       ? entry.key
                                       : entry.value[0],
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             );
 
-                            Widget? descriptionText = entry.value.length <= 1
+                            final Widget? descriptionText = entry.value.length <= 1
                                 ? null
                                 : Text(
                                     entry.value[1].length > 128
@@ -1265,19 +1265,19 @@ class _SelectionModalState extends State<SelectionModal> {
                           });
                         }
 
-                        Widget urlLink = Column(
+                        final Widget urlLink = Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               entry.value.isEmpty ? entry.key : entry.value[0],
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         );
 
-                        Widget? descriptionText = entry.value.length <= 1
+                        final Widget? descriptionText = entry.value.length <= 1
                             ? null
                             : Text(
                                 entry.value[1].length > 128

@@ -49,24 +49,24 @@ class RuStore extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? appId = await tryInferringAppId(standardUrl);
-    Response res0 = await sourceRequest(
+    final String? appId = await tryInferringAppId(standardUrl);
+    final Response res0 = await sourceRequest(
       'https://backapi.rustore.ru/applicationData/overallInfo/$appId',
       additionalSettings,
     );
     if (res0.statusCode != 200) {
       throw getUpdatiumHttpError(res0);
     }
-    var appDetails = (await decodeJsonBody(res0.bodyBytes))['body'];
+    final appDetails = (await decodeJsonBody(res0.bodyBytes))['body'];
     if (appDetails['appId'] == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['appName'] ?? 'app'.t();
-    String author = appDetails['companyName'] ?? name;
-    String? dateStr = appDetails['appVerUpdatedAt'];
-    String? version = appDetails['versionName'];
-    String? changeLog = appDetails['whatsNew'];
-    String? remoteIconUrl = appDetails['icon'];
+    final String appName = appDetails['appName'] ?? 'app'.t();
+    final String author = appDetails['companyName'] ?? name;
+    final String? dateStr = appDetails['appVerUpdatedAt'];
+    final String? version = appDetails['versionName'];
+    final String? changeLog = appDetails['whatsNew'];
+    final String? remoteIconUrl = appDetails['icon'];
     if (version == null) {
       throw NoVersionError();
     }
@@ -74,13 +74,13 @@ class RuStore extends AppSource {
     if (dateStr != null) {
       relDate = DateTime.parse(dateStr);
     }
-    Response res1 = await sourceRequest(
+    final Response res1 = await sourceRequest(
       'https://backapi.rustore.ru/applicationData/v2/download-link',
       additionalSettings,
       followRedirects: false,
-      postBody: {"appId": appDetails['appId'], "firstInstall": true},
+      postBody: {'appId': appDetails['appId'], 'firstInstall': true},
     );
-    var downloadDetails = (await decodeJsonBody(res1.bodyBytes))['body'];
+    final downloadDetails = (await decodeJsonBody(res1.bodyBytes))['body'];
     if (res1.statusCode != 200 ||
         downloadDetails['downloadUrls'][0]['url'] == null) {
       throw NoAPKError();

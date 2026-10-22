@@ -53,13 +53,13 @@ class Gitea extends AppSource {
   }
 
   Future<String?> getTokenIfAny(Map<String, dynamic> additionalSettings) async {
-    SettingsProvider settingsProvider = SettingsProvider();
+    final SettingsProvider settingsProvider = SettingsProvider();
     await settingsProvider.initializeSettings();
-    var sourceConfig = await getSourceConfigValues(
+    final sourceConfig = await getSourceConfigValues(
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['giteaTokenLabel'];
+    final String? creds = sourceConfig['giteaTokenLabel'];
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
@@ -69,8 +69,8 @@ class Gitea extends AppSource {
     String url, {
     bool forAPKDownload = false,
   }) async {
-    var token = await getTokenIfAny(additionalSettings);
-    var headers = <String, String>{};
+    final token = await getTokenIfAny(additionalSettings);
+    final headers = <String, String>{};
     if (token != null && token.isNotEmpty) {
       headers[HttpHeaders.authorizationHeader] = 'token $token';
     }
@@ -89,19 +89,19 @@ class Gitea extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    var url =
+    final url =
         'https://${hosts[0]}/api/v1/repos/search?q=${Uri.encodeQueryComponent(query)}';
-    var res = await sourceRequest(url, {});
+    final res = await sourceRequest(url, {});
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var json = jsonDecode(res.body);
-    var repos = json['data'] as List<dynamic>? ?? [];
-    Map<String, List<String>> results = {};
+    final json = jsonDecode(res.body);
+    final repos = json['data'] as List<dynamic>? ?? [];
+    final Map<String, List<String>> results = {};
     for (var element in repos) {
-      var fullName = element['full_name'] as String?;
-      var name = element['name'] as String? ?? '';
-      var description =
+      final fullName = element['full_name'] as String?;
+      final name = element['name'] as String? ?? '';
+      final description =
           element['description'] as String? ?? 'noDescription'.t();
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
@@ -115,7 +115,7 @@ class Gitea extends AppSource {
       '$standardUrl/releases';
 
   AppNames getAppNames(String standardUrl) {
-    var pathSegments = Uri.parse(standardUrl).pathSegments;
+    final pathSegments = Uri.parse(standardUrl).pathSegments;
     if (pathSegments.length >= 2) {
       return AppNames(pathSegments[0], pathSegments[1]);
     }
@@ -127,21 +127,21 @@ class Gitea extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var names = getAppNames(standardUrl);
-    String owner = names.author;
-    String repo = names.name;
-    bool trackOnly = additionalSettings['trackOnly'] == true;
-    bool includePrereleases = additionalSettings['includePrereleases'] == true;
+    final names = getAppNames(standardUrl);
+    final String owner = names.author;
+    final String repo = names.name;
+    final bool trackOnly = additionalSettings['trackOnly'] == true;
+    final bool includePrereleases = additionalSettings['includePrereleases'] == true;
 
     // Get releases from Gitea API
-    var url = 'https://${hosts[0]}/api/v1/repos/$owner/$repo/releases';
-    Response res = await sourceRequest(url, additionalSettings);
+    final url = 'https://${hosts[0]}/api/v1/repos/$owner/$repo/releases';
+    final Response res = await sourceRequest(url, additionalSettings);
 
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
 
-    var releases = jsonDecode(res.body) as List<dynamic>;
+    final releases = jsonDecode(res.body) as List<dynamic>;
 
     if (releases.isEmpty) {
       throw NoReleasesError();
@@ -164,24 +164,24 @@ class Gitea extends AppSource {
       throw NoReleasesError();
     }
 
-    String version =
+    final String version =
         targetRelease['tag_name'] ?? targetRelease['name'] ?? 'unknown';
 
     // Extract APK URLs from release attachments
-    List<MapEntry<String, String>> apkUrls = [];
-    var assets = targetRelease['assets'] as List<dynamic>? ?? [];
+    final List<MapEntry<String, String>> apkUrls = [];
+    final assets = targetRelease['assets'] as List<dynamic>? ?? [];
 
     for (var asset in assets) {
-      var name = asset['name'] as String? ?? 'unknown';
-      var url = asset['browser_download_url'] as String? ?? '';
+      final name = asset['name'] as String? ?? 'unknown';
+      final url = asset['browser_download_url'] as String? ?? '';
       if (url.isNotEmpty && source_provider.hasSupportedApkExtension(name)) {
         apkUrls.add(MapEntry(name, url));
       }
     }
 
     // Also check release body for APK links
-    var body = targetRelease['body'] as String? ?? '';
-    var bodyUrls = body
+    final body = targetRelease['body'] as String? ?? '';
+    final bodyUrls = body
         .split('\n')
         .where(
           (line) => source_provider.supportedApkExtensions.any(
@@ -189,7 +189,7 @@ class Gitea extends AppSource {
           ),
         )
         .map((line) {
-          var match = RegExp(r'\(([^)]+)\)').firstMatch(line);
+          final match = RegExp(r'\(([^)]+)\)').firstMatch(line);
           return match?.group(1);
         })
         .where((url) => url != null && url.isNotEmpty)
@@ -197,7 +197,7 @@ class Gitea extends AppSource {
 
     for (var url in bodyUrls) {
       try {
-        var name = Uri.parse(url).pathSegments.last;
+        final name = Uri.parse(url).pathSegments.last;
         if (source_provider.hasSupportedApkExtension(name) &&
             !apkUrls.any((e) => e.value == url)) {
           apkUrls.add(MapEntry(name, url));
@@ -214,7 +214,7 @@ class Gitea extends AppSource {
 
     // Parse release date
     DateTime? releaseDate;
-    var createdAt =
+    final createdAt =
         targetRelease['created_at'] ?? targetRelease['published_at'];
     if (createdAt != null) {
       try {

@@ -30,11 +30,11 @@ class Uptodown extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegEx = RegExp(
+    final RegExp standardUrlRegEx = RegExp(
       '^https?://([^\\.]+\\.){2,}${getSourceRegex(hosts)}',
       caseSensitive: false,
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    final RegExpMatch? match = standardUrlRegEx.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
     }
@@ -56,25 +56,25 @@ class Uptodown extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest(standardUrl, additionalSettings);
+    final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var html = parse(res.body);
-    String? version = html.querySelector('div.version')?.innerHtml;
-    String? name = html.querySelector('#detail-app-name')?.innerHtml.trim();
-    String? author = html.querySelector('#author-link')?.innerHtml.trim();
-    var detailElements = html
+    final html = parse(res.body);
+    final String? version = html.querySelector('div.version')?.innerHtml;
+    final String? name = html.querySelector('#detail-app-name')?.innerHtml.trim();
+    final String? author = html.querySelector('#author-link')?.innerHtml.trim();
+    final detailElements = html
         .querySelectorAll('#technical-information td')
         .map((e) => e.text.trim())
         .where((e) => e.isNotEmpty)
         .toList();
-    String? appId = detailElements.lastOrNull;
-    String? dateStr = detailElements.elementAtOrNull(detailElements.length - 5);
-    String? fileId = html
+    final String? appId = detailElements.lastOrNull;
+    final String? dateStr = detailElements.elementAtOrNull(detailElements.length - 5);
+    final String? fileId = html
         .querySelector('#detail-app-name')
         ?.attributes['data-file-id'];
-    String? extension = detailElements
+    final String? extension = detailElements
         .elementAtOrNull(detailElements.length - 4)
         ?.toLowerCase();
     return Map.fromEntries([
@@ -93,27 +93,27 @@ class Uptodown extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var appDetails = await getAppDetailsFromPage(
+    final appDetails = await getAppDetailsFromPage(
       standardUrl,
       additionalSettings,
     );
-    var version = appDetails['version'];
-    var appId = appDetails['appId'];
-    var fileId = appDetails['fileId'];
-    var extension = appDetails['extension'];
+    final version = appDetails['version'];
+    final appId = appDetails['appId'];
+    final fileId = appDetails['fileId'];
+    final extension = appDetails['extension'];
     if (version == null) {
       throw NoVersionError();
     }
     if (fileId == null) {
       throw NoAPKError();
     }
-    var apkUrl = '$standardUrl/$fileId-x';
+    final apkUrl = '$standardUrl/$fileId-x';
     if (appId == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['name'] ?? 'app'.t();
-    String author = appDetails['author'] ?? name;
-    String? dateStr = appDetails['dateStr'];
+    final String appName = appDetails['name'] ?? 'app'.t();
+    final String author = appDetails['author'] ?? name;
+    final String? dateStr = appDetails['dateStr'];
     DateTime? relDate;
     if (dateStr != null) {
       relDate = parseDateTimeMMMddCommayyyy(dateStr);
@@ -132,9 +132,9 @@ class Uptodown extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest(assetUrl, additionalSettings);
-    var html = parse(res.body);
-    var finalUrlKey = html
+    final res = await sourceRequest(assetUrl, additionalSettings);
+    final html = parse(res.body);
+    final finalUrlKey = html
         .querySelector('#detail-download-button')
         ?.attributes['data-url'];
     if (finalUrlKey == null) {

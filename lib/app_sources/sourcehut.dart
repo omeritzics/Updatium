@@ -40,21 +40,21 @@ class SourceHut extends AppSource {
           .sublist(1)
           .join('/');
     }
-    Uri standardUri = Uri.parse(standardUrl);
-    String appName = standardUri.pathSegments.last;
-    bool fallbackToOlderReleases =
+    final Uri standardUri = Uri.parse(standardUrl);
+    final String appName = standardUri.pathSegments.last;
+    final bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       '$standardUrl/refs/rss.xml',
       additionalSettings,
     );
     if (res.statusCode == 200) {
-      var parsedHtml = parse(res.body);
+      final parsedHtml = parse(res.body);
       List<APKDetails> apkDetailsList = [];
       int ind = 0;
       for (var entry in parsedHtml.querySelectorAll('item').sublist(0, 6)) {
         ind++;
-        String releasePage = // querySelector('link') fails for some reason
+        final String releasePage = // querySelector('link') fails for some reason
             entry
                 .querySelector('guid') // Luckily guid is identical
                 ?.innerHtml
@@ -66,11 +66,11 @@ class SourceHut extends AppSource {
         if (!fallbackToOlderReleases && ind > 1) {
           break;
         }
-        String? version = entry.querySelector('title')?.text.trim();
+        final String? version = entry.querySelector('title')?.text.trim();
         if (version == null) {
           throw NoVersionError();
         }
-        String? releaseDateString = entry.querySelector('pubDate')?.innerHtml;
+        final String? releaseDateString = entry.querySelector('pubDate')?.innerHtml;
         DateTime? releaseDate;
         try {
           releaseDate = releaseDateString != null
@@ -81,7 +81,7 @@ class SourceHut extends AppSource {
         } catch (e) {
           // ignore
         }
-        var res2 = await sourceRequest(releasePage, additionalSettings);
+        final res2 = await sourceRequest(releasePage, additionalSettings);
         List<MapEntry<String, String>> apkUrls = [];
         if (res2.statusCode == 200) {
           apkUrls = getApkUrlsFromUrls(

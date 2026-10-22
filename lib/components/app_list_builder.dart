@@ -123,7 +123,7 @@ class AppListBuilder {
 
     final isDesc = sortOrder == SortOrderSettings.descending;
     if (sortColumn == SortColumnSettings.releaseDate) {
-      var entries = apps.map((a) => MapEntry(a.app.releaseDate, a)).toList()
+      final entries = apps.map((a) => MapEntry(a.app.releaseDate, a)).toList()
         ..sort((a, b) {
           final aDate = a.key;
           final bDate = b.key;
@@ -134,7 +134,7 @@ class AppListBuilder {
         });
       apps = entries.map((e) => e.value).toList();
     } else if (sortColumn == SortColumnSettings.added) {
-      var entries = apps.map((a) => MapEntry(a.app.lastUpdateCheck, a)).toList()
+      final entries = apps.map((a) => MapEntry(a.app.lastUpdateCheck, a)).toList()
         ..sort((a, b) {
           final aDate = a.key;
           final bDate = b.key;
@@ -150,7 +150,7 @@ class AppListBuilder {
         SortColumnSettings.nameAuthor => (a.name + a.author).toLowerCase(),
         _ => '',
       };
-      var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
+      final entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
         ..sort((a, b) => a.key.compareTo(b.key));
 
       apps = entries.map((e) => e.value).toList();
@@ -169,7 +169,7 @@ class AppListBuilder {
     Set<String> existingUpdates,
   ) {
     if (pinUpdates) {
-      var temp = <AppInMemory>[];
+      final temp = <AppInMemory>[];
       apps = apps.where((sa) {
         if (existingUpdates.contains(sa.app.id)) {
           temp.add(sa);
@@ -181,7 +181,7 @@ class AppListBuilder {
     }
 
     if (buryNonInstalled) {
-      var temp = <AppInMemory>[];
+      final temp = <AppInMemory>[];
       apps = apps.where((sa) {
         if (sa.app.installedVersion == null) {
           temp.add(sa);
@@ -192,9 +192,9 @@ class AppListBuilder {
       apps = [...apps, ...temp];
     }
 
-    var tempRenamed = <AppInMemory>[];
-    var tempPinned = <AppInMemory>[];
-    var tempNotPinned = <AppInMemory>[];
+    final tempRenamed = <AppInMemory>[];
+    final tempPinned = <AppInMemory>[];
+    final tempNotPinned = <AppInMemory>[];
     for (var a in apps) {
       if (a.app.hasPendingRepoRename) {
         tempRenamed.add(a);

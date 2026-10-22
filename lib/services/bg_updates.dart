@@ -7,15 +7,15 @@ import 'package:updatium/services/slang_converter.dart';
 
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessEvent task) async {
-  String taskId = task.taskId;
-  bool isTimeout = task.timeout;
+  final String taskId = task.taskId;
+  final bool isTimeout = task.timeout;
   if (isTimeout) {
     debugPrint('BG update task timed out.');
-    BackgroundFetch.finish(taskId);
+    await BackgroundFetch.finish(taskId);
     return;
   }
   await bgUpdateCheck(taskId, null);
-  BackgroundFetch.finish(taskId);
+  await BackgroundFetch.finish(taskId);
 }
 
 @pragma('vm:entry-point')
@@ -73,7 +73,7 @@ Future<ServiceRequestResult?> startForegroundService(
   bool restart, [
   int? intervalMinutes,
 ]) async {
-  bool needsRestart = initForegroundService(intervalMinutes ?? 15);
+  final bool needsRestart = initForegroundService(intervalMinutes ?? 15);
   if (await FlutterForegroundTask.isRunningService) {
     if (restart || needsRestart) {
       return FlutterForegroundTask.restartService();
@@ -84,7 +84,7 @@ Future<ServiceRequestResult?> startForegroundService(
       serviceId: 666,
       notificationTitle: 'foregroundService'.t(),
       notificationText: 'fgServiceNotice'.t(),
-      notificationIcon: NotificationIcon(
+      notificationIcon: const NotificationIcon(
         metaDataName: 'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
       ),
       callback: startCallback,

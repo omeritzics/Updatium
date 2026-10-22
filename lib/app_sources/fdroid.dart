@@ -41,7 +41,7 @@ class FDroid extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegExB = RegExp(
+    final RegExp standardUrlRegExB = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
       caseSensitive: false,
     );
@@ -50,7 +50,7 @@ class FDroid extends AppSource {
       url =
           'https://${Uri.parse(match.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
     }
-    RegExp standardUrlRegExA = RegExp(
+    final RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
       caseSensitive: false,
     );
@@ -74,9 +74,9 @@ class FDroid extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? appId = await tryInferringAppId(standardUrl);
-    String host = Uri.parse(standardUrl).host;
-    var details = getAPKUrlsFromFDroidPackagesAPIResponse(
+    final String? appId = await tryInferringAppId(standardUrl);
+    final String host = Uri.parse(standardUrl).host;
+    final details = getAPKUrlsFromFDroidPackagesAPIResponse(
       await sourceRequest(
         'https://$host/api/v1/packages/$appId',
         additionalSettings,
@@ -88,19 +88,19 @@ class FDroid extends AppSource {
     );
     if (!hostChanged) {
       try {
-        var res = await sourceRequest(
+        final res = await sourceRequest(
           'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
           additionalSettings,
         );
-        var lines = res.body.split('\n');
-        var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
+        final lines = res.body.split('\n');
+        final authorLines = lines.where((l) => l.startsWith('AuthorName: '));
         if (authorLines.isNotEmpty) {
           details.names.author = authorLines.first
               .split(': ')
               .sublist(1)
               .join(': ');
         }
-        var changelogUrls = lines
+        final changelogUrls = lines
             .where((l) => l.startsWith('Changelog: '))
             .map((e) => e.split(' ').sublist(1).join(' '));
         if (changelogUrls.isNotEmpty) {
@@ -144,15 +144,15 @@ class FDroid extends AppSource {
     }
     if (details.names.author == t('fdroid')) {
       try {
-        var res = await sourceRequest(
+        final res = await sourceRequest(
           'https://f-droid.org/packages/$appId',
           additionalSettings,
         );
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          var body = parse(res.body);
-          var authorElement = body.querySelector('a[href^="mailto:"]');
+          final body = parse(res.body);
+          final authorElement = body.querySelector('a[href^="mailto:"]');
           if (authorElement != null) {
-            var authorText = authorElement.text.trim();
+            final authorText = authorElement.text.trim();
             if (authorText.isNotEmpty) {
               details.names.author = authorText;
             }
@@ -170,12 +170,12 @@ class FDroid extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       'https://search.${hosts[0]}/?q=${Uri.encodeQueryComponent(query)}',
       {},
     );
     if (res.statusCode == 200) {
-      Map<String, List<String>> urlsWithDescriptions = {};
+      final Map<String, List<String>> urlsWithDescriptions = {};
       parse(res.body).querySelectorAll('.package-header').forEach((e) {
         String? url = e.attributes['href'];
         if (url != null) {
@@ -215,24 +215,24 @@ class FDroid extends AppSource {
     Map<String, dynamic> additionalSettings,
     String standardUrl,
   ) {
-    var autoSelectHighestVersionCode =
+    final autoSelectHighestVersionCode =
         additionalSettings['autoSelectHighestVersionCode'] == true;
-    var trySelectingSuggestedVersionCode =
+    final trySelectingSuggestedVersionCode =
         additionalSettings['trySelectingSuggestedVersionCode'] == true;
-    var filterVersionsByRegEx =
+    final filterVersionsByRegEx =
         (additionalSettings['filterVersionsByRegEx'] as String?)?.isNotEmpty ==
             true
         ? additionalSettings['filterVersionsByRegEx']
         : null;
-    var apkFilterRegEx =
+    final apkFilterRegEx =
         (additionalSettings['apkFilterRegEx'] as String?)?.isNotEmpty == true
         ? additionalSettings['apkFilterRegEx']
         : null;
-    var response = jsonDecode(res.body);
+    final response = jsonDecode(res.body);
     List<dynamic> releases = response['packages'] ?? [];
     if (apkFilterRegEx != null) {
       releases = releases.where((rel) {
-        String apk = '${apkUrlPrefix}_${rel['versionCode']}.apk';
+        final String apk = '${apkUrlPrefix}_${rel['versionCode']}.apk';
         return filterApks(
           [MapEntry(apk, apk)],
           apkFilterRegEx,
@@ -250,7 +250,7 @@ class FDroid extends AppSource {
     if (trySelectingSuggestedVersionCode &&
         response['suggestedVersionCode'] != null &&
         filterVersionsByRegEx == null) {
-      var suggestedReleases = releases.where(
+      final suggestedReleases = releases.where(
         (element) => element['versionCode'] == response['suggestedVersionCode'],
       );
       if (suggestedReleases.isNotEmpty) {
@@ -290,7 +290,7 @@ class FDroid extends AppSource {
         releaseChoices = [releaseChoices.first];
       } else if (trySelectingSuggestedVersionCode &&
           response['suggestedVersionCode'] != null) {
-        var suggestedReleases = releaseChoices.where(
+        final suggestedReleases = releaseChoices.where(
           (element) =>
               element['versionCode'] == response['suggestedVersionCode'],
         );
@@ -299,11 +299,11 @@ class FDroid extends AppSource {
         }
       }
     }
-    List<String> apkUrls = releaseChoices
+    final List<String> apkUrls = releaseChoices
         .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
         .toList();
     // Extract author from API response or fall back to source name
-    String author = response['authorName'] ?? sourceName;
+    final String author = response['authorName'] ?? sourceName;
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),

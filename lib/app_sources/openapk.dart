@@ -48,10 +48,10 @@ class OpenAPK extends AppSource {
     bool forAPKDownload = false,
   }) async {
     return {
-      "User-Agent": "curl/8.0.1",
-      "Accept": "*/*",
-      "Connection": "keep-alive",
-      "Host": hosts[0],
+      'User-Agent': 'curl/8.0.1',
+      'Accept': '*/*',
+      'Connection': 'keep-alive',
+      'Host': hosts[0],
     };
   }
 
@@ -59,14 +59,14 @@ class OpenAPK extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest(standardUrl, additionalSettings);
+    final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var html = parse(res.body);
+    final html = parse(res.body);
 
     // Look for the main download button
-    var downloadElement = html.querySelector('a[href*="/apk/download"]');
+    final downloadElement = html.querySelector('a[href*="/apk/download"]');
     if (downloadElement == null) {
       throw NoAPKError();
     }
@@ -84,10 +84,10 @@ class OpenAPK extends AppSource {
     }
 
     // Extract version info from the page
-    String? version = html.querySelector('span.text-primary')?.text.trim();
-    String? appId = await tryInferringAppId(standardUrl);
+    final String? version = html.querySelector('span.text-primary')?.text.trim();
+    final String? appId = await tryInferringAppId(standardUrl);
 
-    String fileName = appId != null && version != null
+    final String fileName = appId != null && version != null
         ? '$appId-$version.apk'
         : 'app.apk';
 
@@ -100,7 +100,7 @@ class OpenAPK extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var freshURLs = await getApkUrls(standardUrl, additionalSettings);
+    final freshURLs = await getApkUrls(standardUrl, additionalSettings);
     for (var url in freshURLs) {
       if (url.value.contains('/apk/download')) {
         return url.value;
@@ -114,16 +114,16 @@ class OpenAPK extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? appId = await tryInferringAppId(standardUrl);
+    final String? appId = await tryInferringAppId(standardUrl);
     if (appId == null) {
       throw NoVersionError();
     }
 
-    var res = await sourceRequest(standardUrl, additionalSettings);
+    final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var html = parse(res.body);
+    final html = parse(res.body);
 
     // Extract version from the primary version span
     String? version = html.querySelector('span.text-primary')?.text.trim();
@@ -152,11 +152,11 @@ class OpenAPK extends AppSource {
         .trim();
     if (author == null || author.isEmpty) {
       // Try to find developer in other locations
-      var developerElements = html.querySelectorAll(
+      final developerElements = html.querySelectorAll(
         'section.specifications .col-4',
       );
       for (var element in developerElements) {
-        var boldText = element.querySelector('b')?.text.trim();
+        final boldText = element.querySelector('b')?.text.trim();
         if (boldText?.toLowerCase() == 'developer') {
           author = element.querySelector('span')?.text.trim();
           break;
@@ -167,11 +167,11 @@ class OpenAPK extends AppSource {
 
     // Extract release date from specifications
     DateTime? releaseDate;
-    var timeElement = html.querySelector(
+    final timeElement = html.querySelector(
       'section.specifications time[datetime]',
     );
     if (timeElement != null) {
-      String? dateTimeStr = timeElement.attributes['datetime'];
+      final String? dateTimeStr = timeElement.attributes['datetime'];
       if (dateTimeStr != null) {
         try {
           releaseDate = DateTime.parse(dateTimeStr);
@@ -199,27 +199,27 @@ class OpenAPK extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    var searchUrl =
+    final searchUrl =
         'https://${hosts[0]}/search/?q=${Uri.encodeQueryComponent(query)}';
-    var res = await sourceRequest(searchUrl, {});
+    final res = await sourceRequest(searchUrl, {});
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var html = parse(res.body);
+    final html = parse(res.body);
 
     // Extract search results - look for app links in the search results
-    var appLinks = html.querySelectorAll('a[href^="/"]');
-    Map<String, List<String>> results = {};
+    final appLinks = html.querySelectorAll('a[href^="/"]');
+    final Map<String, List<String>> results = {};
 
     for (var link in appLinks) {
-      var href = link.attributes['href'];
+      final href = link.attributes['href'];
       if (href == null) continue;
 
       // Filter for app URLs: pattern is /category/app-id/
-      var segments = href.split('/').where((s) => s.isNotEmpty).toList();
+      final segments = href.split('/').where((s) => s.isNotEmpty).toList();
       if (segments.length == 2) {
-        var appUrl = 'https://${hosts[0]}$href';
-        var appName = link.text.trim();
+        final appUrl = 'https://${hosts[0]}$href';
+        final appName = link.text.trim();
 
         // Skip if already added or if name is empty
         if (appName.isNotEmpty && !results.containsKey(appUrl)) {

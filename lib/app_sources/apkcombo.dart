@@ -48,10 +48,10 @@ class APKCombo extends AppSource {
     bool forAPKDownload = false,
   }) async {
     return {
-      "User-Agent": "curl/8.0.1",
-      "Accept": "*/*",
-      "Connection": "keep-alive",
-      "Host": hosts[0],
+      'User-Agent': 'curl/8.0.1',
+      'Accept': '*/*',
+      'Connection': 'keep-alive',
+      'Host': hosts[0],
     };
   }
 
@@ -59,14 +59,14 @@ class APKCombo extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest(
+    final res = await sourceRequest(
       '$standardUrl/download/apk',
       additionalSettings,
     );
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var html = parse(res.body);
+    final html = parse(res.body);
     // Try multiple selectors for APK variants
     var apkElements = html.querySelectorAll('#variants-tab > div > ul > li');
     if (apkElements.isEmpty) {
@@ -80,7 +80,7 @@ class APKCombo extends AppSource {
     }
     return apkElements
         .map((e) {
-          String? arch = e
+          final String? arch = e
               .querySelector('code')
               ?.text
               .trim()
@@ -95,7 +95,7 @@ class APKCombo extends AppSource {
                 )) {
               url = null;
             }
-            String verCode =
+            final String verCode =
                 e.querySelector('.info .header .vercode')?.text.trim() ?? '';
             return MapEntry<String, String>(
               arch != null
@@ -116,8 +116,8 @@ class APKCombo extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var freshURLs = await getApkUrls(standardUrl, additionalSettings);
-    var path2Match = Uri.parse(assetUrl).path;
+    final freshURLs = await getApkUrls(standardUrl, additionalSettings);
+    final path2Match = Uri.parse(assetUrl).path;
     for (var url in freshURLs) {
       if (Uri.parse(url.value).path == path2Match) {
         return url.value;
@@ -131,15 +131,15 @@ class APKCombo extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? appId = await tryInferringAppId(standardUrl);
+    final String? appId = await tryInferringAppId(standardUrl);
     if (appId == null) {
       throw NoVersionError();
     }
-    var preres = await sourceRequest(standardUrl, additionalSettings);
+    final preres = await sourceRequest(standardUrl, additionalSettings);
     if (preres.statusCode != 200) {
       throw getUpdatiumHttpError(preres);
     }
-    var res = parse(preres.body);
+    final res = parse(preres.body);
     // Try multiple selectors for version
     String? version = res.querySelector('div.version')?.text.trim();
     version ??= res.querySelector('.version')?.text.trim();
@@ -178,7 +178,7 @@ class APKCombo extends AppSource {
     }
     DateTime? releaseDate;
     if (infoArray.length >= 2) {
-      String dateString = infoArray[1];
+      final String dateString = infoArray[1];
       try {
         releaseDate = DateFormat('MMMM d, yyyy').parse(dateString);
       } catch (fullMonthError) {

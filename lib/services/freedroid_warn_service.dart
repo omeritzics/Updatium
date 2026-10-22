@@ -95,7 +95,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
   final strings = await _getWarningStrings();
   if (strings.isEmpty || !context.mounted) return;
 
-  showDialog(
+  await showDialog(
     context: context,
     barrierDismissible: false,
     builder: (context) => AlertDialog(

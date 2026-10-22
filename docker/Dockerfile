@@ -1,14 +1,13 @@
 FROM ubuntu:26.04
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV ANDROID_SDK_ROOT /opt/android-sdk-linux
-ENV PATH "${PATH}:/opt/flutter/bin:/root/.pub-cache/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:/opt/android-sdk-linux/platform-tools"
+ENV DEBIAN_FRONTEND=noninteractive
+ENV JAVA_HOME=/opt/java/temurin-21
+ENV ANDROID_HOME=/opt/android-sdk
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV PATH="${PATH}:${JAVA_HOME}/bin:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
 
-ENV HOME=/root
-
-# Prereqs
-RUN \
-    apt-get update &&\
+# System deps for Flutter Android builds (no Linux desktop / GTK toolchain).
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         bash \
         curl \

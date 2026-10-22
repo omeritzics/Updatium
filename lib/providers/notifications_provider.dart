@@ -80,7 +80,7 @@ class SilentUpdateNotification extends UpdatiumNotification {
             args: [updates[0].finalName, updates[0].latestVersion],
           )
         : plural(
-            succeeded ? 'xAndNMoreUpdatesInstalled' : "xAndNMoreUpdatesFailed",
+            succeeded ? 'xAndNMoreUpdatesInstalled' : 'xAndNMoreUpdatesFailed',
             updates.length - 1,
             args: [updates[0].finalName, (updates.length - 1).toString()],
           );
@@ -285,7 +285,7 @@ class NotificationsProvider {
         ScaffoldMessenger.of(
           globalNavigatorKey.currentState!.context,
         ).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Failed to open file manager'),
             duration: Duration(seconds: 2),
           ),
@@ -296,8 +296,8 @@ class NotificationsProvider {
 
   void _showNotificationPayload(String? payload, {bool doublePop = false}) {
     if (payload?.isNotEmpty == true) {
-      var title = (payload ?? '\n\n').split('\n').first;
-      var content = (payload ?? '\n\n').split('\n').sublist(1).join('\n');
+      final title = (payload ?? '\n\n').split('\n').first;
+      final content = (payload ?? '\n\n').split('\n').sublist(1).join('\n');
       globalNavigatorKey.currentState?.push(
         PageRouteBuilder(
           pageBuilder: (context, _, _) => AlertDialog(

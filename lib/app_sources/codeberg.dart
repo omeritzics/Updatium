@@ -4,7 +4,7 @@ import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
   Codeberg() {
-    var github = gh.GitHub();
+    final github = gh.GitHub();
     name = 'codeberg'.t();
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
@@ -57,18 +57,18 @@ class Codeberg extends AppSource {
     Map<String, dynamic> querySettings = const {},
   }) async {
     // Search Codeberg via explore page
-    var requestUrl =
+    final requestUrl =
         'https://codeberg.org/api/v1/repos/search?q=${Uri.encodeComponent(query)}';
-    var res = await sourceRequest(requestUrl, {});
+    final res = await sourceRequest(requestUrl, {});
     if (res.statusCode == 200) {
-      var html = res.body;
-      var urls = <String, List<String>>{};
+      final html = res.body;
+      final urls = <String, List<String>>{};
       // Find repository links in the page
-      var linkReg = RegExp(r'href="/([^"/]+/[^"/]+)"');
+      final linkReg = RegExp(r'href="/([^"/]+/[^"/]+)"');
       for (var match in linkReg.allMatches(html)) {
-        var path = match.group(1)!;
-        var fullUrl = 'https://codeberg.org/$path';
-        var name = path.split('/').last;
+        final path = match.group(1)!;
+        final fullUrl = 'https://codeberg.org/$path';
+        final name = path.split('/').last;
         urls[fullUrl] = [path, name];
       }
       return urls;

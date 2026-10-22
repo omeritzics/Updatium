@@ -53,7 +53,7 @@ class NeutronCode extends AppSource {
   }
 
   String? customDateParse(String dateString) {
-    List<String> parts = dateString.split(' ');
+    final List<String> parts = dateString.split(' ');
     if (parts.length != 3) {
       return null;
     }
@@ -78,27 +78,27 @@ class NeutronCode extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    Response res = await sourceRequest(standardUrl, additionalSettings);
+    final Response res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode == 200) {
-      var http = parse(res.body);
-      var name = http.querySelector('.pd-title')?.innerHtml;
-      var filename = http.querySelector('.pd-filename .pd-float')?.innerHtml;
+      final http = parse(res.body);
+      final name = http.querySelector('.pd-title')?.innerHtml;
+      final filename = http.querySelector('.pd-filename .pd-float')?.innerHtml;
       if (filename == null) {
         throw NoReleasesError();
       }
-      var version = http
+      final version = http
           .querySelector('.pd-version-txt')
           ?.nextElementSibling
           ?.innerHtml;
       if (version == null) {
         throw NoVersionError();
       }
-      String? apkUrl = 'https://${hosts[0]}/download/$filename';
-      var dateStringOriginal = http.querySelector('.pd-date-txt')?.innerHtml;
-      var dateString = dateStringOriginal != null
+      final String apkUrl = 'https://${hosts[0]}/download/$filename';
+      final dateStringOriginal = http.querySelector('.pd-date-txt')?.innerHtml;
+      final dateString = dateStringOriginal != null
           ? customDateParse(dateStringOriginal)
           : null;
-      var changeLogElements = http.querySelectorAll('.pd-fdesc p');
+      final changeLogElements = http.querySelectorAll('.pd-fdesc p');
       return APKDetails(
         version,
         getApkUrlsFromUrls([apkUrl]),

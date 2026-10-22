@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
   int _installerCheckSeq = 0;
 
   void initUpdateIntervalInterpolator() {
-    List<InterpolationNode> nodes = [];
+    final List<InterpolationNode> nodes = [];
     for (final (index, element) in updateIntervalNodes.indexed) {
       nodes.add(
         InterpolationNode(x: index.toDouble() + 1, y: element.toDouble()),
@@ -107,21 +107,21 @@ class _SettingsPageState extends State<SettingsPage> {
       updateInterval = valInterpolated;
       updateIntervalLabel = 'minute'.plural(valInterpolated);
     } else if (valInterpolated < 8 * 60) {
-      int valRounded = (valInterpolated / 15).floor() * 15;
+      final int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
       updateIntervalLabel = 'hour'.plural(valRounded ~/ 60);
-      int mins = valRounded % 60;
+      final int mins = valRounded % 60;
       if (mins != 0) updateIntervalLabel += " ${'minute'.plural(mins)}";
     } else if (valInterpolated < 24 * 60) {
-      int valRounded = (valInterpolated / 30).floor() * 30;
+      final int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
       updateIntervalLabel = 'hour'.plural(valRounded / 60);
     } else if (valInterpolated < 7 * 24 * 60) {
-      int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
+      final int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
       updateIntervalLabel = 'day'.plural(valRounded / (24 * 60));
     } else {
-      int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
+      final int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
       updateIntervalLabel = 'day'.plural(valRounded ~/ (24 * 60));
     }
@@ -223,12 +223,12 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _cleanupUnusedControllers() {
-    var activeKeys = SourceProvider().sources
+    final activeKeys = SourceProvider().sources
         .where((e) => e.sourceConfigSettingFormItems.isNotEmpty)
         .expand((e) => e.sourceConfigSettingFormItems.map((item) => item.key))
         .toSet();
     // Clean up both controllers and focus nodes together to prevent mismatches
-    var keysToRemove = _textControllers.keys
+    final keysToRemove = _textControllers.keys
         .where((key) => !activeKeys.contains(key))
         .toSet();
     for (var key in keysToRemove) {
@@ -241,8 +241,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    SourceProvider sourceProvider = SourceProvider();
+    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+    final SourceProvider sourceProvider = SourceProvider();
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
@@ -259,7 +259,7 @@ class _SettingsPageState extends State<SettingsPage> {
       });
     }
 
-    var followSystemThemeExplanation = FutureBuilder(
+    final followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 30) < 29)
             ? Text(
@@ -333,15 +333,15 @@ class _SettingsPageState extends State<SettingsPage> {
       );
     }
 
-    var colorPicker = ListTile(
+    final colorPicker = ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       title: Text(
         t('selectX', args: ['color'.t().toLowerCase()]),
         style: Theme.of(context).textTheme.titleMedium,
       ),
       subtitle: Text(
-        "${ColorTools.nameThatColor(settingsProvider.themeColor)} "
-        "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
+        '${ColorTools.nameThatColor(settingsProvider.themeColor)} '
+        '(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})',
       ),
       trailing: Container(
         width: 40,
@@ -368,7 +368,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
 
-    var useMaterialThemeSwitch = FutureBuilder(
+    final useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
             ? SwitchListTile(
@@ -474,7 +474,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ExpansionTile(
-                          leading: Icon(Icons.update),
+                          leading: const Icon(Icons.update),
                           title: Text('updates'.t()),
                           initiallyExpanded:
                               settingsProvider.updatesSectionExpanded,
@@ -610,7 +610,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: Theme.of(
                                         context,
@@ -869,7 +869,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap16,
                         ExpansionTile(
-                          leading: Icon(Icons.cloud_download),
+                          leading: const Icon(Icons.cloud_download),
                           title: Text('sourceSpecific'.t()),
                           initiallyExpanded:
                               settingsProvider.appViewSectionExpanded,
@@ -979,7 +979,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap16,
                         ExpansionTile(
-                          leading: Icon(Icons.palette_rounded),
+                          leading: const Icon(Icons.palette_rounded),
                           title: Text('appearance'.t()),
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
@@ -1163,7 +1163,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap16,
                         ExpansionTile(
-                          leading: Icon(Icons.list_rounded),
+                          leading: const Icon(Icons.list_rounded),
                           title: Text('appView'.t()),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
@@ -1335,7 +1335,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap16,
                         ExpansionTile(
-                          leading: Icon(Icons.more_horiz),
+                          leading: const Icon(Icons.more_horiz),
                           title: Text('misc'.t()),
                           initiallyExpanded: false,
                           onExpansionChanged: (bool expanded) {
@@ -1355,7 +1355,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap16,
                         ExpansionTile(
-                          leading: Icon(Icons.category_rounded),
+                          leading: const Icon(Icons.category_rounded),
                           title: Text('categories'.t()),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
@@ -1366,7 +1366,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap12,
-                            CategoryTagEditor(showLabelWhenNotEmpty: false),
+                            const CategoryTagEditor(showLabelWhenNotEmpty: false),
                           ],
                         ),
                       ],
@@ -1405,13 +1405,13 @@ class _LogsDialogState extends State<LogsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var logsProvider = context.watch<LogsProvider>();
+    final logsProvider = context.watch<LogsProvider>();
     void filterLogs(int days) {
       logsProvider
           .get(after: DateTime.now().subtract(Duration(days: days)))
           .then((value) {
             setState(() {
-              String l = value.map((e) => e.toString()).join('\n\n');
+              final String l = value.map((e) => e.toString()).join('\n\n');
               logString = l.isNotEmpty ? l : 'noLogs'.t();
             });
           });
@@ -1466,7 +1466,7 @@ class _LogsDialogState extends State<LogsDialog> {
       actions: [
         TextButton(
           onPressed: () async {
-            var cont =
+            final cont =
                 (await showDialog<bool>(
                   context: context,
                   builder: (BuildContext ctx) {
@@ -1488,7 +1488,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 )) ==
                 true;
             if (cont) {
-              logsProvider.clear();
+              await logsProvider.clear();
               if (mounted) {
                 Navigator.of(context).pop();
               }
@@ -1625,7 +1625,7 @@ class CategoryTagEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = context.watch<SettingsProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
 
     final allTags = settingsProvider.categories.keys.toList();
 
@@ -1705,7 +1705,7 @@ class _CategorySelectorState extends State<CategorySelector> {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = context.watch<SettingsProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
     final allTags = settingsProvider.categories.keys.toList();
 
     return Column(
@@ -1983,7 +1983,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   );
                 },
                 icon: const Icon(Icons.link_rounded, size: 18),
-                label: Text('Omer I.S. (@omeritzics)'),
+                label: const Text('Omer I.S. (@omeritzics)'),
                 style: TextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,
@@ -2003,7 +2003,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   );
                 },
                 icon: const Icon(Icons.code_rounded, size: 18),
-                label: Text('GitHub'),
+                label: const Text('GitHub'),
                 style: TextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,
@@ -2025,7 +2025,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   );
                 },
                 icon: const Icon(Icons.description_rounded, size: 18),
-                label: Text('GPL-3.0'),
+                label: const Text('GPL-3.0'),
                 style: TextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,

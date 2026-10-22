@@ -36,18 +36,18 @@ class Aptoide extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest(standardUrl, additionalSettings);
+    final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var idMatch = RegExp('"app":{"id":[0-9]+').firstMatch(res.body);
+    final idMatch = RegExp('"app":{"id":[0-9]+').firstMatch(res.body);
     String? id;
     if (idMatch != null) {
       id = res.body.substring(idMatch.start + 12, idMatch.end);
     } else {
       throw NoReleasesError();
     }
-    var res2 = await sourceRequest(
+    final res2 = await sourceRequest(
       'https://ws2.aptoide.com/api/7/getApp/app_id/$id',
       additionalSettings,
     );
@@ -62,13 +62,13 @@ class Aptoide extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
-    String appName = appDetails['name'] ?? 'app'.t();
-    String author = appDetails['developer']?['name'] ?? name;
-    String? dateStr = appDetails['updated'];
-    String? version = appDetails['file']?['vername'];
-    String? apkUrl = appDetails['file']?['path'];
-    String? remoteIconUrl = appDetails['media']?['icon'];
+    final appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
+    final String appName = appDetails['name'] ?? 'app'.t();
+    final String author = appDetails['developer']?['name'] ?? name;
+    final String? dateStr = appDetails['updated'];
+    final String? version = appDetails['file']?['vername'];
+    final String? apkUrl = appDetails['file']?['path'];
+    final String? remoteIconUrl = appDetails['media']?['icon'];
     if (version == null) {
       throw NoVersionError();
     }

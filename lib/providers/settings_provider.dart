@@ -22,7 +22,7 @@ Color updatiumThemeColor = const Color(0xFF3a79b7);
 
 Locale? tryParseLocale(String? localeString) {
   if (localeString == null) return null;
-  var split = localeString.split('-');
+  final split = localeString.split('-');
   if (split.length == 3) {
     return Locale.fromSubtags(languageCode: split[0], countryCode: split[2]);
   }
@@ -136,7 +136,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Color get themeColor {
-    int? colorCode = prefs?.getInt('themeColor');
+    final int? colorCode = prefs?.getInt('themeColor');
     return (colorCode != null) ? Color(colorCode) : updatiumThemeColor;
   }
 
@@ -221,7 +221,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool checkAndFlipFirstRun() {
-    bool result = prefs?.getBool('firstRun') ?? true;
+    final bool result = prefs?.getBool('firstRun') ?? true;
     if (result) {
       prefs?.setBool('firstRun', false);
     }
@@ -248,7 +248,7 @@ class SettingsProvider with ChangeNotifier {
   Future<bool> getInstallPermission({bool enforce = false}) async {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       // Explicit request as InstallPlugin request sometimes bugged
-      Fluttertoast.showToast(
+      await Fluttertoast.showToast(
         msg: 'pleaseAllowInstallPerm'.t(),
         toastLength: Toast.LENGTH_LONG,
       );
@@ -309,7 +309,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   String? getSettingString(String settingId) {
-    String? str = prefs?.getString(settingId);
+    final String? str = prefs?.getString(settingId);
     return str?.isNotEmpty == true ? str : null;
   }
 
@@ -332,13 +332,13 @@ class SettingsProvider with ChangeNotifier {
 
   void setCategories(Map<String, int> cats, {AppsProvider? appsProvider}) {
     if (appsProvider != null) {
-      List<App> changedApps = appsProvider
+      final List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
             if (!(a.app.categories.any((c) => !cats.keys.contains(c)))) {
               return null;
             }
-            var app = a.app.deepCopy();
+            final app = a.app.deepCopy();
             app.categories.removeWhere((c) => !cats.keys.contains(c));
             return app;
           })
@@ -385,10 +385,10 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Locale? get forcedLocale {
-    var flStr = prefs?.getString('forcedLocale');
+    final flStr = prefs?.getString('forcedLocale');
     Locale? fl;
     if (flStr != null) {
-      var parts = flStr.split('-');
+      final parts = flStr.split('-');
       if (parts.length >= 3) {
         fl = Locale.fromSubtags(
           languageCode: parts[0],
@@ -401,7 +401,7 @@ class SettingsProvider with ChangeNotifier {
         fl = Locale(parts[0]);
       }
     }
-    var set = supportedLocales.where((element) => element.key == fl).isNotEmpty
+    final set = supportedLocales.where((element) => element.key == fl).isNotEmpty
         ? fl
         : null;
     return set;
@@ -429,7 +429,7 @@ class SettingsProvider with ChangeNotifier {
     }
 
     // Try language-only match (e.g., 'en-US' → 'en')
-    var languageOnly = Locale(context.deviceLocale.languageCode);
+    final languageOnly = Locale(context.deviceLocale.languageCode);
     if (context.supportedLocales.contains(languageOnly)) {
       context.setLocale(languageOnly);
       context.deleteSaveLocale();
@@ -558,7 +558,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   DateTime get lastCompletedBGCheckTime {
-    int? temp = prefs?.getInt('lastCompletedBGCheckTime');
+    final int? temp = prefs?.getInt('lastCompletedBGCheckTime');
     return temp != null
         ? DateTime.fromMillisecondsSinceEpoch(temp)
         : DateTime.fromMillisecondsSinceEpoch(0);
@@ -579,9 +579,9 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<Uri?> getExportDir() async {
-    var uriString = prefs?.getString('exportDir');
+    final uriString = prefs?.getString('exportDir');
     if (uriString != null) {
-      Uri? uri = Uri.parse(uriString);
+      final Uri uri = Uri.parse(uriString);
       return uri;
     } else {
       return null;
@@ -590,7 +590,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> pickExportDir({bool remove = false}) async {
     if (remove) {
-      prefs?.remove('exportDir');
+      await prefs?.remove('exportDir');
       notifyListeners();
       return;
     }
@@ -599,7 +599,7 @@ class SettingsProvider with ChangeNotifier {
     const platform = MethodChannel('io.github.omeritzics.updatium/saf');
     final String? uri = await platform.invokeMethod('openDirectoryTree');
     if (uri != null) {
-      prefs?.setString('exportDir', uri);
+      await prefs?.setString('exportDir', uri);
       notifyListeners();
     }
   }
@@ -627,7 +627,7 @@ class SettingsProvider with ChangeNotifier {
       return prefs?.getInt('exportSettings') ??
           1; // 0 for no, 1 for yes but no secrets, 2 for everything
     } catch (e) {
-      var val = prefs?.getBool('exportSettings') == true ? 1 : 0;
+      final val = prefs?.getBool('exportSettings') == true ? 1 : 0;
       prefs?.setInt('exportSettings', val);
       return val;
     }

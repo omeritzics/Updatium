@@ -21,10 +21,16 @@ BUILD_DIR="$2"
 read -s -p -r "Enter your keystore password: " KEYSTORE_PASSWORD
 
 if [ -z "$ANDROID_HOME" ]; then
-  ANDROID_HOME=~/Android/Sdk
+  ANDROID_HOME="$HOME/Android/Sdk"
 fi
 if [ ! -d "$ANDROID_HOME" ]; then
   echo "Could not find Android SDK!" >&2
+  exit 1
+fi
+
+APKSIGNER=$(find "${ANDROID_HOME}/build-tools" -maxdepth 2 -name 'apksigner' -type f | sort -V | tail -1)
+if [ -z "$APKSIGNER" ]; then
+  echo "Could not find apksigner in ${ANDROID_HOME}/build-tools!" >&2
   exit 1
 fi
 

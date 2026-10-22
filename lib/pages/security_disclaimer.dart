@@ -146,7 +146,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
               width: double.infinity,
               child: M3EFilledButton(
                 onPressed: () async {
-                  HapticFeedback.lightImpact();
+                  await HapticFeedback.lightImpact();
                   if (!mounted) return;
                   await _saveDisclaimerAccepted();
                   if (mounted) {

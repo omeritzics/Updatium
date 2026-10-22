@@ -96,7 +96,7 @@ class MultiAppMultiError extends UpdatiumError {
       error = error.message;
     }
     rawErrors[appId] = error;
-    var string = error.toString();
+    final string = error.toString();
     var tempIds = idsByErrorString.remove(string);
     tempIds ??= [];
     tempIds.add(appId);
@@ -172,7 +172,7 @@ void showError(dynamic e, BuildContext context) {
 }
 
 String list2FriendlyString(List<String> list) {
-  var isUsingEnglish = isEnglish();
+  final isUsingEnglish = isEnglish();
   return list.length == 2
       ? '${list[0]} ${t('and')} ${list[1]}'
       : list

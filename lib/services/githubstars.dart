@@ -15,14 +15,14 @@ class GitHubStars implements MassAppUrlSource {
     String username,
     int page,
   ) async {
-    var resUrl =
+    final resUrl =
         'https://api.github.com/users/$username/starred?per_page=100&page=$page';
-    Response res = await get(
+    final Response res = await get(
       Uri.parse(resUrl),
       headers: await GitHub().getRequestHeaders({}, resUrl),
     );
     if (res.statusCode == 200) {
-      Map<String, List<String>> urlsWithDescriptions = {};
+      final Map<String, List<String>> urlsWithDescriptions = {};
       for (var e in (jsonDecode(res.body) as List<dynamic>)) {
         urlsWithDescriptions.addAll({
           e['html_url'] as String: [
@@ -35,7 +35,7 @@ class GitHubStars implements MassAppUrlSource {
       }
       return urlsWithDescriptions;
     } else {
-      var gh = GitHub();
+      final gh = GitHub();
       gh.rateLimitErrorCheck(res);
       throw getUpdatiumHttpError(res);
     }
@@ -48,10 +48,10 @@ class GitHubStars implements MassAppUrlSource {
     if (args.length != requiredArgs.length) {
       throw UpdatiumError('wrongArgNum'.t());
     }
-    Map<String, List<String>> urlsWithDescriptions = {};
+    final Map<String, List<String>> urlsWithDescriptions = {};
     var page = 1;
     while (true) {
-      var pageUrls = await getOnePageOfUserStarredUrlsWithDescriptions(
+      final pageUrls = await getOnePageOfUserStarredUrlsWithDescriptions(
         args[0],
         page++,
       );

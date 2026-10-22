@@ -51,9 +51,9 @@ class GitLab extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    var urlSegments = url.split('/');
-    var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
-    var processedUrl = urlSegments
+    final urlSegments = url.split('/');
+    final cutOffIndex = urlSegments.indexWhere((s) => s == '-');
+    final processedUrl = urlSegments
         .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
         .join('/');
     return SourceProvider().standardizeUrlWithRegex(
@@ -64,13 +64,13 @@ class GitLab extends AppSource {
   }
 
   Future<String?> getPATIfAny(Map<String, dynamic> additionalSettings) async {
-    SettingsProvider settingsProvider = SettingsProvider();
+    final SettingsProvider settingsProvider = SettingsProvider();
     await settingsProvider.initializeSettings();
-    var sourceConfig = await getSourceConfigValues(
+    final sourceConfig = await getSourceConfigValues(
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['gitlabPATLabel'];
+    final String? creds = sourceConfig['gitlabPATLabel'];
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
@@ -79,14 +79,14 @@ class GitLab extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    var url =
+    final url =
         'https://${hosts[0]}/api/v4/projects?search=${Uri.encodeQueryComponent(query)}';
-    var res = await sourceRequest(url, {});
+    final res = await sourceRequest(url, {});
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    var json = jsonDecode(res.body) as List<dynamic>;
-    Map<String, List<String>> results = {};
+    final json = jsonDecode(res.body) as List<dynamic>;
+    final Map<String, List<String>> results = {};
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
@@ -108,7 +108,7 @@ class GitLab extends AppSource {
   }) async {
     // Change headers to pacify, e.g. cloudflare protection
     // Related to: (#1397, #1389, #1384, #1382, #1381, #1380, #1359, #854, #785, #697)
-    var headers = <String, String>{};
+    final headers = <String, String>{};
     headers[HttpHeaders.refererHeader] = 'https://${hosts[0]}';
     if (headers.isNotEmpty) {
       return headers;
@@ -123,8 +123,8 @@ class GitLab extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
-    String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
+    final String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
+    final String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
     return '$assetUrl${(Uri.parse(assetUrl).query.isEmpty ? '?' : '&')}$optionalAuth';
   }
 
@@ -134,27 +134,27 @@ class GitLab extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     // Prepare request params
-    var names = GitHub(hostChanged: true).getAppNames(standardUrl);
-    String projectUriComponent =
+    final names = GitHub(hostChanged: true).getAppNames(standardUrl);
+    final String projectUriComponent =
         '${Uri.encodeComponent(names.author)}%2F${Uri.encodeComponent(names.name)}';
-    bool trackOnly = additionalSettings['trackOnly'] == true;
-    String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
-    String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
+    final bool trackOnly = additionalSettings['trackOnly'] == true;
+    final String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
+    final String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
 
     // Get project ID
-    Response res0 = await sourceRequest(
+    final Response res0 = await sourceRequest(
       'https://${hosts[0]}/api/v4/projects/$projectUriComponent?$optionalAuth',
       additionalSettings,
     );
     if (res0.statusCode != 200) {
       throw getUpdatiumHttpError(res0);
     }
-    int? projectId = jsonDecode(res0.body)['id'];
+    final int? projectId = jsonDecode(res0.body)['id'];
     if (projectId == null) {
       throw NoReleasesError();
     }
     // Request data from REST API
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       'https://${hosts[0]}/api/v4/projects/$projectUriComponent/${trackOnly ? 'repository/tags' : 'releases'}?$optionalAuth',
       additionalSettings,
     );
@@ -163,13 +163,13 @@ class GitLab extends AppSource {
     }
 
     // Extract .apk details from received data
-    var jsonData = jsonDecode(res.body) as List<dynamic>;
+    final jsonData = jsonDecode(res.body) as List<dynamic>;
     Iterable<APKDetails> apkDetailsList = [];
     apkDetailsList = jsonData.map((e) {
-      var apkUrlsFromAssets = (e['assets']?['links'] as List<dynamic>? ?? [])
+      final apkUrlsFromAssets = (e['assets']?['links'] as List<dynamic>? ?? [])
           .map((e) {
-            var url = (e['direct_asset_url'] ?? e['url'] ?? '') as String;
-            var parsedUrl = url.isNotEmpty ? Uri.parse(url) : null;
+            final url = (e['direct_asset_url'] ?? e['url'] ?? '') as String;
+            final parsedUrl = url.isNotEmpty ? Uri.parse(url) : null;
             return MapEntry(
               (e['name'] ??
                       (parsedUrl != null && parsedUrl.pathSegments.isNotEmpty
@@ -186,7 +186,7 @@ class GitLab extends AppSource {
                     source_provider.hasSupportedApkExtension(s.value)),
           )
           .toList();
-      var uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
+      final uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
           .split('](')
           .join('\n')
           .split('${source_provider.supportedApkExtensions[0]})')
@@ -203,16 +203,16 @@ class GitLab extends AppSource {
           )
           .map((s) => 'https://${hosts[0]}/-/project/$projectId$s')
           .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l));
-      Map<String, String> apkUrls = {};
+      final Map<String, String> apkUrls = {};
       for (var entry in apkUrlsFromAssets) {
         apkUrls[entry.key] = entry.value;
       }
       for (var entry in uploadedAPKsFromDescription) {
         apkUrls[entry.key] = entry.value;
       }
-      var releaseDateString =
+      final releaseDateString =
           e['released_at'] ?? e['created_at'] ?? e['commit']?['created_at'];
-      DateTime? releaseDate = releaseDateString != null
+      final DateTime? releaseDate = releaseDateString != null
           ? DateTime.parse(releaseDateString)
           : null;
       return APKDetails(
@@ -227,7 +227,7 @@ class GitLab extends AppSource {
     }
     var finalResult = apkDetailsList.first;
     // Fallback procedure
-    bool fallbackToOlderReleases =
+    final bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
     if (finalResult.apkUrls.isEmpty && fallbackToOlderReleases && !trackOnly) {
       apkDetailsList = apkDetailsList

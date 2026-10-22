@@ -23,17 +23,17 @@ class Signal extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     // Signal provides a JSON file with the latest APK info
-    var jsonUrl = 'https://updates.signal.org/android/latest.json';
-    Response res = await sourceRequest(jsonUrl, additionalSettings);
+    const jsonUrl = 'https://updates.signal.org/android/latest.json';
+    final Response res = await sourceRequest(jsonUrl, additionalSettings);
 
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
 
-    var json = jsonDecode(res.body) as Map<String, dynamic>;
+    final json = jsonDecode(res.body) as Map<String, dynamic>;
 
-    var version = json['versionName'] as String?;
-    var apkUrl = json['url'] as String?;
+    final version = json['versionName'] as String?;
+    final apkUrl = json['url'] as String?;
 
     if (version == null || apkUrl == null) {
       throw NoVersionError();
@@ -42,13 +42,13 @@ class Signal extends AppSource {
     // Also try to get the changelog/release notes
     String? changeLog;
     try {
-      var releaseNotesUrl =
+      const releaseNotesUrl =
           'https://updates.signal.org/android/release-notes.json';
-      var notesRes = await sourceRequest(releaseNotesUrl, additionalSettings);
+      final notesRes = await sourceRequest(releaseNotesUrl, additionalSettings);
       if (notesRes.statusCode == 200) {
-        var notesJson = jsonDecode(notesRes.body) as Map<String, dynamic>;
+        final notesJson = jsonDecode(notesRes.body) as Map<String, dynamic>;
         // Find the release notes for this version
-        var releases = notesJson['releases'] as List<dynamic>?;
+        final releases = notesJson['releases'] as List<dynamic>?;
         if (releases != null) {
           for (var release in releases) {
             if (release['version'] == version ||

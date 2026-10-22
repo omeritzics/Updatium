@@ -48,7 +48,7 @@ void main() {
 
   group('Conversion Helper Tests', () {
     test('stringMapListTo2DList converts MapEntry list to 2D list', () {
-      final input = [MapEntry('name', 'url')];
+      final input = [const MapEntry('name', 'url')];
       final result = stringMapListTo2DList(input);
       expect(
         result,
@@ -83,9 +83,9 @@ void main() {
   group('APK Preference Tests', () {
     test('preferApkOverXapk prioritizes .apk over .xapk', () {
       final input = [
-        MapEntry('app.xapk', 'url1'),
-        MapEntry('app.apk', 'url2'),
-        MapEntry('app.zip', 'url3'),
+        const MapEntry('app.xapk', 'url1'),
+        const MapEntry('app.apk', 'url2'),
+        const MapEntry('app.zip', 'url3'),
       ];
       final result = preferApkOverXapk(input);
       expect(result.first.key, equals('app.apk'));

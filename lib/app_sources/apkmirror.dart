@@ -23,7 +23,7 @@ class APKMirror extends AppSource {
     bool forAPKDownload = true,
   }) async {
     return {
-      "User-Agent":
+      'User-Agent':
           "Updatium/${(await getInstalledInfo(updatiumId))?.versionName ?? '1.0.0'}",
     };
   }
@@ -46,24 +46,24 @@ class APKMirror extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    bool fallbackToOlderReleases =
+    final bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
-    String? regexFilter =
+    final String? regexFilter =
         (additionalSettings['filterReleaseTitlesByRegEx'] as String?)
                 ?.isNotEmpty ==
             true
         ? additionalSettings['filterReleaseTitlesByRegEx']
         : null;
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       '$standardUrl/feed/',
       additionalSettings,
     );
     if (res.statusCode == 200) {
-      var items = parse(res.body).querySelectorAll('item');
+      final items = parse(res.body).querySelectorAll('item');
       dynamic targetRelease;
       for (int i = 0; i < items.length; i++) {
         if (!fallbackToOlderReleases && i > 0) break;
-        String? nameToFilter = items[i].querySelector('title')?.innerHtml;
+        final String? nameToFilter = items[i].querySelector('title')?.innerHtml;
         if (regexFilter != null &&
             nameToFilter != null &&
             !RegExp(regexFilter).hasMatch(nameToFilter.trim())) {
@@ -72,14 +72,14 @@ class APKMirror extends AppSource {
         targetRelease = items[i];
         break;
       }
-      String? titleString = targetRelease?.querySelector('title')?.innerHtml;
-      String? dateString = targetRelease
+      final String? titleString = targetRelease?.querySelector('title')?.innerHtml;
+      final String? dateString = targetRelease
           ?.querySelector('pubDate')
           ?.innerHtml
           .split(' ')
           .sublist(0, 5)
           .join(' ');
-      DateTime? releaseDate = dateString != null
+      final DateTime? releaseDate = dateString != null
           ? HttpDate.parse('$dateString GMT')
           : null;
       String? version = titleString

@@ -75,12 +75,12 @@ void main() {
 
     test('moveStrToEndMapEntry moves entry to end', () {
       final arr = [
-        MapEntry('a', 1),
-        MapEntry('b', 2),
-        MapEntry('c', 3),
-        MapEntry('target', 4),
+        const MapEntry('a', 1),
+        const MapEntry('b', 2),
+        const MapEntry('c', 3),
+        const MapEntry('target', 4),
       ];
-      final result = moveStrToEndMapEntryWithCount(arr, MapEntry('target', 4));
+      final result = moveStrToEndMapEntryWithCount(arr, const MapEntry('target', 4));
       expect(result.last.key, equals('target'));
     });
   });

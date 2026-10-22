@@ -149,7 +149,7 @@ void main() {
     });
 
     test('stringMapListTo2DList converts correctly', () {
-      final input = [MapEntry('key1', 'value1'), MapEntry('key2', 'value2')];
+      final input = [const MapEntry('key1', 'value1'), const MapEntry('key2', 'value2')];
       final output = stringMapListTo2DList(input);
       expect(
         output,
@@ -172,7 +172,7 @@ void main() {
     });
 
     test('generateTempID produces consistent hash', () {
-      final url = 'https://github.com/user/repo';
+      const url = 'https://github.com/user/repo';
       final settings = {'key': 'value'};
       final id1 = sourceProvider.generateTempID(url, settings);
       final id2 = sourceProvider.generateTempID(url, settings);
@@ -180,8 +180,8 @@ void main() {
     });
 
     test('generateTempID produces different IDs for different URLs', () {
-      final url1 = 'https://github.com/user/repo1';
-      final url2 = 'https://github.com/user/repo2';
+      const url1 = 'https://github.com/user/repo1';
+      const url2 = 'https://github.com/user/repo2';
       final id1 = sourceProvider.generateTempID(url1, {});
       final id2 = sourceProvider.generateTempID(url2, {});
       expect(id1, isNot(equals(id2)));
@@ -262,8 +262,8 @@ void main() {
   group('APK Filtering Tests', () {
     test('filterApks returns all when no filter', () {
       final apks = [
-        MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
-        MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
+        const MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
+        const MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
       ];
       final filtered = filterApks(apks, null, null);
       expect(filtered.length, equals(2));
@@ -271,8 +271,8 @@ void main() {
 
     test('filterApks filters by regex', () {
       final apks = [
-        MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
-        MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
+        const MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
+        const MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
       ];
       final filtered = filterApks(apks, 'arm64', null);
       expect(filtered.length, equals(1));
@@ -281,8 +281,8 @@ void main() {
 
     test('filterApks inverts filter', () {
       final apks = [
-        MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
-        MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
+        const MapEntry('app-arm64.apk', 'https://example.com/app-arm64.apk'),
+        const MapEntry('app-x86.apk', 'https://example.com/app-x86.apk'),
       ];
       final filtered = filterApks(apks, 'arm64', true);
       expect(filtered.length, equals(1));

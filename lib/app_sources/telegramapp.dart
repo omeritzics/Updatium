@@ -20,22 +20,22 @@ class TelegramApp extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    Response res = await sourceRequest(
+    final Response res = await sourceRequest(
       'https://t.me/s/TAndroidAPK',
       additionalSettings,
     );
     if (res.statusCode == 200) {
-      var http = parse(res.body);
-      var messages = http.querySelectorAll(
+      final http = parse(res.body);
+      final messages = http.querySelectorAll(
         '.tgme_widget_message_text.js-message_text',
       );
-      var version = messages.isNotEmpty
+      final version = messages.isNotEmpty
           ? messages.last.innerHtml.split('\n').first.trim().split(' ').first
           : null;
       if (version == null) {
         throw NoVersionError();
       }
-      String? apkUrl = 'https://telegram.org/dl/android/apk';
+      const String apkUrl = 'https://telegram.org/dl/android/apk';
       return APKDetails(version, [
         MapEntry<String, String>(
           'telegram-$version${source_provider.supportedApkExtensions[0]}',

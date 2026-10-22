@@ -33,11 +33,11 @@ class Tencent extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String appId = (await tryInferringAppId(standardUrl))!;
-    String baseHost = Uri.parse(
+    final String appId = (await tryInferringAppId(standardUrl))!;
+    final String baseHost = Uri.parse(
       standardUrl,
     ).host.split('.').reversed.toList().sublist(0, 2).reversed.join('.');
-    var res = await sourceRequest(
+    final res = await sourceRequest(
       'https://a.app.$baseHost/o/simple.jsp?pkgname=$appId',
       additionalSettings,
       followRedirects: false,
@@ -59,15 +59,15 @@ class Tencent extends AppSource {
       if (json == null) {
         throw NoReleasesError();
       }
-      var version = json['versionName'];
+      final version = json['versionName'];
       var apkUrl = json['apkUrl64'];
       apkUrl ??= json['apkUrl'];
       if (apkUrl == null) {
         throw NoAPKError();
       }
-      var appName = json['appName'];
-      var author = json['author'];
-      var apkName =
+      final appName = json['appName'];
+      final author = json['author'];
+      final apkName =
           Uri.parse(apkUrl).queryParameters['fsname'] ??
           '${appId}_$version.apk';
       return APKDetails(version, [

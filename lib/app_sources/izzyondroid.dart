@@ -33,8 +33,8 @@ class IzzyOnDroid extends FDroid {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? appId = await tryInferringAppId(standardUrl);
-    var details = getAPKUrlsFromFDroidPackagesAPIResponse(
+    final String? appId = await tryInferringAppId(standardUrl);
+    final details = getAPKUrlsFromFDroidPackagesAPIResponse(
       await sourceRequest(
         'https://apt.izzysoft.de/fdroid/api/v1/packages/$appId',
         additionalSettings,
@@ -46,15 +46,15 @@ class IzzyOnDroid extends FDroid {
     );
     // Try to fetch author from F-Droid package page
     try {
-      var res = await sourceRequest(
+      final res = await sourceRequest(
         'https://android.izzysoft.de/packages/$appId',
         additionalSettings,
       );
       if (res.statusCode >= 200 && res.statusCode < 300) {
-        var body = parse(res.body);
-        var authorElement = body.querySelector('a[href^="mailto:"]');
+        final body = parse(res.body);
+        final authorElement = body.querySelector('a[href^="mailto:"]');
         if (authorElement != null) {
-          var authorText = authorElement.text.trim();
+          final authorText = authorElement.text.trim();
           if (authorText.isNotEmpty) {
             details.names.author = authorText;
           }
@@ -65,13 +65,13 @@ class IzzyOnDroid extends FDroid {
     }
     // Try to fetch changelog from GitLab metadata
     try {
-      var res = await sourceRequest(
+      final res = await sourceRequest(
         'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
         additionalSettings,
       );
       if (res.statusCode >= 200 && res.statusCode < 300) {
-        var lines = res.body.split('\n');
-        var changelogUrls = lines
+        final lines = res.body.split('\n');
+        final changelogUrls = lines
             .where((l) => l.startsWith('Changelog: '))
             .map((e) => e.split(' ').sublist(1).join(' '));
         if (changelogUrls.isNotEmpty) {

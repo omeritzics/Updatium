@@ -71,11 +71,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
   @override
   Widget build(BuildContext context) {
-    SourceProvider sourceProvider = SourceProvider();
-    var appsProvider = context.watch<AppsProvider>();
-    var settingsProvider = context.watch<SettingsProvider>();
+    final SourceProvider sourceProvider = SourceProvider();
+    final appsProvider = context.watch<AppsProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
 
-    urlListImport({String? initValue, bool overrideInitValid = false}) {
+    void urlListImport({String? initValue, bool overrideInitValid = false}) {
       final formKey = GlobalKey<FormState>();
       final controller = TextEditingController(text: initValue ?? '');
 
@@ -94,7 +94,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
-                    var lines = value.trim().split('\n');
+                    final lines = value.trim().split('\n');
                     for (int i = 0; i < lines.length; i++) {
                       try {
                         sourceProvider.getSource(lines[i]);
@@ -126,7 +126,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       ).then((value) async {
         controller.dispose();
         if (value != null && value.isNotEmpty) {
-          var urls = value.trim().split('\n');
+          final urls = value.trim().split('\n');
           setState(() {
             importInProgress = true;
           });
@@ -142,7 +142,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 context,
               );
             } else {
-              showDialog(
+              await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
                   return ImportErrorDialog(
@@ -166,7 +166,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       });
     }
 
-    runUpdatiumExport({bool pickOnly = false}) async {
+    Future<void> runUpdatiumExport({bool pickOnly = false}) async {
       settingsProvider.selectionClick();
       try {
         final result = await appsProvider.export(
@@ -182,15 +182,15 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
     }
 
-    runUpdatiumImport() async {
-      HapticFeedback.selectionClick();
+    Future<void> runUpdatiumImport() async {
+      await HapticFeedback.selectionClick();
       setState(() {
         importInProgress = true;
       });
       try {
         final result = await DocMan.pick.files(limit: 1);
         if (result.isNotEmpty) {
-          String data = File(result.first.path).readAsStringSync();
+          final String data = File(result.first.path).readAsStringSync();
           try {
             jsonDecode(data);
           } catch (e) {
@@ -198,7 +198,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           }
           final value = await appsProvider.import(data);
           if (!mounted) return;
-          var cats = settingsProvider.categories;
+          final cats = settingsProvider.categories;
           appsProvider.apps.forEach((key, valueApp) {
             for (var c in valueApp.app.categories) {
               if (!cats.containsKey(c)) {
@@ -224,14 +224,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
     }
 
-    runUrlImport() async {
+    Future<void> runUrlImport() async {
       setState(() {
         importInProgress = true;
       });
       try {
         final result = await DocMan.pick.files(limit: 1);
         if (result.isNotEmpty) {
-          await urlListImport(
+          urlListImport(
             overrideInitValid: true,
             initValue: RegExp('https?://[^"]+')
                 .allMatches(File(result.first.path).readAsStringSync())
@@ -261,14 +261,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       }
     }
 
-    runMassSourceImport(MassAppUrlSource source) {
+    void runMassSourceImport(MassAppUrlSource source) {
       () async {
             final formKey = GlobalKey<FormState>();
             final controllers = {
               for (var arg in source.requiredArgs) arg: TextEditingController(),
             };
 
-            var values =
+            final values =
                 await showDialog<Map<String, String>?>(
                   context: context,
                   builder: (BuildContext ctx) {
@@ -319,17 +319,17 @@ class _ImportExportPageState extends State<ImportExportPage> {
               setState(() {
                 importInProgress = true;
               });
-              var urlsWithDescriptions = await source.getUrlsWithDescriptions(
+              final urlsWithDescriptions = await source.getUrlsWithDescriptions(
                 values.values.map((e) => e.toString()).toList(),
               );
-              var selectedUrls = await showDialog<List<String>?>(
+              final selectedUrls = await showDialog<List<String>?>(
                 context: context,
                 builder: (BuildContext ctx) {
                   return SelectionModal(entries: urlsWithDescriptions);
                 },
               );
               if (selectedUrls != null) {
-                var errors = await appsProvider.addAppsByURL(selectedUrls);
+                final errors = await appsProvider.addAppsByURL(selectedUrls);
                 if (errors.isEmpty) {
                   showMessage(
                     t(
@@ -339,7 +339,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     context,
                   );
                 } else {
-                  showDialog(
+                  await showDialog(
                     context: context,
                     builder: (BuildContext ctx) {
                       return ImportErrorDialog(
@@ -365,7 +365,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           });
     }
 
-    var sourceStrings = <String, List<String>>{};
+    final sourceStrings = <String, List<String>>{};
     sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
       sourceStrings[s.name] = [s.name];
     });

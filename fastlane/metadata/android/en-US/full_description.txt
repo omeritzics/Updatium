@@ -25,10 +25,18 @@
 			<li>APKMirror</li>
 			<li>Huawei AppGallery</li>
 			<li>Tencent App Store</li>
-			<li>CoolApk</li>
 			<li>vivo App Store (CN)</li>
-			<li>Jenkins Jobs</li>
 			<li>RuStore</li>
+			<li>Farsroid</li>
+			<li>Samsung Galaxy Store</li>
+			<li>LiteAPKs</li>
+			<li>APK4Free</li>
+			<li>CoolApk</li>
+			<li>SourceForge</li>
+			<li>Jenkins Jobs</li>
+			<li>APKMirror (Track-Only)</li>
+			<li>APKCombo</li>
+			<li>RockMods (Track-Only)</li>
 		</ul>
 	</li>
 	<li>
@@ -38,6 +46,7 @@
 			<li>Neutron Code</li>
 		</ul>
 	</li>
+	<li>Direct APK Link</li>
 	<li><p>"HTML" (Fallback): Any other URL that returns an HTML page with links to APK files</p></li>
 </ul>
 <p>
