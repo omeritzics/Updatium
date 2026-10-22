@@ -157,7 +157,3 @@ flutter:
     - family: NotoSansArabic
       fonts:
         - asset: assets/fonts/NotoSansArabic-Regular.ttf
-          
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
