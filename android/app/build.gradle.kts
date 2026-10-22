@@ -26,11 +26,6 @@ if (keystorePropertiesExists) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
-}
 
 android {
     namespace = "io.github.omeritzics.updatium"

@@ -119,7 +119,6 @@ flutter:
   assets:
     - assets/translations/
     - assets/graphics/
-    - assets/ca/
     - LICENSE.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
