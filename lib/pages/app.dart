@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -618,7 +618,8 @@ class _AppPageState extends State<AppPage> {
             originalSettings['releaseDateAsVersion'] == true;
         if (releaseDateVersionEnabled) {
           if (app.app.releaseDate != null) {
-            final bool isUpdated = app.app.installedVersion == app.app.latestVersion;
+            final bool isUpdated =
+                app.app.installedVersion == app.app.latestVersion;
             app.app.latestVersion = app.app.releaseDate!.microsecondsSinceEpoch
                 .toString();
             if (isUpdated) {
@@ -873,9 +874,7 @@ class _AppPageState extends State<AppPage> {
                         getFullInfoColumn(),
                         if (app.downloadProgress != null)
                           const Padding(
-                            padding: EdgeInsetsDirectional.only(
-                              bottom: 32,
-                            ),
+                            padding: EdgeInsetsDirectional.only(bottom: 32),
                           ),
                         // Extra bottom padding to clear the docked toolbar and FAB
                         const SizedBox(height: 160),
