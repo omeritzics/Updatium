@@ -708,35 +708,39 @@ class AppsProvider with ChangeNotifier {
       }
     });
     () async {
-      await settingsProvider.initializeSettings();
-      APKDir = Directory('${(await getAppStorageDir()).path}/apks');
-      if (!APKDir.existsSync()) {
-        APKDir.createSync();
-      }
-      // Clean up old external cache directory to reduce cache usage
-      var cacheDirs = await getExternalCacheDirectories();
-      if (cacheDirs?.isNotEmpty ?? false) {
-        var oldCacheDir = cacheDirs!.first;
-        if (oldCacheDir.existsSync()) {
-          try {
-            oldCacheDir.deleteSync(recursive: true);
-          } catch (e) {
-            // Ignore deletion errors
+      try {
+        await settingsProvider.initializeSettings();
+        APKDir = Directory('${(await getAppStorageDir()).path}/apks');
+        if (!APKDir.existsSync()) {
+          APKDir.createSync();
+        }
+        // Clean up old external cache directory to reduce cache usage
+        var cacheDirs = await getExternalCacheDirectories();
+        if (cacheDirs?.isNotEmpty ?? false) {
+          var oldCacheDir = cacheDirs!.first;
+          if (oldCacheDir.existsSync()) {
+            try {
+              oldCacheDir.deleteSync(recursive: true);
+            } catch (e) {
+              // Ignore deletion errors
+            }
           }
         }
-      }
-      if (!isBg) {
-        // Load Apps into memory (in background processes, this is done later instead of in the constructor)
-        await loadApps();
-        // Delete any partial APKs (if safe to do so)
-        var cutoff = DateTime.now().subtract(const Duration(days: 7));
-        APKDir.listSync()
-            .where((element) => element.statSync().modified.isBefore(cutoff))
-            .forEach((partialApk) {
-              if (!areDownloadsRunning()) {
-                partialApk.delete(recursive: true);
-              }
-            });
+        if (!isBg) {
+          // Load Apps into memory (in background processes, this is done later instead of in the constructor)
+          await loadApps();
+          // Delete any partial APKs (if safe to do so)
+          var cutoff = DateTime.now().subtract(const Duration(days: 7));
+          APKDir.listSync()
+              .where((element) => element.statSync().modified.isBefore(cutoff))
+              .forEach((partialApk) {
+                if (!areDownloadsRunning()) {
+                  partialApk.delete(recursive: true);
+                }
+              });
+        }
+      } catch (e) {
+        debugPrint('Error during AppsProvider initialization: $e');
       }
     }();
   }

@@ -124,18 +124,29 @@ void main() async {
   }
   await initializeDateFormatting();
   await QuickLocalization.ensureInitialized();
-  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
-        statusBarColor: Colors.transparent,
-        systemStatusBarContrastEnforced: false,
-      ),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // Safely check Android version
+  try {
+    final androidInfo = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+    if (androidInfo.version.sdkInt >= 29) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+          statusBarColor: Colors.transparent,
+          systemStatusBarContrastEnforced: false,
+        ),
+      );
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+  } catch (e) {
+    debugPrint('Failed to get Android info or timed out: $e');
   }
+  
   final np = NotificationsProvider();
-  await np.initialize();
+  try {
+    await np.initialize().timeout(const Duration(seconds: 5));
+  } catch (e) {
+    debugPrint('Failed to initialize notifications or timed out: $e');
+  }
   FlutterForegroundTask.initCommunicationPort();
 
   runApp(

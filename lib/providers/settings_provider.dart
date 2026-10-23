@@ -59,10 +59,14 @@ class SettingsProvider with ChangeNotifier {
   Future<void> initializeSettings() async {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
-    final info = await DeviceInfoPlugin().androidInfo;
-    isTV =
-        info.systemFeatures.contains('android.hardware.type.television') ||
-        info.systemFeatures.contains('android.software.leanback');
+    try {
+      final info = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+      isTV =
+          info.systemFeatures.contains('android.hardware.type.television') ||
+          info.systemFeatures.contains('android.software.leanback');
+    } catch (e) {
+      debugPrint('Failed to get Android info or timed out: $e');
+    }
     notifyListeners();
   }
 
