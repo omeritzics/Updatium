@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:updatium/pages/home.dart';
@@ -13,6 +13,10 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+// flutter/material.dart is imported with a restricted show so that
+// DynamicColorBuilder's callback ColorScheme type (Flutter's) can be
+// referenced explicitly. All widget/theme types come from material_ui.
+import 'package:flutter/material.dart' as flutter_m show ColorScheme;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
@@ -171,6 +175,61 @@ void main() async {
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
+/// Converts a [flutter_m.ColorScheme] (from dynamic_color / flutter/material.dart)
+/// into a [ColorScheme] from material_ui. Both classes share the same Color
+/// fields and Brightness enum (from dart:ui), so the conversion is lossless.
+ColorScheme _toMuiColorScheme(flutter_m.ColorScheme s) {
+  return ColorScheme(
+    brightness: s.brightness,
+    primary: s.primary,
+    onPrimary: s.onPrimary,
+    primaryContainer: s.primaryContainer,
+    onPrimaryContainer: s.onPrimaryContainer,
+    primaryFixed: s.primaryFixed,
+    primaryFixedDim: s.primaryFixedDim,
+    onPrimaryFixed: s.onPrimaryFixed,
+    onPrimaryFixedVariant: s.onPrimaryFixedVariant,
+    secondary: s.secondary,
+    onSecondary: s.onSecondary,
+    secondaryContainer: s.secondaryContainer,
+    onSecondaryContainer: s.onSecondaryContainer,
+    secondaryFixed: s.secondaryFixed,
+    secondaryFixedDim: s.secondaryFixedDim,
+    onSecondaryFixed: s.onSecondaryFixed,
+    onSecondaryFixedVariant: s.onSecondaryFixedVariant,
+    tertiary: s.tertiary,
+    onTertiary: s.onTertiary,
+    tertiaryContainer: s.tertiaryContainer,
+    onTertiaryContainer: s.onTertiaryContainer,
+    tertiaryFixed: s.tertiaryFixed,
+    tertiaryFixedDim: s.tertiaryFixedDim,
+    onTertiaryFixed: s.onTertiaryFixed,
+    onTertiaryFixedVariant: s.onTertiaryFixedVariant,
+    error: s.error,
+    onError: s.onError,
+    errorContainer: s.errorContainer,
+    onErrorContainer: s.onErrorContainer,
+    surface: s.surface,
+    onSurface: s.onSurface,
+    surfaceDim: s.surfaceDim,
+    surfaceBright: s.surfaceBright,
+    surfaceContainerLowest: s.surfaceContainerLowest,
+    surfaceContainerLow: s.surfaceContainerLow,
+    surfaceContainer: s.surfaceContainer,
+    surfaceContainerHigh: s.surfaceContainerHigh,
+    surfaceContainerHighest: s.surfaceContainerHighest,
+    onSurfaceVariant: s.onSurfaceVariant,
+    outline: s.outline,
+    outlineVariant: s.outlineVariant,
+    shadow: s.shadow,
+    scrim: s.scrim,
+    inverseSurface: s.inverseSurface,
+    onInverseSurface: s.onInverseSurface,
+    inversePrimary: s.inversePrimary,
+    surfaceTint: s.surfaceTint,
+  );
+}
+
 class Updatium extends StatefulWidget {
   const Updatium({super.key});
 
@@ -327,7 +386,7 @@ class _UpdatiumState extends State<Updatium> {
     });
 
     return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      builder: (flutter_m.ColorScheme? lightDynamic, flutter_m.ColorScheme? darkDynamic) {
         ColorScheme lightColorScheme;
         ColorScheme darkColorScheme;
 
@@ -335,8 +394,8 @@ class _UpdatiumState extends State<Updatium> {
         if (lightDynamic != null &&
             darkDynamic != null &&
             settingsProvider.useMaterialYou) {
-          lightColorScheme = lightDynamic;
-          darkColorScheme = darkDynamic;
+          lightColorScheme = _toMuiColorScheme(lightDynamic);
+          darkColorScheme = _toMuiColorScheme(darkDynamic);
           // Ensure surface container colors have proper opacity for switch visibility
           lightColorScheme = lightColorScheme.copyWith(
             surfaceContainerHighest: lightColorScheme.surfaceContainerHighest,

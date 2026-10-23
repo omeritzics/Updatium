@@ -17,7 +17,7 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
