@@ -60,7 +60,9 @@ class SettingsProvider with ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
     try {
-      final info = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+      final info = await DeviceInfoPlugin().androidInfo.timeout(
+        const Duration(seconds: 3),
+      );
       isTV =
           info.systemFeatures.contains('android.hardware.type.television') ||
           info.systemFeatures.contains('android.software.leanback');

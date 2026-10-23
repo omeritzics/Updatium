@@ -126,7 +126,9 @@ void main() async {
   await QuickLocalization.ensureInitialized();
   // Safely check Android version
   try {
-    final androidInfo = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+    final androidInfo = await DeviceInfoPlugin().androidInfo.timeout(
+      const Duration(seconds: 3),
+    );
     if (androidInfo.version.sdkInt >= 29) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -140,7 +142,7 @@ void main() async {
   } catch (e) {
     debugPrint('Failed to get Android info or timed out: $e');
   }
-  
+
   final np = NotificationsProvider();
   try {
     await np.initialize().timeout(const Duration(seconds: 5));
