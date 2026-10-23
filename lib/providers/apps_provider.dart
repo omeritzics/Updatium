@@ -2567,10 +2567,10 @@ class AppsProvider with ChangeNotifier {
 
       // If no installed icon, try remote URL
       if (icon == null &&
-          app?.remoteIconUrl != null &&
-          app!.remoteIconUrl!.isNotEmpty) {
+          app?.remoteIconURL != null &&
+          app!.remoteIconURL!.isNotEmpty) {
         try {
-          final response = await http.get(Uri.parse(app.remoteIconUrl!));
+          final response = await http.get(Uri.parse(app.remoteIconURL!));
           if (response.statusCode == 200) {
             icon = response.bodyBytes;
           }

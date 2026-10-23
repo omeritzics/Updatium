@@ -499,6 +499,10 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue = app.app.name;
                       } else if (item.key == 'author') {
                         item.defaultValue = app.app.author;
+                      } else if (item.key == 'trackedURL') {
+                        item.defaultValue = app.app.url;
+                      } else if (item.key == 'IconURL') {
+                        item.defaultValue = app.app.remoteIconURL ?? '';
                       }
                       return item;
                     })
@@ -605,6 +609,28 @@ class _AppPageState extends State<AppPage> {
                 app.app.additionalSettings['author'].toString().trim() ==
                     app.app.author)) {
           app.app.additionalSettings.remove('author');
+        }
+        if (app.app.additionalSettings['trackedURL'] != null) {
+          final newTrackedUrl = app.app.additionalSettings
+              .remove('trackedURL')
+              ?.toString()
+              .trim();
+          if (newTrackedUrl != null &&
+              newTrackedUrl.isNotEmpty &&
+              newTrackedUrl != app.app.url) {
+            app.app.url = newTrackedUrl;
+          }
+        }
+        if (app.app.additionalSettings['IconURL'] != null) {
+          final newIconUrl = app.app.additionalSettings
+              .remove('IconURL')
+              ?.toString()
+              .trim();
+          if (newIconUrl != null && newIconUrl.isNotEmpty) {
+            app.app.remoteIconURL = newIconUrl;
+          } else {
+            app.app.remoteIconURL = null;
+          }
         }
 
         var versionDetectionEnabled =
