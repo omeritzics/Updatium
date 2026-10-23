@@ -499,6 +499,8 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue = app.app.name;
                       } else if (item.key == 'author') {
                         item.defaultValue = app.app.author;
+                      } else if (item.key == 'trackedUrl') {
+                        item.defaultValue = app.app.url;
                       }
                       return item;
                     })
