@@ -710,14 +710,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
-  m3e_card_list:
-    dependency: "direct main"
-    description:
-      name: m3e_card_list
-      sha256: ed1cc150f051b8812ffd735915ae59fed23517ffeeed04c4b2b8ef6257cc18b7
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   m3e_design:
     dependency: transitive
     description:
@@ -726,6 +718,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+  m3e_haptics:
+    dependency: transitive
+    description:
+      name: m3e_haptics
+      sha256: e19c8bc49df25ad0512a6bb603a3ffcc6b2e4c2c1d4644302eb78f586bd7a0d0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  m3e_segmented_list:
+    dependency: "direct main"
+    description:
+      name: m3e_segmented_list
+      sha256: "245c9e9dd790af48ab0339cdf98b847dd71b61c610525d079e81ee8ba7ca42f6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   markdown:
     dependency: "direct main"
     description:
