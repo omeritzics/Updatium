@@ -114,7 +114,7 @@ void main() {
       provider.addListener(() => notifyCount++);
 
       provider.cancelDownload(id);
-      
+
       expect(
         notifyCount,
         greaterThan(0),
