@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Agahdariya derbasbar a dema kontrola rojanekirinê de xuya dibe",
     "pleaseAllowInstallPerm": "Ji kerema xwe re destûrê bidin Updatium ku sepanan saz bike",
     "trackOnly": "Tenê ji bo trackingê",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Çewtî {}",

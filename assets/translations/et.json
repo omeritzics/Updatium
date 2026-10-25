@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Ajutine teavitus, mis ilmub uuendusi kontrollides",
     "pleaseAllowInstallPerm": "Palun luba Updatiumil rakendusi paigaldada",
     "trackOnly": "Ainult jälgimine",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Usaldusväärne",
     "openSource": "Avatud lähtekoodiga",
     "errorWithHttpStatusCode": "Viga {}",

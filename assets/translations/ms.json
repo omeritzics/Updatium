@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
     "pleaseAllowInstallPerm": "Please allow Updatium to install apps",
     "trackOnly": "Track-only",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Error {}",

@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Güncellemeler kontrol edilirken görünen geçici bildirim",
     "pleaseAllowInstallPerm": "Lütfen Updatium'un uygulamaları yüklemesine izin verin",
     "trackOnly": "Sadece takip",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Hata {}",

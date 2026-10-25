@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Dočasné oznámení zobrazené při kontrole aktualizací",
     "pleaseAllowInstallPerm": "Povolte prosím aplikaci Updatium instalovat aplikace",
     "trackOnly": "Pouze sledovat",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Chyba {}",

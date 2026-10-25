@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "检查更新时短暂显示的通知",
     "pleaseAllowInstallPerm": "请授予 Updatium 安装应用的权限",
     "trackOnly": "仅追踪",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "{} 错误",
