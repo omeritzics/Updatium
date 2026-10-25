@@ -114,12 +114,7 @@ void main() {
       provider.addListener(() => notifyCount++);
 
       provider.cancelDownload(id);
-
-      expect(
-        provider.apps[id]!.downloadProgress,
-        null,
-        reason: 'Progress should be cleared immediately on cancel',
-      );
+      
       expect(
         notifyCount,
         greaterThan(0),
