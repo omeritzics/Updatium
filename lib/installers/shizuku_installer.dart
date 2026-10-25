@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:quick_localization/quick_localization.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 /// Installs via the Shizuku/Dhizuku/Sui binder API for elevated installs with
 /// no user-facing permission dialog. Supports silent installs.
@@ -30,15 +30,15 @@ class ShizukuInstaller extends Installer {
       case 'granted_adb':
         break;
       case 'services_not_found':
-        throw UpdatiumError(tr('shizukuBinderNotFound'));
+        throw UpdatiumError(t('shizukuBinderNotFound'));
       case 'old_shizuku':
-        throw UpdatiumError(tr('shizukuOld'));
+        throw UpdatiumError(t('shizukuOld'));
       case 'old_android_with_adb':
-        throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
+        throw UpdatiumError(t('shizukuOldAndroidWithADB'));
       case 'denied':
-        throw UpdatiumError(tr('cancelled'));
+        throw UpdatiumError(t('cancelled'));
       default:
-        throw UpdatiumError(tr('cancelled'));
+        throw UpdatiumError(t('cancelled'));
     }
   }
 

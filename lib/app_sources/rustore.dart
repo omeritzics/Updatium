@@ -66,7 +66,7 @@ class RuStore extends AppSource {
     String? dateStr = appDetails['appVerUpdatedAt'];
     String? version = appDetails['versionName'];
     String? changeLog = appDetails['whatsNew'];
-    String? remoteIconUrl = appDetails['icon'];
+    String? remoteIconURL = appDetails['icon'];
     if (version == null) {
       throw NoVersionError();
     }
@@ -96,7 +96,7 @@ class RuStore extends AppSource {
       AppNames(author, appName),
       releaseDate: relDate,
       changeLog: changeLog,
-      remoteIconUrl: remoteIconUrl,
+      remoteIconURL: remoteIconURL,
     );
   }
 }
