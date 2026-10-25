@@ -128,9 +128,9 @@ class _AppPageState extends State<AppPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(t('repoRenamed'), style: textTheme.bodyLarge),
+                        Text('repoRenamed'.t(), style: textTheme.bodyLarge),
                         Text(
-                          t('repoRenamedExplanation'),
+                          'repoRenamedExplanation'.t(),
                           style: textTheme.bodyMedium,
                         ),
                       ],
@@ -163,7 +163,7 @@ class _AppPageState extends State<AppPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(t('newUrl'), style: textTheme.bodyLarge),
+                        Text('newUrl'.t(), style: textTheme.bodyLarge),
                         Text(pendingUrl, style: textTheme.bodyMedium),
                       ],
                     ),
@@ -200,7 +200,7 @@ class _AppPageState extends State<AppPage> {
                           null,
                         );
                       },
-                      child: Text(t('dismiss')),
+                      child: Text('dismiss'.t()),
                     ),
                   ),
                   Expanded(
@@ -214,7 +214,7 @@ class _AppPageState extends State<AppPage> {
                           onUpdate(appValue.app.id);
                         }
                       },
-                      child: Text(t('updateUrl')),
+                      child: Text('updateUrl'.t()),
                     ),
                   ),
                 ],
@@ -338,7 +338,7 @@ class _AppPageState extends State<AppPage> {
         'lastUpdateCheckX',
         args: [
           lastUpdateCheck == null
-              ? t('never')
+              ? 'never'.t()
               : lastUpdateCheck.toString().split('.').first,
         ],
       );

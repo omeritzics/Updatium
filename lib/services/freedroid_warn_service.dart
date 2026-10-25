@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FreeDroidWarnService {
@@ -131,7 +132,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
               Navigator.of(context).pop();
             }
           },
-          child: const Text('OK'),
+          child: Text('ok'.t()),
         ),
       ],
     ),
