@@ -631,7 +631,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'IconURL',
-        label: 'IconURL'.t(),
+        label: 'iconURL'.t(),
         required: false,
         hint: 'https://example.com/icon.png',
         additionalValidators: [(value) => httpUrlValidator(value)],
