@@ -68,7 +68,7 @@ class Aptoide extends AppSource {
     String? dateStr = appDetails['updated'];
     String? version = appDetails['file']?['vername'];
     String? apkUrl = appDetails['file']?['path'];
-    String? remoteIconUrl = appDetails['media']?['icon'];
+    String? remoteIconURL = appDetails['media']?['icon'];
     if (version == null) {
       throw NoVersionError();
     }
@@ -84,7 +84,7 @@ class Aptoide extends AppSource {
       getApkUrlsFromUrls([apkUrl]),
       AppNames(author, appName),
       releaseDate: relDate,
-      remoteIconUrl: remoteIconUrl,
+      remoteIconURL: remoteIconURL,
     );
   }
 }

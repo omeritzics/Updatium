@@ -72,7 +72,7 @@ class APKDetails {
   late AppNames names;
   late DateTime? releaseDate;
   late String? changeLog;
-  late String? remoteIconUrl;
+  late String? remoteIconURL;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -81,7 +81,7 @@ class APKDetails {
     this.names, {
     this.releaseDate,
     this.changeLog,
-    this.remoteIconUrl,
+    this.remoteIconURL,
     this.allAssetUrls = const [],
   });
 }
@@ -126,7 +126,7 @@ class App {
   List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
-  late String? remoteIconUrl;
+  late String? remoteIconURL;
   late String? overrideSource;
   bool allowIdChange = false;
   String? pendingRepoRenameUrl;
@@ -145,7 +145,7 @@ class App {
     this.categories = const [],
     this.releaseDate,
     this.changeLog,
-    this.remoteIconUrl,
+    this.remoteIconURL,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -192,7 +192,7 @@ class App {
     pinned,
     categories: categories,
     changeLog: changeLog,
-    remoteIconUrl: remoteIconUrl,
+    remoteIconURL: remoteIconURL,
     releaseDate: releaseDate,
     overrideSource: overrideSource,
     allowIdChange: allowIdChange,
@@ -239,7 +239,7 @@ class App {
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
       changeLog: json['changeLog']?.toString(),
-      remoteIconUrl: json['remoteIconUrl']?.toString(),
+      remoteIconURL: json['remoteIconURL']?.toString(),
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(
@@ -265,7 +265,7 @@ class App {
     'categories': categories,
     'releaseDate': releaseDate?.microsecondsSinceEpoch,
     'changeLog': changeLog,
-    'remoteIconUrl': remoteIconUrl,
+    'remoteIconURL': remoteIconURL,
     'overrideSource': overrideSource,
     'allowIdChange': allowIdChange,
     'pendingRepoRenameUrl': pendingRepoRenameUrl,
@@ -621,8 +621,8 @@ abstract class AppSource {
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
     [
       GeneratedFormTextField(
-        'trackedUrl',
-        label: 'trackedUrl'.t(),
+        'trackedURL',
+        label: 'trackedURL'.t(),
         required: true,
         additionalValidators: [(value) => httpUrlValidator(value)],
       ),
@@ -630,8 +630,8 @@ abstract class AppSource {
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormTextField(
-        'IconUrl',
-        label: 'IconUrl'.t(),
+        'IconURL',
+        label: 'IconURL'.t(),
         required: false,
         hint: 'https://example.com/icon.png',
         additionalValidators: [(value) => httpUrlValidator(value)],
@@ -1338,7 +1338,7 @@ class SourceProvider {
     // A user-edited tracked URL replaces the original; it's consumed here so
     // the final App.url (standardUrl) is the single source of truth.
     final editedTrackedUrl = additionalSettings
-        .remove('trackedUrl')
+        .remove('trackedURL')
         ?.toString()
         .trim();
     final String standardUrl = source.standardizeUrl(
@@ -1397,9 +1397,9 @@ class SourceProvider {
                 apk.names.author)) {
       additionalSettings.remove('author');
     }
-    final IconUrl = additionalSettings['IconUrl']?.toString().trim();
-    if (IconUrl == null || IconUrl.isEmpty) {
-      additionalSettings.remove('IconUrl');
+    final IconURL = additionalSettings['IconURL']?.toString().trim();
+    if (IconURL == null || IconURL.isEmpty) {
+      additionalSettings.remove('IconURL');
     }
     App finalApp = App(
       currentApp?.id ??
@@ -1428,9 +1428,9 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
-      remoteIconUrl: (IconUrl != null && IconUrl.isNotEmpty)
-          ? IconUrl
-          : apk.remoteIconUrl,
+      remoteIconURL: (IconURL != null && IconURL.isNotEmpty)
+          ? IconURL
+          : apk.remoteIconURL,
       overrideSource: sourceIsOverriden
           ? source.sourceIdentifier
           : currentApp?.overrideSource,
