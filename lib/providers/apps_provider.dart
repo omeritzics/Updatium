@@ -2935,7 +2935,7 @@ class AppsProvider with ChangeNotifier {
                 // "Reproducible builds only" is on and no release
                 // is confirmed reproducible: not a failure. Stay on the
                 // current version, with no retry and no error notification.
-                logs.add(
+                await logs.add(
                   'No reproducible release for $appId - keeping current version.',
                 );
               } else {

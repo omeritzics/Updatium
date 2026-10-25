@@ -72,16 +72,16 @@ class IzzyOnDroid extends FDroid {
     dynamic decoded,
     Map<String, Map<String, bool>> into,
   ) {
-    Iterable entries = decoded is Map
+    final Iterable entries = decoded is Map
         ? decoded.values.expand((v) => v is List ? v : [v])
         : (decoded is List ? decoded : const []);
     for (var e in entries) {
       if (e is! Map) continue;
-      var id = e['appid']?.toString();
-      var code = e['version_code']?.toString();
+      final id = e['appid']?.toString();
+      final code = e['version_code']?.toString();
       if (id == null || code == null || code.isEmpty) continue;
-      bool ok = e['reproducible'] == true && e['error'] == null;
-      var m = into.putIfAbsent(id, () => {});
+      final bool ok = e['reproducible'] == true && e['error'] == null;
+      final m = into.putIfAbsent(id, () => {});
       m[code] = (m[code] ?? false) || ok;
     }
   }
@@ -94,10 +94,10 @@ class IzzyOnDroid extends FDroid {
     String body,
     Map<String, bool>? reproducibleByCode,
   ) {
-    var response = jsonDecode(body);
+    final response = jsonDecode(body);
     if (response is! Map) throw NoReleasesError();
-    List<dynamic> releases = response['packages'] ?? [];
-    var kept = releases
+    final List<dynamic> releases = response['packages'] ?? [];
+    final kept = releases
         .where((r) => reproducibleByCode?[r['versionCode']?.toString()] == true)
         .toList();
     if (kept.isEmpty) throw NotReproducibleError();
@@ -119,11 +119,11 @@ class IzzyOnDroid extends FDroid {
       return _rbCache;
     }
     for (var root in _mirrorRoots) {
-      var merged = <String, Map<String, bool>>{};
+      final merged = <String, Map<String, bool>>{};
       int loaded = 0;
       for (var file in _rbIndexFiles) {
         try {
-          var res = await sourceRequest(
+          final res = await sourceRequest(
             '$root/rbtlogs/$file',
             additionalSettings,
           );
@@ -156,7 +156,7 @@ class IzzyOnDroid extends FDroid {
     if (appId != null &&
         additionalSettings[reproducibleOnlyKey] == true &&
         apiRes.statusCode == 200) {
-      var index = await _getRbIndex(additionalSettings);
+      final index = await _getRbIndex(additionalSettings);
       if (index == null) {
         throw UpdatiumError(
           'Could not fetch IzzyOnDroid reproducible build logs; cannot verify $appId.',
