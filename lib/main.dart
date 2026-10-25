@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:updatium/pages/home.dart';
@@ -13,10 +13,6 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-// flutter/material.dart is imported with a restricted show so that
-// DynamicColorBuilder's callback ColorScheme type (Flutter's) can be
-// referenced explicitly. All widget/theme types come from material_ui.
-import 'package:flutter/material.dart' as flutter_m show ColorScheme;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
@@ -178,7 +174,7 @@ void main() async {
 /// Converts a [flutter_m.ColorScheme] (from dynamic_color / flutter/material.dart)
 /// into a [ColorScheme] from material_ui. Both classes share the same Color
 /// fields and Brightness enum (from dart:ui), so the conversion is lossless.
-ColorScheme _toMuiColorScheme(flutter_m.ColorScheme s) {
+ColorScheme _toMuiColorScheme(ColorScheme s) {
   return ColorScheme(
     brightness: s.brightness,
     primary: s.primary,
@@ -388,8 +384,8 @@ class _UpdatiumState extends State<Updatium> {
     return DynamicColorBuilder(
       builder:
           (
-            flutter_m.ColorScheme? lightDynamic,
-            flutter_m.ColorScheme? darkDynamic,
+            ColorScheme? lightDynamic,
+            ColorScheme? darkDynamic,
           ) {
             ColorScheme lightColorScheme;
             ColorScheme darkColorScheme;
