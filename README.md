@@ -3,10 +3,13 @@
 
 # <img src="./assets/graphics/icon.svg" alt="Updatium Icon" height="84px" /> Updatium
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
-[![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/omeritzics/updatium/total)](https://tooomm.github.io/github-release-stats/?username=omeritzics&repository=Updatium)
-[![Translation state](https://hosted.weblate.org/widget/updatium/updatium/svg-badge.svg)](https://hosted.weblate.org/engage/updatium/)
+[![GitHub Release](https://img.shields.io/github/v/release/omeritzics/updatium?style=flat-square&label=Latest%20release)](https://github.com/omeritzics/Updatium/releases/latest)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/omeritzics/updatium/nightly.yml?style=flat-square&label=Nightly%20build)
+](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/omeritzics/updatium/total?style=flat-square)](https://tooomm.github.io/github-release-stats/?username=omeritzics&repository=Updatium)
+[![Translation state on Weblate](https://img.shields.io/weblate/progress/updatium?style=flat-square&logo=weblate)](https://hosted.weblate.org/engage/updatium/)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/omeritzics/updatium?style=flat-square&logo=codefactor)
+
 
 Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
