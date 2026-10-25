@@ -806,6 +806,10 @@ class _AppPageState extends State<AppPage> {
         child: Stack(
           children: [
             ExpressiveRefreshIndicator(
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHigh,
+              color: Theme.of(context).colorScheme.surface,
               onRefresh: () async {
                 await getUpdate(app.app.id);
               },
