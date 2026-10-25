@@ -117,7 +117,7 @@ void main() {
 
       expect(
         provider.apps[id]!.downloadProgress,
-        isNull,
+        null,
         reason: 'Progress should be cleared immediately on cancel',
       );
       expect(
