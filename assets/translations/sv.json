@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Övergående meddelande som visas när du söker efter uppdateringar",
     "pleaseAllowInstallPerm": "Tillåt Obtanium att installera Appar",
     "trackOnly": "Följ-Endast",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Fel {}",

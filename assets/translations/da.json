@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Kortvarig meddelelse ved tjek for opdateringer",
     "pleaseAllowInstallPerm": "Tillad venligst Updatium at installere apps",
     "trackOnly": "Følg Kun",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Fejl {}",

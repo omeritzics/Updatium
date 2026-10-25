@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Privremeno obavještenje koje se pojavljuje prilikom provjere ažuriranja",
     "pleaseAllowInstallPerm": "Dozvolite Updatiumu da instalira aplikacije",
     "trackOnly": "Samo za praćenje",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Greška {}",

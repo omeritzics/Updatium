@@ -212,6 +212,7 @@
     "checkingForUpdatesNotifDescription": "התראה קבועה שמופיעה בעת בדיקת עדכונים",
     "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
     "trackOnly": "למעקב עדכונים בלבד",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "מהימן",
     "openSource": "קוד פתוח",
     "errorWithHttpStatusCode": "שגיאה {}",

@@ -42,6 +42,13 @@ class NoReleasesError extends UpdatiumError {
       );
 }
 
+/// Thrown when "Reproducible builds only" is on and none of the
+/// available releases is confirmed reproducible. Not a real failure: update
+/// checks skip it silently and keep the currently installed version.
+class NotReproducibleError extends UpdatiumError {
+  NotReproducibleError() : super(t('noReproducibleReleaseFound'));
+}
+
 class NoAPKError extends UpdatiumError {
   NoAPKError() : super(t('noAPKFound'));
 }

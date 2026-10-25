@@ -2931,6 +2931,13 @@ class AppsProvider with ChangeNotifier {
               }
               if (e is RepositoryRenamedError) {
                 await updatePendingRepoRename(appId, e.newUrl);
+              } else if (e is NotReproducibleError) {
+                // "Reproducible builds only" is on and no release
+                // is confirmed reproducible: not a failure. Stay on the
+                // current version, with no retry and no error notification.
+                logs.add(
+                  'No reproducible release for $appId - keeping current version.',
+                );
               } else {
                 errors.add(appId, e, appName: apps[appId]?.name);
               }

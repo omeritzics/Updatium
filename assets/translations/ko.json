@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "업데이트 확인 시 나타나는 일시적인 알림",
     "pleaseAllowInstallPerm": "Updatium이 앱을 설치할 수 있도록 허용해 주세요",
     "trackOnly": "추적 전용",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "오류 {}",

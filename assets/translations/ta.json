@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "புதுப்பிப்புகளைச் சரிபார்க்கும்போது தோன்றும் தற்காலிக அறிவிப்பு",
     "pleaseAllowInstallPerm": "செயலிகளை நிறுவ Updatium ஐ அனுமதிக்கவும்",
     "trackOnly": "கண்காணிக்க மட்டும்",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "நம்பகமானது",
     "openSource": "திறந்த மூல மென்பொருள் (Open-source)",
     "errorWithHttpStatusCode": "பிழை {}",

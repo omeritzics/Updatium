@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "अपडेट की जाँच करते समय दिखाई देने वाली अस्थायी अधिसूचना",
     "pleaseAllowInstallPerm": "कृपया Updatium को ऐप इंस्टॉल करने की अनुमति दें",
     "trackOnly": "केवल-ट्रैक",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "त्रुटि {}",

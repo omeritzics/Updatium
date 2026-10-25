@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "檢查更新時出現的暫時性通知",
     "pleaseAllowInstallPerm": "請允許 Updatium 安裝應用程式",
     "trackOnly": "僅追蹤",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "錯誤 {}",
