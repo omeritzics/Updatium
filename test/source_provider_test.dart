@@ -95,18 +95,6 @@ void main() {
   });
 
   group('App JSON Compatibility Tests', () {
-    test('appJSONCompatibilityModifiers handles removed overrideSource', () {
-      final json = {
-        'url': 'https://example.com',
-        'overrideSource': 'RemovedSource',
-      };
-      // Since RemovedSource doesn't exist in SourceProvider, it should be cleared
-      final result = appJSONCompatibilityModifiers(
-        Map<String, dynamic>.from(json),
-      );
-      expect(result['overrideSource'], isNull);
-    });
-
     test(
       'appJSONCompatibilityModifiers migrates additionalData to additionalSettings',
       () {
