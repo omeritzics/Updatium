@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -40,6 +40,13 @@ class NoReleasesError extends UpdatiumError {
     : super(
         '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
+}
+
+/// Thrown when "Reproducible builds only" is on and none of the
+/// available releases is confirmed reproducible. Not a real failure: update
+/// checks skip it silently and keep the currently installed version.
+class NotReproducibleError extends UpdatiumError {
+  NotReproducibleError() : super(t('noReproducibleReleaseFound'));
 }
 
 class NoAPKError extends UpdatiumError {

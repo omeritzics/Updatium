@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Midlertidig varsel som vises under søk etter oppdateringer",
     "pleaseAllowInstallPerm": "Vennligst gi Updatium tillatelse til å installere apper",
     "trackOnly": "Kun sporing",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Klarert",
     "openSource": "Åpen kildekode",
     "errorWithHttpStatusCode": "Feil {}",

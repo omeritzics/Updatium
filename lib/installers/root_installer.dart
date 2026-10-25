@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:quick_localization/quick_localization.dart';
 import 'package:updatium/core/logging/app_logger.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 /// Installs via the Android `pm` CLI over root (`su`).
 class RootInstaller extends Installer {
@@ -31,7 +31,7 @@ class RootInstaller extends Installer {
   @override
   Future<void> ensurePermission() async {
     if (!await checkPermission()) {
-      throw UpdatiumError(tr('rootNotGranted'));
+      throw UpdatiumError(t('rootNotGranted'));
     }
   }
 

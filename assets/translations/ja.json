@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "アップデートを確認する際に表示される一時的な通知",
     "pleaseAllowInstallPerm": "Updatiumによるアプリのインストールを許可してください",
     "trackOnly": "追跡のみ",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "エラー {}",

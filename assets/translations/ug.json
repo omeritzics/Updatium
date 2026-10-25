@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "يېڭىلانما تەكشۈرۈۋاتقاندا كۆرۈنىدىغان ۋاقىتلىق ئۇقتۇرۇش",
     "pleaseAllowInstallPerm": "Updatium نىڭ ئەپ قاچىلىشىغا رۇخسەت قىلىڭ",
     "trackOnly": "پەقەت ئىز قوغلاش",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "خاتالىق: {}",

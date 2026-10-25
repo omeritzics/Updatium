@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "আপডেট চেক করার সময় সাময়িক বিজ্ঞপ্তি",
     "pleaseAllowInstallPerm": "Updatium-কে অ্যাপ ইনস্টল করার অনুমতি দিন",
     "trackOnly": "শুধুমাত্র ট্র্যাক",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "ত্রুটি {}",

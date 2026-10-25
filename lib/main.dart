@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:updatium/pages/home.dart';
@@ -13,6 +13,10 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+// flutter/material.dart is imported with a restricted show so that
+// DynamicColorBuilder's callback ColorScheme type (Flutter's) can be
+// referenced explicitly. All widget/theme types come from material_ui.
+import 'package:flutter/material.dart' as flutter_m show ColorScheme;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
@@ -126,7 +130,9 @@ void main() async {
   await QuickLocalization.ensureInitialized();
   // Safely check Android version
   try {
-    final androidInfo = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+    final androidInfo = await DeviceInfoPlugin().androidInfo.timeout(
+      const Duration(seconds: 3),
+    );
     if (androidInfo.version.sdkInt >= 29) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -140,7 +146,7 @@ void main() async {
   } catch (e) {
     debugPrint('Failed to get Android info or timed out: $e');
   }
-  
+
   final np = NotificationsProvider();
   try {
     await np.initialize().timeout(const Duration(seconds: 5));
@@ -167,6 +173,61 @@ void main() async {
     ),
   );
   await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+}
+
+/// Converts a [flutter_m.ColorScheme] (from dynamic_color / flutter/material.dart)
+/// into a [ColorScheme] from material_ui. Both classes share the same Color
+/// fields and Brightness enum (from dart:ui), so the conversion is lossless.
+ColorScheme _toMuiColorScheme(flutter_m.ColorScheme s) {
+  return ColorScheme(
+    brightness: s.brightness,
+    primary: s.primary,
+    onPrimary: s.onPrimary,
+    primaryContainer: s.primaryContainer,
+    onPrimaryContainer: s.onPrimaryContainer,
+    primaryFixed: s.primaryFixed,
+    primaryFixedDim: s.primaryFixedDim,
+    onPrimaryFixed: s.onPrimaryFixed,
+    onPrimaryFixedVariant: s.onPrimaryFixedVariant,
+    secondary: s.secondary,
+    onSecondary: s.onSecondary,
+    secondaryContainer: s.secondaryContainer,
+    onSecondaryContainer: s.onSecondaryContainer,
+    secondaryFixed: s.secondaryFixed,
+    secondaryFixedDim: s.secondaryFixedDim,
+    onSecondaryFixed: s.onSecondaryFixed,
+    onSecondaryFixedVariant: s.onSecondaryFixedVariant,
+    tertiary: s.tertiary,
+    onTertiary: s.onTertiary,
+    tertiaryContainer: s.tertiaryContainer,
+    onTertiaryContainer: s.onTertiaryContainer,
+    tertiaryFixed: s.tertiaryFixed,
+    tertiaryFixedDim: s.tertiaryFixedDim,
+    onTertiaryFixed: s.onTertiaryFixed,
+    onTertiaryFixedVariant: s.onTertiaryFixedVariant,
+    error: s.error,
+    onError: s.onError,
+    errorContainer: s.errorContainer,
+    onErrorContainer: s.onErrorContainer,
+    surface: s.surface,
+    onSurface: s.onSurface,
+    surfaceDim: s.surfaceDim,
+    surfaceBright: s.surfaceBright,
+    surfaceContainerLowest: s.surfaceContainerLowest,
+    surfaceContainerLow: s.surfaceContainerLow,
+    surfaceContainer: s.surfaceContainer,
+    surfaceContainerHigh: s.surfaceContainerHigh,
+    surfaceContainerHighest: s.surfaceContainerHighest,
+    onSurfaceVariant: s.onSurfaceVariant,
+    outline: s.outline,
+    outlineVariant: s.outlineVariant,
+    shadow: s.shadow,
+    scrim: s.scrim,
+    inverseSurface: s.inverseSurface,
+    onInverseSurface: s.onInverseSurface,
+    inversePrimary: s.inversePrimary,
+    surfaceTint: s.surfaceTint,
+  );
 }
 
 class Updatium extends StatefulWidget {
@@ -325,138 +386,147 @@ class _UpdatiumState extends State<Updatium> {
     });
 
     return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        ColorScheme lightColorScheme;
-        ColorScheme darkColorScheme;
+      builder:
+          (
+            flutter_m.ColorScheme? lightDynamic,
+            flutter_m.ColorScheme? darkDynamic,
+          ) {
+            ColorScheme lightColorScheme;
+            ColorScheme darkColorScheme;
 
-        // Configure ColorScheme (Material You vs Seed)
-        if (lightDynamic != null &&
-            darkDynamic != null &&
-            settingsProvider.useMaterialYou) {
-          lightColorScheme = lightDynamic;
-          darkColorScheme = darkDynamic;
-          // Ensure surface container colors have proper opacity for switch visibility
-          lightColorScheme = lightColorScheme.copyWith(
-            surfaceContainerHighest: lightColorScheme.surfaceContainerHighest,
-            surfaceContainerHigh: lightColorScheme.surfaceContainerHigh,
-            surfaceContainer: lightColorScheme.surfaceContainer,
-          );
-          darkColorScheme = darkColorScheme.copyWith(
-            surfaceContainerHighest: darkColorScheme.surfaceContainerHighest,
-            surfaceContainerHigh: darkColorScheme.surfaceContainerHigh,
-            surfaceContainer: darkColorScheme.surfaceContainer,
-          );
-        } else {
-          lightColorScheme = ColorScheme.fromSeed(
-            seedColor: settingsProvider.themeColor,
-          );
-          darkColorScheme = ColorScheme.fromSeed(
-            seedColor: settingsProvider.themeColor,
-            brightness: Brightness.dark,
-          );
-        }
+            // Configure ColorScheme (Material You vs Seed)
+            if (lightDynamic != null &&
+                darkDynamic != null &&
+                settingsProvider.useMaterialYou) {
+              lightColorScheme = _toMuiColorScheme(lightDynamic);
+              darkColorScheme = _toMuiColorScheme(darkDynamic);
+              // Ensure surface container colors have proper opacity for switch visibility
+              lightColorScheme = lightColorScheme.copyWith(
+                surfaceContainerHighest:
+                    lightColorScheme.surfaceContainerHighest,
+                surfaceContainerHigh: lightColorScheme.surfaceContainerHigh,
+                surfaceContainer: lightColorScheme.surfaceContainer,
+              );
+              darkColorScheme = darkColorScheme.copyWith(
+                surfaceContainerHighest:
+                    darkColorScheme.surfaceContainerHighest,
+                surfaceContainerHigh: darkColorScheme.surfaceContainerHigh,
+                surfaceContainer: darkColorScheme.surfaceContainer,
+              );
+            } else {
+              lightColorScheme = ColorScheme.fromSeed(
+                seedColor: settingsProvider.themeColor,
+              );
+              darkColorScheme = ColorScheme.fromSeed(
+                seedColor: settingsProvider.themeColor,
+                brightness: Brightness.dark,
+              );
+            }
 
-        // Apply pure black surface for AMOLED black theme
-        // Apply semi-transparent surface colors for AMOLED black theme
-        if (settingsProvider.useBlackTheme) {
-          darkColorScheme = darkColorScheme.copyWith(
-            surface: Colors.black,
-            // surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
-            // surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
-            // surfaceContainer: Colors.white.withValues(alpha: 0.08),
-            // surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
-            // surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
-            surfaceDim: Colors.black,
-            surfaceBright: Colors.white.withValues(alpha: 0.05),
-            onSurface: Colors.white,
-            onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
-            outline: Colors.white,
-            outlineVariant: Colors.white.withValues(alpha: 0.85),
-          );
-        }
+            // Apply pure black surface for AMOLED black theme
+            // Apply semi-transparent surface colors for AMOLED black theme
+            if (settingsProvider.useBlackTheme) {
+              darkColorScheme = darkColorScheme.copyWith(
+                surface: Colors.black,
+                // surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
+                // surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
+                // surfaceContainer: Colors.white.withValues(alpha: 0.08),
+                // surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
+                // surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+                surfaceDim: Colors.black,
+                surfaceBright: Colors.white.withValues(alpha: 0.05),
+                onSurface: Colors.white,
+                onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
+                outline: Colors.white,
+                outlineVariant: Colors.white.withValues(alpha: 0.85),
+              );
+            }
 
-        if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
+            if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
-        // Determine primary font based on locale
-        String getPrimaryFontForLocale(Locale locale) {
-          if (settingsProvider.useSystemFont) {
-            return 'SystemFont';
-          }
+            // Determine primary font based on locale
+            String getPrimaryFontForLocale(Locale locale) {
+              if (settingsProvider.useSystemFont) {
+                return 'SystemFont';
+              }
 
-          // CJK languages
-          if (locale.languageCode == 'zh' ||
-              locale.languageCode == 'ja' ||
-              locale.languageCode == 'ko') {
-            return 'NotoSansCJK';
-          }
+              // CJK languages
+              if (locale.languageCode == 'zh' ||
+                  locale.languageCode == 'ja' ||
+                  locale.languageCode == 'ko') {
+                return 'NotoSansCJK';
+              }
 
-          // Arabic
-          if (locale.languageCode == 'ar' ||
-              locale.languageCode == 'fa' ||
-              locale.languageCode == 'ug') {
-            return 'NotoSansArabic';
-          }
+              // Arabic
+              if (locale.languageCode == 'ar' ||
+                  locale.languageCode == 'fa' ||
+                  locale.languageCode == 'ug') {
+                return 'NotoSansArabic';
+              }
 
-          // Default to Google Sans for other languages
-          return 'GoogleSans';
-        }
+              // Default to Google Sans for other languages
+              return 'GoogleSans';
+            }
 
-        // Determine fallback fonts
-        List<String> getFallbackFonts() {
-          if (settingsProvider.useSystemFont) {
-            return const ['NotoSansCJK', 'NotoSansArabic', 'GoogleSans'];
-          }
+            // Determine fallback fonts
+            List<String> getFallbackFonts() {
+              if (settingsProvider.useSystemFont) {
+                return const ['NotoSansCJK', 'NotoSansArabic', 'GoogleSans'];
+              }
 
-          final primary = getPrimaryFontForLocale(context.locale);
-          const allFonts = ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'];
-          return allFonts.where((f) => f != primary).toList();
-        }
+              final primary = getPrimaryFontForLocale(context.locale);
+              const allFonts = ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'];
+              return allFonts.where((f) => f != primary).toList();
+            }
 
-        // Shared theme component generator with Material Design Expressive
-        ThemeData createTheme(ColorScheme scheme, bool isDark) {
-          return ThemeData(
-            useMaterial3: true,
-            colorScheme: scheme,
-            focusColor: scheme.primary.withValues(alpha: 0.18),
-            fontFamily: getPrimaryFontForLocale(context.locale),
-            fontFamilyFallback: getFallbackFonts(),
+            // Shared theme component generator with Material Design Expressive
+            ThemeData createTheme(ColorScheme scheme, bool isDark) {
+              return ThemeData(
+                useMaterial3: true,
+                colorScheme: scheme,
+                focusColor: scheme.primary.withValues(alpha: 0.18),
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: getFallbackFonts(),
 
-            // Expressive Card Design - preserve M3 Expressive transparency
-            cardTheme: CardThemeData(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-              surfaceTintColor: scheme.surfaceTint,
-            ),
+                // Expressive Card Design - preserve M3 Expressive transparency
+                cardTheme: CardThemeData(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 4,
+                  ),
+                  surfaceTintColor: scheme.surfaceTint,
+                ),
 
-            // Material 3 Outlined Text Fields
-            inputDecorationTheme: InputDecorationTheme(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: scheme.outline),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: scheme.primary, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: scheme.error, width: 2),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: scheme.error, width: 2),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 16,
-              ),
-            ),
+                // Material 3 Outlined Text Fields
+                inputDecorationTheme: InputDecorationTheme(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.outline),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.primary, width: 2),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.error, width: 2),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.error, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                ),
 
             // Modern progress indicator
             progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -464,128 +534,138 @@ class _UpdatiumState extends State<Updatium> {
               year2023: false,
             ),
 
-            // Material 3 Menu Theme
-            dropdownMenuTheme: DropdownMenuThemeData(
-              menuStyle: MenuStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  scheme.surfaceContainer,
-                ),
-                surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
-                elevation: WidgetStateProperty.all(3),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                // Material 3 Menu Theme
+                dropdownMenuTheme: DropdownMenuThemeData(
+                  menuStyle: MenuStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                      scheme.surfaceContainer,
+                    ),
+                    surfaceTintColor: WidgetStateProperty.all(
+                      scheme.surfaceTint,
+                    ),
+                    elevation: WidgetStateProperty.all(3),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    padding: WidgetStateProperty.all(EdgeInsets.zero),
+                  ),
+                  inputDecorationTheme: InputDecorationTheme(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: BorderSide(color: scheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide: BorderSide(color: scheme.primary, width: 2),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
                   ),
                 ),
-                padding: WidgetStateProperty.all(EdgeInsets.zero),
-              ),
-              inputDecorationTheme: InputDecorationTheme(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.outline),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.primary, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
-            ),
 
-            // Expressive List Tiles
-            listTileTheme: ListTileThemeData(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 4,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              selectedTileColor: scheme.surface.withValues(alpha: 0.2),
-            ),
+                // Expressive List Tiles
+                listTileTheme: ListTileThemeData(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  selectedTileColor: scheme.surface.withValues(alpha: 0.2),
+                ),
 
-            // Expressive Page Transitions
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+                // Expressive Page Transitions
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android:
+                        PredictiveBackPageTransitionsBuilder(),
+                  },
+                ),
+
+                // Expressive Text Selection
+                textSelectionTheme: TextSelectionThemeData(
+                  selectionColor: scheme.primary.withValues(alpha: 0.3),
+                  selectionHandleColor: scheme.primary,
+                  cursorColor: scheme.primary,
+                ),
+
+                // Expressive Touch Feedback
+                splashFactory: InkRipple.splashFactory,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              );
+            }
+
+            return MaterialApp(
+              title: 'Updatium',
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: globalNavigatorKey,
+              debugShowCheckedModeBanner: false,
+              theme: createTheme(
+                settingsProvider.theme == ThemeSettings.dark
+                    ? darkColorScheme
+                    : lightColorScheme,
+                settingsProvider.theme == ThemeSettings.dark,
+              ),
+              darkTheme: createTheme(
+                settingsProvider.theme == ThemeSettings.light
+                    ? lightColorScheme
+                    : darkColorScheme,
+                settingsProvider.theme != ThemeSettings.light,
+              ),
+              builder: (context, child) {
+                return Shortcuts(
+                  shortcuts: <LogicalKeySet, Intent>{
+                    LogicalKeySet(LogicalKeyboardKey.select):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.enter):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.space):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.numpadEnter):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.gameButtonA):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.gameButtonSelect):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.gameButtonStart):
+                        const ActivateIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                        const DirectionalFocusIntent(TraversalDirection.up),
+                    LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                        const DirectionalFocusIntent(TraversalDirection.down),
+                    LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                        const DirectionalFocusIntent(TraversalDirection.left),
+                    LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                        const DirectionalFocusIntent(TraversalDirection.right),
+                    LogicalKeySet(LogicalKeyboardKey.tab):
+                        const NextFocusIntent(),
+                    LogicalKeySet(
+                      LogicalKeyboardKey.shift,
+                      LogicalKeyboardKey.tab,
+                    ): const PreviousFocusIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.escape):
+                        const DismissIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.gameButtonB):
+                        const DismissIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.goBack):
+                        const DismissIntent(),
+                  },
+                  child: child ?? const SizedBox.shrink(),
+                );
               },
-            ),
-
-            // Expressive Text Selection
-            textSelectionTheme: TextSelectionThemeData(
-              selectionColor: scheme.primary.withValues(alpha: 0.3),
-              selectionHandleColor: scheme.primary,
-              cursorColor: scheme.primary,
-            ),
-
-            // Expressive Touch Feedback
-            splashFactory: InkRipple.splashFactory,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          );
-        }
-
-        return MaterialApp(
-          title: 'Updatium',
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          navigatorKey: globalNavigatorKey,
-          debugShowCheckedModeBanner: false,
-          theme: createTheme(
-            settingsProvider.theme == ThemeSettings.dark
-                ? darkColorScheme
-                : lightColorScheme,
-            settingsProvider.theme == ThemeSettings.dark,
-          ),
-          darkTheme: createTheme(
-            settingsProvider.theme == ThemeSettings.light
-                ? lightColorScheme
-                : darkColorScheme,
-            settingsProvider.theme != ThemeSettings.light,
-          ),
-          builder: (context, child) {
-            return Shortcuts(
-              shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.space): const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.numpadEnter):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.gameButtonA):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.gameButtonSelect):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.gameButtonStart):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                    const DirectionalFocusIntent(TraversalDirection.up),
-                LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                    const DirectionalFocusIntent(TraversalDirection.down),
-                LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                    const DirectionalFocusIntent(TraversalDirection.left),
-                LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                    const DirectionalFocusIntent(TraversalDirection.right),
-                LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.tab):
-                    const PreviousFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
-                LogicalKeySet(LogicalKeyboardKey.gameButtonB):
-                    const DismissIntent(),
-                LogicalKeySet(LogicalKeyboardKey.goBack): const DismissIntent(),
-              },
-              child: child ?? const SizedBox.shrink(),
+              home: const WithForegroundTask(child: HomePage()),
             );
           },
-          home: const WithForegroundTask(child: HomePage()),
-        );
-      },
     );
   }
 }

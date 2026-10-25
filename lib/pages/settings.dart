@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:equations/equations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -594,20 +594,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('safeMode'.t()),
-                                        Text(
-                                          'safeModeEnabled'.t(),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
-                                    ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('safeMode'.t()),
+                                      Text(
+                                        'safeModeEnabled'.t(),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.labelSmall,
+                                      ),
+                                    ],
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(8),
@@ -629,59 +627,47 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                             gap12,
                             if (settingsProvider.safeMode)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SwitchListTile(
-                                    title: Text('preventUninstallation'.t()),
-                                    subtitle: Text(
-                                      'preventUninstallationDescription'.t(),
-                                      style: Theme.of(
+                              SwitchListTile(
+                                title: Text('preventUninstallation'.t()),
+                                subtitle: Text(
+                                  'preventUninstallationDescription'.t(),
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                value: settingsProvider.preventUninstallation,
+                                onChanged: (value) async {
+                                  if (value) {
+                                    // Enable device admin
+                                    await DeviceAdminService.requestDeviceAdmin();
+                                    // Check if device admin is now enabled
+                                    final isEnabled =
+                                        await DeviceAdminService.isDeviceAdminEnabled();
+                                    if (!mounted) return;
+                                    if (isEnabled) {
+                                      settingsProvider.preventUninstallation =
+                                          true;
+                                    } else {
+                                      // User declined or failed
+                                      ScaffoldMessenger.of(
                                         context,
-                                      ).textTheme.labelSmall,
-                                    ),
-                                    value:
-                                        settingsProvider.preventUninstallation,
-                                    onChanged: (value) async {
-                                      if (value) {
-                                        // Enable device admin
-                                        await DeviceAdminService.requestDeviceAdmin();
-                                        // Check if device admin is now enabled
-                                        final isEnabled =
-                                            await DeviceAdminService.isDeviceAdminEnabled();
-                                        if (!mounted) return;
-                                        if (isEnabled) {
-                                          settingsProvider
-                                                  .preventUninstallation =
-                                              true;
-                                        } else {
-                                          // User declined or failed
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'deviceAdminRequired'.t(),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      } else {
-                                        // Prevent disabling when Safe Mode is enabled
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'turnOffSafeModeFirst'.t(),
-                                            ),
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'deviceAdminRequired'.t(),
                                           ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ],
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    // Prevent disabling when Safe Mode is enabled
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'turnOffSafeModeFirst'.t(),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
 
                             // TODO: Implement anti-cheat for Safe Mode
@@ -1173,104 +1159,78 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: GeneratedForm(
-                                    items: [
-                                      [
-                                        GeneratedFormDropdown(
-                                          'sortColumn',
-                                          [
-                                                const MapEntry(
-                                                  'authorName',
-                                                  'authorName',
-                                                ),
-                                                const MapEntry(
-                                                  'nameAuthor',
-                                                  'nameAuthor',
-                                                ),
-                                                const MapEntry(
-                                                  'asAdded',
-                                                  'asAdded',
-                                                ),
-                                                const MapEntry(
-                                                  'releaseDate',
-                                                  'releaseDate',
-                                                ),
-                                              ]
-                                              .map(
-                                                (e) =>
-                                                    MapEntry(e.key, t(e.value)),
-                                              )
-                                              .toList(),
-                                          label: 'appSortBy'.t(),
-                                          defaultValue:
-                                              settingsProvider.sortColumn.name,
-                                          required: true,
-                                        ),
-                                      ],
-                                    ],
-                                    onValueChanges:
-                                        (values, valid, isBuilding) {
-                                          if (!isBuilding && valid) {
-                                            settingsProvider.sortColumn =
-                                                SortColumnSettings.values
-                                                    .firstWhere(
-                                                      (e) =>
-                                                          e.name ==
-                                                          values['sortColumn'],
-                                                    );
-                                          }
-                                        },
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'sortColumn',
+                                    [
+                                          const MapEntry(
+                                            'authorName',
+                                            'authorName',
+                                          ),
+                                          const MapEntry(
+                                            'nameAuthor',
+                                            'nameAuthor',
+                                          ),
+                                          const MapEntry('asAdded', 'asAdded'),
+                                          const MapEntry(
+                                            'releaseDate',
+                                            'releaseDate',
+                                          ),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'appSortBy'.t(),
+                                    defaultValue:
+                                        settingsProvider.sortColumn.name,
+                                    required: true,
                                   ),
-                                ),
-                                horizontalGap16,
-                                Expanded(
-                                  child: GeneratedForm(
-                                    items: [
-                                      [
-                                        GeneratedFormDropdown(
-                                          'sortOrder',
-                                          [
-                                                const MapEntry(
-                                                  'ascending',
-                                                  'ascending',
-                                                ),
-                                                const MapEntry(
-                                                  'descending',
-                                                  'descending',
-                                                ),
-                                              ]
-                                              .map(
-                                                (e) =>
-                                                    MapEntry(e.key, t(e.value)),
-                                              )
-                                              .toList(),
-                                          label: 'appSortOrder'.t(),
-                                          defaultValue:
-                                              settingsProvider.sortOrder.name,
-                                          required: true,
-                                        ),
-                                      ],
-                                    ],
-                                    onValueChanges:
-                                        (values, valid, isBuilding) {
-                                          if (!isBuilding && valid) {
-                                            settingsProvider.sortOrder =
-                                                SortOrderSettings.values
-                                                    .firstWhere(
-                                                      (e) =>
-                                                          e.name ==
-                                                          values['sortOrder'],
-                                                    );
-                                          }
-                                        },
-                                  ),
-                                ),
+                                ],
                               ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  settingsProvider.sortColumn =
+                                      SortColumnSettings.values.firstWhere(
+                                        (e) => e.name == values['sortColumn'],
+                                      );
+                                }
+                              },
+                            ),
+                            gap12,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'sortOrder',
+                                    [
+                                          const MapEntry(
+                                            'ascending',
+                                            'ascending',
+                                          ),
+                                          const MapEntry(
+                                            'descending',
+                                            'descending',
+                                          ),
+                                        ]
+                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .toList(),
+                                    label: 'appSortOrder'.t(),
+                                    defaultValue:
+                                        settingsProvider.sortOrder.name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  settingsProvider.sortOrder = SortOrderSettings
+                                      .values
+                                      .firstWhere(
+                                        (e) => e.name == values['sortOrder'],
+                                      );
+                                }
+                              },
                             ),
                             gap12,
                             GeneratedForm(

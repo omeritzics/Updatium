@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Notificare tranzitorie care apare la verificarea actualizărilor",
     "pleaseAllowInstallPerm": "Vă rugăm să permiteți Updatium să instaleze aplicații",
     "trackOnly": "Doar pentru urmărire",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Eroare {}",

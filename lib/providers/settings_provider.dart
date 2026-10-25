@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -60,7 +60,9 @@ class SettingsProvider with ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
     try {
-      final info = await DeviceInfoPlugin().androidInfo.timeout(const Duration(seconds: 3));
+      final info = await DeviceInfoPlugin().androidInfo.timeout(
+        const Duration(seconds: 3),
+      );
       isTV =
           info.systemFeatures.contains('android.hardware.type.television') ||
           info.systemFeatures.contains('android.software.leanback');

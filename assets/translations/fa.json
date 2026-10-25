@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "اعلان گذرا که هنگام بررسی به روز رسانی ظاهر می شود",
     "pleaseAllowInstallPerm": "لطفاً به Updatium اجازه دهید برنامه‌ها را نصب کند",
     "trackOnly": "فقط ردیابی",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "خطا {}",

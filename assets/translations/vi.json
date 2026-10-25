@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật",
     "pleaseAllowInstallPerm": "Vui lòng cho phép Updatium cài đặt Ứng dụng",
     "trackOnly": "Chỉ theo dõi",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Lỗi {}",

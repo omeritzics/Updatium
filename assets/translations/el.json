@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Προσωρινή ειδοποίηση που εμφανίζεται κατά τον έλεγχο για ενημερώσεις",
     "pleaseAllowInstallPerm": "Παρακαλώ επιτρέψτε στο Updatium να εγκαθιστά εφαρμογές",
     "trackOnly": "Μόνο παρακολούθηση",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Έμπιστο",
     "openSource": "Ανοιχτού κώδικα",
     "errorWithHttpStatusCode": "Σφάλμα {}",

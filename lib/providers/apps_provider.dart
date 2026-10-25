@@ -17,7 +17,7 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -2567,10 +2567,10 @@ class AppsProvider with ChangeNotifier {
 
       // If no installed icon, try remote URL
       if (icon == null &&
-          app?.remoteIconUrl != null &&
-          app!.remoteIconUrl!.isNotEmpty) {
+          app?.remoteIconURL != null &&
+          app!.remoteIconURL!.isNotEmpty) {
         try {
-          final response = await http.get(Uri.parse(app.remoteIconUrl!));
+          final response = await http.get(Uri.parse(app.remoteIconURL!));
           if (response.statusCode == 200) {
             icon = response.bodyBytes;
           }
@@ -2931,6 +2931,13 @@ class AppsProvider with ChangeNotifier {
               }
               if (e is RepositoryRenamedError) {
                 await updatePendingRepoRename(appId, e.newUrl);
+              } else if (e is NotReproducibleError) {
+                // "Reproducible builds only" is on and no release
+                // is confirmed reproducible: not a failure. Stay on the
+                // current version, with no retry and no error notification.
+                logs.add(
+                  'No reproducible release for $appId - keeping current version.',
+                );
               } else {
                 errors.add(appId, e, appName: apps[appId]?.name);
               }

@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Временно известие, което се появява при проверка за актуализации",
     "pleaseAllowInstallPerm": "Моля, разрешете на Updatium да инсталира приложения",
     "trackOnly": "Само за проследяване",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Грешка {}",
