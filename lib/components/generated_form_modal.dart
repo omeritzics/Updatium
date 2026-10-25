@@ -73,7 +73,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           },
           child: Text(
             widget.singleNullReturnButton == null
-                ? t('cancel')
+                ? 'cancel'.t()
                 : widget.singleNullReturnButton!,
           ),
         ),

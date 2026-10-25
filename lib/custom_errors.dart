@@ -165,7 +165,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(t('ok')),
+              child: Text('ok'.t()),
             ),
           ],
         );

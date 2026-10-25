@@ -61,7 +61,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  // MapEntry(Locale('en', 'KU'), 'Kurdî'),
+  // MapEntry(Locale('kmr'), 'Kurdî'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('nb'), 'Norsk (Bokmål)'),
   MapEntry(Locale('bn'), 'বাংলা'),
@@ -71,8 +71,6 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ta'), 'தமிழ்'),
   MapEntry(Locale('fil'), 'Filipino'),
 ];
-const fallbackLocale = Locale('en');
-const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
@@ -82,16 +80,15 @@ Future<void> loadTranslations() async {
   await QuickLocalizationController.initQuickLocation();
   try {
     await SettingsProvider().initializeSettings();
-    var forceLocale = SettingsProvider().forcedLocale;
     final controller = QuickLocalizationController(
       saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
+      forceLocale: SettingsProvider().forcedLocale,
+      fallbackLocale: Locale('en'),
       supportedLocales: supportedLocales.map((e) => e.key).toList(),
       assetLoader: RootBundleAssetLoader.fromRootBundle(),
       useOnlyLangCode: false,
       useFallbackTranslations: true,
-      path: localeDir,
+      path: 'assets/translations',
       onLoadError: (FlutterError e) {
         throw e;
       },
@@ -161,69 +158,14 @@ void main() async {
       ],
       child: QuickLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale: fallbackLocale,
+        path: 'assets/translations',
+        fallbackLocale: Locale('en'),
         useOnlyLangCode: false,
         child: const Updatium(),
       ),
     ),
   );
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
-}
-
-/// Converts a [flutter_m.ColorScheme] (from dynamic_color / flutter/material.dart)
-/// into a [ColorScheme] from material_ui. Both classes share the same Color
-/// fields and Brightness enum (from dart:ui), so the conversion is lossless.
-ColorScheme _toMuiColorScheme(ColorScheme s) {
-  return ColorScheme(
-    brightness: s.brightness,
-    primary: s.primary,
-    onPrimary: s.onPrimary,
-    primaryContainer: s.primaryContainer,
-    onPrimaryContainer: s.onPrimaryContainer,
-    primaryFixed: s.primaryFixed,
-    primaryFixedDim: s.primaryFixedDim,
-    onPrimaryFixed: s.onPrimaryFixed,
-    onPrimaryFixedVariant: s.onPrimaryFixedVariant,
-    secondary: s.secondary,
-    onSecondary: s.onSecondary,
-    secondaryContainer: s.secondaryContainer,
-    onSecondaryContainer: s.onSecondaryContainer,
-    secondaryFixed: s.secondaryFixed,
-    secondaryFixedDim: s.secondaryFixedDim,
-    onSecondaryFixed: s.onSecondaryFixed,
-    onSecondaryFixedVariant: s.onSecondaryFixedVariant,
-    tertiary: s.tertiary,
-    onTertiary: s.onTertiary,
-    tertiaryContainer: s.tertiaryContainer,
-    onTertiaryContainer: s.onTertiaryContainer,
-    tertiaryFixed: s.tertiaryFixed,
-    tertiaryFixedDim: s.tertiaryFixedDim,
-    onTertiaryFixed: s.onTertiaryFixed,
-    onTertiaryFixedVariant: s.onTertiaryFixedVariant,
-    error: s.error,
-    onError: s.onError,
-    errorContainer: s.errorContainer,
-    onErrorContainer: s.onErrorContainer,
-    surface: s.surface,
-    onSurface: s.onSurface,
-    surfaceDim: s.surfaceDim,
-    surfaceBright: s.surfaceBright,
-    surfaceContainerLowest: s.surfaceContainerLowest,
-    surfaceContainerLow: s.surfaceContainerLow,
-    surfaceContainer: s.surfaceContainer,
-    surfaceContainerHigh: s.surfaceContainerHigh,
-    surfaceContainerHighest: s.surfaceContainerHighest,
-    onSurfaceVariant: s.onSurfaceVariant,
-    outline: s.outline,
-    outlineVariant: s.outlineVariant,
-    shadow: s.shadow,
-    scrim: s.scrim,
-    inverseSurface: s.inverseSurface,
-    onInverseSurface: s.onInverseSurface,
-    inversePrimary: s.inversePrimary,
-    surfaceTint: s.surfaceTint,
-  );
 }
 
 class Updatium extends StatefulWidget {
@@ -390,8 +332,8 @@ class _UpdatiumState extends State<Updatium> {
         if (lightDynamic != null &&
             darkDynamic != null &&
             settingsProvider.useMaterialYou) {
-          lightColorScheme = _toMuiColorScheme(lightDynamic);
-          darkColorScheme = _toMuiColorScheme(darkDynamic);
+          lightColorScheme = lightDynamic;
+          darkColorScheme = darkDynamic;
           // Ensure surface container colors have proper opacity for switch visibility
           lightColorScheme = lightColorScheme.copyWith(
             surfaceContainerHighest: lightColorScheme.surfaceContainerHighest,
@@ -494,19 +436,15 @@ class _UpdatiumState extends State<Updatium> {
                 borderRadius: BorderRadius.circular(4),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.outline),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.primary, width: 2),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               contentPadding: const EdgeInsets.symmetric(
@@ -558,11 +496,11 @@ class _UpdatiumState extends State<Updatium> {
             // Expressive List Tiles
             listTileTheme: ListTileThemeData(
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
+                horizontal: 12,
                 vertical: 4,
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(12),
               ),
               selectedTileColor: scheme.surface.withValues(alpha: 0.2),
             ),
@@ -573,17 +511,6 @@ class _UpdatiumState extends State<Updatium> {
                 TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
               },
             ),
-
-            // Expressive Text Selection
-            textSelectionTheme: TextSelectionThemeData(
-              selectionColor: scheme.primary.withValues(alpha: 0.3),
-              selectionHandleColor: scheme.primary,
-              cursorColor: scheme.primary,
-            ),
-
-            // Expressive Touch Feedback
-            splashFactory: InkRipple.splashFactory,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           );
         }
 
