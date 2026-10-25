@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Vorübergehende Benachrichtigung, die bei der Suche nach Aktualisierungen angezeigt wird",
     "pleaseAllowInstallPerm": "Bitte erlauben Sie Updatium die Installation von Apps",
     "trackOnly": "Nur nachverfolgen",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Fehler {}",

@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Notificació temporal que apareix en cercar actualitzacions",
     "pleaseAllowInstallPerm": "Permet que Updatium instal·li aplicacions",
     "trackOnly": "Només per a seguiment",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Error {}",

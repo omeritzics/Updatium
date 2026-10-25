@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Dumtempa sciigo kiu aperas dum la serĉo de ĝisdatigoj",
     "pleaseAllowInstallPerm": "Bonvolu permesi al Updatium instali apojn",
     "trackOnly": "Nur sekvita",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Eraro {}",

@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുമ്പോൾ ദൃശ്യമാകുന്ന താൽക്കാലിക അറിയിപ്പ്",
     "pleaseAllowInstallPerm": "ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ ഒബ്‌റ്റേനിയത്തിന് അനുമതി നൽകുക",
     "trackOnly": "ട്രാക്ക്-മാത്രം",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "പിശക് {}",

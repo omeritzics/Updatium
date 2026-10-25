@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Notifikasi sementara yang ditampilkan saat memeriksa pembaruan",
     "pleaseAllowInstallPerm": "Harap izinkan Updatium untuk memasang aplikasi",
     "trackOnly": "Pelacakan Saja",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Kesalahan {}",

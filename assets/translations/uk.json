@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Тимчасове повідомлення, яке з'являється при перевірці оновлень",
     "pleaseAllowInstallPerm": "Будь ласка, дозвольте Updatium встановлювати застосунки",
     "trackOnly": "Тільки відстеження",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Помилка {} HTTP-коду",

@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Átmeneti értesítés, amely a frissítések ellenőrzésekor jelenik meg",
     "pleaseAllowInstallPerm": "Engedélyezze az Updatiumnak az alkalmazások telepítését",
     "trackOnly": "Csak nyomon követés",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Hiba {}",

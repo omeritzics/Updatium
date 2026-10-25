@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Pansamantalang abiso na lumilitaw kapag nagche-check ng mga update",
     "pleaseAllowInstallPerm": "Mangyaring payagan ang Updatium na mag-install ng mga app",
     "trackOnly": "Track-only",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Mapagkakatiwalaan",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Error {}",

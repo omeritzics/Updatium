@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Tijdelijke melding die verschijnt tijdens het controleren op updates",
     "pleaseAllowInstallPerm": "Toestaan dat Updatium apps installeert",
     "trackOnly": "'Alleen volgen'",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Foutmelding {}",

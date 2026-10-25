@@ -211,6 +211,7 @@
     "checkingForUpdatesNotifDescription": "Notificação transiente que aparece quando o Updatium está verificando se há atualizações",
     "pleaseAllowInstallPerm": "Por favor, permita que o Updatium instale aplicações",
     "trackOnly": "Apenas monitorar",
+    "reproducibleOnly": "Reproducible builds only",
     "trusted": "Trusted",
     "openSource": "Open-source",
     "errorWithHttpStatusCode": "Erro {}",
