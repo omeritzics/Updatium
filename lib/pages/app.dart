@@ -608,6 +608,17 @@ class _AppPageState extends State<AppPage> {
                     app.app.author)) {
           app.app.additionalSettings.remove('author');
         }
+        if (app.app.additionalSettings['trackedURL'] != null) {
+          final newTrackedUrl = app.app.additionalSettings
+              .remove('trackedURL')
+              ?.toString()
+              .trim();
+          if (newTrackedUrl != null &&
+              newTrackedUrl.isNotEmpty &&
+              newTrackedUrl != app.app.url) {
+            app.app.url = newTrackedUrl;
+          }
+        }
 
         var versionDetectionEnabled =
             app.app.additionalSettings['versionDetection'] == true &&
