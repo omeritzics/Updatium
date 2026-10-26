@@ -1558,36 +1558,35 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          M3EPullToRefreshIndicator(
-            controller: _pullController,
-            shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
-            triggerDistance: 110.00,
-            indicatorHeight: 64.00,
-            dragResistance: 0.50,
-            maxDragMultiplier: 2.00,
-            edgeOffset: 0.00,
-            springMotion: M3EMotion.expressiveSpatialDefault,
-            hapticFeedback: M3EHapticFeedback.none,
-            onRefresh: refresh,
-            style: M3EPullToRefreshStyle(
-              size: 56.00,
-              padding: const EdgeInsets.all(8.00),
-              elevation: 4.00,
-              borderRadius: BorderRadius.circular(28.00),
+          Scrollbar(
+            interactive: true,
+            controller: scrollController,
+            child: M3EPullToRefreshIndicator(
+              controller: _pullController,
+              shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
               triggerDistance: 110.00,
               indicatorHeight: 64.00,
-              springMotion: const M3EMotion.custom(
-                stiffness: 380.00,
-                damping: 0.80,
-              ),
-              hapticFeedback: M3EHapticFeedback.none,
               dragResistance: 0.50,
               maxDragMultiplier: 2.00,
-            ),
-
-            child: Scrollbar(
-              interactive: true,
-              controller: scrollController,
+              edgeOffset: 0.00,
+              springMotion: M3EMotion.expressiveSpatialDefault,
+              hapticFeedback: M3EHapticFeedback.none,
+              onRefresh: refresh,
+              style: M3EPullToRefreshStyle(
+                size: 56.00,
+                padding: const EdgeInsets.all(8.00),
+                elevation: 4.00,
+                borderRadius: BorderRadius.circular(28.00),
+                triggerDistance: 110.00,
+                indicatorHeight: 64.00,
+                springMotion: const M3EMotion.custom(
+                  stiffness: 380.00,
+                  damping: 0.80,
+                ),
+                hapticFeedback: M3EHapticFeedback.none,
+                dragResistance: 0.50,
+                maxDragMultiplier: 2.00,
+              ),
               child: CustomScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 controller: scrollController,
