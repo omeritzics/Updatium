@@ -712,8 +712,8 @@ class _AppPageState extends State<AppPage> {
                   }
                 },
           icon: SizedBox(
-            width: 24,
-            height: 24,
+            width: 32,
+            height: 32,
             child: CircularProgressIndicator(
               value: isInstalling ? null : progress,
               strokeWidth: 2,

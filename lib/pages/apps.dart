@@ -757,7 +757,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: 'downloadProgress'.t(),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 120,
+                            width: 140,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -873,7 +873,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: 'downloadProgress'.t(),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 120,
+                      width: 140,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
