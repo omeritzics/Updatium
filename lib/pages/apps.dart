@@ -1636,24 +1636,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                       Consumer<SettingsProvider>(
                         builder: (context, settingsProvider, child) {
-                          return Semantics(
-                            button: true,
-                            label: settingsProvider.useGridView
+                          return IconButton(
+                            tooltip: settingsProvider.useGridView
                                 ? 'listView'.t()
                                 : 'gridView'.t(),
-                            child: IconButton(
-                              tooltip: settingsProvider.useGridView
-                                  ? 'listView'.t()
-                                  : 'gridView'.t(),
-                              onPressed: () {
-                                settingsProvider.useGridView =
-                                    !settingsProvider.useGridView;
-                              },
-                              icon: Icon(
-                                settingsProvider.useGridView
-                                    ? Icons.view_list_rounded
-                                    : Icons.grid_view_rounded,
-                              ),
+                            onPressed: () {
+                              settingsProvider.useGridView =
+                                  !settingsProvider.useGridView;
+                            },
+                            icon: Icon(
+                              settingsProvider.useGridView
+                                  ? Icons.view_list_rounded
+                                  : Icons.grid_view_rounded,
                             ),
                           );
                         },

@@ -472,11 +472,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: isTV
             ? Row(
                 children: [
-                  Semantics(
-                    label: 'Main navigation',
-                    hint:
-                        'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
-                    child: NavigationRail(
+                  NavigationRail(
                       selectedIndex: selectedIndexHistory.isEmpty
                           ? 0
                           : selectedIndexHistory.last,
@@ -484,18 +480,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       destinations: _buildNavigationRailDestinations(pages),
                       labelType: NavigationRailLabelType.all,
                     ),
-                  ),
                   Expanded(child: pageTransitionSwitcher),
                 ],
               )
             : pageTransitionSwitcher,
         bottomNavigationBar: isTV
             ? null
-            : Semantics(
-                label: 'Main navigation',
-                hint:
-                    'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
-                child: NavigationBar(
+            : NavigationBar(
                   selectedIndex: selectedIndexHistory.isEmpty
                       ? 0
                       : selectedIndexHistory.last,
@@ -504,7 +495,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   onDestinationSelected: _onNavigationDestinationSelected,
                   destinations: _buildNavigationDestinations(pages),
                 ),
-              ),
       ),
     );
   }
