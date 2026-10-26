@@ -93,7 +93,10 @@ dependencies:
   path: ^1.9.1
   m3e_buttons: ^1.0.3
   progress_indicator_m3e: ^0.1.1
-  loading_indicator_m3e: ^0.1.1
+  loading_indicator_m3e:
+    git:
+      url: https://github.com/omeritzics/m3e_loading_indicator
+      ref: main
   dynamic_color: ^1.8.1
   intl: any
   confetti: ^0.8.0
