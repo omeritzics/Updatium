@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
+import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:confetti/confetti.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -212,7 +212,7 @@ class AddAppPageState extends State<AddAppPage> {
       ),
       horizontalGap16,
       searching
-          ? const LoadingIndicatorM3E()
+          ? const M3ELoadingIndicator()
           : M3EFilledButton.tonal(
               onPressed: searchQuery.isEmpty || searching
                   ? null
@@ -953,7 +953,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                           child: SizedBox(
                             width: 24,
                             height: 24,
-                            child: LoadingIndicatorM3E(),
+                            child: M3ELoadingIndicator(),
                           ),
                         ),
                       )

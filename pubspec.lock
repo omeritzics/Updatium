@@ -485,13 +485,13 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_m3shapes_extended:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_m3shapes_extended
-      sha256: "585194f12fb7f4bb705228d11f39e8f157edadb5b2d906e0ed502817403270fc"
+      sha256: "37e5839a7ed4feb9c8a6deb4bb29949e1fc3dd9534863eaa92d160cc15b945c9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "1.2.1"
   flutter_markdown_plus:
     dependency: "direct main"
     description:
@@ -670,14 +670,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
-  loading_indicator_m3e:
-    dependency: "direct main"
-    description:
-      name: loading_indicator_m3e
-      sha256: "3fe97385b4f84382c25b901abf88fcee4200e6e78fcd5ed7e037a34d7db53038"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   logger:
     dependency: "direct main"
     description:
@@ -729,10 +721,11 @@ packages:
   m3e_loading_indicator:
     dependency: "direct main"
     description:
-      name: m3e_loading_indicator
-      sha256: "6d3f80c680b5b992cea3be7176a0c491a14061d26a33274b6ad55027ebbd720a"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: b2a56557f2fa7f86054bd2729e32a25f71ddb700
+      url: "https://github.com/omeritzics/m3e_loading_indicator"
+    source: git
     version: "1.0.0"
   m3e_segmented_list:
     dependency: "direct main"
@@ -766,14 +759,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
-  material_new_shapes:
-    dependency: transitive
-    description:
-      name: material_new_shapes
-      sha256: e4bc375205e187e8fb232573387112dd8c0dd45b03af8aa2b3c79eb4b9e3e0dc
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   material_ui:
     dependency: "direct main"
     description:
