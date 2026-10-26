@@ -306,14 +306,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  expressive_refresh:
-    dependency: "direct main"
-    description:
-      name: expressive_refresh
-      sha256: "99bb70ae1719ebdedbaf3b4a49031ef7b916da157f7843b8e83efbe6633b20ad"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   fake_async:
     dependency: transitive
     description:
@@ -492,6 +484,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_m3shapes_extended:
+    dependency: transitive
+    description:
+      name: flutter_m3shapes_extended
+      sha256: "585194f12fb7f4bb705228d11f39e8f157edadb5b2d906e0ed502817403270fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_markdown_plus:
     dependency: "direct main"
     description:
@@ -726,6 +726,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  m3e_loading_indicator:
+    dependency: "direct main"
+    description:
+      name: m3e_loading_indicator
+      sha256: "6d3f80c680b5b992cea3be7176a0c491a14061d26a33274b6ad55027ebbd720a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   m3e_segmented_list:
     dependency: "direct main"
     description:
@@ -862,6 +870,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      sha256: bbb1934c0cbb03091af082a6389ca2080345291ef07a5fa6d6e078ba8682f977
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      sha256: "883402936929eac138ee0a45da5b0f2c80f89913e6dc3bf77eb65b84b409c6ca"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   path_provider:
     dependency: "direct main"
     description:
