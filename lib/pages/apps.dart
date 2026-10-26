@@ -1527,7 +1527,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
           ExpressiveRefreshIndicator(
