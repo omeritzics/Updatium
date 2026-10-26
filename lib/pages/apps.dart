@@ -1558,10 +1558,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          Scrollbar(
-            interactive: true,
-            controller: scrollController,
-            child: M3EPullToRefreshIndicator(
+          M3EPullToRefreshIndicator(
               controller: _pullController,
               shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
               triggerDistance: 110.00,
@@ -1587,9 +1584,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 dragResistance: 0.50,
                 maxDragMultiplier: 2.00,
               ),
-              child: CustomScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
+              child: Scrollbar(
+                interactive: true,
                 controller: scrollController,
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: scrollController,
                 slivers: <Widget>[
                   SliverAppBar.medium(
                     pinned: true,
