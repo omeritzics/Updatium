@@ -725,7 +725,7 @@ class _AppPageState extends State<AppPage> {
                 ? 'cancelling'.t()
                 : isInstalling
                 ? 'installing'.t()
-                : '${'downloading'.t()} (${app.downloadProgress!.toInt()})%',
+                : '${'downloading'.t()} (${app.downloadProgress!.toInt()}%)',
           ),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
