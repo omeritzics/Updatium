@@ -12,7 +12,6 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
-import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -503,7 +502,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
-                    const LoadingIndicatorM3E()
+                    const M3ELoadingIndicator()
                   else
                     Icon(
                       Icons.widgets,

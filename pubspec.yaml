@@ -93,7 +93,7 @@ dependencies:
   path: ^1.9.1
   m3e_buttons: ^1.0.3
   progress_indicator_m3e: ^0.1.1
-  loading_indicator_m3e:
+  m3e_loading_indicator:
     git:
       url: https://github.com/omeritzics/m3e_loading_indicator
       ref: main
@@ -104,11 +104,7 @@ dependencies:
   sqflite_common_ffi: ^2.4.3
   material_ui: ^1.8.0
   m3e_segmented_list: ^0.0.3
-  m3e_loading_indicator: ^1.0.0
-  flutter_m3shapes_extended:
-    git:
-      url: https://github.com/omeritzics/flutter_m3shapes_extended
-      ref: main
+  flutter_m3shapes_extended: ^1.2.0
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"
