@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:material_ui/material_ui.dart';
-import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
 import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
 
 import 'package:updatium/components/generated_form.dart';
@@ -177,8 +177,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
-  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<ExpressiveRefreshIndicatorState>();
+  final _pullController = M3EPullToRefreshController();
   final Set<int> _expandedCategories = {};
 
   void clearSelected() {
@@ -218,6 +217,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   void dispose() {
     _tabController.dispose();
     scrollController.dispose();
+    _pullController.dispose();
     super.dispose();
   }
 
@@ -251,7 +251,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         appsProvider.apps.isNotEmpty &&
         settingsProvider.checkJustStarted() &&
         settingsProvider.checkOnStart) {
-      _refreshIndicatorKey.currentState?.show();
+      _pullController.refresh();
     }
 
     var listedAppIdSet = listedApps.map((e) => e.app.id).toSet();
@@ -1529,9 +1529,32 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          ExpressiveRefreshIndicator(
-            key: _refreshIndicatorKey,
+          M3EPullToRefreshIndicator(
+            controller: _pullController,
+            shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
+            triggerDistance: 110.00,
+            indicatorHeight: 64.00,
+            dragResistance: 0.50,
+            maxDragMultiplier: 2.00,
+            edgeOffset: 0.00,
+            springMotion: M3EMotion.expressiveSpatialDefault,
+            hapticFeedback: M3EHapticFeedback.none,
             onRefresh: refresh,
+            style: M3EPullToRefreshStyle(
+              size: 56.00,
+              padding: const EdgeInsets.all(8.00),
+              elevation: 4.00,
+              borderRadius: BorderRadius.circular(28.00),
+              triggerDistance: 110.00,
+              indicatorHeight: 64.00,
+              springMotion: const M3EMotion.custom(
+                stiffness: 380.00,
+                damping: 0.80,
+              ),
+              hapticFeedback: M3EHapticFeedback.none,
+              dragResistance: 0.50,
+              maxDragMultiplier: 2.00,
+            ),
 
             child: Scrollbar(
               interactive: true,

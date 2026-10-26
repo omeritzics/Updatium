@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
+import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
@@ -60,6 +60,13 @@ class _AppPageState extends State<AppPage> {
   Future<void>? _iconFuture;
   String? _openabilityCheckedPackageName;
   bool? _isAppOpenable;
+  final _pullController = M3EPullToRefreshController();
+
+  @override
+  void dispose() {
+    _pullController.dispose();
+    super.dispose();
+  }
 
   Future<void> _checkAppOpenability(String packageName) async {
     if (_openabilityCheckedPackageName == packageName) return;
@@ -805,10 +812,34 @@ class _AppPageState extends State<AppPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Stack(
           children: [
-            ExpressiveRefreshIndicator(
+            M3EPullToRefreshIndicator(
+              controller: _pullController,
+              shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
+              triggerDistance: 110.00,
+              indicatorHeight: 64.00,
+              dragResistance: 0.50,
+              maxDragMultiplier: 2.00,
+              edgeOffset: 0.00,
+              springMotion: M3EMotion.expressiveSpatialDefault,
+              hapticFeedback: M3EHapticFeedback.none,
               onRefresh: () async {
                 await getUpdate(app.app.id);
               },
+              style: M3EPullToRefreshStyle(
+                size: 56.00,
+                padding: const EdgeInsets.all(8.00),
+                elevation: 4.00,
+                borderRadius: BorderRadius.circular(28.00),
+                triggerDistance: 110.00,
+                indicatorHeight: 64.00,
+                springMotion: const M3EMotion.custom(
+                  stiffness: 380.00,
+                  damping: 0.80,
+                ),
+                hapticFeedback: M3EHapticFeedback.none,
+                dragResistance: 0.50,
+                maxDragMultiplier: 2.00,
+              ),
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar.large(
