@@ -472,13 +472,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: isTV
             ? Row(
                 children: [
-                  NavigationRail(
-                    selectedIndex: selectedIndexHistory.isEmpty
-                        ? 0
-                        : selectedIndexHistory.last,
-                    onDestinationSelected: _onNavigationDestinationSelected,
-                    destinations: _buildNavigationRailDestinations(pages),
-                    labelType: NavigationRailLabelType.all,
+                  Semantics(
+                    label: 'Main navigation',
+                    hint:
+                        'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+                    child: NavigationRail(
+                      selectedIndex: selectedIndexHistory.isEmpty
+                          ? 0
+                          : selectedIndexHistory.last,
+                      onDestinationSelected: _onNavigationDestinationSelected,
+                      destinations: _buildNavigationRailDestinations(pages),
+                      labelType: NavigationRailLabelType.all,
+                    ),
                   ),
                   Expanded(child: pageTransitionSwitcher),
                 ],
@@ -486,14 +491,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             : pageTransitionSwitcher,
         bottomNavigationBar: isTV
             ? null
-            : NavigationBar(
-                selectedIndex: selectedIndexHistory.isEmpty
-                    ? 0
-                    : selectedIndexHistory.last,
-                animationDuration: const Duration(milliseconds: 200),
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-                onDestinationSelected: _onNavigationDestinationSelected,
-                destinations: _buildNavigationDestinations(pages),
+            : Semantics(
+                label: 'Main navigation',
+                hint:
+                    'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+                child: NavigationBar(
+                  selectedIndex: selectedIndexHistory.isEmpty
+                      ? 0
+                      : selectedIndexHistory.last,
+                  animationDuration: const Duration(milliseconds: 200),
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+                  onDestinationSelected: _onNavigationDestinationSelected,
+                  destinations: _buildNavigationDestinations(pages),
+                ),
               ),
       ),
     );
