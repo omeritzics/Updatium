@@ -473,13 +473,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ? Row(
                 children: [
                   NavigationRail(
-                      selectedIndex: selectedIndexHistory.isEmpty
-                          ? 0
-                          : selectedIndexHistory.last,
-                      onDestinationSelected: _onNavigationDestinationSelected,
-                      destinations: _buildNavigationRailDestinations(pages),
-                      labelType: NavigationRailLabelType.all,
-                    ),
+                    selectedIndex: selectedIndexHistory.isEmpty
+                        ? 0
+                        : selectedIndexHistory.last,
+                    onDestinationSelected: _onNavigationDestinationSelected,
+                    destinations: _buildNavigationRailDestinations(pages),
+                    labelType: NavigationRailLabelType.all,
+                  ),
                   Expanded(child: pageTransitionSwitcher),
                 ],
               )
@@ -487,14 +487,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         bottomNavigationBar: isTV
             ? null
             : NavigationBar(
-                  selectedIndex: selectedIndexHistory.isEmpty
-                      ? 0
-                      : selectedIndexHistory.last,
-                  animationDuration: const Duration(milliseconds: 200),
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-                  onDestinationSelected: _onNavigationDestinationSelected,
-                  destinations: _buildNavigationDestinations(pages),
-                ),
+                selectedIndex: selectedIndexHistory.isEmpty
+                    ? 0
+                    : selectedIndexHistory.last,
+                animationDuration: const Duration(milliseconds: 200),
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+                onDestinationSelected: _onNavigationDestinationSelected,
+                destinations: _buildNavigationDestinations(pages),
+              ),
       ),
     );
   }
