@@ -676,7 +676,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               ? additionalSettings['author']
               : app.author;
           additionalSettings['app.url'] =
-              additionalSettings['app.url']?.toString().trim().isNotEmpty == true
+              additionalSettings['app.url']?.toString().trim().isNotEmpty ==
+                  true
               ? additionalSettings['app.url']
               : app.url;
           prefillVersion++;
