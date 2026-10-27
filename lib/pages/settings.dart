@@ -842,7 +842,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         onExpansionChanged: (bool expanded) {
                           settingsProvider.appViewSectionExpanded = expanded;
                         },
-                        childrenPadding: const EdgeInsets.all(8),
+                        childrenPadding: const EdgeInsets.all(16),
                         children: [
                           ...sourceProvider.sources.map((e) {
                             if (e.sourceConfigSettingFormItems.isNotEmpty) {
@@ -946,7 +946,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         onExpansionChanged: (bool expanded) {
                           settingsProvider.appearanceSectionExpanded = expanded;
                         },
-                        childrenPadding: const EdgeInsets.all(8),
+                        childrenPadding: const EdgeInsets.all(16),
                         children: [
                           gap12,
                           GeneratedForm(
@@ -1123,7 +1123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         onExpansionChanged: (bool expanded) {
                           settingsProvider.categoriesSectionExpanded = expanded;
                         },
-                        childrenPadding: const EdgeInsets.all(8),
+                        childrenPadding: const EdgeInsets.all(16),
                         children: [
                           GeneratedForm(
                             items: [
@@ -1265,7 +1265,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         onExpansionChanged: (bool expanded) {
                           // Optional: save expansion state in settingsProvider if desired
                         },
-                        childrenPadding: const EdgeInsets.all(8),
+                        childrenPadding: const EdgeInsets.all(16),
                         children: [
                           gap12,
                           SwitchListTile(
@@ -1286,7 +1286,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         onExpansionChanged: (bool expanded) {
                           settingsProvider.categoriesSectionExpanded = expanded;
                         },
-                        childrenPadding: const EdgeInsets.all(8),
+                        childrenPadding: const EdgeInsets.all(16),
                         children: [
                           gap12,
                           CategoryTagEditor(showLabelWhenNotEmpty: false),
