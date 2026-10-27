@@ -1546,7 +1546,7 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text('remove'.t()),
         ),
-        TextButton(
+        M3EFilledButton(
           onPressed: () {
             Navigator.of(context).pop();
           },

@@ -102,7 +102,6 @@ class _AppPageState extends State<AppPage> {
     }
     var appValue = app!;
     var pendingUrl = appValue.app.pendingRepoRenameUrl!;
-    final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -116,7 +115,7 @@ class _AppPageState extends State<AppPage> {
               bottom: Radius.circular(4),
             ),
           ),
-          color: colorScheme.surfaceContainer,
+          color: Theme.of(context).colorScheme.surfaceContainer,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(
@@ -127,7 +126,7 @@ class _AppPageState extends State<AppPage> {
                   Icon(
                     Icons.info_outline_rounded,
                     size: 24,
-                    color: colorScheme.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   Expanded(
                     child: Column(
@@ -151,7 +150,7 @@ class _AppPageState extends State<AppPage> {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
-          color: colorScheme.surfaceContainer,
+          color: Theme.of(context).colorScheme.surfaceContainer,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(
@@ -162,7 +161,7 @@ class _AppPageState extends State<AppPage> {
                   Icon(
                     Icons.link_rounded,
                     size: 24,
-                    color: colorScheme.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   Expanded(
                     child: Column(
@@ -186,7 +185,7 @@ class _AppPageState extends State<AppPage> {
               bottom: Radius.circular(16),
             ),
           ),
-          color: colorScheme.surfaceContainer,
+          color: Theme.of(context).colorScheme.surfaceContainer,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(

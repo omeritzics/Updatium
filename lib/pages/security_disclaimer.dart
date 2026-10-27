@@ -43,7 +43,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -75,13 +75,13 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.primaryContainer,
         shape: BoxShape.circle,
       ),
       child: Icon(
         Icons.security,
         size: 64,
-        color: colorScheme.onPrimaryContainer,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
@@ -91,7 +91,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
       'securityDisclaimerTitle'.t(),
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
         fontWeight: FontWeight.bold,
-        color: colorScheme.onSurface,
+        color: Theme.of(context).colorScheme.onSurface,
       ),
       textAlign: TextAlign.center,
     );
@@ -101,7 +101,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colorScheme.surface.withValues(alpha: 0.1),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -119,7 +119,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(item.icon, size: 20, color: colorScheme.primary),
+        Icon(item.icon, size: 20, color: Theme.of(context).colorScheme.primary),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -171,7 +171,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
                     'decline'.t(),
-                    style: TextStyle(fontSize: 16, color: colorScheme.error),
+                    style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.error),
                   ),
                 ),
               ),

@@ -37,8 +37,8 @@ class _CardAction {
 }
 
 Widget _actionCards(BuildContext context, List<_CardAction> actions) {
-  final theme = Theme.of(context);
   return M3ESegmentedColumn(
+    color: Theme.of(context).colorScheme.surfaceContainer,
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     onTap: (i) => actions[i].onPressed?.call(),
     children: [
@@ -47,10 +47,13 @@ Widget _actionCards(BuildContext context, List<_CardAction> actions) {
           opacity: a.onPressed == null ? 0.38 : 1,
           child: Row(
             children: [
-              Icon(a.icon, color: theme.colorScheme.onSurfaceVariant),
+              Icon(a.icon, color: Theme.of(context).colorScheme.onSurface),
               horizontalGap16,
               Expanded(
-                child: Text(a.label, style: theme.textTheme.titleMedium),
+                child: Text(
+                  a.label,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
             ],
           ),
