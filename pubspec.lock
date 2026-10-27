@@ -689,12 +689,27 @@ packages:
   m3e_core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "9cc0d5cb0686882678eb72b58813c466a2d7eeb4"
-      url: "https://github.com/omeritzics/m3e_core"
-    source: git
-    version: "1.1.4"
+      name: m3e_core
+      sha256: "859b2810fe713b5bb124fdc804ff28273dd919d64c8dd016d2ae6d28771d8797"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
+  m3e_haptics:
+    dependency: transitive
+    description:
+      name: m3e_haptics
+      sha256: e19c8bc49df25ad0512a6bb603a3ffcc6b2e4c2c1d4644302eb78f586bd7a0d0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  m3e_segmented_list:
+    dependency: "direct main"
+    description:
+      name: m3e_segmented_list
+      sha256: "245c9e9dd790af48ab0339cdf98b847dd71b61c610525d079e81ee8ba7ca42f6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   markdown:
     dependency: "direct main"
     description:

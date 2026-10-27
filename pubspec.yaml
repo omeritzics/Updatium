@@ -96,10 +96,8 @@ dependencies:
   logger: ^2.8.0
   sqflite_common_ffi: ^2.4.3
   flutter_m3shapes_extended: ^1.2.0
-  m3e_core:
-    git:
-      url: https://github.com/omeritzics/m3e_core
-      ref: main
+  m3e_core: 0.1.6
+  m3e_segmented_list: ^0.0.3
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"

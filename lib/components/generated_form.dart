@@ -453,7 +453,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 autocorrect: !formItem.password,
                 enableSuggestions: !formItem.password,
                 key: formFieldKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.always,
                 onChanged: (value) {
                   setState(() {
                     values[fieldKey] = value;

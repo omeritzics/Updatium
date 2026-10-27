@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:m3e_core/m3e_core.dart';
+import 'package:m3e_segmented_list/m3e_segmented_list.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/services/slang_converter.dart';
