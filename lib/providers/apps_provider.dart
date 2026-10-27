@@ -3436,7 +3436,6 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   // ignore: avoid_print
   print('BG task started $taskId: ${params.toString()}');
   WidgetsFlutterBinding.ensureInitialized();
-  await QuickLocalization.ensureInitialized();
   await loadTranslations();
 
   LogsProvider logs = LogsProvider();
