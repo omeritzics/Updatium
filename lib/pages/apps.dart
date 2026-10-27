@@ -3,16 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
-import 'package:m3e_core/m3e_core.dart'
-    hide
-        M3EPullToRefreshController,
-        M3ELoadingIndicator,
-        M3EPullToRefreshIndicator,
-        Shapes,
-        M3EMotion,
-        M3EHapticFeedback,
-        M3EPullToRefreshStyle;
+import 'package:m3e_core/m3e_core.dart';
 
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';

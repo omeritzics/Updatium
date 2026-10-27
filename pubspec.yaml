@@ -90,17 +90,16 @@ dependencies:
   flutter_foreground_task: ^11.0.3
   flutter_markdown_plus: ^1.0.7
   path: ^1.9.1
-  m3e_loading_indicator:
-    git:
-      url: https://github.com/omeritzics/m3e_loading_indicator
-      ref: main
   dynamic_color: ^1.8.1
   intl: any
   confetti: ^0.8.0
   logger: ^2.8.0
   sqflite_common_ffi: ^2.4.3
   flutter_m3shapes_extended: ^1.2.0
-  m3e_core: ^1.1.4
+  m3e_core:
+    git:
+      url: https://github.com/omeritzics/m3e_core
+      ref: main
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"
