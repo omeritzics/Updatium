@@ -6,8 +6,7 @@ import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
-import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:m3e_floating_toolbar/m3e_floating_toolbar.dart' hide M3EMotion;
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/settings.dart';
@@ -950,73 +949,90 @@ class _AppPageState extends State<AppPage> {
                 alignment: fab != null
                     ? AlignmentDirectional.bottomEnd
                     : Alignment.center,
-                child: M3FloatingToolbar(
-                  floatingActionButton: fab,
-                  actions: [
-                    if (!updating &&
-                        source != null &&
-                        source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.edit,
-                        semanticLabel: 'additionalOptions'.t(),
-                        tooltip: 'additionalOptions'.t(),
-                        onPressed: () {
-                          showAdditionalOptionsDialog().then(
-                            handleAdditionalOptionChanges,
-                          );
-                        },
-                      ),
-                    if (!updating &&
-                        (app.app.apkUrls.isNotEmpty == true ||
-                            app.app.otherAssetUrls.isNotEmpty == true))
-                      M3FloatingToolbarAction(
-                        icon: Icons.archive,
-                        semanticLabel: t(
-                          'downloadX',
-                          args: [lowerCaseIfEnglish('releaseAsset'.t())],
-                        ),
-                        tooltip: t(
-                          'downloadX',
-                          args: [lowerCaseIfEnglish('releaseAsset'.t())],
-                        ),
-                        onPressed: () async {
-                          try {
-                            if (!mounted) return;
-                            await appsProvider.downloadAppAssets([
-                              app.app.id,
-                            ], context);
-                          } catch (e) {
-                            if (!mounted) return;
-                            showError(e, context);
-                          }
-                        },
-                      ),
-                    M3FloatingToolbarAction(
-                      icon: Icons.delete,
-                      semanticLabel: 'remove'.t(),
-                      tooltip: 'remove'.t(),
-                      onPressed: () async {
-                        if (!mounted) return;
-                        final removedApps = await appsProvider
-                            .removeAppsWithModal(context, [app.app]);
-                        if (removedApps != null && removedApps.isNotEmpty) {
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('appRemoved'.t()),
-                                action: SnackBarAction(
-                                  label: 'undo'.t(),
-                                  onPressed: () {
-                                    appsProvider.undoRestoreApps(removedApps);
-                                  },
-                                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    M3EHorizontalFloatingToolbar(
+                      expanded: true,
+                      content: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!updating &&
+                              source != null &&
+                              source
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty)
+                            IconButton(
+                              tooltip: 'additionalOptions'.t(),
+                              onPressed: () {
+                                showAdditionalOptionsDialog().then(
+                                  handleAdditionalOptionChanges,
+                                );
+                              },
+                              style: IconButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                            );
-                            Navigator.of(context).pop();
-                          }
-                        }
-                      },
+                              icon: const Icon(Icons.edit, size: 24),
+                            ),
+                          if (!updating &&
+                              (app.app.apkUrls.isNotEmpty == true ||
+                                  app.app.otherAssetUrls.isNotEmpty == true))
+                            IconButton(
+                              tooltip: t(
+                                'downloadX',
+                                args: [lowerCaseIfEnglish('releaseAsset'.t())],
+                              ),
+                              onPressed: () async {
+                                try {
+                                  if (!mounted) return;
+                                  await appsProvider.downloadAppAssets([
+                                    app.app.id,
+                                  ], context);
+                                } catch (e) {
+                                  if (!mounted) return;
+                                  showError(e, context);
+                                }
+                              },
+                              style: IconButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              icon: const Icon(Icons.archive, size: 24),
+                            ),
+                          IconButton(
+                            tooltip: 'remove'.t(),
+                            onPressed: () async {
+                              if (!mounted) return;
+                              final removedApps = await appsProvider
+                                  .removeAppsWithModal(context, [app.app]);
+                              if (removedApps != null &&
+                                  removedApps.isNotEmpty) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('appRemoved'.t()),
+                                      action: SnackBarAction(
+                                        label: 'undo'.t(),
+                                        onPressed: () {
+                                          appsProvider.undoRestoreApps(
+                                            removedApps,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            },
+                            style: IconButton.styleFrom(
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            icon: const Icon(Icons.delete, size: 24),
+                          ),
+                        ],
+                      ),
                     ),
+                    if (fab != null) ...[const SizedBox(width: 8), fab],
                   ],
                 ),
               ),

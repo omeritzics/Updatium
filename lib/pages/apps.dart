@@ -9,8 +9,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
-import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:m3e_floating_toolbar/m3e_floating_toolbar.dart' hide M3EMotion;
 import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
 
 import 'package:updatium/components/generated_form.dart';
@@ -1676,124 +1675,157 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               bottom: 16,
               child: Align(
                 alignment: Alignment.center,
-                child: M3FloatingToolbar(
-                  actions: [
-                    M3FloatingToolbarAction(
-                      icon: selectedAppIds.length == listedApps.length
-                          ? Icons.deselect
-                          : Icons.select_all,
-                      label: selectedAppIds.isEmpty
-                          ? listedApps.length.toString()
-                          : selectedAppIds.length.toString(),
-                      semanticLabel: selectedAppIds.isEmpty
-                          ? 'installUpdateApps'.t()
-                          : 'installUpdateSelectedApps'.t(),
-                      tooltip: selectedAppIds.isEmpty
-                          ? 'installUpdateApps'.t()
-                          : 'installUpdateSelectedApps'.t(),
-                      onPressed: selectedAppIds.isEmpty
-                          ? () {
-                              selectThese(
-                                listedApps.map((e) => e.app).toList(),
-                              );
-                            }
-                          : selectedAppIds.length == listedApps.length
-                          ? () {
-                              clearSelected();
-                            }
-                          : () {
-                              selectThese(
-                                listedApps.map((e) => e.app).toList(),
-                              );
-                            },
-                    ),
-                    if (!(appsProvider.areDownloadsRunning() ||
-                        (existingUpdateIdsAllOrSelected.isEmpty &&
-                            newInstallIdsAllOrSelected.isEmpty &&
-                            trackOnlyUpdateIdsAllOrSelected.isEmpty)))
-                      M3FloatingToolbarAction(
-                        icon: Icons.file_download,
-                        semanticLabel: selectedAppIds.isEmpty
+                child: M3EHorizontalFloatingToolbar(
+                  expanded: true,
+                  content: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Tooltip(
+                        message: selectedAppIds.isEmpty
                             ? 'installUpdateApps'.t()
                             : 'installUpdateSelectedApps'.t(),
-                        tooltip: selectedAppIds.isEmpty
-                            ? 'installUpdateApps'.t()
-                            : 'installUpdateSelectedApps'.t(),
-                        onPressed: getMassObtainFunction(),
-                      ),
-                    if (selectedAppIds.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.share,
-                        semanticLabel:
-                            '${'share'.t()} - ${'updatiumExport'.t()}',
-                        tooltip: '${'share'.t()} - ${'updatiumExport'.t()}',
-                        onPressed: () {
-                          var encoder = const JsonEncoder.withIndent("    ");
-                          var exportJSON = encoder.convert(
-                            appsProvider.generateExportJSON(
-                              appIds: selectedApps.map((e) => e.id).toList(),
-                              overrideExportSettings: 0,
-                            ),
-                          );
-                          String fn =
-                              '${'updatiumExportHyphenatedLowercase'.t()}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
-                          XFile f = XFile.fromData(
-                            Uint8List.fromList(utf8.encode(exportJSON)),
-                            mimeType: 'application/json',
-                            name: fn,
-                          );
-                          SharePlus.instance.share(ShareParams(files: [f]));
-                        },
-                      ),
-                    if (selectedAppIds.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.delete,
-                        semanticLabel: 'removeSelectedApps'.t(),
-                        tooltip: 'removeSelectedApps'.t(),
-                        onPressed: () async {
-                          final removedApps = await appsProvider
-                              .removeAppsWithModal(
+                        child: Semantics(
+                          label: selectedAppIds.isEmpty
+                              ? 'installUpdateApps'.t()
+                              : 'installUpdateSelectedApps'.t(),
+                          button: true,
+                          child: TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Theme.of(
                                 context,
-                                selectedApps.toList(),
-                              );
-                          if (removedApps != null && removedApps.isNotEmpty) {
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'appRemoved'.plural(removedApps.length),
+                              ).colorScheme.onSurface,
+                              minimumSize: const Size(0, 48),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            icon: Icon(
+                              selectedAppIds.length == listedApps.length
+                                  ? Icons.deselect
+                                  : Icons.select_all,
+                              size: 24,
+                            ),
+                            label: Text(
+                              selectedAppIds.isEmpty
+                                  ? listedApps.length.toString()
+                                  : selectedAppIds.length.toString(),
+                            ),
+                            onPressed: selectedAppIds.isEmpty
+                                ? () {
+                                    selectThese(
+                                      listedApps.map((e) => e.app).toList(),
+                                    );
+                                  }
+                                : selectedAppIds.length == listedApps.length
+                                ? () {
+                                    clearSelected();
+                                  }
+                                : () {
+                                    selectThese(
+                                      listedApps.map((e) => e.app).toList(),
+                                    );
+                                  },
+                          ),
+                        ),
+                      ),
+                      if (!(appsProvider.areDownloadsRunning() ||
+                          (existingUpdateIdsAllOrSelected.isEmpty &&
+                              newInstallIdsAllOrSelected.isEmpty &&
+                              trackOnlyUpdateIdsAllOrSelected.isEmpty)))
+                        IconButton(
+                          tooltip: selectedAppIds.isEmpty
+                              ? 'installUpdateApps'.t()
+                              : 'installUpdateSelectedApps'.t(),
+                          onPressed: getMassObtainFunction(),
+                          style: IconButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.file_download, size: 24),
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        IconButton(
+                          tooltip: '${'share'.t()} - ${'updatiumExport'.t()}',
+                          onPressed: () {
+                            var encoder = const JsonEncoder.withIndent("    ");
+                            var exportJSON = encoder.convert(
+                              appsProvider.generateExportJSON(
+                                appIds: selectedApps.map((e) => e.id).toList(),
+                                overrideExportSettings: 0,
+                              ),
+                            );
+                            String fn =
+                                '${'updatiumExportHyphenatedLowercase'.t()}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+                            XFile f = XFile.fromData(
+                              Uint8List.fromList(utf8.encode(exportJSON)),
+                              mimeType: 'application/json',
+                              name: fn,
+                            );
+                            SharePlus.instance.share(ShareParams(files: [f]));
+                          },
+                          style: IconButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.share, size: 24),
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        IconButton(
+                          tooltip: 'removeSelectedApps'.t(),
+                          onPressed: () async {
+                            final removedApps = await appsProvider
+                                .removeAppsWithModal(
+                                  context,
+                                  selectedApps.toList(),
+                                );
+                            if (removedApps != null && removedApps.isNotEmpty) {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'appRemoved'.plural(removedApps.length),
+                                    ),
+                                    action: SnackBarAction(
+                                      label: 'undo'.t(),
+                                      onPressed: () {
+                                        appsProvider.undoRestoreApps(
+                                          removedApps,
+                                        );
+                                      },
+                                    ),
                                   ),
-                                  action: SnackBarAction(
-                                    label: 'undo'.t(),
-                                    onPressed: () {
-                                      appsProvider.undoRestoreApps(removedApps);
-                                    },
-                                  ),
-                                ),
-                              );
+                                );
+                              }
                             }
-                          }
-                        },
-                      ),
-                    if (selectedAppIds.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.category,
-                        semanticLabel: 'categorize'.t(),
-                        tooltip: 'categorize'.t(),
-                        onPressed: () {
-                          launchCategorizeDialog()();
-                        },
-                      ),
-                    if (selectedAppIds.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.more_horiz,
-                        semanticLabel: 'more'.t(),
-                        tooltip: 'more'.t(),
-                        onPressed: () {
-                          showMoreOptionsDialog();
-                        },
-                      ),
-                  ],
+                          },
+                          style: IconButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.delete, size: 24),
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        IconButton(
+                          tooltip: 'categorize'.t(),
+                          onPressed: () {
+                            launchCategorizeDialog()();
+                          },
+                          style: IconButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.category, size: 24),
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        IconButton(
+                          tooltip: 'more'.t(),
+                          onPressed: () {
+                            showMoreOptionsDialog();
+                          },
+                          style: IconButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          icon: const Icon(Icons.more_horiz, size: 24),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
