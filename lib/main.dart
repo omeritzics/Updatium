@@ -430,7 +430,6 @@ class _UpdatiumState extends State<Updatium> {
                 borderRadius: BorderRadius.circular(20),
               ),
               margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-              surfaceTintColor: scheme.surfaceTint,
             ),
 
             // Material 3 Outlined Text Fields
