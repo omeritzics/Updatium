@@ -467,29 +467,14 @@ class _UpdatiumState extends State<Updatium> {
 
             // Material 3 Menu Theme
             dropdownMenuTheme: DropdownMenuThemeData(
-              menuStyle: MenuStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  scheme.surfaceContainer,
-                ),
-                surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
-                elevation: WidgetStateProperty.all(3),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                padding: WidgetStateProperty.all(EdgeInsets.zero),
-              ),
               inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide(color: scheme.outline),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -524,10 +509,6 @@ class _UpdatiumState extends State<Updatium> {
               selectionHandleColor: scheme.primary,
               cursorColor: scheme.primary,
             ),
-
-            // Expressive Touch Feedback
-            splashFactory: InkRipple.splashFactory,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           );
         }
 

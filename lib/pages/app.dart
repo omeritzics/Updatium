@@ -376,6 +376,7 @@ class _AppPageState extends State<AppPage> {
             ),
           if (changeLogFn != null)
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton.icon(
                   onPressed: changeLogFn,

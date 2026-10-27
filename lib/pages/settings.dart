@@ -709,28 +709,30 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text(
                                 'beforeNewInstallsShareToAppVerifierBG'.t(),
                               ),
-                              subtitle: Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton.icon(
-                                  onPressed: () {
-                                    launchUrlString(
-                                      'https://github.com/RoundSalmon4/AppVerifierBG',
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  },
-                                  label: Text(
-                                    'about'.t(),
-                                    style: const TextStyle(fontSize: 12),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      launchUrlString(
+                                        'https://github.com/RoundSalmon4/AppVerifierBG',
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
+                                    label: Text(
+                                      'about'.t(),
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                    icon: const Icon(
+                                      Icons.info_outline,
+                                      size: 18,
+                                    ),
                                   ),
-                                  style: TextButton.styleFrom(
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  icon: const Icon(
-                                    Icons.info_outline,
-                                    size: 18,
-                                  ),
-                                ),
+                                ],
                               ),
                               value: settingsProvider
                                   .beforeNewInstallsShareToAppVerifierBG,
@@ -1891,15 +1893,15 @@ class _AboutDialogState extends State<AboutDialog> {
                   children: [
                     Image.asset(
                       'assets/graphics/icon.png',
-                      width: 72,
-                      height: 72,
+                      width: 68,
+                      height: 68,
                     ),
                     gap8,
                     Text(
                       'Updatium',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    gap8,
+                    gap4,
                     GestureDetector(
                       onTap: _onVersionTapped,
                       child: Container(
