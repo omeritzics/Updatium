@@ -412,15 +412,6 @@ class _UpdatiumState extends State<Updatium> {
             fontFamily: getPrimaryFontForLocale(context.locale),
             fontFamilyFallback: getFallbackFonts(),
 
-            // Expressive Card Design - preserve M3 Expressive transparency
-            cardTheme: CardThemeData(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            ),
-
             // Material 3 Outlined Text Fields
             inputDecorationTheme: InputDecorationTheme(
               border: OutlineInputBorder(
