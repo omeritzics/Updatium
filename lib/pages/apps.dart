@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
 import 'package:updatium/custom_errors.dart';
 
@@ -771,7 +771,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: 'downloadProgress'.t(),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 140,
+                            width: 120,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -887,7 +887,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: 'downloadProgress'.t(),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 140,
+                      width: 120,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -1076,15 +1076,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
                   return AlertDialog(
-                    scrollable: true,
                     title: Text(
                       t(
                         'changeX',
                         args: ['apps'.plural(totalApps).toLowerCase()],
                       ),
                     ),
-                    content: SizedBox(
-                      width: double.maxFinite,
+                    content: SingleChildScrollView(
                       child: GeneratedForm(
                         items: formItems.map((e) => [e]).toList(),
                         onValueChanges: (vals, valid, isBuilding) {
@@ -1205,7 +1203,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ),
                   ),
                   actions: [
-                    TextButton(
+                    M3EFilledButton(
                       onPressed: () {
                         for (var app in selectedApps) {
                           app.categories = selectedCategories.toList();
@@ -1566,26 +1564,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             indicatorHeight: 64.00,
             dragResistance: 0.50,
             maxDragMultiplier: 2.00,
-            edgeOffset: 0.00,
             springMotion: M3EMotion.expressiveSpatialDefault,
             hapticFeedback: M3EHapticFeedback.none,
             onRefresh: refresh,
-            style: M3EPullToRefreshStyle(
-              size: 56.00,
-              padding: const EdgeInsets.all(8.00),
-              elevation: 4.00,
-              borderRadius: BorderRadius.circular(28.00),
-              triggerDistance: 110.00,
-              indicatorHeight: 64.00,
-              springMotion: const M3EMotion.custom(
-                stiffness: 380.00,
-                damping: 0.80,
-              ),
-              hapticFeedback: M3EHapticFeedback.none,
-              dragResistance: 0.50,
-              maxDragMultiplier: 2.00,
-            ),
-
             child: Scrollbar(
               interactive: true,
               controller: scrollController,
