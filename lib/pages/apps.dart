@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
 import 'package:updatium/custom_errors.dart';
 
@@ -1076,15 +1076,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
                   return AlertDialog(
-                    scrollable: true,
                     title: Text(
                       t(
                         'changeX',
                         args: ['apps'.plural(totalApps).toLowerCase()],
                       ),
                     ),
-                    content: SizedBox(
-                      width: double.maxFinite,
+                    content: SingleChildScrollView(
                       child: GeneratedForm(
                         items: formItems.map((e) => [e]).toList(),
                         onValueChanges: (vals, valid, isBuilding) {
@@ -1205,7 +1203,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ),
                   ),
                   actions: [
-                    TextButton(
+                    M3EFilledButton(
                       onPressed: () {
                         for (var app in selectedApps) {
                           app.categories = selectedCategories.toList();

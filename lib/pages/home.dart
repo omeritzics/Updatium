@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
 
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/custom_errors.dart';
@@ -235,7 +235,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }
 
-    interpretUpdatiumLink(Uri uri) async {
+    interpretObtainiumLink(Uri uri) async {
       isLinkActivity = true;
       var action = uri.host;
       var data = uri.path.length > 1 ? uri.path.substring(1) : "";
@@ -274,8 +274,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final appLink = await _appLinks.getInitialLink();
     var initLinked = false;
     if (appLink != null) {
-      if (appLink.scheme == 'updatium') {
-        await interpretUpdatiumLink(appLink);
+      if (appLink.scheme == 'obtainium') {
+        await interpretObtainiumLink(appLink);
       } else {
         await interpretLink(appLink);
       }
@@ -284,8 +284,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Handle link when app is in warm state (front or background)
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       if (!initLinked) {
-        if (uri.scheme == 'updatium') {
-          await interpretUpdatiumLink(uri);
+        if (uri.scheme == 'obtainium') {
+          await interpretObtainiumLink(uri);
         } else {
           await interpretLink(uri);
         }
