@@ -505,7 +505,7 @@ class _AppPageState extends State<AppPage> {
                         item.defaultValue = app.app.name;
                       } else if (item.key == 'author') {
                         item.defaultValue = app.app.author;
-                      } else if (item.key == 'trackedURL') {
+                      } else if (item.key == 'app.url') {
                         item.defaultValue = app.app.url;
                       } else if (item.key == 'IconURL') {
                         item.defaultValue = app.app.remoteIconURL ?? '';
@@ -616,9 +616,9 @@ class _AppPageState extends State<AppPage> {
                     app.app.author)) {
           app.app.additionalSettings.remove('author');
         }
-        if (app.app.additionalSettings['trackedURL'] != null) {
+        if (app.app.additionalSettings['app.url'] != null) {
           final newTrackedUrl = app.app.additionalSettings
-              .remove('trackedURL')
+              .remove('app.url')
               ?.toString()
               .trim();
           if (newTrackedUrl != null &&

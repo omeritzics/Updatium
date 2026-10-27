@@ -621,7 +621,7 @@ abstract class AppSource {
     [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
     [
       GeneratedFormTextField(
-        'trackedURL',
+        'app.url',
         label: 'trackedURL'.t(),
         required: true,
         hint: 'https://github.com/author/app',
@@ -1338,15 +1338,7 @@ class SourceProvider {
     final trackOnly = additionalSettings['trackOnly'] == true;
     // A user-edited tracked URL replaces the original; it's consumed here so
     // the final App.url (standardUrl) is the single source of truth.
-    final editedTrackedUrl = additionalSettings
-        .remove('trackedURL')
-        ?.toString()
-        .trim();
-    final String standardUrl = source.standardizeUrl(
-      (editedTrackedUrl != null && editedTrackedUrl.isNotEmpty)
-          ? editedTrackedUrl
-          : url,
-    );
+    final String standardUrl = source.standardizeUrl(url);
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
       additionalSettings,
