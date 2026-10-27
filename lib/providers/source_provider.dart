@@ -631,8 +631,8 @@ abstract class AppSource {
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
     [
       GeneratedFormTextField(
-        'IconURL',
-        label: 'IconURL'.t(),
+        'iconURL',
+        label: 'iconURL'.t(),
         required: false,
         hint: 'https://example.com/icon.png',
         additionalValidators: [(value) => httpUrlValidator(value)],
@@ -1390,9 +1390,9 @@ class SourceProvider {
                 apk.names.author)) {
       additionalSettings.remove('author');
     }
-    final IconURL = additionalSettings['IconURL']?.toString().trim();
-    if (IconURL == null || IconURL.isEmpty) {
-      additionalSettings.remove('IconURL');
+    final iconURL = additionalSettings['iconURL']?.toString().trim();
+    if (iconURL == null || iconURL.isEmpty) {
+      additionalSettings.remove('iconURL');
     }
     App finalApp = App(
       currentApp?.id ??
@@ -1421,8 +1421,8 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
-      remoteIconURL: (IconURL != null && IconURL.isNotEmpty)
-          ? IconURL
+      remoteIconURL: (iconURL != null && iconURL.isNotEmpty)
+          ? iconURL
           : apk.remoteIconURL,
       overrideSource: sourceIsOverriden
           ? source.sourceIdentifier
