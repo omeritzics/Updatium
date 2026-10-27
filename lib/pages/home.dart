@@ -6,7 +6,7 @@ import 'package:app_links/app_links.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';

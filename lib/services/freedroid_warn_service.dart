@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FreeDroidWarnService {

@@ -4,13 +4,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
-import 'package:updatium/custom_errors.dart';
+import 'package:m3e_core/m3e_core.dart' hide M3EPullToRefreshController, M3ELoadingIndicator, M3EPullToRefreshIndicator, Shapes, M3EMotion, M3EHapticFeedback, M3EPullToRefreshStyle;
 
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:m3e_floating_toolbar/m3e_floating_toolbar.dart' hide M3EMotion;
-import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';

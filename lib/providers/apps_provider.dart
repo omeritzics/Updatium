@@ -20,7 +20,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
-import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';

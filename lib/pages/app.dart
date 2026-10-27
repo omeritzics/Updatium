@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
-import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
+import 'package:m3e_core/m3e_core.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:m3e_floating_toolbar/m3e_floating_toolbar.dart' hide M3EMotion;
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/settings.dart';
