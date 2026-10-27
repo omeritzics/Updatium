@@ -466,874 +466,834 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text('settings'.t()),
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: settingsProvider.prefs == null
-                  ? const SizedBox()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ExpansionTile(
-                          leading: Icon(Icons.update),
-                          title: Text('updates'.t()),
-                          initiallyExpanded:
-                              settingsProvider.updatesSectionExpanded,
-                          onExpansionChanged: (bool expanded) {
-                            settingsProvider.updatesSectionExpanded = expanded;
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            //intervalDropdown,
-                            gap12,
-                            if (showIntervalLabel)
-                              SizedBox(
-                                child: Text(
-                                  "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
-                                ),
-                              )
-                            else
-                              gap12,
-                            intervalSlider,
-                            FutureBuilder(
-                              builder: (ctx, val) {
-                                return (settingsProvider.updateInterval > 0) &&
-                                        (((val.data?.version.sdkInt ?? 0) >=
-                                                30) ||
-                                            settingsProvider.useShizuku)
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SwitchListTile(
-                                            title: Text(
-                                              t('foregroundServiceExplanation'),
-                                            ),
-                                            value:
-                                                settingsProvider.useFGService,
-                                            onChanged: (value) {
-                                              settingsProvider.useFGService =
-                                                  value;
-                                            },
-                                          ),
-
-                                          SwitchListTile(
-                                            title: Text(
-                                              'enableBackgroundUpdates'.t(),
-                                            ),
-                                            subtitle: Text(
-                                              '${t('backgroundUpdateLimitsExplanation')} ${t('backgroundUpdateReqsExplanation')}',
-                                              style: Theme.of(
-                                                context,
-                                              ).textTheme.labelSmall,
-                                            ),
-                                            value: settingsProvider
-                                                .enableBackgroundUpdates,
-                                            onChanged: (value) {
-                                              settingsProvider
-                                                      .enableBackgroundUpdates =
-                                                  value;
-                                            },
-                                          ),
-
-                                          gap8,
-                                          if (settingsProvider
-                                              .enableBackgroundUpdates)
-                                            Column(
-                                              children: [
-                                                SwitchListTile(
-                                                  title: Text(
-                                                    t('bgUpdatesOnWiFiOnly'),
-                                                  ),
-                                                  value: settingsProvider
-                                                      .bgUpdatesOnWiFiOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesOnWiFiOnly =
-                                                        value;
-                                                  },
-                                                ),
-
-                                                SwitchListTile(
-                                                  title: Text(
-                                                    t(
-                                                      'bgUpdatesWhileChargingOnly',
-                                                    ),
-                                                  ),
-                                                  value: settingsProvider
-                                                      .bgUpdatesWhileChargingOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesWhileChargingOnly =
-                                                        value;
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                        ],
-                                      )
-                                    : const SizedBox.shrink();
-                              },
-                              future: DeviceInfoPlugin().androidInfo,
-                            ),
-                            gap12,
-                            if (!settingsProvider.safeMode)
-                              SwitchListTile(
-                                title: Text('safeMode'.t()),
-                                subtitle: Text(
-                                  'safeModeDescription'.t(),
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                value: false,
-                                onChanged: (value) {
-                                  showSafeModeEnableDialog(context);
-                                },
+            child: settingsProvider.prefs == null
+                ? const SizedBox()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExpansionTile(
+                        leading: Icon(Icons.update),
+                        title: Text('updates'.t()),
+                        initiallyExpanded:
+                            settingsProvider.updatesSectionExpanded,
+                        onExpansionChanged: (bool expanded) {
+                          settingsProvider.updatesSectionExpanded = expanded;
+                        },
+                        childrenPadding: const EdgeInsets.all(16),
+                        children: [
+                          //intervalDropdown,
+                          gap12,
+                          if (showIntervalLabel)
+                            SizedBox(
+                              child: Text(
+                                "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
                               ),
-
-                            if (settingsProvider.safeMode)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('safeMode'.t()),
-                                      Text(
-                                        'safeModeEnabled'.t(),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primaryContainer,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Icon(
-                                      Icons.lock,
-                                      size: 20,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onPrimaryContainer,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            )
+                          else
                             gap12,
-                            if (settingsProvider.safeMode)
-                              SwitchListTile(
-                                title: Text('preventUninstallation'.t()),
-                                subtitle: Text(
-                                  'preventUninstallationDescription'.t(),
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                value: settingsProvider.preventUninstallation,
-                                onChanged: (value) async {
-                                  if (value) {
-                                    // Enable device admin
-                                    await DeviceAdminService.requestDeviceAdmin();
-                                    // Check if device admin is now enabled
-                                    final isEnabled =
-                                        await DeviceAdminService.isDeviceAdminEnabled();
-                                    if (!mounted) return;
-                                    if (isEnabled) {
-                                      settingsProvider.preventUninstallation =
-                                          true;
-                                    } else {
-                                      // User declined or failed
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'deviceAdminRequired'.t(),
+                          intervalSlider,
+                          FutureBuilder(
+                            builder: (ctx, val) {
+                              return (settingsProvider.updateInterval > 0) &&
+                                      (((val.data?.version.sdkInt ?? 0) >=
+                                              30) ||
+                                          settingsProvider.useShizuku)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SwitchListTile(
+                                          title: Text(
+                                            t('foregroundServiceExplanation'),
                                           ),
+                                          value: settingsProvider.useFGService,
+                                          onChanged: (value) {
+                                            settingsProvider.useFGService =
+                                                value;
+                                          },
                                         ),
-                                      );
-                                    }
+                                        SwitchListTile(
+                                          title: Text(
+                                            'enableBackgroundUpdates'.t(),
+                                          ),
+                                          subtitle: Text(
+                                            '${t('backgroundUpdateLimitsExplanation')} ${t('backgroundUpdateReqsExplanation')}',
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.labelSmall,
+                                          ),
+                                          value: settingsProvider
+                                              .enableBackgroundUpdates,
+                                          onChanged: (value) {
+                                            settingsProvider
+                                                    .enableBackgroundUpdates =
+                                                value;
+                                          },
+                                        ),
+                                        gap8,
+                                        if (settingsProvider
+                                            .enableBackgroundUpdates)
+                                          Column(
+                                            children: [
+                                              SwitchListTile(
+                                                title: Text(
+                                                  t('bgUpdatesOnWiFiOnly'),
+                                                ),
+                                                value: settingsProvider
+                                                    .bgUpdatesOnWiFiOnly,
+                                                onChanged: (value) {
+                                                  settingsProvider
+                                                          .bgUpdatesOnWiFiOnly =
+                                                      value;
+                                                },
+                                              ),
+                                              SwitchListTile(
+                                                title: Text(
+                                                  t(
+                                                    'bgUpdatesWhileChargingOnly',
+                                                  ),
+                                                ),
+                                                value: settingsProvider
+                                                    .bgUpdatesWhileChargingOnly,
+                                                onChanged: (value) {
+                                                  settingsProvider
+                                                          .bgUpdatesWhileChargingOnly =
+                                                      value;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                      ],
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                            future: DeviceInfoPlugin().androidInfo,
+                          ),
+                          gap12,
+                          if (!settingsProvider.safeMode)
+                            SwitchListTile(
+                              title: Text('safeMode'.t()),
+                              subtitle: Text(
+                                'safeModeDescription'.t(),
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              value: false,
+                              onChanged: (value) {
+                                showSafeModeEnableDialog(context);
+                              },
+                            ),
+                          if (settingsProvider.safeMode)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('safeMode'.t()),
+                                    Text(
+                                      'safeModeEnabled'.t(),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall,
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    Icons.lock,
+                                    size: 20,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimaryContainer,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          gap12,
+                          if (settingsProvider.safeMode)
+                            SwitchListTile(
+                              title: Text('preventUninstallation'.t()),
+                              subtitle: Text(
+                                'preventUninstallationDescription'.t(),
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              value: settingsProvider.preventUninstallation,
+                              onChanged: (value) async {
+                                if (value) {
+                                  // Enable device admin
+                                  await DeviceAdminService.requestDeviceAdmin();
+                                  // Check if device admin is now enabled
+                                  final isEnabled =
+                                      await DeviceAdminService.isDeviceAdminEnabled();
+                                  if (!mounted) return;
+                                  if (isEnabled) {
+                                    settingsProvider.preventUninstallation =
+                                        true;
                                   } else {
-                                    // Prevent disabling when Safe Mode is enabled
+                                    // User declined or failed
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'turnOffSafeModeFirst'.t(),
+                                          'deviceAdminRequired'.t(),
                                         ),
                                       ),
                                     );
                                   }
-                                },
-                              ),
-
-                            // TODO: Implement anti-cheat for Safe Mode
-                            SwitchListTile(
-                              title: Text('checkOnStart'.t()),
-                              value: settingsProvider.checkOnStart,
-                              onChanged: (value) {
-                                settingsProvider.checkOnStart = value;
+                                } else {
+                                  // Prevent disabling when Safe Mode is enabled
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('turnOffSafeModeFirst'.t()),
+                                    ),
+                                  );
+                                }
                               },
                             ),
 
-                            SwitchListTile(
-                              title: Text('checkUpdateOnDetailPage'.t()),
-                              value: settingsProvider.checkUpdateOnDetailPage,
-                              onChanged: (value) {
-                                settingsProvider.checkUpdateOnDetailPage =
-                                    value;
-                              },
+                          // TODO: Implement anti-cheat for Safe Mode
+                          SwitchListTile(
+                            title: Text('checkOnStart'.t()),
+                            value: settingsProvider.checkOnStart,
+                            onChanged: (value) {
+                              settingsProvider.checkOnStart = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('checkUpdateOnDetailPage'.t()),
+                            value: settingsProvider.checkUpdateOnDetailPage,
+                            onChanged: (value) {
+                              settingsProvider.checkUpdateOnDetailPage = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('removeOnExternalUninstall'.t()),
+                            value: settingsProvider.removeOnExternalUninstall,
+                            onChanged: (value) {
+                              settingsProvider.removeOnExternalUninstall =
+                                  value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('parallelDownloads'.t()),
+                            value: settingsProvider.parallelDownloads,
+                            onChanged: (value) {
+                              settingsProvider.parallelDownloads = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text(
+                              'beforeNewInstallsShareToAppVerifierBG'.t(),
                             ),
-
-                            SwitchListTile(
-                              title: Text('removeOnExternalUninstall'.t()),
-                              value: settingsProvider.removeOnExternalUninstall,
-                              onChanged: (value) {
-                                settingsProvider.removeOnExternalUninstall =
-                                    value;
-                              },
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton.icon(
+                                  onPressed: () {
+                                    launchUrlString(
+                                      'https://github.com/RoundSalmon4/AppVerifierBG',
+                                      mode: LaunchMode.externalApplication,
+                                    );
+                                  },
+                                  label: Text(
+                                    'about'.t(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  icon: const Icon(
+                                    Icons.info_outline,
+                                    size: 18,
+                                  ),
+                                ),
+                              ],
                             ),
-
+                            value: settingsProvider
+                                .beforeNewInstallsShareToAppVerifierBG,
+                            onChanged: (value) {
+                              settingsProvider
+                                      .beforeNewInstallsShareToAppVerifierBG =
+                                  value;
+                            },
+                          ),
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'installerMode',
+                                  const [
+                                        MapEntry(
+                                          'system',
+                                          'installMethodSystem',
+                                        ),
+                                        MapEntry(
+                                          'shizuku',
+                                          'installMethodShizuku',
+                                        ),
+                                        MapEntry(
+                                          'external',
+                                          'installMethodExternal',
+                                        ),
+                                        MapEntry('root', 'installMethodRoot'),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'installMethod'.t(),
+                                  defaultValue:
+                                      settingsProvider.installerMode.name,
+                                  required: true,
+                                ),
+                              ],
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                final newMode = InstallerMode.values.firstWhere(
+                                  (e) => e.name == values['installerMode'],
+                                );
+                                handleInstallerModeChange(
+                                  settingsProvider,
+                                  newMode,
+                                  _installerCheckSeq,
+                                );
+                              }
+                            },
+                          ),
+                          if (settingsProvider.installerMode ==
+                                  InstallerMode.shizuku ||
+                              settingsProvider.installerMode ==
+                                  InstallerMode.root)
                             SwitchListTile(
-                              title: Text('parallelDownloads'.t()),
-                              value: settingsProvider.parallelDownloads,
-                              onChanged: (value) {
-                                settingsProvider.parallelDownloads = value;
-                              },
+                              title: Text('shizukuPretendToBeGooglePlay'.t()),
+                              value:
+                                  settingsProvider.shizukuPretendToBeGooglePlay,
+                              onChanged:
+                                  (settingsProvider.installerMode ==
+                                          InstallerMode.shizuku ||
+                                      settingsProvider.installerMode ==
+                                          InstallerMode.root)
+                                  ? (value) {
+                                      settingsProvider
+                                              .shizukuPretendToBeGooglePlay =
+                                          value;
+                                    }
+                                  : null,
                             ),
-
-                            SwitchListTile(
-                              title: Text(
-                                'beforeNewInstallsShareToAppVerifierBG'.t(),
-                              ),
-                              subtitle: Column(
+                          if (settingsProvider.installerMode ==
+                              InstallerMode.external)
+                            const _ExternalInstallerTile(),
+                          gap8,
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'dnsProvider',
+                                  [
+                                        const MapEntry(
+                                          'system',
+                                          'systemDefaults',
+                                        ),
+                                        const MapEntry(
+                                          'cloudflare',
+                                          'cloudflare',
+                                        ),
+                                        const MapEntry('quad9', 'quad9'),
+                                        const MapEntry('opendns', 'openDNS'),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'dnsServiceProvider'.t(),
+                                  defaultValue:
+                                      settingsProvider.dnsServiceProvider.name,
+                                  required: true,
+                                ),
+                              ],
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                final newProvider = DNSServiceProvider.values
+                                    .firstWhere(
+                                      (e) => e.name == values['dnsProvider'],
+                                    );
+                                settingsProvider.dnsServiceProvider =
+                                    newProvider;
+                                // Reinitialize DNS service with new provider
+                                DNSService().initializeFromSettings(
+                                  settingsProvider,
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      gap16,
+                      ExpansionTile(
+                        leading: Icon(Icons.cloud_download),
+                        title: Text('sourceSpecific'.t()),
+                        initiallyExpanded:
+                            settingsProvider.appViewSectionExpanded,
+                        onExpansionChanged: (bool expanded) {
+                          settingsProvider.appViewSectionExpanded = expanded;
+                        },
+                        childrenPadding: const EdgeInsets.all(8),
+                        children: [
+                          ...sourceProvider.sources.map((e) {
+                            if (e.sourceConfigSettingFormItems.isNotEmpty) {
+                              final columnContent = Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      launchUrlString(
-                                        'https://github.com/RoundSalmon4/AppVerifierBG',
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    },
-                                    label: Text(
-                                      'about'.t(),
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      alignment: Alignment.centerLeft,
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    icon: const Icon(
-                                      Icons.info_outline,
-                                      size: 18,
-                                    ),
+                                  Text(
+                                    e.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.bold),
                                   ),
-                                ],
-                              ),
-                              value: settingsProvider
-                                  .beforeNewInstallsShareToAppVerifierBG,
-                              onChanged: (value) {
-                                settingsProvider
-                                        .beforeNewInstallsShareToAppVerifierBG =
-                                    value;
-                              },
-                            ),
-
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'installerMode',
-                                    const [
-                                          MapEntry(
-                                            'system',
-                                            'installMethodSystem',
-                                          ),
-                                          MapEntry(
-                                            'shizuku',
-                                            'installMethodShizuku',
-                                          ),
-                                          MapEntry(
-                                            'external',
-                                            'installMethodExternal',
-                                          ),
-                                          MapEntry('root', 'installMethodRoot'),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'installMethod'.t(),
-                                    defaultValue:
-                                        settingsProvider.installerMode.name,
-                                    required: true,
-                                  ),
-                                ],
-                              ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  final newMode = InstallerMode.values
-                                      .firstWhere(
-                                        (e) =>
-                                            e.name == values['installerMode'],
-                                      );
-                                  handleInstallerModeChange(
-                                    settingsProvider,
-                                    newMode,
-                                    _installerCheckSeq,
-                                  );
-                                }
-                              },
-                            ),
-                            if (settingsProvider.installerMode ==
-                                    InstallerMode.shizuku ||
-                                settingsProvider.installerMode ==
-                                    InstallerMode.root)
-                              SwitchListTile(
-                                title: Text('shizukuPretendToBeGooglePlay'.t()),
-                                value: settingsProvider
-                                    .shizukuPretendToBeGooglePlay,
-                                onChanged:
-                                    (settingsProvider.installerMode ==
-                                            InstallerMode.shizuku ||
-                                        settingsProvider.installerMode ==
-                                            InstallerMode.root)
-                                    ? (value) {
-                                        settingsProvider
-                                                .shizukuPretendToBeGooglePlay =
-                                            value;
-                                      }
-                                    : null,
-                              ),
-                            if (settingsProvider.installerMode ==
-                                InstallerMode.external)
-                              const _ExternalInstallerTile(),
-                            gap8,
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'dnsProvider',
-                                    [
-                                          const MapEntry(
-                                            'system',
-                                            'systemDefaults',
-                                          ),
-                                          const MapEntry(
-                                            'cloudflare',
-                                            'cloudflare',
-                                          ),
-                                          const MapEntry('quad9', 'quad9'),
-                                          const MapEntry('opendns', 'openDNS'),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'dnsServiceProvider'.t(),
-                                    defaultValue: settingsProvider
-                                        .dnsServiceProvider
-                                        .name,
-                                    required: true,
-                                  ),
-                                ],
-                              ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  final newProvider = DNSServiceProvider.values
-                                      .firstWhere(
-                                        (e) => e.name == values['dnsProvider'],
-                                      );
-                                  settingsProvider.dnsServiceProvider =
-                                      newProvider;
-                                  // Reinitialize DNS service with new provider
-                                  DNSService().initializeFromSettings(
-                                    settingsProvider,
-                                  );
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        gap16,
-                        ExpansionTile(
-                          leading: Icon(Icons.cloud_download),
-                          title: Text('sourceSpecific'.t()),
-                          initiallyExpanded:
-                              settingsProvider.appViewSectionExpanded,
-                          onExpansionChanged: (bool expanded) {
-                            settingsProvider.appViewSectionExpanded = expanded;
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            ...sourceProvider.sources.map((e) {
-                              if (e.sourceConfigSettingFormItems.isNotEmpty) {
-                                final columnContent = Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      e.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                    gap12,
-                                    ...e.sourceConfigSettingFormItems.map((
-                                      formItem,
-                                    ) {
-                                      if (formItem is GeneratedFormSwitch) {
-                                        // Switch type
-                                        final bool currentValue =
-                                            settingsProvider.getSettingBool(
+                                  gap12,
+                                  ...e.sourceConfigSettingFormItems.map((
+                                    formItem,
+                                  ) {
+                                    if (formItem is GeneratedFormSwitch) {
+                                      // Switch type
+                                      final bool currentValue =
+                                          settingsProvider.getSettingBool(
+                                            formItem.key,
+                                          ) ??
+                                          false;
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 16,
+                                        ),
+                                        child: SwitchListTile(
+                                          title: Text(formItem.label),
+                                          value: currentValue,
+                                          onChanged: (value) {
+                                            settingsProvider.setSettingBool(
                                               formItem.key,
-                                            ) ??
-                                            false;
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 16,
-                                          ),
-                                          child: SwitchListTile(
-                                            title: Text(formItem.label),
-                                            value: currentValue,
-                                            onChanged: (value) {
-                                              settingsProvider.setSettingBool(
-                                                formItem.key,
-                                                value,
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      } else {
-                                        // Text field type
-                                        final String currentValue =
-                                            settingsProvider.getSettingString(
-                                              formItem.key,
-                                            ) ??
-                                            '';
-                                        if (!_textControllers.containsKey(
-                                          formItem.key,
-                                        )) {
-                                          _textControllers[formItem.key] =
-                                              TextEditingController(
-                                                text: currentValue,
-                                              );
-                                          _focusNodes[formItem.key] =
-                                              FocusNode();
-                                        } else if (_textControllers[formItem
-                                                    .key]!
-                                                .text !=
-                                            currentValue) {
-                                          // Only update if not focused to avoid overwriting user input
-                                          if (!_focusNodes[formItem.key]!
-                                              .hasFocus) {
-                                            _textControllers[formItem.key]!
-                                                    .text =
-                                                currentValue;
-                                          }
+                                              value,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    } else {
+                                      // Text field type
+                                      final String currentValue =
+                                          settingsProvider.getSettingString(
+                                            formItem.key,
+                                          ) ??
+                                          '';
+                                      if (!_textControllers.containsKey(
+                                        formItem.key,
+                                      )) {
+                                        _textControllers[formItem.key] =
+                                            TextEditingController(
+                                              text: currentValue,
+                                            );
+                                        _focusNodes[formItem.key] = FocusNode();
+                                      } else if (_textControllers[formItem.key]!
+                                              .text !=
+                                          currentValue) {
+                                        // Only update if not focused to avoid overwriting user input
+                                        if (!_focusNodes[formItem.key]!
+                                            .hasFocus) {
+                                          _textControllers[formItem.key]!.text =
+                                              currentValue;
                                         }
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 16,
-                                          ),
-                                          child: TextField(
-                                            controller:
-                                                _textControllers[formItem.key],
-                                            focusNode:
-                                                _focusNodes[formItem.key],
-                                            decoration: InputDecoration(
-                                              labelText: formItem.label,
-                                            ),
-                                            onChanged: (value) {
-                                              settingsProvider.setSettingString(
-                                                formItem.key,
-                                                value,
-                                              );
-                                            },
-                                          ),
-                                        );
                                       }
-                                    }),
-                                  ],
-                                );
-                                return columnContent;
-                              } else {
-                                return const SizedBox.shrink();
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 16,
+                                        ),
+                                        child: TextField(
+                                          controller:
+                                              _textControllers[formItem.key],
+                                          focusNode: _focusNodes[formItem.key],
+                                          decoration: InputDecoration(
+                                            labelText: formItem.label,
+                                          ),
+                                          onChanged: (value) {
+                                            settingsProvider.setSettingString(
+                                              formItem.key,
+                                              value,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  }),
+                                ],
+                              );
+                              return columnContent;
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }),
+                        ],
+                      ),
+                      gap16,
+                      ExpansionTile(
+                        leading: Icon(Icons.palette_rounded),
+                        title: Text('appearance'.t()),
+                        initiallyExpanded:
+                            settingsProvider.appearanceSectionExpanded,
+                        onExpansionChanged: (bool expanded) {
+                          settingsProvider.appearanceSectionExpanded = expanded;
+                        },
+                        childrenPadding: const EdgeInsets.all(8),
+                        children: [
+                          gap12,
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'theme',
+                                  [
+                                        const MapEntry(
+                                          'system',
+                                          'followSystem',
+                                        ),
+                                        const MapEntry('light', 'light'),
+                                        const MapEntry('dark', 'dark'),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'theme'.t(),
+                                  defaultValue: settingsProvider.theme.name,
+                                  required: true,
+                                ),
+                              ],
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                settingsProvider.theme = ThemeSettings.values
+                                    .firstWhere(
+                                      (e) => e.name == values['theme'],
+                                    );
                               }
-                            }),
-                          ],
-                        ),
-                        gap16,
-                        ExpansionTile(
-                          leading: Icon(Icons.palette_rounded),
-                          title: Text('appearance'.t()),
-                          initiallyExpanded:
-                              settingsProvider.appearanceSectionExpanded,
-                          onExpansionChanged: (bool expanded) {
-                            settingsProvider.appearanceSectionExpanded =
-                                expanded;
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            gap12,
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'theme',
-                                    [
-                                          const MapEntry(
-                                            'system',
-                                            'followSystem',
-                                          ),
-                                          const MapEntry('light', 'light'),
-                                          const MapEntry('dark', 'dark'),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'theme'.t(),
-                                    defaultValue: settingsProvider.theme.name,
-                                    required: true,
-                                  ),
-                                ],
-                              ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  settingsProvider.theme = ThemeSettings.values
-                                      .firstWhere(
-                                        (e) => e.name == values['theme'],
-                                      );
-                                }
+                            },
+                          ),
+                          gap8,
+                          if (settingsProvider.theme == ThemeSettings.system)
+                            followSystemThemeExplanation,
+                          gap12,
+                          if (settingsProvider.theme != ThemeSettings.light)
+                            SwitchListTile(
+                              title: Text('useBlackTheme'.t()),
+                              value: settingsProvider.useBlackTheme,
+                              onChanged: (value) {
+                                settingsProvider.useBlackTheme = value;
                               },
                             ),
-                            gap8,
-                            if (settingsProvider.theme == ThemeSettings.system)
-                              followSystemThemeExplanation,
-                            gap12,
-                            if (settingsProvider.theme != ThemeSettings.light)
-                              SwitchListTile(
-                                title: Text('useBlackTheme'.t()),
-                                value: settingsProvider.useBlackTheme,
-                                onChanged: (value) {
-                                  settingsProvider.useBlackTheme = value;
-                                },
-                              ),
-
-                            gap8,
-                            useMaterialThemeSwitch,
-                            gap8,
-                            if (!settingsProvider.useMaterialYou) colorPicker,
-                            gap12,
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'forcedLocale',
-                                    [
-                                          const MapEntry('', 'followSystem'),
-                                          ...supportedLocales.map(
-                                            (e) => MapEntry(
-                                              e.key.toString(),
-                                              e.value,
-                                            ),
+                          gap8,
+                          useMaterialThemeSwitch,
+                          gap8,
+                          if (!settingsProvider.useMaterialYou) colorPicker,
+                          gap12,
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'forcedLocale',
+                                  [
+                                        const MapEntry('', 'followSystem'),
+                                        ...supportedLocales.map(
+                                          (e) => MapEntry(
+                                            e.key.toString(),
+                                            e.value,
                                           ),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'language'.t(),
-                                    defaultValue:
-                                        settingsProvider.forcedLocale
-                                            ?.toString() ??
-                                        '',
-                                    required: true,
-                                  ),
-                                ],
+                                        ),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'language'.t(),
+                                  defaultValue:
+                                      settingsProvider.forcedLocale
+                                          ?.toString() ??
+                                      '',
+                                  required: true,
+                                ),
                               ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  final localeValue =
-                                      values['forcedLocale'] as String;
-                                  if (localeValue.isEmpty) {
-                                    settingsProvider.forcedLocale = null;
-                                  } else {
-                                    settingsProvider.forcedLocale = Locale(
-                                      localeValue,
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                final localeValue =
+                                    values['forcedLocale'] as String;
+                                if (localeValue.isEmpty) {
+                                  settingsProvider.forcedLocale = null;
+                                } else {
+                                  settingsProvider.forcedLocale = Locale(
+                                    localeValue,
+                                  );
+                                }
+                                // Apply the locale change immediately
+                                if (settingsProvider.forcedLocale != null) {
+                                  context.setLocale(
+                                    settingsProvider.forcedLocale!,
+                                  );
+                                } else {
+                                  context.resetLocale();
+                                }
+                              }
+                            },
+                          ),
+                          FutureBuilder(
+                            builder: (ctx, val) {
+                              return (val.data?.version.sdkInt ?? 0) >= 37
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        gap8,
+                                        SwitchListTile(
+                                          title: Text('useSystemFont'.t()),
+                                          value: settingsProvider.useSystemFont,
+                                          onChanged: (useSystemFont) {
+                                            if (useSystemFont) {
+                                              NativeFeatures.loadSystemFont()
+                                                  .then((val) {
+                                                    settingsProvider
+                                                            .useSystemFont =
+                                                        true;
+                                                  });
+                                            } else {
+                                              settingsProvider.useSystemFont =
+                                                  false;
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                            future: DeviceInfoPlugin().androidInfo,
+                          ),
+                          SwitchListTile(
+                            title: Text('dontShowTrackOnlyWarnings'.t()),
+                            value: settingsProvider.hideTrackOnlyWarning,
+                            onChanged: (value) {
+                              settingsProvider.hideTrackOnlyWarning = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('dontShowAPKOriginWarnings'.t()),
+                            value: settingsProvider.hideAPKOriginWarning,
+                            onChanged: (value) {
+                              settingsProvider.hideAPKOriginWarning = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('disablePageTransitions'.t()),
+                            value: settingsProvider.disablePageTransitions,
+                            onChanged: (value) {
+                              settingsProvider.disablePageTransitions = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('reversePageTransitions'.t()),
+                            value: settingsProvider.reversePageTransitions,
+                            onChanged: settingsProvider.disablePageTransitions
+                                ? null
+                                : (value) {
+                                    settingsProvider.reversePageTransitions =
+                                        value;
+                                  },
+                          ),
+                          SwitchListTile(
+                            title: Text('highlightTouchTargets'.t()),
+                            value: settingsProvider.highlightTouchTargets,
+                            onChanged: (value) {
+                              settingsProvider.highlightTouchTargets = value;
+                            },
+                          ),
+                        ],
+                      ),
+                      gap16,
+                      ExpansionTile(
+                        leading: Icon(Icons.list_rounded),
+                        title: Text('appView'.t()),
+                        initiallyExpanded:
+                            settingsProvider.categoriesSectionExpanded,
+                        onExpansionChanged: (bool expanded) {
+                          settingsProvider.categoriesSectionExpanded = expanded;
+                        },
+                        childrenPadding: const EdgeInsets.all(8),
+                        children: [
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'sortColumn',
+                                  [
+                                        const MapEntry(
+                                          'authorName',
+                                          'authorName',
+                                        ),
+                                        const MapEntry(
+                                          'nameAuthor',
+                                          'nameAuthor',
+                                        ),
+                                        const MapEntry('asAdded', 'asAdded'),
+                                        const MapEntry(
+                                          'releaseDate',
+                                          'releaseDate',
+                                        ),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'appSortBy'.t(),
+                                  defaultValue:
+                                      settingsProvider.sortColumn.name,
+                                  required: true,
+                                ),
+                              ],
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                settingsProvider.sortColumn = SortColumnSettings
+                                    .values
+                                    .firstWhere(
+                                      (e) => e.name == values['sortColumn'],
                                     );
-                                  }
-                                  // Apply the locale change immediately
-                                  if (settingsProvider.forcedLocale != null) {
-                                    context.setLocale(
-                                      settingsProvider.forcedLocale!,
+                              }
+                            },
+                          ),
+                          gap12,
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'sortOrder',
+                                  [
+                                        const MapEntry(
+                                          'ascending',
+                                          'ascending',
+                                        ),
+                                        const MapEntry(
+                                          'descending',
+                                          'descending',
+                                        ),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'appSortOrder'.t(),
+                                  defaultValue: settingsProvider.sortOrder.name,
+                                  required: true,
+                                ),
+                              ],
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                settingsProvider.sortOrder = SortOrderSettings
+                                    .values
+                                    .firstWhere(
+                                      (e) => e.name == values['sortOrder'],
                                     );
-                                  } else {
-                                    context.resetLocale();
-                                  }
-                                }
-                              },
-                            ),
-                            FutureBuilder(
-                              builder: (ctx, val) {
-                                return (val.data?.version.sdkInt ?? 0) >= 37
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          gap8,
-                                          SwitchListTile(
-                                            title: Text('useSystemFont'.t()),
-                                            value:
-                                                settingsProvider.useSystemFont,
-                                            onChanged: (useSystemFont) {
-                                              if (useSystemFont) {
-                                                NativeFeatures.loadSystemFont()
-                                                    .then((val) {
-                                                      settingsProvider
-                                                              .useSystemFont =
-                                                          true;
-                                                    });
-                                              } else {
-                                                settingsProvider.useSystemFont =
-                                                    false;
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      )
-                                    : const SizedBox.shrink();
-                              },
-                              future: DeviceInfoPlugin().androidInfo,
-                            ),
-                            SwitchListTile(
-                              title: Text('dontShowTrackOnlyWarnings'.t()),
-                              value: settingsProvider.hideTrackOnlyWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideTrackOnlyWarning = value;
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('dontShowAPKOriginWarnings'.t()),
-                              value: settingsProvider.hideAPKOriginWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideAPKOriginWarning = value;
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('disablePageTransitions'.t()),
-                              value: settingsProvider.disablePageTransitions,
-                              onChanged: (value) {
-                                settingsProvider.disablePageTransitions = value;
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('reversePageTransitions'.t()),
-                              value: settingsProvider.reversePageTransitions,
-                              onChanged: settingsProvider.disablePageTransitions
-                                  ? null
-                                  : (value) {
-                                      settingsProvider.reversePageTransitions =
-                                          value;
-                                    },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('highlightTouchTargets'.t()),
-                              value: settingsProvider.highlightTouchTargets,
-                              onChanged: (value) {
-                                settingsProvider.highlightTouchTargets = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        gap16,
-                        ExpansionTile(
-                          leading: Icon(Icons.list_rounded),
-                          title: Text('appView'.t()),
-                          initiallyExpanded:
-                              settingsProvider.categoriesSectionExpanded,
-                          onExpansionChanged: (bool expanded) {
-                            settingsProvider.categoriesSectionExpanded =
-                                expanded;
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'sortColumn',
-                                    [
-                                          const MapEntry(
-                                            'authorName',
-                                            'authorName',
-                                          ),
-                                          const MapEntry(
-                                            'nameAuthor',
-                                            'nameAuthor',
-                                          ),
-                                          const MapEntry('asAdded', 'asAdded'),
-                                          const MapEntry(
-                                            'releaseDate',
-                                            'releaseDate',
-                                          ),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'appSortBy'.t(),
-                                    defaultValue:
-                                        settingsProvider.sortColumn.name,
-                                    required: true,
-                                  ),
-                                ],
+                              }
+                            },
+                          ),
+                          gap12,
+                          GeneratedForm(
+                            items: [
+                              [
+                                GeneratedFormDropdown(
+                                  'defaultTab',
+                                  [
+                                        const MapEntry('all', 'all'),
+                                        const MapEntry(
+                                          'installed',
+                                          'installed',
+                                        ),
+                                        const MapEntry(
+                                          'notInstalled',
+                                          'notInstalledApps',
+                                        ),
+                                      ]
+                                      .map((e) => MapEntry(e.key, t(e.value)))
+                                      .toList(),
+                                  label: 'defaultTab'.t(),
+                                  defaultValue:
+                                      settingsProvider.defaultTab.name,
+                                  required: true,
+                                ),
                               ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  settingsProvider.sortColumn =
-                                      SortColumnSettings.values.firstWhere(
-                                        (e) => e.name == values['sortColumn'],
-                                      );
-                                }
-                              },
-                            ),
-                            gap12,
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'sortOrder',
-                                    [
-                                          const MapEntry(
-                                            'ascending',
-                                            'ascending',
-                                          ),
-                                          const MapEntry(
-                                            'descending',
-                                            'descending',
-                                          ),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'appSortOrder'.t(),
-                                    defaultValue:
-                                        settingsProvider.sortOrder.name,
-                                    required: true,
-                                  ),
-                                ],
-                              ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  settingsProvider.sortOrder = SortOrderSettings
-                                      .values
-                                      .firstWhere(
-                                        (e) => e.name == values['sortOrder'],
-                                      );
-                                }
-                              },
-                            ),
-                            gap12,
-                            GeneratedForm(
-                              items: [
-                                [
-                                  GeneratedFormDropdown(
-                                    'defaultTab',
-                                    [
-                                          const MapEntry('all', 'all'),
-                                          const MapEntry(
-                                            'installed',
-                                            'installed',
-                                          ),
-                                          const MapEntry(
-                                            'notInstalled',
-                                            'notInstalledApps',
-                                          ),
-                                        ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
-                                        .toList(),
-                                    label: 'defaultTab'.t(),
-                                    defaultValue:
-                                        settingsProvider.defaultTab.name,
-                                    required: true,
-                                  ),
-                                ],
-                              ],
-                              onValueChanges: (values, valid, isBuilding) {
-                                if (!isBuilding && valid) {
-                                  settingsProvider.defaultTab =
-                                      DefaultTabSettings.values.firstWhere(
-                                        (e) => e.name == values['defaultTab'],
-                                      );
-                                }
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('pinUpdates'.t()),
-                              value: settingsProvider.pinUpdates,
-                              onChanged: (value) {
-                                settingsProvider.pinUpdates = value;
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('moveNonInstalledAppsToBottom'.t()),
-                              value: settingsProvider.buryNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.buryNonInstalled = value;
-                              },
-                            ),
-
-                            SwitchListTile(
-                              title: Text('groupByCategory'.t()),
-                              value: settingsProvider.groupByCategory,
-                              onChanged: (value) {
-                                settingsProvider.groupByCategory = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        gap16,
-                        ExpansionTile(
-                          leading: Icon(Icons.more_horiz),
-                          title: Text('misc'.t()),
-                          initiallyExpanded: false,
-                          onExpansionChanged: (bool expanded) {
-                            // Optional: save expansion state in settingsProvider if desired
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            gap12,
-                            SwitchListTile(
-                              title: Text('showConfetti'.t()),
-                              value: settingsProvider.showConfetti,
-                              onChanged: (value) {
-                                settingsProvider.showConfetti = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        gap16,
-                        ExpansionTile(
-                          leading: Icon(Icons.category_rounded),
-                          title: Text('categories'.t()),
-                          initiallyExpanded:
-                              settingsProvider.categoriesSectionExpanded,
-                          onExpansionChanged: (bool expanded) {
-                            settingsProvider.categoriesSectionExpanded =
-                                expanded;
-                          },
-                          childrenPadding: const EdgeInsets.all(8),
-                          children: [
-                            gap12,
-                            CategoryTagEditor(showLabelWhenNotEmpty: false),
-                          ],
-                        ),
-                      ],
-                    ),
-            ),
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding && valid) {
+                                settingsProvider.defaultTab = DefaultTabSettings
+                                    .values
+                                    .firstWhere(
+                                      (e) => e.name == values['defaultTab'],
+                                    );
+                              }
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('pinUpdates'.t()),
+                            value: settingsProvider.pinUpdates,
+                            onChanged: (value) {
+                              settingsProvider.pinUpdates = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('moveNonInstalledAppsToBottom'.t()),
+                            value: settingsProvider.buryNonInstalled,
+                            onChanged: (value) {
+                              settingsProvider.buryNonInstalled = value;
+                            },
+                          ),
+                          SwitchListTile(
+                            title: Text('groupByCategory'.t()),
+                            value: settingsProvider.groupByCategory,
+                            onChanged: (value) {
+                              settingsProvider.groupByCategory = value;
+                            },
+                          ),
+                        ],
+                      ),
+                      gap16,
+                      ExpansionTile(
+                        leading: Icon(Icons.more_horiz),
+                        title: Text('misc'.t()),
+                        initiallyExpanded: false,
+                        onExpansionChanged: (bool expanded) {
+                          // Optional: save expansion state in settingsProvider if desired
+                        },
+                        childrenPadding: const EdgeInsets.all(8),
+                        children: [
+                          gap12,
+                          SwitchListTile(
+                            title: Text('showConfetti'.t()),
+                            value: settingsProvider.showConfetti,
+                            onChanged: (value) {
+                              settingsProvider.showConfetti = value;
+                            },
+                          ),
+                        ],
+                      ),
+                      gap16,
+                      ExpansionTile(
+                        leading: Icon(Icons.category_rounded),
+                        title: Text('categories'.t()),
+                        initiallyExpanded:
+                            settingsProvider.categoriesSectionExpanded,
+                        onExpansionChanged: (bool expanded) {
+                          settingsProvider.categoriesSectionExpanded = expanded;
+                        },
+                        childrenPadding: const EdgeInsets.all(8),
+                        children: [
+                          gap12,
+                          CategoryTagEditor(showLabelWhenNotEmpty: false),
+                        ],
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
