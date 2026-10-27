@@ -71,8 +71,6 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ta'), 'தமிழ்'),
   MapEntry(Locale('fil'), 'Filipino'),
 ];
-const fallbackLocale = Locale('en');
-const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
@@ -86,12 +84,12 @@ Future<void> loadTranslations() async {
     final controller = QuickLocalizationController(
       saveLocale: true,
       forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
+      fallbackLocale: Locale('en'),
       supportedLocales: supportedLocales.map((e) => e.key).toList(),
       assetLoader: RootBundleAssetLoader.fromRootBundle(),
       useOnlyLangCode: false,
       useFallbackTranslations: true,
-      path: localeDir,
+      path: 'assets/translations',
       onLoadError: (FlutterError e) {
         throw e;
       },
@@ -161,8 +159,8 @@ void main() async {
       ],
       child: QuickLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale: fallbackLocale,
+        path: 'assets/translations',
+        fallbackLocale: Locale('en'),
         useOnlyLangCode: false,
         child: const Updatium(),
       ),
@@ -337,17 +335,8 @@ class _UpdatiumState extends State<Updatium> {
             settingsProvider.useMaterialYou) {
           lightColorScheme = lightDynamic;
           darkColorScheme = darkDynamic;
-          // Ensure surface container colors have proper opacity for switch visibility
-          lightColorScheme = lightColorScheme.copyWith(
-            surfaceContainerHighest: lightColorScheme.surfaceContainerHighest,
-            surfaceContainerHigh: lightColorScheme.surfaceContainerHigh,
-            surfaceContainer: lightColorScheme.surfaceContainer,
-          );
-          darkColorScheme = darkColorScheme.copyWith(
-            surfaceContainerHighest: darkColorScheme.surfaceContainerHighest,
-            surfaceContainerHigh: darkColorScheme.surfaceContainerHigh,
-            surfaceContainer: darkColorScheme.surfaceContainer,
-          );
+          lightColorScheme = lightColorScheme;
+          darkColorScheme = darkColorScheme;
         } else {
           lightColorScheme = ColorScheme.fromSeed(
             seedColor: settingsProvider.themeColor,
@@ -438,19 +427,15 @@ class _UpdatiumState extends State<Updatium> {
                 borderRadius: BorderRadius.circular(4),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.outline),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.primary, width: 2),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               contentPadding: const EdgeInsets.symmetric(
@@ -461,6 +446,12 @@ class _UpdatiumState extends State<Updatium> {
 
             // Modern progress indicator
             progressIndicatorTheme: ProgressIndicatorThemeData(
+              // ignore: deprecated_member_use
+              year2023: false,
+            ),
+
+            // Modern slider design
+            sliderTheme: SliderThemeData(
               // ignore: deprecated_member_use
               year2023: false,
             ),
@@ -482,18 +473,6 @@ class _UpdatiumState extends State<Updatium> {
                   vertical: 16,
                 ),
               ),
-            ),
-
-            // Expressive List Tiles
-            listTileTheme: ListTileThemeData(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 4,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              selectedTileColor: scheme.surface.withValues(alpha: 0.2),
             ),
 
             // Expressive Page Transitions

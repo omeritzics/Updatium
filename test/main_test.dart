@@ -12,14 +12,6 @@ void main() {
       expect(supportedLocales.length, greaterThan(20));
     });
 
-    test('fallbackLocale is English', () {
-      expect(fallbackLocale.languageCode, equals('en'));
-    });
-
-    test('localeDir is set correctly', () {
-      expect(localeDir, equals('assets/translations'));
-    });
-
     test('fdroid flag is false by default', () {
       expect(fdroid, isFalse);
     });
