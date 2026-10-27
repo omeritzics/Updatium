@@ -423,34 +423,21 @@ class _UpdatiumState extends State<Updatium> {
             fontFamily: getPrimaryFontForLocale(context.locale),
             fontFamilyFallback: getFallbackFonts(),
 
-            // Expressive Card Design - preserve M3 Expressive transparency
-            cardTheme: CardThemeData(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            ),
-
             // Material 3 Outlined Text Fields
             inputDecorationTheme: InputDecorationTheme(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.outline),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.primary, width: 2),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: scheme.error, width: 2),
               ),
               contentPadding: const EdgeInsets.symmetric(
