@@ -695,6 +695,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
+        elevation: 0,
         margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: isSelected
             ? Theme.of(
@@ -773,33 +774,27 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       const SizedBox(height: 8),
                       // Action button or progress indicator
                       if (appInfo.downloadProgress != null)
-                        Semantics(
-                          label: 'downloadProgress'.t(),
-                          value: '${appInfo.downloadProgress!.toInt()}%',
-                          child: SizedBox(
-                            width: 140,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (appInfo.downloadProgress! >= 0)
-                                  Text(
-                                    '${appInfo.downloadProgress!.toInt()}%',
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                  ),
-                                const SizedBox(height: 4),
-                                SizedBox(
-                                  width: 40,
-                                  height: 4,
-                                  child: LinearProgressIndicator(
-                                    value: appInfo.downloadProgress! >= 0
-                                        ? appInfo.downloadProgress! / 100
-                                        : null,
-                                  ),
+                        SizedBox(
+                          width: 140,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (appInfo.downloadProgress! >= 0)
+                                Text(
+                                  '${appInfo.downloadProgress!.toInt()}%',
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
-                              ],
-                            ),
+                              const SizedBox(height: 4),
+                              SizedBox(
+                                width: 40,
+                                height: 4,
+                                child: LinearProgressIndicator(
+                                  value: appInfo.downloadProgress! >= 0
+                                      ? appInfo.downloadProgress! / 100
+                                      : null,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       else if (!isTrackOnly)
@@ -889,31 +884,27 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             trailing: appInfo.downloadProgress != null
-                ? Semantics(
-                    label: 'downloadProgress'.t(),
-                    value: '${appInfo.downloadProgress!.toInt()}%',
-                    child: SizedBox(
-                      width: 140,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (appInfo.downloadProgress! >= 0)
-                            Text(
-                              '${appInfo.downloadProgress!.toInt()}%',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          const SizedBox(height: 4),
-                          SizedBox(
-                            width: 40,
-                            height: 4,
-                            child: LinearProgressIndicator(
-                              value: appInfo.downloadProgress! >= 0
-                                  ? appInfo.downloadProgress! / 100
-                                  : null,
-                            ),
+                ? SizedBox(
+                    width: 140,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (appInfo.downloadProgress! >= 0)
+                          Text(
+                            '${appInfo.downloadProgress!.toInt()}%',
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
-                        ],
-                      ),
+                        const SizedBox(height: 4),
+                        SizedBox(
+                          width: 40,
+                          height: 4,
+                          child: LinearProgressIndicator(
+                            value: appInfo.downloadProgress! >= 0
+                                ? appInfo.downloadProgress! / 100
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : isTrackOnly
@@ -959,7 +950,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
 
       // Grid view when 'Group by category' is enabled
-
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: ExpansionTile(
@@ -968,9 +958,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
           title: Text(
             '${listedCategories[index] ?? 'noCategory'.t()} (${filteredEntries.length})',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           initiallyExpanded: _expandedCategories.contains(index),
           onExpansionChanged: (isExpanded) {
@@ -1500,9 +1488,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   ),
                   title: Text(
                     '${listedCategories[index] ?? 'noCategory'.t()} (${tiles.length})',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   initiallyExpanded: _expandedCategories.contains(index),
                   onExpansionChanged: (isExpanded) {
@@ -1644,24 +1630,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                       Consumer<SettingsProvider>(
                         builder: (context, settingsProvider, child) {
-                          return Semantics(
-                            button: true,
-                            label: settingsProvider.useGridView
+                          return IconButton(
+                            tooltip: settingsProvider.useGridView
                                 ? 'listView'.t()
                                 : 'gridView'.t(),
-                            child: IconButton(
-                              tooltip: settingsProvider.useGridView
-                                  ? 'listView'.t()
-                                  : 'gridView'.t(),
-                              onPressed: () {
-                                settingsProvider.useGridView =
-                                    !settingsProvider.useGridView;
-                              },
-                              icon: Icon(
-                                settingsProvider.useGridView
-                                    ? Icons.view_list_rounded
-                                    : Icons.grid_view_rounded,
-                              ),
+                            onPressed: () {
+                              settingsProvider.useGridView =
+                                  !settingsProvider.useGridView;
+                            },
+                            icon: Icon(
+                              settingsProvider.useGridView
+                                  ? Icons.view_list_rounded
+                                  : Icons.grid_view_rounded,
                             ),
                           );
                         },
