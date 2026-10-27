@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:m3e_loading_indicator/m3e_loading_indicator.dart';
 import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/services/slang_converter.dart';
@@ -11,8 +11,7 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
-import 'package:m3e_buttons/m3e_buttons.dart';
-import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
+import 'package:m3e_buttons/m3e_buttons.dart' hide M3EHapticFeedback, M3EMotion;
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -177,8 +176,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
-  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<ExpressiveRefreshIndicatorState>();
+  final _pullController = M3EPullToRefreshController();
   final Set<int> _expandedCategories = {};
 
   void clearSelected() {
@@ -218,6 +216,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   void dispose() {
     _tabController.dispose();
     scrollController.dispose();
+    _pullController.dispose();
     super.dispose();
   }
 
@@ -251,7 +250,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         appsProvider.apps.isNotEmpty &&
         settingsProvider.checkJustStarted() &&
         settingsProvider.checkOnStart) {
-      _refreshIndicatorKey.currentState?.show();
+      _pullController.refresh();
     }
 
     var listedAppIdSet = listedApps.map((e) => e.app.id).toSet();
@@ -503,7 +502,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
-                    const LoadingIndicatorM3E()
+                    const M3ELoadingIndicator()
                   else
                     Icon(
                       Icons.widgets,
@@ -643,23 +642,38 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       bool isCompact = false,
     }) {
       if (!isInstalled) {
-        return M3EFilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => installApp(app),
-          child: Text('install'.t()),
+        return Semantics(
+          button: true,
+          label: 'install'.t(),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: M3EFilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => installApp(app),
+            child: Text('install'.t()),
+          ),
         );
       } else if (hasUpdate) {
-        return M3EFilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => installApp(app),
-          child: Text('update'.t()),
+        return Semantics(
+          button: true,
+          label: 'update'.t(),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: M3EFilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => installApp(app),
+            child: Text('update'.t()),
+          ),
         );
       } else {
-        return M3EFilledButton.tonal(
-          onPressed: null,
-          child: Text('updated'.t()),
+        return Semantics(
+          button: true,
+          label: 'updated'.t(),
+          enabled: false,
+          child: M3EFilledButton.tonal(
+            onPressed: null,
+            child: Text('updated'.t()),
+          ),
         );
       }
     }
@@ -757,7 +771,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: 'downloadProgress'.t(),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 120,
+                            width: 140,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -873,7 +887,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: 'downloadProgress'.t(),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 120,
+                      width: 140,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -1276,33 +1290,44 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
-                    onPressed: appsProvider.areDownloadsRunning()
-                        ? null
-                        : showMassMarkDialog,
-                    child: Text(
-                      'markSelectedAppsUpdated'.t(),
-                      textAlign: TextAlign.center,
+                  Semantics(
+                    button: true,
+                    label: 'markSelectedAppsUpdated'.t(),
+                    enabled: !appsProvider.areDownloadsRunning(),
+                    child: TextButton(
+                      onPressed: appsProvider.areDownloadsRunning()
+                          ? null
+                          : showMassMarkDialog,
+                      child: Text(
+                        'markSelectedAppsUpdated'.t(),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      var allPinned = selectedApps.every(
-                        (element) => element.pinned,
-                      );
-                      appsProvider.saveApps(
-                        selectedApps.map((e) {
-                          e.pinned = !allPinned;
-                          return e;
-                        }).toList(),
-                      );
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      selectedApps.every((element) => element.pinned)
-                          ? 'unpinFromTop'.t()
-                          : 'pinToTop'.t(),
-                      textAlign: TextAlign.center,
+                  Semantics(
+                    button: true,
+                    label: selectedApps.every((element) => element.pinned)
+                        ? 'unpinFromTop'.t()
+                        : 'pinToTop'.t(),
+                    child: TextButton(
+                      onPressed: () {
+                        var allPinned = selectedApps.every(
+                          (element) => element.pinned,
+                        );
+                        appsProvider.saveApps(
+                          selectedApps.map((e) {
+                            e.pinned = !allPinned;
+                            return e;
+                          }).toList(),
+                        );
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        selectedApps.every((element) => element.pinned)
+                            ? 'unpinFromTop'.t()
+                            : 'pinToTop'.t(),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ],
@@ -1394,9 +1419,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text('cancel'.t()),
+              Semantics(
+                button: true,
+                label: 'cancel'.t(),
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text('cancel'.t()),
+                ),
               ),
               M3EFilledButton(
                 onPressed: () => Navigator.of(ctx).pop(localValues),
@@ -1530,12 +1559,32 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-          ExpressiveRefreshIndicator(
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-            color: Theme.of(context).colorScheme.surface,
-
-            key: _refreshIndicatorKey,
+          M3EPullToRefreshIndicator(
+            controller: _pullController,
+            shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
+            triggerDistance: 110.00,
+            indicatorHeight: 64.00,
+            dragResistance: 0.50,
+            maxDragMultiplier: 2.00,
+            edgeOffset: 0.00,
+            springMotion: M3EMotion.expressiveSpatialDefault,
+            hapticFeedback: M3EHapticFeedback.none,
             onRefresh: refresh,
+            style: M3EPullToRefreshStyle(
+              size: 56.00,
+              padding: const EdgeInsets.all(8.00),
+              elevation: 4.00,
+              borderRadius: BorderRadius.circular(28.00),
+              triggerDistance: 110.00,
+              indicatorHeight: 64.00,
+              springMotion: const M3EMotion.custom(
+                stiffness: 380.00,
+                damping: 0.80,
+              ),
+              hapticFeedback: M3EHapticFeedback.none,
+              dragResistance: 0.50,
+              maxDragMultiplier: 2.00,
+            ),
 
             child: Scrollbar(
               interactive: true,
@@ -1562,39 +1611,51 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             neutralFilter,
                             settingsProvider,
                           );
-                          return IconButton(
-                            tooltip: isFilterOff
+                          return Semantics(
+                            button: true,
+                            label: isFilterOff
                                 ? 'filterApps'.t()
-                                : '${'filter'.t()} - ${'remove'.t()}',
-                            onPressed: isFilterOff
-                                ? showFilterDialog
-                                : () {
-                                    setState(() {
-                                      filter = AppsFilter();
-                                    });
-                                  },
-                            icon: Icon(
-                              isFilterOff
-                                  ? Icons.search_rounded
-                                  : Icons.search_off_rounded,
+                                : 'removeFilter'.t(),
+                            child: IconButton(
+                              tooltip: isFilterOff
+                                  ? 'filterApps'.t()
+                                  : '${'filter'.t()} - ${'remove'.t()}',
+                              onPressed: isFilterOff
+                                  ? showFilterDialog
+                                  : () {
+                                      setState(() {
+                                        filter = AppsFilter();
+                                      });
+                                    },
+                              icon: Icon(
+                                isFilterOff
+                                    ? Icons.search_rounded
+                                    : Icons.search_off_rounded,
+                              ),
                             ),
                           );
                         },
                       ),
                       Consumer<SettingsProvider>(
                         builder: (context, settingsProvider, child) {
-                          return IconButton(
-                            tooltip: settingsProvider.useGridView
+                          return Semantics(
+                            button: true,
+                            label: settingsProvider.useGridView
                                 ? 'listView'.t()
                                 : 'gridView'.t(),
-                            onPressed: () {
-                              settingsProvider.useGridView =
-                                  !settingsProvider.useGridView;
-                            },
-                            icon: Icon(
-                              settingsProvider.useGridView
-                                  ? Icons.view_list_rounded
-                                  : Icons.grid_view_rounded,
+                            child: IconButton(
+                              tooltip: settingsProvider.useGridView
+                                  ? 'listView'.t()
+                                  : 'gridView'.t(),
+                              onPressed: () {
+                                settingsProvider.useGridView =
+                                    !settingsProvider.useGridView;
+                              },
+                              icon: Icon(
+                                settingsProvider.useGridView
+                                    ? Icons.view_list_rounded
+                                    : Icons.grid_view_rounded,
+                              ),
                             ),
                           );
                         },
