@@ -273,7 +273,10 @@
     "category": "Категория",
     "noCategory": "Няма категория",
     "noCategories": "Няма категории",
-    "categoryDeleteQuestion": "Изтриване на категории?",
+    "categoryDeleteQuestion": {
+        "one": "Изтриване на категории?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Всички приложения в изтритите категории ще бъдат зададени като некатегоризирани.",
     "addCategory": "Добавяне на категория",
     "label": "Етикет",
@@ -551,7 +554,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
