@@ -1,4 +1,4 @@
-![GitHub Repo Banner](https://ghrb.waren.build/banner?header=Keep+Open+Source+Neutral&subheader=Everyone+should+feel+free+to+use+Updatium%2C+everyone.&bg=013B84-016EEA&color=FFFFFF&headerfont=Google+Sans&subheaderfont=Google+Sans+Flex&support=false)
+![Keep Open Source Neutral](https://ghrb.waren.build/render/banner?header=Keep+Open+Source+Neutral&subheader=Everyone+is+welcome+to+Updatium%2C+regardless+of+where+you+are&bg=013B84-016EEA&color=FFFFFF&headerfont=Google+Sans&subheaderfont=Google+Sans+Flex&support=false)
 <!-- Created with GitHub Repo Banner by Waren Gonzaga: https://ghrb.waren.build -->
 
 # <img src="./assets/graphics/icon.svg" alt="Updatium Icon" height="84px" /> Updatium
@@ -19,6 +19,10 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
+Warning: GitHub is currently the only official place to download Updatium. Beware of unofficial sources (such as Appteka) that distribute modified APKs, which may contain more bugs, or even malware.
+
+If you want to distribute legitimate APK files of Updatium in your app store, please contact me by creating a new issue so I can add your store as an official publisher of Updatium.
+
 ## Features
 
 ### Currently supported App sources
@@ -34,7 +38,8 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC](https://www.videolan.org/) |
 | ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
 | ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror (track-only)](https://apkmirror.com/) | |
-| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea](https://try.gitea.io/) | | |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=about.gitea.com) [Gitea](https://about.gitea.com) | | |
+| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket](https://bitbucket.org) | | |
 
 ### Improved Design
 
@@ -59,10 +64,6 @@ If you need any help or advice for translating Updatium to your language, or if 
 [![Supported locales](https://hosted.weblate.org/widget/updatium/updatium/matrix-auto.svg)](https://hosted.weblate.org/engage/updatium/)
 
 `Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
-
-Warning: GitHub is currently the only official place to download Updatium. Beware of unofficial sources (such as Appteka) that distribute modified APKs, which may contain more bugs, or even malware.
-
-If you want to distribute legitimate APK files of Updatium in your app store, please contact me by creating a new issue so I can add your store as an official publisher of Updatium.
 
 ## Screenshots
 
