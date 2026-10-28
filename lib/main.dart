@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -436,15 +438,16 @@ class _UpdatiumState extends State<Updatium> {
             ),
 
             // Modern progress indicator
-            progressIndicatorTheme: ProgressIndicatorThemeData(
-              // ignore: deprecated_member_use
-              year2023: false,
-            ),
+            progressIndicatorTheme: ProgressIndicatorThemeData(year2023: false),
 
             // Modern slider design
-            sliderTheme: SliderThemeData(
-              // ignore: deprecated_member_use
-              year2023: false,
+            sliderTheme: SliderThemeData(year2023: false),
+
+            listTileTheme: ListTileThemeData(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 2,
+                vertical: 6,
+              ),
             ),
 
             // Material 3 Menu Theme

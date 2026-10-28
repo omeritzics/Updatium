@@ -819,6 +819,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+        elevation: 0,
         child: Semantics(
           button: true,
           label: app.pinned

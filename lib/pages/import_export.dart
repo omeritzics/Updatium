@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:m3e_core/m3e_core.dart';
-import 'package:m3e_segmented_list/m3e_segmented_list.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/services/slang_converter.dart';
@@ -38,7 +37,7 @@ class _CardAction {
 
 Widget _actionCards(BuildContext context, List<_CardAction> actions) {
   final theme = Theme.of(context);
-  return M3ESegmentedColumn(
+  return M3ECardColumn(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     onTap: (i) => actions[i].onPressed?.call(),
     children: [
