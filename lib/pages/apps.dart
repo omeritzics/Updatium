@@ -544,26 +544,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ),
             ),
           ),
-        if (refreshingSince != null || appsProvider.loadingApps)
-          SliverToBoxAdapter(
-            child: LinearProgressIndicator(
-              value: appsProvider.loadingApps
-                  ? null
-                  : appsProvider
-                            .getAppValues()
-                            .where(
-                              (element) =>
-                                  !(element.app.lastUpdateCheck?.isBefore(
-                                        refreshingSince!,
-                                      ) ??
-                                      true),
-                            )
-                            .length /
-                        (appsProvider.apps.isNotEmpty
-                            ? appsProvider.apps.length
-                            : 1),
-            ),
-          ),
       ];
     }
 
@@ -1532,43 +1512,67 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ],
               ),
             ],
-            body: M3EPullToRefreshIndicator(
-              controller: _pullController,
-              shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
-              triggerDistance: 110.00,
-              indicatorHeight: 64.00,
-              dragResistance: 0.50,
-              maxDragMultiplier: 2.00,
-              edgeOffset: 0.00,
-              springMotion: M3EMotion.expressiveSpatialDefault,
-              hapticFeedback: M3EHapticFeedback.none,
-              onRefresh: refresh,
-              style: M3EPullToRefreshStyle(
-                size: 56.00,
-                padding: const EdgeInsets.all(8.00),
-                elevation: 2,
-                borderRadius: BorderRadius.circular(28.00),
-                triggerDistance: 110.00,
-                indicatorHeight: 64.00,
-                springMotion: const M3EMotion.custom(
-                  stiffness: 380.00,
-                  damping: 0.80,
+            body: Column(
+              children: [
+                if (refreshingSince != null || appsProvider.loadingApps)
+                  LinearProgressIndicator(
+                    value: appsProvider.loadingApps
+                        ? null
+                        : appsProvider
+                                  .getAppValues()
+                                  .where(
+                                    (element) =>
+                                        !(element.app.lastUpdateCheck?.isBefore(
+                                              refreshingSince!,
+                                            ) ??
+                                            true),
+                                  )
+                                  .length /
+                              (appsProvider.apps.isNotEmpty
+                                  ? appsProvider.apps.length
+                                  : 1),
+                  ),
+                Expanded(
+                  child: M3EPullToRefreshIndicator(
+                    controller: _pullController,
+                    shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
+                    triggerDistance: 110.00,
+                    indicatorHeight: 64.00,
+                    dragResistance: 0.50,
+                    maxDragMultiplier: 2.00,
+                    edgeOffset: 0.00,
+                    springMotion: M3EMotion.expressiveSpatialDefault,
+                    hapticFeedback: M3EHapticFeedback.none,
+                    onRefresh: refresh,
+                    style: M3EPullToRefreshStyle(
+                      size: 56.00,
+                      padding: const EdgeInsets.all(8.00),
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(28.00),
+                      triggerDistance: 110.00,
+                      indicatorHeight: 64.00,
+                      springMotion: const M3EMotion.custom(
+                        stiffness: 380.00,
+                        damping: 0.80,
+                      ),
+                      hapticFeedback: M3EHapticFeedback.none,
+                      dragResistance: 0.50,
+                      maxDragMultiplier: 2.00,
+                    ),
+                    child: Scrollbar(
+                      interactive: true,
+                      child: CustomScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        slivers: <Widget>[
+                          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                          ...getLoadingWidgets(),
+                          getDisplayedList(),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                hapticFeedback: M3EHapticFeedback.none,
-                dragResistance: 0.50,
-                maxDragMultiplier: 2.00,
-              ),
-              child: Scrollbar(
-                interactive: true,
-                child: CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  slivers: <Widget>[
-                    const SliverToBoxAdapter(child: SizedBox(height: 8)),
-                    ...getLoadingWidgets(),
-                    getDisplayedList(),
-                  ],
-                ),
-              ),
+              ],
             ),
           ),
           if (appsProvider.apps.isNotEmpty)
