@@ -918,10 +918,10 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           ],
           onValueChanges: (values, valid, isBuilding) {
             if (!mounted) {
-            setState(() {
-              additionalSettings = values;
-              additionalSettingsValid = valid;
-            });
+              setState(() {
+                additionalSettings = values;
+                additionalSettingsValid = valid;
+              });
             }
           },
         ),
