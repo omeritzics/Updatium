@@ -414,7 +414,6 @@ class AddAppPageState extends State<AddAppPage> {
                                                 defaultValue: e.hosts.isNotEmpty
                                                     ? e.hosts[0]
                                                     : '',
-                                                required: true,
                                               ),
                                             ],
                                           ],
