@@ -139,6 +139,7 @@ class AddAppPageState extends State<AddAppPage> {
                 'appSourceURL',
                 label: 'appSourceURL'.t(),
                 defaultValue: userInput,
+                required: false,
                 additionalValidators: [
                   (value) {
                     try {
@@ -916,11 +917,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
-            if (!isBuilding) {
-              setState(() {
-                additionalSettings = values;
-                additionalSettingsValid = valid;
-              });
+            if (!mounted) {
+            setState(() {
+              additionalSettings = values;
+              additionalSettingsValid = valid;
+            });
             }
           },
         ),
