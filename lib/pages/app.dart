@@ -714,7 +714,7 @@ class _AppPageState extends State<AppPage> {
             height: 36,
             child: CircularProgressIndicator(
               value: isInstalling ? null : progress,
-              strokeWidth: 4,
+              strokeWidth: 3,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           ),
@@ -917,25 +917,28 @@ class _AppPageState extends State<AppPage> {
                 dragResistance: 0.50,
                 maxDragMultiplier: 2.00,
               ),
-              child: CustomScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        getFullInfoColumn(),
-                        if (app.downloadProgress != null)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              bottom: 32,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          getFullInfoColumn(),
+                          if (app.downloadProgress != null)
+                            Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                bottom: 32,
+                              ),
                             ),
-                          ),
-                        // Extra bottom padding to clear the docked toolbar and FAB
-                        const SizedBox(height: 160),
-                      ],
+                          // Extra bottom padding to clear the docked toolbar and FAB
+                          const SizedBox(height: 160),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
