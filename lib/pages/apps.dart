@@ -801,35 +801,38 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         clipBehavior: Clip.antiAlias,
-        elevation: 0,
+        elevation: 1,
         margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: isSelected
             ? Theme.of(
                 context,
               ).colorScheme.primaryContainer.withValues(alpha: 0.3)
             : null,
-        child: Semantics(
-          button: true,
-          label: app.pinned
-              ? t(
-                  'pinnedApp',
-                  args: [
-                    appInfo.name,
-                    t('byX', args: [appInfo.author]),
-                  ],
-                )
-              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
-          value: isInstalled
-              ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
-              : 'notInstalled'.t(),
-          onTapHint: 'openAppDetails'.t(),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () => handleAppTap(app),
-            onLongPress: () => toggleAppSelected(app),
-            child: useGridView
-                ? Stack(alignment: Alignment.center, children: [content])
-                : content,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+          child: Semantics(
+            button: true,
+            label: app.pinned
+                ? t(
+                    'pinnedApp',
+                    args: [
+                      appInfo.name,
+                      t('byX', args: [appInfo.author]),
+                    ],
+                  )
+                : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
+            value: isInstalled
+                ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
+                : 'notInstalled'.t(),
+            onTapHint: 'openAppDetails'.t(),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () => handleAppTap(app),
+              onLongPress: () => toggleAppSelected(app),
+              child: useGridView
+                  ? Stack(alignment: Alignment.center, children: [content])
+                  : content,
+            ),
           ),
         ),
       );
@@ -1543,7 +1546,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               style: M3EPullToRefreshStyle(
                 size: 56.00,
                 padding: const EdgeInsets.all(8.00),
-                elevation: 3.00,
+                elevation: 2,
                 borderRadius: BorderRadius.circular(28.00),
                 triggerDistance: 110.00,
                 indicatorHeight: 64.00,

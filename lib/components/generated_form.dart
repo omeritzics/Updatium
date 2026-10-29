@@ -42,7 +42,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
     super.belowWidgets,
     String super.defaultValue = '',
     List<String? Function(String? value)> super.additionalValidators = const [],
-    this.required = true,
+    this.required = false,
     this.max = 1,
     this.hint,
     this.password = false,
@@ -85,7 +85,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     super.belowWidgets,
     String super.defaultValue = '',
     this.disabledOptKeys,
-    this.required = true,
+    this.required = false,
     this.max = 1000,
     List<String? Function(String? value)> super.additionalValidators = const [],
   });
