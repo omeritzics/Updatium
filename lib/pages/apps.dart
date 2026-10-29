@@ -192,8 +192,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
   }
 
-  late final ScrollController scrollController = ScrollController();
-
   var sourceProvider = SourceProvider();
 
   @override
@@ -212,7 +210,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _tabController.dispose();
-    scrollController.dispose();
     _pullController.dispose();
     super.dispose();
   }
@@ -1466,107 +1463,108 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-          M3EPullToRefreshIndicator(
-            controller: _pullController,
-            shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
-            triggerDistance: 110.00,
-            indicatorHeight: 64.00,
-            dragResistance: 0.50,
-            maxDragMultiplier: 2.00,
-            edgeOffset: 0.00,
-            springMotion: M3EMotion.expressiveSpatialDefault,
-            hapticFeedback: M3EHapticFeedback.none,
-            onRefresh: refresh,
-            style: M3EPullToRefreshStyle(
-              size: 56.00,
-              padding: const EdgeInsets.all(8.00),
-              elevation: 4.00,
-              borderRadius: BorderRadius.circular(28.00),
+          NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverAppBar.medium(
+                pinned: true,
+                title: Text('appsString'.t()),
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(text: 'all'.t()),
+                    Tab(text: 'installed'.t()),
+                    Tab(text: 'notInstalledApps'.t()),
+                  ],
+                ),
+                actions: [
+                  Consumer<AppsProvider>(
+                    builder: (context, appsProvider, child) {
+                      var isFilterOff = filter.isIdenticalTo(
+                        neutralFilter,
+                        settingsProvider,
+                      );
+                      return Semantics(
+                        button: true,
+                        label: isFilterOff
+                            ? 'filterApps'.t()
+                            : 'removeFilter'.t(),
+                        child: IconButton(
+                          tooltip: isFilterOff
+                              ? 'filterApps'.t()
+                              : '${'filter'.t()} - ${'remove'.t()}',
+                          onPressed: isFilterOff
+                              ? showFilterDialog
+                              : () {
+                                  setState(() {
+                                    filter = AppsFilter();
+                                  });
+                                },
+                          icon: Icon(
+                            isFilterOff
+                                ? Icons.search_rounded
+                                : Icons.search_off_rounded,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  Consumer<SettingsProvider>(
+                    builder: (context, settingsProvider, child) {
+                      return IconButton(
+                        tooltip: settingsProvider.useGridView
+                            ? 'listView'.t()
+                            : 'gridView'.t(),
+                        onPressed: () {
+                          settingsProvider.useGridView =
+                              !settingsProvider.useGridView;
+                        },
+                        icon: Icon(
+                          settingsProvider.useGridView
+                              ? Icons.view_list_rounded
+                              : Icons.grid_view_rounded,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+            body: M3EPullToRefreshIndicator(
+              controller: _pullController,
+              shapes: const [Shapes.softBurst, Shapes.sunny, Shapes.pill],
               triggerDistance: 110.00,
               indicatorHeight: 64.00,
-              springMotion: const M3EMotion.custom(
-                stiffness: 380.00,
-                damping: 0.80,
-              ),
-              hapticFeedback: M3EHapticFeedback.none,
               dragResistance: 0.50,
               maxDragMultiplier: 2.00,
-            ),
-
-            child: Scrollbar(
-              interactive: true,
-              controller: scrollController,
-              child: CustomScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                controller: scrollController,
-                slivers: <Widget>[
-                  SliverAppBar.medium(
-                    pinned: true,
-                    title: Text('appsString'.t()),
-                    bottom: TabBar(
-                      controller: _tabController,
-                      tabs: [
-                        Tab(text: 'all'.t()),
-                        Tab(text: 'installed'.t()),
-                        Tab(text: 'notInstalledApps'.t()),
-                      ],
-                    ),
-                    actions: [
-                      Consumer<AppsProvider>(
-                        builder: (context, appsProvider, child) {
-                          var isFilterOff = filter.isIdenticalTo(
-                            neutralFilter,
-                            settingsProvider,
-                          );
-                          return Semantics(
-                            button: true,
-                            label: isFilterOff
-                                ? 'filterApps'.t()
-                                : 'removeFilter'.t(),
-                            child: IconButton(
-                              tooltip: isFilterOff
-                                  ? 'filterApps'.t()
-                                  : '${'filter'.t()} - ${'remove'.t()}',
-                              onPressed: isFilterOff
-                                  ? showFilterDialog
-                                  : () {
-                                      setState(() {
-                                        filter = AppsFilter();
-                                      });
-                                    },
-                              icon: Icon(
-                                isFilterOff
-                                    ? Icons.search_rounded
-                                    : Icons.search_off_rounded,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      Consumer<SettingsProvider>(
-                        builder: (context, settingsProvider, child) {
-                          return IconButton(
-                            tooltip: settingsProvider.useGridView
-                                ? 'listView'.t()
-                                : 'gridView'.t(),
-                            onPressed: () {
-                              settingsProvider.useGridView =
-                                  !settingsProvider.useGridView;
-                            },
-                            icon: Icon(
-                              settingsProvider.useGridView
-                                  ? Icons.view_list_rounded
-                                  : Icons.grid_view_rounded,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
-                  ...getLoadingWidgets(),
-                  getDisplayedList(),
-                ],
+              edgeOffset: 0.00,
+              springMotion: M3EMotion.expressiveSpatialDefault,
+              hapticFeedback: M3EHapticFeedback.none,
+              onRefresh: refresh,
+              style: M3EPullToRefreshStyle(
+                size: 56.00,
+                padding: const EdgeInsets.all(8.00),
+                elevation: 3.00,
+                borderRadius: BorderRadius.circular(28.00),
+                triggerDistance: 110.00,
+                indicatorHeight: 64.00,
+                springMotion: const M3EMotion.custom(
+                  stiffness: 380.00,
+                  damping: 0.80,
+                ),
+                hapticFeedback: M3EHapticFeedback.none,
+                dragResistance: 0.50,
+                maxDragMultiplier: 2.00,
+              ),
+              child: Scrollbar(
+                interactive: true,
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: <Widget>[
+                    const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                    ...getLoadingWidgets(),
+                    getDisplayedList(),
+                  ],
+                ),
               ),
             ),
           ),

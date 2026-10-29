@@ -710,11 +710,11 @@ class _AppPageState extends State<AppPage> {
                   }
                 },
           icon: SizedBox(
-            width: 32,
-            height: 32,
+            width: 36,
+            height: 36,
             child: CircularProgressIndicator(
               value: isInstalling ? null : progress,
-              strokeWidth: 2,
+              strokeWidth: 4,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           ),
