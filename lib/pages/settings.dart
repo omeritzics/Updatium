@@ -837,7 +837,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ],
                       ),
-                      gap16,
+                      gap12,
                       ExpansionTile(
                         leading: Icon(Icons.cloud_download),
                         title: Text('sourceSpecific'.t()),
@@ -1126,7 +1126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ],
                       ),
-                      gap16,
+                      gap12,
                       ExpansionTile(
                         leading: Icon(Icons.list_rounded),
                         title: Text('appView'.t()),
@@ -1273,7 +1273,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ],
                       ),
-                      gap16,
+                      gap12,
                       ExpansionTile(
                         leading: Icon(Icons.more_horiz),
                         title: Text('misc'.t()),
@@ -1297,7 +1297,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ],
                       ),
-                      gap16,
+                      gap12,
                       ExpansionTile(
                         leading: Icon(Icons.category_rounded),
                         title: Text('categories'.t()),
@@ -1977,7 +1977,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   padding: EdgeInsets.zero,
                 ),
               ),
-              gap16,
+              gap12,
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
