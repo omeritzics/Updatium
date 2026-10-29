@@ -474,6 +474,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.update),
                         title: Text('updates'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded:
                             settingsProvider.updatesSectionExpanded,
                         onExpansionChanged: (bool expanded) {
@@ -837,6 +841,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.cloud_download),
                         title: Text('sourceSpecific'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded:
                             settingsProvider.appViewSectionExpanded,
                         onExpansionChanged: (bool expanded) {
@@ -941,6 +949,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.palette_rounded),
                         title: Text('appearance'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded:
                             settingsProvider.appearanceSectionExpanded,
                         onExpansionChanged: (bool expanded) {
@@ -1118,6 +1130,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.list_rounded),
                         title: Text('appView'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded:
                             settingsProvider.categoriesSectionExpanded,
                         onExpansionChanged: (bool expanded) {
@@ -1261,6 +1277,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.more_horiz),
                         title: Text('misc'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded: false,
                         onExpansionChanged: (bool expanded) {
                           // Optional: save expansion state in settingsProvider if desired
@@ -1281,6 +1301,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       ExpansionTile(
                         leading: Icon(Icons.category_rounded),
                         title: Text('categories'.t()),
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         initiallyExpanded:
                             settingsProvider.categoriesSectionExpanded,
                         onExpansionChanged: (bool expanded) {
