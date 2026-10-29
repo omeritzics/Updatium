@@ -675,8 +675,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
     }
 
-    // Simplified grid tile widget using Material Design 3 components
-    Widget buildGridTile(int index) {
+    // Unified app tile widget for both list view and grid view
+    Widget buildAppTile(int index, {required bool useGridView}) {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
@@ -684,6 +684,122 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           isInstalled && app.installedVersion != app.latestVersion;
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
+
+      final appIcon = Stack(
+        children: [
+          SizedBox(
+            height: 56,
+            width: 56,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: getAppIcon(index),
+            ),
+          ),
+          if (app.pinned)
+            PositionedDirectional(
+              top: -4,
+              start: -4,
+              child: Semantics(
+                label: 'pinned'.t(),
+                child: Icon(
+                  Icons.push_pin,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+        ],
+      );
+
+      final appName = Text(
+        appInfo.name,
+        textAlign: useGridView ? TextAlign.center : TextAlign.start,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: useGridView
+            ? Theme.of(context).textTheme.labelMedium
+            : Theme.of(context).textTheme.titleMedium,
+      );
+
+      final appAuthor = Text(
+        t('byX', args: [appInfo.author]),
+        textAlign: useGridView ? TextAlign.center : TextAlign.start,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: useGridView
+            ? Theme.of(context).textTheme.bodySmall
+            : Theme.of(context).textTheme.bodyMedium,
+      );
+
+      final appStatus = appInfo.downloadProgress != null
+          ? SizedBox(
+              width: 140,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (appInfo.downloadProgress! >= 0)
+                    Text(
+                      '${appInfo.downloadProgress!.toInt()}%',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 40,
+                    height: 4,
+                    child: LinearProgressIndicator(
+                      value: appInfo.downloadProgress! >= 0
+                          ? appInfo.downloadProgress! / 100
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : isTrackOnly
+          ? const SizedBox.shrink()
+          : buildActionButton(
+              app,
+              isInstalled,
+              hasUpdate,
+              isCompact: useGridView,
+            );
+
+      final Widget content = useGridView
+          ? Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  appIcon,
+                  const SizedBox(height: 8),
+                  appName,
+                  const SizedBox(height: 4),
+                  appAuthor,
+                  const SizedBox(height: 8),
+                  if (appInfo.downloadProgress != null || !isTrackOnly)
+                    appStatus,
+                ],
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  appIcon,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [appName, appAuthor],
+                    ),
+                  ),
+                  if (appInfo.downloadProgress != null || !isTrackOnly)
+                    appStatus,
+                ],
+              ),
+            );
 
       return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -714,215 +830,20 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             borderRadius: BorderRadius.circular(12),
             onTap: () => handleAppTap(app),
             onLongPress: () => toggleAppSelected(app),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // App icon with status indicators
-                      Stack(
-                        children: [
-                          SizedBox(
-                            height: 56,
-                            width: 56,
-                            child: getAppIcon(index),
-                          ),
-                          if (app.pinned)
-                            PositionedDirectional(
-                              top: -4,
-                              start: -4,
-                              child: Semantics(
-                                label: 'pinned'.t(),
-                                child: Icon(
-                                  Icons.push_pin,
-                                  size: 16,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      // App name
-                      Text(
-                        appInfo.name,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      const SizedBox(height: 4),
-                      // Author name
-                      Text(
-                        t('byX', args: [appInfo.author]),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(height: 8),
-                      // Action button or progress indicator
-                      if (appInfo.downloadProgress != null)
-                        SizedBox(
-                          width: 140,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (appInfo.downloadProgress! >= 0)
-                                Text(
-                                  '${appInfo.downloadProgress!.toInt()}%',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              const SizedBox(height: 4),
-                              SizedBox(
-                                width: 40,
-                                height: 4,
-                                child: LinearProgressIndicator(
-                                  value: appInfo.downloadProgress! >= 0
-                                      ? appInfo.downloadProgress! / 100
-                                      : null,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      else if (!isTrackOnly)
-                        buildActionButton(
-                          app,
-                          isInstalled,
-                          hasUpdate,
-                          isCompact: true,
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Simplified list tile widget using Material Design 3 components
-    Widget buildListTile(int index) {
-      final appInfo = listedApps[index];
-      final app = appInfo.app;
-      final isInstalled = app.installedVersion != null;
-      final hasUpdate =
-          isInstalled && app.installedVersion != app.latestVersion;
-      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
-      final isSelected = selectedAppIds.contains(app.id);
-
-      return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-        elevation: 0,
-        child: Semantics(
-          button: true,
-          label: app.pinned
-              ? t(
-                  'pinnedApp',
-                  args: [
-                    appInfo.name,
-                    t('byX', args: [appInfo.author]),
-                  ],
-                )
-              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
-          value: isInstalled
-              ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
-              : 'notInstalled'.t(),
-          onTapHint: 'openAppDetails'.t(),
-          child: ListTile(
-            selected: isSelected,
-            selectedTileColor: Theme.of(
-              context,
-            ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-            leading: SizedBox(
-              height: 48,
-              width: 48,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: getAppIcon(index),
-              ),
-            ),
-            title: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    appInfo.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                if (app.pinned)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8),
-                    child: Semantics(
-                      label: 'pinned'.t(),
-                      child: Icon(
-                        Icons.push_pin,
-                        size: 16,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            subtitle: Text(
-              t('byX', args: [appInfo.author]),
-              maxLines: 1,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            trailing: appInfo.downloadProgress != null
-                ? SizedBox(
-                    width: 140,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (appInfo.downloadProgress! >= 0)
-                          Text(
-                            '${appInfo.downloadProgress!.toInt()}%',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        const SizedBox(height: 4),
-                        SizedBox(
-                          width: 40,
-                          height: 4,
-                          child: LinearProgressIndicator(
-                            value: appInfo.downloadProgress! >= 0
-                                ? appInfo.downloadProgress! / 100
-                                : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : isTrackOnly
-                ? Semantics(
-                    label: 'trackOnly'.t(),
-                    child: Icon(
-                      Icons.check_circle_outline,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  )
-                : buildActionButton(app, isInstalled, hasUpdate),
-            onTap: () => handleAppTap(app),
-            onLongPress: () => toggleAppSelected(app),
+            child: useGridView
+                ? Stack(alignment: Alignment.center, children: [content])
+                : content,
           ),
         ),
       );
     }
 
     getSingleAppHorizTile(int index) {
-      return buildListTile(index);
+      return buildAppTile(index, useGridView: false);
     }
 
     getSingleAppGridTile(int index) {
-      return buildGridTile(index);
+      return buildAppTile(index, useGridView: true);
     }
 
     getCategoryGridTile(int index) {

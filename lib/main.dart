@@ -445,7 +445,7 @@ class _UpdatiumState extends State<Updatium> {
 
             listTileTheme: ListTileThemeData(
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 2,
+                horizontal: 4,
                 vertical: 6,
               ),
             ),
