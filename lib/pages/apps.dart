@@ -781,7 +781,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         clipBehavior: Clip.antiAlias,
-        elevation: 1,
+        elevation: 0,
         margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: isSelected
             ? Theme.of(
