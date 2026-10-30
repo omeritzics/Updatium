@@ -942,98 +942,102 @@ class _AppPageState extends State<AppPage> {
               ),
             ),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 42,
-            child: Align(
-              alignment: fab != null
-                  ? AlignmentDirectional.bottomEnd
-                  : Alignment.center,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  M3EHorizontalFloatingToolbar(
-                    expanded: true,
-                    content: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (!updating &&
-                            source != null &&
-                            source
-                                .combinedAppSpecificSettingFormItems
-                                .isNotEmpty)
-                          IconButton(
-                            tooltip: 'additionalOptions'.t(),
-                            onPressed: () {
-                              showAdditionalOptionsDialog().then(
-                                handleAdditionalOptionChanges,
-                              );
-                            },
-                            style: IconButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            icon: const Icon(Icons.edit, size: 24),
-                          ),
-                        if (!updating &&
-                            (app.app.apkUrls.isNotEmpty == true ||
-                                app.app.otherAssetUrls.isNotEmpty == true))
-                          IconButton(
-                            tooltip: t(
-                              'downloadX',
-                              args: [lowerCaseIfEnglish('releaseAsset'.t())],
-                            ),
-                            onPressed: () async {
-                              try {
-                                if (!mounted) return;
-                                await appsProvider.downloadAppAssets([
-                                  app.app.id,
-                                ], context);
-                              } catch (e) {
-                                if (!mounted) return;
-                                showError(e, context);
-                              }
-                            },
-                            style: IconButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            icon: const Icon(Icons.archive, size: 24),
-                          ),
-                        IconButton(
-                          tooltip: 'remove'.t(),
-                          onPressed: () async {
-                            if (!mounted) return;
-                            final removedApps = await appsProvider
-                                .removeAppsWithModal(context, [app.app]);
-                            if (removedApps != null && removedApps.isNotEmpty) {
-                              if (mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('appRemoved'.t()),
-                                    action: SnackBarAction(
-                                      label: 'undo'.t(),
-                                      onPressed: () {
-                                        appsProvider.undoRestoreApps(
-                                          removedApps,
-                                        );
-                                      },
-                                    ),
-                                  ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Positioned(
+              left: 0,
+              right: 0,
+              bottom: 42,
+              child: Align(
+                alignment: fab != null
+                    ? AlignmentDirectional.bottomEnd
+                    : Alignment.center,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    M3EHorizontalFloatingToolbar(
+                      expanded: true,
+                      content: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!updating &&
+                              source != null &&
+                              source
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty)
+                            IconButton(
+                              tooltip: 'additionalOptions'.t(),
+                              onPressed: () {
+                                showAdditionalOptionsDialog().then(
+                                  handleAdditionalOptionChanges,
                                 );
-                                Navigator.of(context).pop();
+                              },
+                              style: IconButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              icon: const Icon(Icons.edit, size: 24),
+                            ),
+                          if (!updating &&
+                              (app.app.apkUrls.isNotEmpty == true ||
+                                  app.app.otherAssetUrls.isNotEmpty == true))
+                            IconButton(
+                              tooltip: t(
+                                'downloadX',
+                                args: [lowerCaseIfEnglish('releaseAsset'.t())],
+                              ),
+                              onPressed: () async {
+                                try {
+                                  if (!mounted) return;
+                                  await appsProvider.downloadAppAssets([
+                                    app.app.id,
+                                  ], context);
+                                } catch (e) {
+                                  if (!mounted) return;
+                                  showError(e, context);
+                                }
+                              },
+                              style: IconButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              icon: const Icon(Icons.archive, size: 24),
+                            ),
+                          IconButton(
+                            tooltip: 'remove'.t(),
+                            onPressed: () async {
+                              if (!mounted) return;
+                              final removedApps = await appsProvider
+                                  .removeAppsWithModal(context, [app.app]);
+                              if (removedApps != null &&
+                                  removedApps.isNotEmpty) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('appRemoved'.t()),
+                                      action: SnackBarAction(
+                                        label: 'undo'.t(),
+                                        onPressed: () {
+                                          appsProvider.undoRestoreApps(
+                                            removedApps,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.of(context).pop();
+                                }
                               }
-                            }
-                          },
-                          style: IconButton.styleFrom(
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            },
+                            style: IconButton.styleFrom(
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            icon: const Icon(Icons.delete, size: 24),
                           ),
-                          icon: const Icon(Icons.delete, size: 24),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  if (fab != null) ...[const SizedBox(width: 8), fab],
-                ],
+                    if (fab != null) ...[const SizedBox(width: 8), fab],
+                  ],
+                ),
               ),
             ),
           ),

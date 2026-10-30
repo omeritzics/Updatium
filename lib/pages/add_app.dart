@@ -596,6 +596,7 @@ class AddAppConfirmationPage extends StatefulWidget {
 
 class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool gettingAppInfo = false;
+  bool prefilling = false;
   bool cameFromSearch = false;
 
   late ConfettiController _confettiController;
@@ -634,6 +635,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 pickedSource!.combinedAppSpecificSettingFormItems,
               )
             : {};
+        additionalSettings['trackedURL'] = userInput;
         additionalSettingsValid = pickedSource != null
             ? !sourceProvider.ifRequiredAppSpecificSettingsExist(pickedSource!)
             : true;
@@ -653,6 +655,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
 
   Future<void> prefillAppInfo() async {
     if (userInput.isEmpty || pickedSource == null) return;
+    prefilling = true;
     try {
       App app = await sourceProvider.getApp(
         pickedSource!,
@@ -684,6 +687,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       }
     } catch (e) {
       // Ignore errors during pre-filling
+    } finally {
+      if (mounted) setState(() => prefilling = false);
     }
   }
 
@@ -917,11 +922,16 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
-            if (!isBuilding) {
-              setState(() {
-                additionalSettings = values;
-                additionalSettingsValid = valid;
-              });
+            additionalSettings = values;
+            if (additionalSettingsValid != valid) {
+              additionalSettingsValid = valid;
+              if (isBuilding) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (mounted) setState(() {});
+                });
+              } else {
+                setState(() {});
+              }
             }
           },
         ),
@@ -950,7 +960,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   pinned: true,
                   title: Text('addApp'.t()),
                   actions: [
-                    if (gettingAppInfo)
+                    if (gettingAppInfo || prefilling)
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Center(
