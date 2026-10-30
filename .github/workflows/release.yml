@@ -18,17 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
-          android: false
-          dotnet: false
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: false
-          
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
@@ -37,8 +26,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: "temurin"
+          java-version: "21"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -48,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        
+
       - name: Auto-fix linting issues
         run: dart fix --apply
 
@@ -60,7 +49,7 @@ jobs:
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
-          
+
       - name: Generate Version
         id: version
         run: |
@@ -68,10 +57,10 @@ jobs:
           YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
           VERSION="$YEAR.$MONTH"
-          
+
           # Generate build number: YYMMDDHH format
           BUILD_NUMBER=$(date +'%y%m%d%H')
-          
+
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
@@ -131,11 +120,11 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
           done
-        
+
       - name: Attest Build Provenance
         uses: actions/attest@v4.1.1
         with:
-          subject-path: 'build/app/outputs/flutter-apk/*.apk'
+          subject-path: "build/app/outputs/flutter-apk/*.apk"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v6
@@ -160,7 +149,7 @@ jobs:
         if: always()
         run: |
           echo "Starting cleanup of sensitive signing files..."
-          
+
           # Cleanup keystore file
           if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
             rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
@@ -172,7 +161,7 @@ jobs:
           else
             echo "Keystore file not found, nothing to cleanup"
           fi
-          
+
           # Cleanup key.properties file
           if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
             rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
@@ -184,11 +173,11 @@ jobs:
           else
             echo "key.properties file not found, nothing to cleanup"
           fi
-          
+
           # Unset environment variables
           unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
           unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
           unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
           unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
-          
+
           echo "Cleanup completed"
