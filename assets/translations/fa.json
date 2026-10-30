@@ -273,7 +273,10 @@
     "category": "دسته بندی",
     "noCategory": "بدون دسته بندی",
     "noCategories": "بدون دسته بندی ها",
-    "categoryDeleteQuestion": "دسته بندی ها حذف شوند؟",
+    "categoryDeleteQuestion": {
+        "one": "دسته بندی ها حذف شوند؟",
+        "other": ""
+    },
     "categoryDeleteWarning": "همه برنامه‌ها در دسته‌های حذف شده روی دسته‌بندی نشده تنظیم می‌شوند.",
     "addCategory": "اضافه کردن دسته",
     "label": "برچسب",
@@ -551,7 +554,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

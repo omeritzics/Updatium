@@ -273,7 +273,10 @@
     "category": "Category",
     "noCategory": "No category",
     "noCategories": "No categories",
-    "categoryDeleteQuestion": "Delete categories?",
+    "categoryDeleteQuestion": {
+        "one": "Delete categories?",
+        "other": ""
+    },
     "categoryDeleteWarning": "All apps in deleted categories will be set to uncategorized.",
     "addCategory": "Add category",
     "label": "Label",
@@ -551,7 +554,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
