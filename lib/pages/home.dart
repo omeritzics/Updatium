@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final appLink = await _appLinks.getInitialLink();
     var initLinked = false;
     if (appLink != null) {
-      if (appLink.scheme == 'updatium') {
+      if (appLink.scheme == 'obtainium') {
         await interpretUpdatiumLink(appLink);
       } else {
         await interpretLink(appLink);
@@ -284,7 +284,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Handle link when app is in warm state (front or background)
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       if (!initLinked) {
-        if (uri.scheme == 'updatium') {
+        if (uri.scheme == 'obtainium') {
           await interpretUpdatiumLink(uri);
         } else {
           await interpretLink(uri);
