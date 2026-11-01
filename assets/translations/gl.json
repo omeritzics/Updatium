@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Vanse comprobar as actualizacións da app, pero Obtanium non poderá descargalas ou instalalas.",
     "cancelled": "Cancelada",
     "appAlreadyAdded": "A app xa está engadida",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Está a app ao día?",
     "addApp": "Engadir app",
     "appSourceURL": "URL de orixe da app",

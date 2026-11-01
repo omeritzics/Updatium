@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Aplikace bude sledována kvůli aktualizacím, ale Updatium ji nebude stahovat ani instalovat.",
     "cancelled": "Zrušeno",
     "appAlreadyAdded": "Aplikace již přidána",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Aplikace je již aktualizovaná?",
     "addApp": "Přidat aplikaci",
     "appSourceURL": "Zdrojová adresa URL aplikace",

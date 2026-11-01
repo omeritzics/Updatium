@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Appen vil bli sporet for oppdateringer, men Updatium vil ikke kunne laste ned eller installere den.",
     "cancelled": "Avbrutt",
     "appAlreadyAdded": "Appen er allerede lagt til",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Appen er allerede oppdatert?",
     "addApp": "Legg til app",
     "appSourceURL": "Kilde-URL for app",

@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Aplikasi akan dilacak untuk pembaruan, tetapi Updatium tidak akan dapat mengunduh atau memasangnya.",
     "cancelled": "Dibatalkan",
     "appAlreadyAdded": "Aplikasi sudah ditambahkan",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Aplikasi sudah yang terbaru?",
     "addApp": "Tambah aplikasi",
     "appSourceURL": "Tambah sumber URL",

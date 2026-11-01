@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "செயலியின் புதுப்பிப்புகள் கண்காணிக்கப்படும், ஆனால் Updatium செயலியை பதிவிறக்கவோ அல்லது நிறுவவோ முடியாது.",
     "cancelled": "ரத்துசெய்யப்பட்டது",
     "appAlreadyAdded": "செயலி ஏற்கனவே சேர்க்கப்பட்டுள்ளது",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "செயலி ஏற்கனவே புதுப்பித்த நிலையில் உள்ளதா?",
     "addApp": "செயலியைச் சேர்",
     "appSourceURL": "செயலி மூல URL",

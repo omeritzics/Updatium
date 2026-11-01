@@ -699,6 +699,64 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     }
   }
 
+  static Future<String?> confirmAndRenameDuplicate(
+    BuildContext context,
+    App app,
+  ) async {
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('appAlreadyAdded'.t()),
+        content: Text('appAlreadyAddedPrompt'.t()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text('cancel'.t()),
+          ),
+          M3EFilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text('yes'.t()),
+          ),
+        ],
+      ),
+    );
+    if (sure != true || !context.mounted) return null;
+    final taken = context
+        .read<AppsProvider>()
+        .apps
+        .values
+        .map((e) => e.name.toLowerCase())
+        .toSet();
+    var suggestion = app.finalName;
+    for (var i = 2; taken.contains(suggestion.toLowerCase()); i++) {
+      suggestion = '${app.finalName} ($i)';
+    }
+    final controller = TextEditingController(text: suggestion);
+    final newName = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('enterNewName'.t()),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: InputDecoration(labelText: 'appName'.t()),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(null),
+            child: Text('cancel'.t()),
+          ),
+          M3EFilledButton(
+            onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
+            child: Text('ok'.t()),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    return (newName == null || newName.isEmpty) ? null : newName;
+  }
+
   @override
   void dispose() {
     _confettiController.dispose();
@@ -850,7 +908,20 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             app.id = downloadedFile?.appId ?? downloadedDir!.appId;
           }
           if (appsProvider.apps.containsKey(app.id)) {
-            throw UpdatiumError('appAlreadyAdded'.t());
+            // Already tracked: confirm, then keep a renamed track-only copy
+            if (!mounted) return;
+            final newName = await confirmAndRenameDuplicate(context, app);
+            if (newName == null) return;
+            app.additionalSettings['appName'] = newName;
+            app.additionalSettings['trackOnly'] = true;
+            var newId = sourceProvider.generateTempID(
+              app.url,
+              app.additionalSettings,
+            );
+            while (appsProvider.apps.containsKey(newId)) {
+              newId = '${newId}1';
+            }
+            app.id = newId;
           }
           if (app.additionalSettings['trackOnly'] == true ||
               app.additionalSettings['versionDetection'] != true) {

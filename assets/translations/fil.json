@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Ilo-log ang app para sa mga update, ngunit hindi ito mai-download o mai-install ng Updatium.",
     "cancelled": "Kanselado",
     "appAlreadyAdded": "Naidagdag na ang app",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Up-to-date na ba ang app?",
     "addApp": "Magdagdag ng App",
     "appSourceURL": "URL ng source ng app",
