@@ -720,14 +720,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   const SizedBox(height: 4),
-                  SizedBox(
-                    width: 40,
-                    height: 4,
-                    child: LinearProgressIndicator(
-                      value: appInfo.downloadProgress! >= 0
-                          ? appInfo.downloadProgress! / 100
-                          : null,
-                    ),
+                  LinearProgressIndicator(
+                    value: appInfo.downloadProgress! >= 0
+                        ? appInfo.downloadProgress! / 100
+                        : null,
                   ),
                 ],
               ),
