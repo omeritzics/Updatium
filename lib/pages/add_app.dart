@@ -1195,29 +1195,29 @@ class _SelectionModalState extends State<SelectionModal> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                controller: _filterController,
-                decoration: InputDecoration(
-                  labelText: 'filter'.t(),
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: _filterController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            setState(() {
-                              _filterController.clear();
-                              filterRegex = '';
-                            });
-                          },
-                        )
-                      : null,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    filterRegex = value;
-                  });
-                },
-                validator: regExValidator,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: _filterController,
+                      decoration: InputDecoration(
+                        labelText: 'filter'.t(),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: _filterController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  setState(() {
+                                    _filterController.clear();
+                                    filterRegex = '';
+                                  });
+                                },
+                              )
+                            : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          filterRegex = value;
+                        });
+                      },
+                      validator: regExValidator,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                   ),
                   getSelectAllButton(),
