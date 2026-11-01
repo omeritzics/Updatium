@@ -1125,13 +1125,15 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.every((v) => v == false);
       return noneSelected
-          ? TextButton(
+          ? IconButton(
+              icon: const Icon(Icons.select_all),
+              tooltip: 'selectAll'.t(),
               onPressed: () => setState(selectAll),
-              child: Text('selectAll'.t()),
             )
-          : TextButton(
+          : IconButton(
+              icon: const Icon(Icons.deselect),
+              tooltip: t('deselectX', args: ['all'.t()]),
               onPressed: () => setState(() => selectAll(deselect: true)),
-              child: Text(t('deselectX', args: ['all'.t()])),
             );
     }
 
@@ -1145,7 +1147,6 @@ class _SelectionModalState extends State<SelectionModal> {
           ),
           title: Text(widget.title ?? 'pick'.t()),
           actions: [
-            getSelectAllButton(),
             M3EFilledButton(
               onPressed: entrySelections.values.every((v) => v == false)
                   ? null
@@ -1190,7 +1191,10 @@ class _SelectionModalState extends State<SelectionModal> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: TextFormField(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
                 controller: _filterController,
                 decoration: InputDecoration(
                   labelText: 'filter'.t(),
@@ -1214,6 +1218,10 @@ class _SelectionModalState extends State<SelectionModal> {
                 },
                 validator: regExValidator,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                  ),
+                  getSelectAllButton(),
+                ],
               ),
             ),
             Expanded(
