@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "La apo estas sekvota por ĝisdatigoj, sed Updatium ne povos elŝuti aŭ instali ĝin.",
     "cancelled": "Nuligita",
     "appAlreadyAdded": "Jam aldonita apo",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Ĉu la apo estas ĝisdata?",
     "addApp": "Aldoni apon",
     "appSourceURL": "URL de la apofonto",

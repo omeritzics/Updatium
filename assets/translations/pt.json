@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "As atualizações desta aplicação serão monitorizadas, mas o Updatium não poderá descarregá-la ou instalá-la.",
     "cancelled": "Cancelado",
     "appAlreadyAdded": "Aplicação já adicionada",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Aplicação já foi atualizada?",
     "addApp": "Adicionar aplicação",
     "appSourceURL": "URL de origem da aplicação",

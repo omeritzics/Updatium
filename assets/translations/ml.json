@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "ആപ്പ് അപ്‌ഡേറ്റുകൾക്കായി ട്രാക്ക് ചെയ്യപ്പെടും, പക്ഷേ ഒബ്‌റ്റേനിയത്തിന് അത് ഡൗൺലോഡ് ചെയ്യാനോ ഇൻസ്റ്റാൾ ചെയ്യാനോ കഴിയില്ല.",
     "cancelled": "റദ്ദാക്കി",
     "appAlreadyAdded": "ആപ്പ് ഇതിനകം കൂട്ടിച്ചേർത്തിട്ടുണ്ട്",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "ആപ്പ് ഇതിനകം ഏറ്റവും പുതിയ പതിപ്പിലാണോ?",
     "addApp": "ആപ്പ് ചേർക്കുക",
     "appSourceURL": "ആപ്പ് ഉറവിട URL",

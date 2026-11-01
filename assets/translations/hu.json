@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Az alkalmazás frissítéseit nyomon követi, de az Updatium nem tudja letölteni vagy telepíteni.",
     "cancelled": "Visszavonva",
     "appAlreadyAdded": "Az alkalmazás már hozzá van adva",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Az alkalmazás már naprakész?",
     "addApp": "Hozzáadás",
     "appSourceURL": "Alkalmazás forrásának webcíme",

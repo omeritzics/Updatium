@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Farem el seguiment de les actualitzacions per a l'aplicació, però Updatium no podrà descarregar-la ni actualitzar-la.",
     "cancelled": "Cancel·lat",
     "appAlreadyAdded": "Aplicació ja afegida",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Aplicació ja actualitzada?",
     "addApp": "Afegeix l'aplicació",
     "appSourceURL": "URL font de l'aplicació",

@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Sepan ji bo rojanekirinê dê were tracking, lê Updatium nikare wê saz bike an jî daxe.",
     "cancelled": "Betal hat",
     "appAlreadyAdded": "Sepan jixwe hatibe zêdekirin",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Sepan jixwe rojane ye?",
     "addApp": "Sepanê Zêde Bike",
     "appSourceURL": "URL-ya çavkaniya sepanê",

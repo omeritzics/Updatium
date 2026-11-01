@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "ئەپنىڭ يېڭىلىنىشى ئىز قوغلىنىدۇ، ئەمما Updatium ئۇنى چۈشۈرەلمەيدۇ ياكى قاچىلىيالمايدۇ.",
     "cancelled": "بىكار قىلىندى",
     "appAlreadyAdded": "ئەپ ئاللىقاچان قوشۇلغان",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "ئەپ ئاللىقاچان ئەڭ يېڭى نەشرىدە؟",
     "addApp": "ئەپ قوشۇش",
     "appSourceURL": "ئەپ مەنبە URL ئادرېسى",

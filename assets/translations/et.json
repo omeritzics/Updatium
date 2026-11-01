@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Rakendust jälgitakse uuenduste osas, kuid Updatium ei saa seda alla laadida ega paigaldada.",
     "cancelled": "Katkestatud",
     "appAlreadyAdded": "Rakendus on juba lisatud",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Kas rakendus on juba ajakohane?",
     "addApp": "Lisa rakendus",
     "appSourceURL": "Rakenduse allika võrguaadress",

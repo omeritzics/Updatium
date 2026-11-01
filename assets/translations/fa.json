@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "برنامه برای به روز رسانی ها ردیابی می شود، اما Updatium قادر به دانلود یا نصب آن نخواهد بود.",
     "cancelled": "لغو شد",
     "appAlreadyAdded": "برنامه قبلاً اضافه شده است",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "برنامه از قبل به روز شده است؟",
     "addApp": "افزودن برنامه",
     "appSourceURL": "آدرس اینترنتی منبع برنامه",

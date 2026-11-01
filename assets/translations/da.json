@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Appen tjekkes for opdateringer, men Updatium kan ikke hente eller installere den.",
     "cancelled": "Annulleret",
     "appAlreadyAdded": "Appen er allerede tilføjet",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Er appen allerede opdateret?",
     "addApp": "Tilføj app",
     "appSourceURL": "URL til app-kilde",

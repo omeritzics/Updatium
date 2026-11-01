@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "應用程式將會被追蹤更新，但 Updatium 無法下載或安裝它。",
     "cancelled": "已取消",
     "appAlreadyAdded": "應用程式已加入",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "應用程式已是最新版本？",
     "addApp": "新增應用程式",
     "appSourceURL": "應用程式來源網址",

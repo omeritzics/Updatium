@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "יתבצע מעקב אחר עדכונים ליישום זה, אבל היישום Updatium לא יוכל להוריד או להתקין אותו.",
     "cancelled": "בוטל",
     "appAlreadyAdded": "היישום כבר נוסף",
+    "appAlreadyAddedPrompt": "יישום זה כבר נוסף ל־Updatium. להוסיף עותק אחר שלו?",
+    "enterNewName": "נא להקליד שם חדש לעותק החדש",
     "alreadyUpToDateQuestion": "היישום כבר מעודכן?",
     "addApp": "הוספת יישום",
     "appSourceURL": "כתובת המקור של היישום",

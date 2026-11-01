@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Застосунок буде відстежуватися для оновлень, але Updatium не зможе його завантажити або встановити.",
     "cancelled": "Скасовано",
     "appAlreadyAdded": "Застосунок вже додано",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Застосунок вже оновлено?",
     "addApp": "Додати",
     "appSourceURL": "URL-адреса джерела застосунку",

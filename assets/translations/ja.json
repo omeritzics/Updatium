@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "アプリのアップデートは追跡されますが、Updatiumはアプリのダウンロードやインストールはできません。",
     "cancelled": "キャンセルしました",
     "appAlreadyAdded": "アプリはすでに追加されています",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "アプリはすでに最新ですか？",
     "addApp": "アプリの追加",
     "appSourceURL": "アプリのソースURL",
