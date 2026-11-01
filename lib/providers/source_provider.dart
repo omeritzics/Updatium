@@ -1444,6 +1444,7 @@ class SourceProvider {
     List<String> urls, {
     List<String> alreadyAddedUrls = const [],
     AppSource? sourceOverride,
+    Future<String?> Function(App app)? onDuplicate,
   }) async {
     final List<App> apps = [];
     final Map<String, dynamic> errors = {};
@@ -1457,20 +1458,31 @@ class SourceProvider {
     final added = <String>[...alreadyAddedUrls, ...existingUrls];
     for (var url in urls) {
       try {
-        if (added.contains(url)) {
+        final isDuplicate = added.contains(url);
+        if (isDuplicate && onDuplicate == null) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
         final source = sourceOverride ?? getSource(url);
-        apps.add(
-          await getApp(
-            source,
-            url,
-            sourceIsOverriden: sourceOverride != null,
-            getDefaultValuesFromFormItems(
-              source.combinedAppSpecificSettingFormItems,
-            ),
+        final app = await getApp(
+          source,
+          url,
+          sourceIsOverriden: sourceOverride != null,
+          getDefaultValuesFromFormItems(
+            source.combinedAppSpecificSettingFormItems,
           ),
         );
+        if (isDuplicate) {
+          final newName = await onDuplicate!(app);
+          if (newName == null) continue;
+          app.additionalSettings['appName'] = newName;
+          app.additionalSettings['trackOnly'] = true;
+          var newId = generateTempID(app.url, app.additionalSettings);
+          while (apps.any((a) => a.id == newId)) {
+            newId = '${newId}1';
+          }
+          app.id = newId;
+        }
+        apps.add(app);
       } catch (e) {
         errors.addAll(<String, dynamic>{url: e});
       }

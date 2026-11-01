@@ -3191,16 +3191,20 @@ class AppsProvider with ChangeNotifier {
   Future<List<List<String>>> addAppsByURL(
     List<String> urls, {
     AppSource? sourceOverride,
+    Future<String?> Function(App app)? onDuplicate,
   }) async {
     List<dynamic> results = await SourceProvider().getAppsByURLNaive(
       urls,
       alreadyAddedUrls: apps.values.map((e) => e.app.url).toList(),
       sourceOverride: sourceOverride,
+      onDuplicate: onDuplicate,
     );
     List<App> pps = results[0];
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
-      var alreadyExists = apps.values.any((e) => e.app.url == app.url);
+      var alreadyExists =
+          apps.containsKey(app.id) ||
+          (onDuplicate == null && apps.values.any((e) => e.app.url == app.url));
       if (alreadyExists) {
         errorsMap.addAll({app.id: t('appAlreadyAdded')});
       } else {

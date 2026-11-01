@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "Ứng dụng sẽ được theo dõi để cập nhật, nhưng Updatium sẽ không thể tải xuống hoặc cài đặt nó.",
     "cancelled": "Đã hủy",
     "appAlreadyAdded": "Ứng dụng được thêm rồi",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Ứng dụng đã được cập nhật?",
     "addApp": "Thêm",
     "appSourceURL": "URL nguồn ứng dụng",

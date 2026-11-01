@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "앱은 업데이트를 위해 추적되지만 Updatium은 다운로드하거나 설치할 수 없습니다.",
     "cancelled": "취소됨",
     "appAlreadyAdded": "앱이 이미 추가되었습니다",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "앱이 이미 최신 상태입니까?",
     "addApp": "앱 추가",
     "appSourceURL": "앱 소스 URL",

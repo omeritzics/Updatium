@@ -130,7 +130,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
             importInProgress = true;
           });
           try {
-            final errors = await appsProvider.addAppsByURL(urls);
+            final errors = await appsProvider.addAppsByURL(
+              urls,
+              onDuplicate: (app) =>
+                  AddAppConfirmationPageState.confirmAndRenameDuplicate(
+                    context,
+                    app,
+                  ),
+            );
             if (!mounted) return;
             if (errors.isEmpty) {
               showMessage(
@@ -328,7 +335,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 },
               );
               if (selectedUrls != null) {
-                var errors = await appsProvider.addAppsByURL(selectedUrls);
+                var errors = await appsProvider.addAppsByURL(
+                  selectedUrls,
+                  onDuplicate: (app) =>
+                      AddAppConfirmationPageState.confirmAndRenameDuplicate(
+                        context,
+                        app,
+                      ),
+                );
                 if (errors.isEmpty) {
                   showMessage(
                     t(

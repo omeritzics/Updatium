@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "De app zal worden gevolgd voor updates, maar Updatium zal niet in staat zijn om deze te downloaden of te installeren.",
     "cancelled": "Geannuleerd",
     "appAlreadyAdded": "App reeds toegevoegd",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "App al bijgewerkt?",
     "addApp": "App toevoegen",
     "appSourceURL": "App-bron URL",

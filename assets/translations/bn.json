@@ -49,6 +49,8 @@
     "trackOnlyAppDescription": "অ্যাপটি আপডেটের জন্য ট্র্যাক করা হবে, কিন্তু Updatium এটি ডাউনলোড বা ইনস্টল করতে পারবে না।",
     "cancelled": "বাতিল করা হয়েছে",
     "appAlreadyAdded": "অ্যাপটি আগেই যোগ করা হয়েছে",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "অ্যাপটি কি ইতিমধ্যে আপ-টু-ডেট?",
     "addApp": "অ্যাপ যোগ করুন",
     "appSourceURL": "অ্যাপ সোর্স URL",
