@@ -58,6 +58,7 @@
     "add": "Добавить",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Поиск (в некоторых источниках)",
+    "pickDifferentSources": "Pick different sources",
     "search": "Поиск",
     "searching": "Searching",
     "additionalOptsFor": "Дополнительные настройки для {}",

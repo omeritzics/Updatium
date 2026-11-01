@@ -495,10 +495,17 @@ class AddAppPageState extends State<AddAppPage> {
                     entries: res.map((k, v) => MapEntry(k, v.value)),
                     selectedByDefault: false,
                     onlyOneSelectionAllowed: true,
+                    showPickDifferentSources: true,
                   );
                 },
               );
         if (!mounted) return;
+        if (selectedUrls != null &&
+            selectedUrls.length == 1 &&
+            selectedUrls[0] == SelectionModal.pickSourcesSentinel) {
+          await runSearch();
+          return;
+        }
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
           var sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
@@ -1109,8 +1116,11 @@ class SelectionModal extends StatefulWidget {
     this.onlyOneSelectionAllowed = false,
     this.title,
     this.deselectThese = const [],
+    this.showPickDifferentSources = false,
   });
 
+  static const pickSourcesSentinel = '__pick_different_sources__';
+  final bool showPickDifferentSources;
   final String? title;
   final Map<String, List<String>> entries;
   final bool selectedByDefault;
@@ -1251,32 +1261,56 @@ class _SelectionModalState extends State<SelectionModal> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: TextFormField(
-                controller: _filterController,
-                decoration: InputDecoration(
-                  labelText: 'filter'.t(),
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: _filterController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            setState(() {
-                              _filterController.clear();
-                              filterRegex = '';
-                            });
-                          },
-                        )
-                      : null,
+            if (widget.showPickDifferentSources)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: M3EFilledButton(
+                      child: Text('pickDifferentSources'.t()),
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).pop([SelectionModal.pickSourcesSentinel]),
+                    ),
+                  ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    filterRegex = value;
-                  });
-                },
-                validator: regExValidator,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _filterController,
+                        decoration: InputDecoration(
+                          labelText: 'filter'.t(),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: _filterController.text.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      _filterController.clear();
+                                      filterRegex = '';
+                                    });
+                                  },
+                                )
+                              : null,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            filterRegex = value;
+                          });
+                        },
+                        validator: regExValidator,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                    ),
+                    getSelectAllButton(),
+                  ],
+                ),
               ),
             ),
             Expanded(

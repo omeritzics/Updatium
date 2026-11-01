@@ -58,6 +58,7 @@
     "add": "添加",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "搜索（仅支持部分来源）",
+    "pickDifferentSources": "Pick different sources",
     "search": "搜索",
     "searching": "Searching",
     "additionalOptsFor": "{} 的更多选项",

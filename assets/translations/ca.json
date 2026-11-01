@@ -58,6 +58,7 @@
     "add": "Afegeix",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Cerca (només algunes fonts)",
+    "pickDifferentSources": "Pick different sources",
     "search": "Cerca",
     "searching": "Searching",
     "additionalOptsFor": "Opcions addicionals per a {}",
