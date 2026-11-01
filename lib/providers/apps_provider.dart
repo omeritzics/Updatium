@@ -2783,9 +2783,9 @@ class AppsProvider with ChangeNotifier {
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text('cancel'.t()),
                 ),
-                FilledButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.error,
+                M3EFilledButton(
+                  decoration: M3EButtonDecoration.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.error,
                   ),
                   onPressed: () {
                     HapticFeedback.selectionClick();

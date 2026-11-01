@@ -366,6 +366,7 @@ class AddAppPageState extends State<AddAppPage> {
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
+                showPickDifferentSources: true,
                 deselectThese: settingsProvider.searchDeselected,
               );
             },
@@ -499,6 +500,12 @@ class AddAppPageState extends State<AddAppPage> {
                 },
               );
         if (!mounted) return;
+        if (selectedUrls != null &&
+            selectedUrls.length == 1 &&
+            selectedUrls[0] == SelectionModal.pickSourcesSentinel) {
+          await runSearch();
+          return;
+        }
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
           var sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
@@ -1046,8 +1053,11 @@ class SelectionModal extends StatefulWidget {
     this.onlyOneSelectionAllowed = false,
     this.title,
     this.deselectThese = const [],
+    this.showPickDifferentSources = false,
   });
 
+  static const pickSourcesSentinel = '__pick_different_sources__';
+  final bool showPickDifferentSources;
   final String? title;
   final Map<String, List<String>> entries;
   final bool selectedByDefault;
@@ -1189,6 +1199,19 @@ class _SelectionModalState extends State<SelectionModal> {
                 ],
               ),
             ),
+            if (widget.showPickDifferentSources)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: M3EFilledButton(
+                    child: Text('pickDifferentSources'.t()),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).pop([SelectionModal.pickSourcesSentinel]),
+                  ),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Row(
