@@ -556,7 +556,7 @@
     "fileName": "Όνομα αρχείου",
     "downloadCancelled": "Η μεταφόρτωση ακυρώθηκε",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Εμφάνιση στη διαχείριση αρχείων",
     "usedOpenSourcePackages": "Χρησιμοποιημένα πακέτα ανοιχτού κώδικα",
     "pleaseWaitOperationInProgress": "Παρακαλώ περιμένετε, η διαδικασία είναι σε εξέλιξη",

@@ -556,7 +556,7 @@
     "fileName": "Filnavn",
     "downloadCancelled": "Nedlasting avbrutt",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Vis i filbehandler",
     "usedOpenSourcePackages": "Brukte open-source-pakker",
     "pleaseWaitOperationInProgress": "Vennligst vent, operasjon pågår",

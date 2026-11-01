@@ -275,7 +275,10 @@
     "category": "Kategori",
     "noCategory": "Ingen Kategori",
     "noCategories": "Inga Kategorier",
-    "categoryDeleteQuestion": "Ta Bort Kategorier?",
+    "categoryDeleteQuestion": {
+        "one": "Ta Bort Kategorier?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alla Appar i de borttagna kategorierna kommer att märkas som okategoriserade.",
     "addCategory": "Lägg till Kategori",
     "label": "Märka",
@@ -553,7 +556,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

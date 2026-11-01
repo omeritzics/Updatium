@@ -275,7 +275,10 @@
     "category": "Kategori",
     "noCategory": "Ingen kategori",
     "noCategories": "Ingen kategorier",
-    "categoryDeleteQuestion": "Slet kategorier?",
+    "categoryDeleteQuestion": {
+        "one": "Slet kategorier?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Alle apps i slettede kategorier indstilles til ukategoriseret.",
     "addCategory": "Tilføj kategori",
     "label": "Etiket",
@@ -553,7 +556,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

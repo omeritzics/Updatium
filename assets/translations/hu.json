@@ -275,7 +275,10 @@
     "category": "Kategória",
     "noCategory": "Nincs kategória",
     "noCategories": "Nincsenek kategóriák",
-    "categoryDeleteQuestion": "Biztosan törli a kategóriákat?",
+    "categoryDeleteQuestion": {
+        "one": "Biztosan törli a kategóriákat?",
+        "other": ""
+    },
     "categoryDeleteWarning": "A törölt kategóriákban lévő összes alkalmazás kategorizálatlanná válik.",
     "addCategory": "Kategória hozzáadása",
     "label": "Címke",
@@ -553,7 +556,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

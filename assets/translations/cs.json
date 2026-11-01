@@ -89,7 +89,8 @@
     "removeSelectedApps": "Odstranit vybrané aplikace",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "few": "Removed {} apps",
+        "other": ""
     },
     "updateX": "Aktualizovat {}",
     "installX": "Instalovat {}",
@@ -275,7 +276,11 @@
     "category": "Kategorie",
     "noCategory": "Žádná kategorie",
     "noCategories": "Žádné kategorie",
-    "categoryDeleteQuestion": "Smazat kategorie?",
+    "categoryDeleteQuestion": {
+        "one": "Smazat kategorie?",
+        "few": "",
+        "other": ""
+    },
     "categoryDeleteWarning": "Všechny aplikace v odstraněných kategoriích budou nastaveny na nekategorizované.",
     "addCategory": "Přidat kategorii",
     "label": "Popisek",
@@ -439,7 +444,8 @@
     "multipleSigners": "Několik signers",
     "removeAppQuestion": {
         "one": "Odstranit aplikaci?",
-        "other": "Odstranit aplikace?"
+        "few": "Odstranit aplikace?",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {} minutu",
@@ -508,11 +514,13 @@
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK"
+        "few": "{} APK",
+        "other": ""
     },
     "certificateHash": {
         "one": "Haš osvědčení",
-        "other": "Uzávěry certifikátů"
+        "few": "Uzávěry certifikátů",
+        "other": ""
     },
     "securityDisclaimerTitle": "Bezpečnostní a Právní Zřeknutí se Odpovědnosti",
     "license": "Licence",
@@ -566,7 +574,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
