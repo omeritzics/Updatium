@@ -15,6 +15,7 @@ import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
@@ -608,6 +609,37 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           });
     }
 
+    // Cancel app download helper method
+    Future<void> cancelAppDownload(AppInMemory appInfo) async {
+      if (!context.mounted) return;
+      final shouldCancel = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text('cancelDownload'.t()),
+            content: Text('cancelDownloadPrompt'.t()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text('no'.t()),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text('yes'.t()),
+              ),
+            ],
+          );
+        },
+      );
+      if (shouldCancel == true) {
+        final ap = context.read<AppsProvider>();
+        ap.cancelDownload(appInfo.app.id);
+        final np = context.read<NotificationsProvider>();
+        final notifId = DownloadNotification(appInfo.app.finalName, 0).id;
+        np.cancel(notifId);
+      }
+    }
+
     // Build action button for install/update/updated states
     Widget buildActionButton(
       App app,
@@ -708,28 +740,115 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             : Theme.of(context).textTheme.bodyMedium,
       );
 
+      final isInstalling =
+          appInfo.downloadProgress != null && appInfo.downloadProgress! < 0;
+      final progress = appInfo.downloadProgress != null
+          ? (appInfo.downloadProgress! / 100).clamp(0.0, 1.0)
+          : 0.0;
+      final statusText = appInfo.isCancelling
+          ? 'cancelling'.t()
+          : isInstalling
+          ? 'installing'.t()
+          : '${appInfo.downloadProgress?.toInt()}%';
+
       final appStatus = appInfo.downloadProgress != null
-          ? SizedBox(
-              width: 140,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (appInfo.downloadProgress! >= 0)
-                    Text(
-                      '${appInfo.downloadProgress!.toInt()}%',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  const SizedBox(height: 4),
-                  SizedBox(
-                    width: 40,
-                    height: 4,
-                    child: LinearProgressIndicator(
-                      value: appInfo.downloadProgress! >= 0
-                          ? appInfo.downloadProgress! / 100
-                          : null,
-                    ),
-                  ),
-                ],
+          ? Semantics(
+              button: true,
+              label: 'cancelDownload'.t(),
+              enabled: !appInfo.isCancelling,
+              child: Tooltip(
+                message: 'cancelDownload'.t(),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: appInfo.isCancelling
+                      ? null
+                      : () => cancelAppDownload(appInfo),
+                  child: useGridView
+                      ? SizedBox(
+                          width: 100,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      statusText,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    Icons.close,
+                                    size: 14,
+                                    color: appInfo.isCancelling
+                                        ? Theme.of(context).disabledColor
+                                        : Theme.of(
+                                            context,
+                                          ).colorScheme.onSurfaceVariant,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              LinearProgressIndicator(
+                                value: isInstalling || appInfo.isCancelling
+                                    ? null
+                                    : progress,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 2,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 72,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      statusText,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    LinearProgressIndicator(
+                                      value:
+                                          isInstalling || appInfo.isCancelling
+                                          ? null
+                                          : progress,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.close,
+                                size: 18,
+                                color: appInfo.isCancelling
+                                    ? Theme.of(context).disabledColor
+                                    : Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
               ),
             )
           : isTrackOnly
@@ -801,7 +920,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ],
                   )
                 : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
-            value: isInstalled
+            value: appInfo.downloadProgress != null
+                ? (appInfo.isCancelling
+                      ? 'cancelling'.t()
+                      : isInstalling
+                      ? 'installing'.t()
+                      : '${'downloading'.t()} (${appInfo.downloadProgress!.toInt()}%)')
+                : isInstalled
                 ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
                 : 'notInstalled'.t(),
             onTapHint: 'openAppDetails'.t(),
