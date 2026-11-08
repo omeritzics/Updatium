@@ -58,6 +58,7 @@
     "add": "追加",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "検索 (一部ソースのみ)",
+    "pickDifferentSources": "Pick different sources",
     "search": "検索",
     "searching": "Searching",
     "additionalOptsFor": "{}の追加オプション",

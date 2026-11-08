@@ -58,6 +58,7 @@
     "add": "Lisa",
     "advanced": "Täiendavad seadistused",
     "searchSomeSourcesLabel": "Otsi (ainult mõned allikad)",
+    "pickDifferentSources": "Pick different sources",
     "search": "Otsi",
     "searching": "Otsin",
     "additionalOptsFor": "Lisavalikud {} jaoks",

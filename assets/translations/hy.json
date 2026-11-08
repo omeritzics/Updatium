@@ -58,6 +58,7 @@
     "add": "Add",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Search (some sources only)",
+    "pickDifferentSources": "Pick different sources",
     "search": "Search",
     "searching": "Searching",
     "additionalOptsFor": "Additional options for {}",

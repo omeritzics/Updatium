@@ -58,6 +58,7 @@
     "add": "Dodaj",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Pretraživanje (samo neki izvori)",
+    "pickDifferentSources": "Pick different sources",
     "search": "Pretraživanje",
     "searching": "Searching",
     "additionalOptsFor": "Dodatne opcije za {}",
