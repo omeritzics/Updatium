@@ -745,11 +745,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final progress = appInfo.downloadProgress != null
           ? (appInfo.downloadProgress! / 100).clamp(0.0, 1.0)
           : 0.0;
-      final statusText = appInfo.isCancelling
-          ? 'cancelling'.t()
-          : isInstalling
-          ? 'installing'.t()
-          : '${appInfo.downloadProgress?.toInt()}%';
 
       final appStatus = appInfo.downloadProgress != null
           ? Semantics(
@@ -773,16 +768,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Flexible(
-                                    child: Text(
-                                      statusText,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
                                   const SizedBox(width: 4),
                                   Icon(
                                     Icons.close,
@@ -817,14 +802,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      statusText,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
                                     const SizedBox(height: 4),
                                     LinearProgressIndicator(
                                       value:
