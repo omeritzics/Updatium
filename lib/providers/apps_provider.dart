@@ -3291,6 +3291,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.close),
+            tooltip: 'cancel'.t(),
             onPressed: () => Navigator.of(context).pop(null),
           ),
           title: Text(
@@ -3299,12 +3300,6 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 : 'pickAnAPK'.t(),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(null);
-              },
-              child: Text('cancel'.t()),
-            ),
             M3EFilledButton(
               onPressed: () {
                 HapticFeedback.selectionClick();
