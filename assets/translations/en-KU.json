@@ -276,7 +276,6 @@
     "category": "Kategorî",
     "noCategory": "Bê kategorî",
     "noCategories": "Kategorî tune ne",
-    "categoryDeleteQuestion": "Kategorî jê bibin?",
     "categoryDeleteWarning": "Hemî sepanên di kategoriyan yên jêbirî de dê werin wek bê-kategorî sazkirin.",
     "addCategory": "Kategorî zêde bike",
     "label": "Etîket",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Kategorî jê bibin?"
+    }
 }

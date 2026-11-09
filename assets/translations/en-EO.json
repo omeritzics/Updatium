@@ -276,7 +276,6 @@
     "category": "Kategorio",
     "noCategory": "Neniu kategorio",
     "noCategories": "Neniuj kategorioj",
-    "categoryDeleteQuestion": "Forigi la kategoriojn?",
     "categoryDeleteWarning": "Ĉiuj apoj el forigitaj kategorioj iĝos nekategoriitaj.",
     "addCategory": "Aldoni kategorion",
     "label": "Etikedo",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Forigi la kategoriojn?"
+    }
 }
