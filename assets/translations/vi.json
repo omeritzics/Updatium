@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Ứng dụng sẽ được theo dõi để cập nhật, nhưng Updatium sẽ không thể tải xuống hoặc cài đặt nó.",
     "cancelled": "Đã hủy",
     "appAlreadyAdded": "Ứng dụng được thêm rồi",
-    "appAlreadyAddedPrompt": "Ứng dụng này đã được thêm vào Updatium. Bạn có chắc chắn muốn thêm một bản sao khác của nó không?",
-    "enterNewName": "Vui lòng nhập tên mới cho bản sao mới",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Ứng dụng đã được cập nhật?",
     "addApp": "Thêm",
     "appSourceURL": "URL nguồn ứng dụng",
@@ -58,7 +58,7 @@
     "add": "Thêm",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Tìm kiếm (Chỉ một số nguồn)",
-    "pickDifferentSources": "Chọn nguồn khác",
+    "pickDifferentSources": "Pick different sources",
     "search": "Tìm kiếm",
     "searching": "Searching",
     "additionalOptsFor": "Tùy chọn bổ sung cho {}",
@@ -88,10 +88,6 @@
     "xWillBeRemovedButRemainInstalled": "{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
     "removeSelectedAppsQuestion": "Xóa ứng dụng đã chọn?",
     "removeSelectedApps": "Xóa ứng dụng đã chọn",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
     "updateX": "Cập nhật {}",
     "installX": "Cài đặt {}",
     "markXTrackOnlyAsUpdated": "Đánh dấu {}\n(Chỉ theo dõi)\nnhư là đã cập nhật",
@@ -276,7 +272,6 @@
     "category": "Danh mục",
     "noCategory": "Không danh mục",
     "noCategories": "Không danh mục",
-    "categoryDeleteQuestion": "Xóa danh mục?",
     "categoryDeleteWarning": "Tất cả ứng dụng trong danh mục đã xóa sẽ được đặt thành chưa được phân loại.",
     "addCategory": "Thêm thể loại",
     "label": "Nhãn",
@@ -438,70 +433,6 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Nhiều người ký",
-    "removeAppQuestion": {
-        "one": "Gỡ ứng dụng?",
-        "other": "Gỡ ứng dụng?"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút",
-        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút",
-        "other": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
-        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
-    },
-    "apps": {
-        "one": "{} Ứng dụng",
-        "other": "{} Ứng dụng"
-    },
-    "url": {
-        "one": "{} URL",
-        "other": "{} URL"
-    },
-    "minute": {
-        "one": "{} phút",
-        "other": "{} phút"
-    },
-    "hour": {
-        "one": "{} giờ",
-        "other": "{} giờ"
-    },
-    "day": {
-        "one": "{} ngày",
-        "other": "{} ngày"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})",
-        "other": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} và 1 ứng dụng khác có bản cập nhật.",
-        "other": "{app} và {} ứng dụng khác có bản cập nhật."
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} và 1 ứng dụng khác đã được cập nhật.",
-        "other": "{app} và {} ứng dụng khác đã được cập nhật."
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "{app} và 1 ứng dụng khác đã cập nhật không thành công.",
-        "other": "{app} và {} ứng dụng khác đã cập nhật không thành công."
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} và 1 ứng dụng khác có thể đã được cập nhật.",
-        "other": "{app} và {} ứng dụng khác có thể đã được cập nhật."
-    },
-    "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
-    },
-    "certificateHash": {
-        "one": "Mã băm chứng chỉ",
-        "other": "Mã băm chứng chỉ"
-    },
     "securityDisclaimerTitle": "Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý",
     "license": "Giấy phép",
     "licenseText": "Ứng dụng này được phân phối theo Giấy phép GPL v3.",
@@ -554,7 +485,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +502,77 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "hour": {
+        "one": "",
+        "other": ""
+    },
+    "url": {
+        "one": "",
+        "other": ""
+    },
+    "minute": {
+        "other": "",
+        "one": ""
+    },
+    "removeAppQuestion": {
+        "other": "",
+        "one": ""
+    },
+    "xAndNMoreUpdatesPossiblyInstalled": {
+        "one": "",
+        "other": ""
+    },
+    "xAndNMoreUpdatesInstalled": {
+        "one": "",
+        "other": ""
+    },
+    "xAndNMoreUpdatesAvailable": {
+        "other": "",
+        "one": ""
+    },
+    "bgUpdateGotErrorRetryInMinutes": {
+        "one": "",
+        "other": ""
+    },
+    "apk": {
+        "other": "",
+        "one": ""
+    },
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    },
+    "xAndNMoreUpdatesFailed": {
+        "one": "",
+        "other": ""
+    },
+    "certificateHash": {
+        "one": "",
+        "other": ""
+    },
+    "appRemoved": {
+        "one": "",
+        "other": ""
+    },
+    "clearedNLogsBeforeXAfterY": {
+        "other": "",
+        "one": ""
+    },
+    "day": {
+        "one": "",
+        "other": ""
+    },
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
+        "other": "",
+        "one": ""
+    },
+    "apps": {
+        "one": "",
+        "other": ""
+    },
+    "tooManyRequestsTryAgainInMinutes": {
+        "other": "",
+        "one": ""
+    }
 }

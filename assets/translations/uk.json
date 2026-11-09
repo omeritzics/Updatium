@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Застосунок буде відстежуватися для оновлень, але Updatium не зможе його завантажити або встановити.",
     "cancelled": "Скасовано",
     "appAlreadyAdded": "Застосунок вже додано",
-    "appAlreadyAddedPrompt": "Цю програму вже додано до Updatium. Ви впевнені, що хочете додати інший екземпляр?",
-    "enterNewName": "Будь ласка, введіть нову назву для нового екземпляра",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Застосунок вже оновлено?",
     "addApp": "Додати",
     "appSourceURL": "URL-адреса джерела застосунку",
@@ -58,7 +58,7 @@
     "add": "Додати",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Пошук (Лише деякі джерела)",
-    "pickDifferentSources": "Вибрати інші джерела",
+    "pickDifferentSources": "Pick different sources",
     "search": "Пошук",
     "searching": "Searching",
     "additionalOptsFor": "Додаткові опції для {}",
@@ -90,7 +90,7 @@
     "removeSelectedApps": "Видалити вибрані застосунки",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Оновити {}",
     "installX": "Встановити {}",
@@ -276,7 +276,10 @@
     "category": "Категорія",
     "noCategory": "Без категорії",
     "noCategories": "Немає категорій",
-    "categoryDeleteQuestion": "Видалити категорії?",
+    "categoryDeleteQuestion": {
+        "one": "Видалити категорії?",
+        "other": ""
+    },
     "categoryDeleteWarning": "Усі застосунки у видалених категоріях будуть переведені у некатегоризовані.",
     "addCategory": "Додати категорію",
     "label": "Мітка",
@@ -440,67 +443,67 @@
     "multipleSigners": "Кілька підписників",
     "removeAppQuestion": {
         "one": "Видалити застосунок?",
-        "other": "Видалити застосунки?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилину",
-        "other": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилин"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилину",
-        "other": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилин"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Фонова перевірка оновлень знайшла {} оновлення - сповістити користувача, якщо це необхідно",
-        "other": "Фонова перевірка оновлень знайшла {} оновлень - сповістити користувача, якщо це необхідно"
+        "other": ""
     },
     "apps": {
         "one": "{} застосунок",
-        "other": "{} застосунки"
+        "other": ""
     },
     "url": {
         "one": "{} URL-адреса",
-        "other": "{} URL-адреси"
+        "other": ""
     },
     "minute": {
         "one": "{} хвилина",
-        "other": "{} хвилин"
+        "other": ""
     },
     "hour": {
         "one": "{} година",
-        "other": "{} годин"
+        "other": ""
     },
     "day": {
         "one": "{} день",
-        "other": "{} днів"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Очищено {n} журнал (до = {before}, після = {after})",
-        "other": "Очищено {n} журналів (до = {before}, після = {after})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} та ще 1 застосунок мають оновлення.",
-        "other": "{app} та ще {} застосунки мають оновлення."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} та ще 1 застосунок було оновлено.",
-        "other": "{app} та ще {} застосунків було оновлено."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Не вдалося оновити {app} та ще 1 програму.",
-        "other": "Не вдалося оновити {app} і {} та інші програми."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} та ще 1 застосунок можливо було оновлено.",
-        "other": "{app} та ще {} застосунків можливо було оновлено."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK-файли"
+        "other": ""
     },
     "certificateHash": {
         "one": "Сертифікат Hash",
-        "other": "Сертифікат Hashes"
+        "other": ""
     },
     "securityDisclaimerTitle": "Відмова від відповідальності щодо безпеки та правових питань",
     "license": "Ліцензія",
@@ -554,7 +557,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",

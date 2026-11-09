@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "The app will be tracked for updates, but Updatium will not be able to download or install it.",
     "cancelled": "Cancelled",
     "appAlreadyAdded": "App already added",
-    "appAlreadyAddedPrompt": "Apl ini sudah ditambahkan ke Updatium. Adakah anda pasti mahu menambah tika lain?",
-    "enterNewName": "Sila masukkan nama baharu untuk tika baharu",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "App already up to date?",
     "addApp": "Add App",
     "appSourceURL": "App source URL",
@@ -58,7 +58,7 @@
     "add": "Add",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Search (some sources only)",
-    "pickDifferentSources": "Pilih sumber lain",
+    "pickDifferentSources": "Pick different sources",
     "search": "Search",
     "searching": "Searching",
     "additionalOptsFor": "Additional options for {}",
@@ -88,10 +88,6 @@
     "xWillBeRemovedButRemainInstalled": "{} will be removed from Updatium but remain installed on device.",
     "removeSelectedAppsQuestion": "Remove selected apps?",
     "removeSelectedApps": "Remove selected apps",
-    "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
-    },
     "updateX": "Update {}",
     "installX": "Install {}",
     "markXTrackOnlyAsUpdated": "Mark {}\n(track-only)\nas updated",
@@ -276,7 +272,6 @@
     "category": "Category",
     "noCategory": "No category",
     "noCategories": "No categories",
-    "categoryDeleteQuestion": "Delete categories?",
     "categoryDeleteWarning": "All apps in deleted categories will be set to uncategorized.",
     "addCategory": "Add category",
     "label": "Label",
@@ -438,70 +433,6 @@
     "includeTarballs": "Include tarball files (tar.gz, etc.)",
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Multiple Signers",
-    "removeAppQuestion": {
-        "one": "Remove app?",
-        "other": "Remove apps?"
-    },
-    "tooManyRequestsTryAgainInMinutes": {
-        "one": "Too many requests (rate limited) - try again in {} minute",
-        "other": "Too many requests (rate limited) - try again in {} minutes"
-    },
-    "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG update checking encountered a {error}, will schedule a retry check in {} minute",
-        "other": "BG update checking encountered a {error}, will schedule a retry check in {} minutes"
-    },
-    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG update checking found {} update - will notify user if needed",
-        "other": "BG update checking found {} updates - will notify user if needed"
-    },
-    "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
-    },
-    "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
-    },
-    "minute": {
-        "one": "{} minute",
-        "other": "{} minutes"
-    },
-    "hour": {
-        "one": "{} hour",
-        "other": "{} hours"
-    },
-    "day": {
-        "one": "{} day",
-        "other": "{} days"
-    },
-    "clearedNLogsBeforeXAfterY": {
-        "one": "Cleared {n} log (before = {before}, after = {after})",
-        "other": "Cleared {n} logs (before = {before}, after = {after})"
-    },
-    "xAndNMoreUpdatesAvailable": {
-        "one": "{app} and 1 more app have updates.",
-        "other": "{app} and {} more apps have updates."
-    },
-    "xAndNMoreUpdatesInstalled": {
-        "one": "{app} and 1 more app was updated.",
-        "other": "{app} and {} more apps were updated."
-    },
-    "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {app} and 1 more app.",
-        "other": "Failed to update {app} and {} more apps."
-    },
-    "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} and 1 more app may have been updated.",
-        "other": "{app} and {} more apps may have been updated."
-    },
-    "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
-    },
-    "certificateHash": {
-        "one": "Certificate Hash",
-        "other": "Certificate Hashes"
-    },
     "securityDisclaimerTitle": "Security & Legal Disclaimer",
     "license": "License",
     "licenseText": "This application is distributed under the GPL v3 License.",
@@ -554,7 +485,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +502,77 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "hour": {
+        "one": "",
+        "other": ""
+    },
+    "url": {
+        "one": "",
+        "other": ""
+    },
+    "minute": {
+        "other": "",
+        "one": ""
+    },
+    "removeAppQuestion": {
+        "other": "",
+        "one": ""
+    },
+    "xAndNMoreUpdatesPossiblyInstalled": {
+        "one": "",
+        "other": ""
+    },
+    "xAndNMoreUpdatesInstalled": {
+        "one": "",
+        "other": ""
+    },
+    "xAndNMoreUpdatesAvailable": {
+        "other": "",
+        "one": ""
+    },
+    "bgUpdateGotErrorRetryInMinutes": {
+        "one": "",
+        "other": ""
+    },
+    "apk": {
+        "other": "",
+        "one": ""
+    },
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    },
+    "xAndNMoreUpdatesFailed": {
+        "one": "",
+        "other": ""
+    },
+    "certificateHash": {
+        "one": "",
+        "other": ""
+    },
+    "appRemoved": {
+        "one": "",
+        "other": ""
+    },
+    "clearedNLogsBeforeXAfterY": {
+        "other": "",
+        "one": ""
+    },
+    "day": {
+        "one": "",
+        "other": ""
+    },
+    "bgCheckFoundUpdatesWillNotifyIfNeeded": {
+        "other": "",
+        "one": ""
+    },
+    "apps": {
+        "one": "",
+        "other": ""
+    },
+    "tooManyRequestsTryAgainInMinutes": {
+        "other": "",
+        "one": ""
+    }
 }
