@@ -38,18 +38,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Auto-fix linting issues
-        run: dart fix --apply
-
-      - name: Format code
-        run: dart format .
-
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: "style: auto-fix linting and formatting issues"
-          branch: ${{ github.ref_name }}
-
       - name: Generate Version
         id: version
         run: |
@@ -106,7 +94,7 @@ jobs:
           fi
           echo "Keystore verification successful"
 
-      - name: Build APKs (Release Mode)
+      - name: Build APKs
         run: |
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
@@ -125,25 +113,6 @@ jobs:
         uses: actions/attest@v4.1.1
         with:
           subject-path: "build/app/outputs/flutter-apk/*.apk"
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v6
-        with:
-          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
-          path: build/outputs/Updatium-*.apk
-
-      - name: Create Release
-        if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
-        uses: softprops/action-gh-release@master
-        with:
-          tag_name: Qama-${{ steps.version.outputs.tag }}
-          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
-          prerelease: ${{ github.event.inputs.beta == 'true' }}
-          draft: true
-          files: build/outputs/Updatium-*.apk
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup signing files
         if: always()
@@ -181,3 +150,22 @@ jobs:
           unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
 
           echo "Cleanup completed"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
+          path: build/outputs/Updatium-*.apk
+
+      - name: Create Release
+        if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: Qama-${{ steps.version.outputs.tag }}
+          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          prerelease: ${{ github.event.inputs.beta == 'true' }}
+          draft: true
+          files: build/outputs/Updatium-*.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
