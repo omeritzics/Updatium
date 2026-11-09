@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Aplikasi akan dilacak untuk pembaruan, tetapi Updatium tidak akan dapat mengunduh atau memasangnya.",
     "cancelled": "Dibatalkan",
     "appAlreadyAdded": "Aplikasi sudah ditambahkan",
-    "appAlreadyAddedPrompt": "Aplikasi ini sudah ditambahkan ke Updatium. Apakah Anda yakin ingin menambahkan instance lain darinya?",
-    "enterNewName": "Silakan masukkan nama baru untuk instance baru",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Aplikasi sudah yang terbaru?",
     "addApp": "Tambah aplikasi",
     "appSourceURL": "Tambah sumber URL",
@@ -58,7 +58,7 @@
     "add": "Tambah",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Cari (beberapa sumber saja)",
-    "pickDifferentSources": "Pilih sumber yang berbeda",
+    "pickDifferentSources": "Pick different sources",
     "search": "Cari",
     "searching": "Searching",
     "additionalOptsFor": "Opsi tambahan untuk {}",
@@ -89,8 +89,8 @@
     "removeSelectedAppsQuestion": "Hapus aplikasi terpilih?",
     "removeSelectedApps": "Hapus aplikasi terpilih",
     "appRemoved": {
-        "one": "Removed one app",
-        "other": "Removed {} apps"
+        "one": "",
+        "other": ""
     },
     "updateX": "Perbarui {}",
     "installX": "Pasang {}",
@@ -276,7 +276,6 @@
     "category": "Kategori",
     "noCategory": "Tidak ada kategori",
     "noCategories": "Tidak ada kategori",
-    "categoryDeleteQuestion": "Hapus kategori?",
     "categoryDeleteWarning": "Semua aplikasi dalam kategori yang dihapus akan diatur sebagai tidak terkategori.",
     "addCategory": "Tambah kategori",
     "label": "Label",
@@ -439,68 +438,68 @@
     "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Tanda Tangan Ganda",
     "removeAppQuestion": {
-        "one": "Hapus aplikasi?",
-        "other": "Hapus aplikasi?"
+        "one": "",
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit",
-        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit"
+        "one": "",
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit",
-        "other": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit"
+        "one": "",
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan",
-        "other": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan"
+        "one": "",
+        "other": ""
     },
     "apps": {
-        "one": "{} aplikasi",
-        "other": "{} aplikasi"
+        "one": "",
+        "other": ""
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "",
+        "other": ""
     },
     "minute": {
-        "one": "{} menit",
-        "other": "{} menit"
+        "one": "",
+        "other": ""
     },
     "hour": {
-        "one": "{} jam",
-        "other": "{} jam"
+        "one": "",
+        "other": ""
     },
     "day": {
-        "one": "{} hari",
-        "other": "{} hari"
+        "one": "",
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})",
-        "other": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})"
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} dan 1 aplikasi lainnya memiliki pembaruan.",
-        "other": "{app} dan {} aplikasi lainnya memiliki pembaruan."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} dan 1 aplikasi lainnya telah diperbarui.",
-        "other": "{app} dan {} aplikasi lainnya telah diperbarui."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Gagal memperbarui {app} dan 1 aplikasi lainnya.",
-        "other": "Gagal memperbarui {app} dan {} aplikasi lainnya."
+        "one": "",
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} dan 1 aplikasi lainnya mungkin telah diperbarui.",
-        "other": "{app} dan {} aplikasi lainnya mungkin telah diperbarui."
+        "one": "",
+        "other": ""
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "",
+        "other": ""
     },
     "certificateHash": {
-        "one": "Hash Sertifikat",
-        "other": "Hashes Sertifikat"
+        "one": "",
+        "other": ""
     },
     "securityDisclaimerTitle": "Penafian Keamanan dan Hukum",
     "license": "Lisensi",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": ""
+    }
 }
