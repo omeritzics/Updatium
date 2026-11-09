@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "L'app sarà monitorata per gli aggiornamenti, ma Updatium non sarà in grado di scaricarli o di installarli.",
     "cancelled": "Annullato",
     "appAlreadyAdded": "App già aggiunta",
-    "appAlreadyAddedPrompt": "Questa app è già stata aggiunta a Updatium. Sei sicuro di voler aggiungere un'altra istanza?",
-    "enterNewName": "Inserisci un nuovo nome per la nuova istanza",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "L'app è già aggiornata?",
     "addApp": "Aggiungi app",
     "appSourceURL": "URL della fonte dell'app",
@@ -58,7 +58,7 @@
     "add": "Aggiungi",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Cerca (solo per alcune fonti)",
-    "pickDifferentSources": "Scegli altre fonti",
+    "pickDifferentSources": "Pick different sources",
     "search": "Cerca",
     "searching": "Searching",
     "additionalOptsFor": "Opzioni aggiuntive per {}",
@@ -90,7 +90,7 @@
     "removeSelectedApps": "Rimuovi le app selezionate",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": ""
     },
     "updateX": "Aggiorna {}",
     "installX": "Installa {}",
@@ -276,7 +276,6 @@
     "category": "Categoria",
     "noCategory": "Nessuna categoria",
     "noCategories": "Nessuna categoria",
-    "categoryDeleteQuestion": "Eliminare le categorie?",
     "categoryDeleteWarning": "Tutte le app nelle categorie eliminate saranno impostate come non categorizzate.",
     "addCategory": "Aggiungi categoria",
     "label": "Etichetta",
@@ -440,67 +439,67 @@
     "multipleSigners": "Segnali multipli",
     "removeAppQuestion": {
         "one": "Rimuovere l'app?",
-        "other": "Rimuovere le app?"
+        "other": ""
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Troppe richieste (traffico limitato) - riprova tra {} minuto",
-        "other": "Troppe richieste (traffico limitato) - riprova tra {} minuti"
+        "other": ""
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Il controllo degli aggiornamenti in secondo piano ha riscontrato un {error}, nuovo tentativo tra {} minuto",
-        "other": "Il controllo degli aggiornamenti in secondo piano ha riscontrato un {error}, nuovo tentativo tra {} minuti"
+        "other": ""
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "Il controllo degli aggiornamenti in secondo piano ha trovato {} aggiornamento - notificherà l'utente se necessario",
-        "other": "Il controllo degli aggiornamenti in secondo piano ha trovato {} aggiornamenti - notificherà l'utente se necessario"
+        "other": ""
     },
     "apps": {
         "one": "{} app",
-        "other": "{} app"
+        "other": ""
     },
     "url": {
         "one": "{} URL",
-        "other": "{} URL"
+        "other": ""
     },
     "minute": {
         "one": "{} minuto",
-        "other": "{} minuti"
+        "other": ""
     },
     "hour": {
         "one": "{} ora",
-        "other": "{} ore"
+        "other": ""
     },
     "day": {
         "one": "{} giorno",
-        "other": "{} giorni"
+        "other": ""
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Rimosso {n} log (prima = {before}, dopo = {after})",
-        "other": "Rimossi {n} log (prima = {before}, dopo = {after})"
+        "other": ""
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e un'altra app hanno aggiornamenti disponibili.",
-        "other": "{app} e altre {} app hanno aggiornamenti disponibili."
+        "other": ""
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e un'altra app sono state aggiornate.",
-        "other": "{app} e altre {} app sono state aggiornate."
+        "other": ""
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Non è riuscito ad aggiornare {app} e altre 1 app.",
-        "other": "Non è riuscito ad aggiornare {app} e {} altre applicazioni."
+        "other": ""
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e un'altra app potrebbero essere state aggiornate.",
-        "other": "{app} e altre {} app potrebbero essere state aggiornate."
+        "other": ""
     },
     "apk": {
         "one": "{} APK",
-        "other": "{} APK"
+        "other": ""
     },
     "certificateHash": {
         "one": "Certificato Hash",
-        "other": "Certificato Hashes"
+        "other": ""
     },
     "securityDisclaimerTitle": "Disclaimer di Sicurezza e Legale",
     "license": "Licenza",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Eliminare le categorie?"
+    }
 }
