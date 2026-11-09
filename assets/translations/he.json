@@ -58,7 +58,7 @@
     "add": "הוספה",
     "advanced": "אפשרויות מתקדמות",
     "searchSomeSourcesLabel": "חיפוש (מספר מקורות בלבד)",
-    "pickDifferentSources": "בחירת מקורות אחרים",
+    "pickDifferentSources": "Pick different sources",
     "search": "חיפוש",
     "searching": "מתבצע חיפוש",
     "additionalOptsFor": "אפשרויות נוספות עבור {}",
@@ -90,7 +90,6 @@
     "removeSelectedApps": "הסרת היישומים שנבחרו",
     "appRemoved": {
         "one": "הוסר יישום אחד",
-        "two": "הוסרו שני יישומים",
         "other": "הוסרו {} יישומים"
     },
     "updateX": "עדכון {}",
@@ -198,14 +197,14 @@
     "xHasAnUpdate": "יש עדכון ליישום {}.",
     "appsUpdated": "היישומים עודכנו",
     "appsNotUpdated": "עדכון היישומים נכשל",
-    "appsUpdatedNotifDescription": "Notifies the user that updates to one or more apps were applied in the background",
+    "appsUpdatedNotifDescription": "התראה למשתמש על עדכון ברקע שהתבצע ליישום אחד או יותר",
     "xWasUpdatedToY": "{} עודכן לגרסה {}.",
     "xWasNotUpdatedToY": "נכשל העדכון של {} לגרסה {}.",
     "errorCheckingUpdates": "שגיאה בעת בדיקת עדכונים",
     "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
     "appsRemoved": "הוסרו יישומים",
     "undo": "החזרה",
-    "appsRemovedNotifDescription": "התראה למשתמש על עצם כך שהוסר יישום אחד או יותר בשל שגיאות במהלך טעינתו",
+    "appsRemovedNotifDescription": "התראה למשתמש על הסרת יישום אחד או יותר בשל שגיאות בטעינת הפרטים",
     "xWasRemovedDueToErrorY": "היישום {} הוסר בשל שגיאה זו: {}",
     "completeAppInstallation": "השלמת התקנת היישום",
     "updatiumMustBeOpenToInstallApps": "על Updatium להיות פתוח לצורך התקנת יישומים",
@@ -215,7 +214,7 @@
     "checkingForUpdatesNotifDescription": "התראה קבועה שמופיעה בעת בדיקת עדכונים",
     "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
     "trackOnly": "למעקב עדכונים בלבד",
-    "reproducibleOnly": "Reproducible builds only",
+    "reproducibleOnly": "רק בניות הניתנות לשחזור (Reproducible builds)",
     "trusted": "מהימן",
     "openSource": "קוד פתוח",
     "errorWithHttpStatusCode": "שגיאה {}",
@@ -263,7 +262,7 @@
     "additionalOptions": "אפשרויות נוספות",
     "disableVersionDetection": "השבתת זיהוי גרסה",
     "noVersionDetectionExplanation": "יש להשתמש באפשרות זו רק עבור יישומים שזיהוי הגרסה לא עובד טוב עבורם.",
-    "downloadingX": "‏{} בהורדה",
+    "downloadingX": "מתבצעת הורדת {}",
     "downloading": "בהורדה",
     "downloadX": "הורדת {}",
     "downloadedX": "בוצעה הורדת {}",
@@ -279,7 +278,6 @@
     "noCategories": "אין קטגוריות",
     "categoryDeleteQuestion": {
         "one": "למחוק את הקטגוריה?",
-        "two": "למחוק את הקטגוריות?",
         "other": "למחוק את הקטגוריות?"
     },
     "categoryDeleteWarning": "יבוטל השיוך לקטגוריות מכל היישומים שבקטגוריות שנמחקו.",
@@ -295,7 +293,7 @@
     "onlyWorksWithNonVersionDetectApps": "עובד רק עבור יישומים שזיהוי הגרסה מושבת אצלם.",
     "releaseDateAsVersion": "שימוש בתאריך פרסום המהדורה בתור מחרוזת הגרסה",
     "releaseTitleAsVersion": "שימוש בכותרת המהדורה בתור מחרוזת הגרסה",
-    "releaseDateAsVersionExplanation": "This option should only be used for apps where version detection does not work correctly, but a release date is available.",
+    "releaseDateAsVersionExplanation": "יש להשתמש באפשרות זו רק עבור יישומים שזיהוי הגרסה שלהם לא עובד כראוי, אך תאריך פרסום המהדורה שלהם זמין.",
     "changes": "שינויים",
     "releaseDate": "תאריך שחרור גרסה",
     "importFromURLsInFile": "ייבוא כתובות מקובץ (כגון OPML)",
@@ -382,12 +380,12 @@
     "supportFixedAPKURL": "תמיכה בכתובות קבועות של קובצי APK",
     "selectX": "בחירת {}",
     "showSystemApps": "הצגת יישומי מערכת",
-    "hideAddedApps": "Hide already added apps",
+    "hideAddedApps": "הסתרת יישומים שכבר נוספו",
     "parallelDownloads": "לאפשר מספר הורדות במקביל",
     "useShizuku": "שימוש ב־Shizuku או Sui להתקנה",
     "installMethod": "שיטת התקנה",
     "installMethodSystem": "כלי ההתקנה של המערכת",
-    "installMethodShizuku": "Shizuku",
+    "installMethodShizuku": "Shizuku‏",
     "installMethodExternal": "יישום חיצוני",
     "installMethodRoot": "שימוש בהרשאת שורש (Root)",
     "chooseExternalInstaller": "בחירת כלי התקנה חיצוני",
@@ -445,82 +443,66 @@
     "multipleSigners": "חתימות מרובות",
     "removeAppQuestion": {
         "one": "להסיר את היישום?",
-        "two": "להסיר את שני היישומים?",
         "other": "להסיר את היישומים?"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד דקה",
-        "two": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד שתי דקות",
         "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {} דקות"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד דקה",
-        "two": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד שתי דקות",
         "other": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד {} דקות"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "בדיקת העדכונים ברקע מצאה עדכון אחד - המשתמש יקבל התראה במידת הצורך",
-        "two": "בדיקת העדכונים ברקע מצאה שני עדכונים - המשתמש יקבל התראה במידת הצורך",
         "other": "בדיקת העדכונים ברקע מצאה {} עדכונים - המשתמש יקבל התראה במידת הצורך"
     },
     "apps": {
         "one": "יישום אחד",
-        "two": "שני יישומים",
         "other": "{} יישומים"
     },
     "url": {
         "one": "כתובת אחת",
-        "two": "שתי כתובות",
         "other": "{} כתובות"
     },
     "minute": {
         "one": "דקה אחת",
-        "two": "שתי דקות",
         "other": "{} דקות"
     },
     "hour": {
         "one": "שעה אחת",
-        "two": "שעתיים",
         "other": "{} שעות"
     },
     "day": {
         "one": "יום אחד",
-        "two": "יומיים",
         "other": "{} ימים"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "נוקה יומן אחד (לפני = {before}, אחרי = {after})",
-        "two": "נוקו שני יומנים (לפני = {before}, אחרי = {after})",
         "other": "נוקו {n} יומנים (לפני = {before}, אחרי = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "ליישום {app} ולעוד יישום יש עדכונים.",
-        "two": "ליישום {app} ולעוד שני יישומים יש עדכונים.",
         "other": "ליישום {app} ולעוד {} יישומים יש עדכונים."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "היישום {app} ועוד יישום נוסף עודכנו.",
-        "two": "{app} ועוד שני יישומים נוספים עודכנו.",
         "other": "{app} ועוד {} יישומים נוספים עודכנו."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "נכשל העדכון של {app} ועוד יישום אחד.",
-        "two": "נכשל העדכון של {app} ועוד שני יישומים.",
         "other": "נכשל העדכון של {app} ועוד {} יישומים."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "ייתכן כי {app} ועוד יישום אחד התעדכנו.",
-        "two": "ייתכן כי {app} ועוד שני יישומים התעדכנו.",
         "other": "ייתכן כי {app} ועוד {} יישומים התעדכנו."
     },
     "apk": {
         "one": "קובץ APK אחד",
-        "two": "שני קובצי APK",
         "other": "{} קובצי APK"
     },
     "certificateHash": {
         "one": "גיבוב תעודה",
-        "two": "גיבובי תעודה",
         "other": "גיבובי תעודה"
     },
     "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",

@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Appen kommer följas för uppdateringar men Updatium kommer inte ladda ner eller installera den.",
     "cancelled": "Avbruten",
     "appAlreadyAdded": "App redan tillagd",
-    "appAlreadyAddedPrompt": "Den här appen har redan lagts till i Updatium. Är du säker på att du vill lägga till en till instans av den?",
-    "enterNewName": "Ange ett nytt namn för den nya instansen",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "App redan uppdaterad?",
     "addApp": "Lägg till App",
     "appSourceURL": "URL till Appkälla",
@@ -58,7 +58,7 @@
     "add": "Lägg till",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Sök (Bara några källor)",
-    "pickDifferentSources": "Välj andra källor",
+    "pickDifferentSources": "Pick different sources",
     "search": "Sök",
     "searching": "Searching",
     "additionalOptsFor": "Ytterligare Alternativ för {}",
@@ -276,7 +276,6 @@
     "category": "Kategori",
     "noCategory": "Ingen Kategori",
     "noCategories": "Inga Kategorier",
-    "categoryDeleteQuestion": "Ta Bort Kategorier?",
     "categoryDeleteWarning": "Alla Appar i de borttagna kategorierna kommer att märkas som okategoriserade.",
     "addCategory": "Lägg till Kategori",
     "label": "Märka",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Ta Bort Kategorier?"
+    }
 }
