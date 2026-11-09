@@ -52,7 +52,8 @@ Based on Material Design 3 Expressive guidelines.
 - Searching APKPure apps directly from the app.
 - Better accessibility for screen readers.
 - Safe Mode (allows you to block unwanted changes to the app catalogue).
-<!-- - Editing basic app information after adding it (Nightly builds only). -->
+- Editing basic app information after adding it (Nightly builds only).
+- Ability to add two instances of the same app.
 
 ### Localization
 
