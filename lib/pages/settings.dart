@@ -718,6 +718,22 @@ class _SettingsPageState extends State<SettingsPage> {
                                     size: 18,
                                   ),
                                 ),
+                                SwitchListTile(
+                                  title: Text('dontShowTrackOnlyWarnings'.t()),
+                                  value: settingsProvider.hideTrackOnlyWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideTrackOnlyWarning =
+                                        value;
+                                  },
+                                ),
+                                SwitchListTile(
+                                  title: Text('dontShowAPKOriginWarnings'.t()),
+                                  value: settingsProvider.hideAPKOriginWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideAPKOriginWarning =
+                                        value;
+                                  },
+                                ),
                               ],
                             ),
                             value: settingsProvider
@@ -1085,20 +1101,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                   : const SizedBox.shrink();
                             },
                             future: DeviceInfoPlugin().androidInfo,
-                          ),
-                          SwitchListTile(
-                            title: Text('dontShowTrackOnlyWarnings'.t()),
-                            value: settingsProvider.hideTrackOnlyWarning,
-                            onChanged: (value) {
-                              settingsProvider.hideTrackOnlyWarning = value;
-                            },
-                          ),
-                          SwitchListTile(
-                            title: Text('dontShowAPKOriginWarnings'.t()),
-                            value: settingsProvider.hideAPKOriginWarning,
-                            onChanged: (value) {
-                              settingsProvider.hideAPKOriginWarning = value;
-                            },
                           ),
                           SwitchListTile(
                             title: Text('disablePageTransitions'.t()),
