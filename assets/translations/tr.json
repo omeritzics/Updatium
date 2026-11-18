@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Uygulama güncellemeler için takip edilecek, ancak Updatium bu uygulamayı indiremeyecek veya yükleyemeyecek.",
     "cancelled": "İptal edildi",
     "appAlreadyAdded": "Uygulama zaten eklenmiş",
-    "appAlreadyAddedPrompt": "Bu uygulama zaten Updatium'a eklendi. Başka bir kopyasını eklemek istediğinizden emin misiniz?",
-    "enterNewName": "Lütfen yeni kopya için yeni bir ad girin",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Uygulama zaten güncel mi?",
     "addApp": "Uygulama Ekle",
     "appSourceURL": "Uygulama kaynak bağlantısı (URL)",
@@ -58,7 +58,7 @@
     "add": "Ekle",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Ara (sadece bazı kaynaklar)",
-    "pickDifferentSources": "Farklı kaynaklar seçin",
+    "pickDifferentSources": "Pick different sources",
     "search": "Ara",
     "searching": "Searching",
     "additionalOptsFor": "{} için ek seçenekler",
@@ -276,7 +276,6 @@
     "category": "Kategori",
     "noCategory": "Kategori yok",
     "noCategories": "Kategori yok",
-    "categoryDeleteQuestion": "Kategoriler silinsin mi?",
     "categoryDeleteWarning": "Silinen kategorilerdeki tüm uygulamalar kategorize edilmemiş olarak ayarlanacaktır.",
     "addCategory": "Kategori ekle",
     "label": "Etiket",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Kategoriler silinsin mi?"
+    }
 }
