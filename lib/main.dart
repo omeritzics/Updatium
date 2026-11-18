@@ -20,8 +20,7 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
-import 'package:quick_localization/src/quick_localization_controller.dart';
-import 'package:quick_localization/src/localization.dart';
+import 'package:quick_localization/quick_localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 
@@ -77,37 +76,6 @@ var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
-Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
-  await QuickLocalizationController.initQuickLocation();
-  try {
-    await SettingsProvider().initializeSettings();
-    var forceLocale = SettingsProvider().forcedLocale;
-    final controller = QuickLocalizationController(
-      saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: Locale('en'),
-      supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: RootBundleAssetLoader.fromRootBundle(),
-      useOnlyLangCode: false,
-      useFallbackTranslations: true,
-      path: 'assets/translations',
-      onLoadError: (FlutterError e) {
-        throw e;
-      },
-    );
-    await controller.loadTranslations();
-    Localization.load(
-      controller.locale,
-      translations: controller.translations,
-      fallbackTranslations: controller.fallbackTranslations,
-    );
-  } finally {
-    // Clean up the temporary SettingsProvider instance
-    SettingsProvider().dispose();
-  }
-}
-
 @pragma('vm:entry-point')
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -156,13 +124,13 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
-        Provider(create: (context) => np),
+        Provider.value(value: np),
         ChangeNotifierProvider(create: (context) => LogsProvider()),
       ],
       child: QuickLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
         path: 'assets/translations',
-        fallbackLocale: Locale('en'),
+        fallbackLocale: const Locale('en'),
         useOnlyLangCode: false,
         child: const Updatium(),
       ),
@@ -312,7 +280,7 @@ class _UpdatiumState extends State<Updatium> {
       }
 
       // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale)) {
+      if (!context.supportedLocales.contains(context.locale)) {
         settingsProvider.resetLocaleSafe(context);
       } else if (settingsProvider.forcedLocale != null &&
           context.locale != settingsProvider.forcedLocale) {
