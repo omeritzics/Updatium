@@ -1,6 +1,6 @@
 import 'package:m3e_core/m3e_core.dart';
 import 'package:updatium/services/slang_converter.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
 /// Reusable category chip widget for consistent category selection display

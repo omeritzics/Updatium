@@ -97,6 +97,7 @@ dependencies:
   sqflite_common_ffi: ^2.4.3
   flutter_m3shapes_extended: ^1.2.0
   m3e_core: 0.1.6
+  material_ui: any
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"

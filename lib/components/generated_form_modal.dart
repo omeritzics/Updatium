@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
