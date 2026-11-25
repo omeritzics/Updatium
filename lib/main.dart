@@ -300,7 +300,7 @@ class _UpdatiumState extends State<Updatium> {
     });
 
     return DynamicColorBuilder(
-       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         ColorScheme lightColorScheme;
         ColorScheme darkColorScheme;
 
@@ -308,11 +308,11 @@ class _UpdatiumState extends State<Updatium> {
         if (lightDynamic != null &&
             darkDynamic != null &&
             settingsProvider.useMaterialYou) {
-              lightColorScheme = lightDynamic;
-               darkColorScheme = darkDynamic;
-               lightColorScheme = lightColorScheme;
-                darkColorScheme = darkColorScheme;
-            } else {
+          lightColorScheme = lightDynamic;
+          darkColorScheme = darkDynamic;
+          lightColorScheme = lightColorScheme;
+          darkColorScheme = darkColorScheme;
+        } else {
           lightColorScheme = ColorScheme.fromSeed(
             seedColor: settingsProvider.themeColor,
           );
@@ -320,9 +320,9 @@ class _UpdatiumState extends State<Updatium> {
             seedColor: settingsProvider.themeColor,
             brightness: Brightness.dark,
           );
-            }
+        }
 
-          // Apply pure black surface for AMOLED black theme
+        // Apply pure black surface for AMOLED black theme
         // Apply semi-transparent surface colors for AMOLED black theme
         if (settingsProvider.useBlackTheme) {
           darkColorScheme = darkColorScheme.copyWith(
