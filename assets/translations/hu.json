@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "Az alkalmazás frissítéseit nyomon követi, de az Updatium nem tudja letölteni vagy telepíteni.",
     "cancelled": "Visszavonva",
     "appAlreadyAdded": "Az alkalmazás már hozzá van adva",
-    "appAlreadyAddedPrompt": "Ez az alkalmazás már hozzá van adva az Updatiumhoz. Biztosan hozzá szeretne adni egy másik példányt?",
-    "enterNewName": "Kérjük, adjon meg egy új nevet az új példányhoz",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "Az alkalmazás már naprakész?",
     "addApp": "Hozzáadás",
     "appSourceURL": "Alkalmazás forrásának webcíme",
@@ -58,7 +58,7 @@
     "add": "Hozzáadás",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "Keresés (csak bizonyos források)",
-    "pickDifferentSources": "Más források kiválasztása",
+    "pickDifferentSources": "Pick different sources",
     "search": "Keresés",
     "searching": "Searching",
     "additionalOptsFor": "További lehetőségek a következőhöz: {}",
@@ -276,7 +276,6 @@
     "category": "Kategória",
     "noCategory": "Nincs kategória",
     "noCategories": "Nincsenek kategóriák",
-    "categoryDeleteQuestion": "Biztosan törli a kategóriákat?",
     "categoryDeleteWarning": "A törölt kategóriákban lévő összes alkalmazás kategorizálatlanná válik.",
     "addCategory": "Kategória hozzáadása",
     "label": "Címke",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "Biztosan törli a kategóriákat?"
+    }
 }

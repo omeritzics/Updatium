@@ -49,8 +49,8 @@
     "trackOnlyAppDescription": "برنامه برای به روز رسانی ها ردیابی می شود، اما Updatium قادر به دانلود یا نصب آن نخواهد بود.",
     "cancelled": "لغو شد",
     "appAlreadyAdded": "برنامه قبلاً اضافه شده است",
-    "appAlreadyAddedPrompt": "این برنامه قبلاً به Updatium اضافه شده است. آیا مطمئنید که می‌خواهید نمونه دیگری از آن را اضافه کنید؟",
-    "enterNewName": "لطفاً یک نام جدید برای نمونه جدید وارد کنید",
+    "appAlreadyAddedPrompt": "This app is already added to Updatium. Are you sure you want to add another instance if it?",
+    "enterNewName": "Please enter a new name for the new instance",
     "alreadyUpToDateQuestion": "برنامه از قبل به روز شده است؟",
     "addApp": "افزودن برنامه",
     "appSourceURL": "آدرس اینترنتی منبع برنامه",
@@ -58,7 +58,7 @@
     "add": "اضافه کردن",
     "advanced": "Advanced",
     "searchSomeSourcesLabel": "جستجو (فقط برخی منابع)",
-    "pickDifferentSources": "انتخاب منابع دیگر",
+    "pickDifferentSources": "Pick different sources",
     "search": "جستجو کردن",
     "searching": "Searching",
     "additionalOptsFor": "گزینه های اضافی برای {}",
@@ -276,7 +276,6 @@
     "category": "دسته بندی",
     "noCategory": "بدون دسته بندی",
     "noCategories": "بدون دسته بندی ها",
-    "categoryDeleteQuestion": "دسته بندی ها حذف شوند؟",
     "categoryDeleteWarning": "همه برنامه‌ها در دسته‌های حذف شده روی دسته‌بندی نشده تنظیم می‌شوند.",
     "addCategory": "اضافه کردن دسته",
     "label": "برچسب",
@@ -554,7 +553,7 @@
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
     "cancelDownload": "Cancel download",
-    "cancelDownloadPrompt": "Are you sure you want to cancel the download?",
+    "cancelDownloadPrompt": "Are you sure you want to cancel the download",
     "showInFileManager": "Show in file manager",
     "usedOpenSourcePackages": "Used open-source packages",
     "pleaseWaitOperationInProgress": "Please wait, operation in progress",
@@ -571,5 +570,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "other": "",
+        "one": "دسته بندی ها حذف شوند؟"
+    }
 }
