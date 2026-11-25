@@ -1,9 +1,7 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:updatium/pages/home.dart';
@@ -300,18 +298,70 @@ class _UpdatiumState extends State<Updatium> {
     });
 
     return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      builder: (lightDynamic, darkDynamic) {
         ColorScheme lightColorScheme;
         ColorScheme darkColorScheme;
+
+        /// Converts a `flutter/material` [ColorScheme] from [DynamicColorBuilder]
+        /// into a `material_ui` [ColorScheme].
+        ColorScheme toMaterialUiColorScheme(dynamic scheme) {
+          return ColorScheme(
+            brightness: scheme.brightness,
+            primary: scheme.primary,
+            onPrimary: scheme.onPrimary,
+            primaryContainer: scheme.primaryContainer,
+            onPrimaryContainer: scheme.onPrimaryContainer,
+            primaryFixed: scheme.primaryFixed,
+            primaryFixedDim: scheme.primaryFixedDim,
+            onPrimaryFixed: scheme.onPrimaryFixed,
+            onPrimaryFixedVariant: scheme.onPrimaryFixedVariant,
+            secondary: scheme.secondary,
+            onSecondary: scheme.onSecondary,
+            secondaryContainer: scheme.secondaryContainer,
+            onSecondaryContainer: scheme.onSecondaryContainer,
+            secondaryFixed: scheme.secondaryFixed,
+            secondaryFixedDim: scheme.secondaryFixedDim,
+            onSecondaryFixed: scheme.onSecondaryFixed,
+            onSecondaryFixedVariant: scheme.onSecondaryFixedVariant,
+            tertiary: scheme.tertiary,
+            onTertiary: scheme.onTertiary,
+            tertiaryContainer: scheme.tertiaryContainer,
+            onTertiaryContainer: scheme.onTertiaryContainer,
+            tertiaryFixed: scheme.tertiaryFixed,
+            tertiaryFixedDim: scheme.tertiaryFixedDim,
+            onTertiaryFixed: scheme.onTertiaryFixed,
+            onTertiaryFixedVariant: scheme.onTertiaryFixedVariant,
+            error: scheme.error,
+            onError: scheme.onError,
+            errorContainer: scheme.errorContainer,
+            onErrorContainer: scheme.onErrorContainer,
+            surface: scheme.surface,
+            onSurface: scheme.onSurface,
+            surfaceDim: scheme.surfaceDim,
+            surfaceBright: scheme.surfaceBright,
+            surfaceContainerLowest: scheme.surfaceContainerLowest,
+            surfaceContainerLow: scheme.surfaceContainerLow,
+            surfaceContainer: scheme.surfaceContainer,
+            surfaceContainerHigh: scheme.surfaceContainerHigh,
+            surfaceContainerHighest: scheme.surfaceContainerHighest,
+            onSurfaceVariant: scheme.onSurfaceVariant,
+            outline: scheme.outline,
+            outlineVariant: scheme.outlineVariant,
+            shadow: scheme.shadow,
+            scrim: scheme.scrim,
+            inverseSurface: scheme.inverseSurface,
+            onInverseSurface: scheme.onInverseSurface,
+            inversePrimary: scheme.inversePrimary,
+            surfaceTint: scheme.surfaceTint,
+          );
+        }
 
         // Configure ColorScheme (Material You vs Seed)
         if (lightDynamic != null &&
             darkDynamic != null &&
             settingsProvider.useMaterialYou) {
-          lightColorScheme = lightDynamic;
-          darkColorScheme = darkDynamic;
-          lightColorScheme = lightColorScheme;
-          darkColorScheme = darkColorScheme;
+          lightColorScheme = toMaterialUiColorScheme(lightDynamic);
+          darkColorScheme = toMaterialUiColorScheme(darkDynamic);
         } else {
           lightColorScheme = ColorScheme.fromSeed(
             seedColor: settingsProvider.themeColor,
@@ -458,7 +508,7 @@ class _UpdatiumState extends State<Updatium> {
           );
         }
 
-        return MaterialApp(
+        final Widget app = MaterialApp(
           title: 'Updatium',
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
@@ -513,6 +563,7 @@ class _UpdatiumState extends State<Updatium> {
           },
           home: const WithForegroundTask(child: HomePage()),
         );
+        return app;
       },
     );
   }
