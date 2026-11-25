@@ -509,10 +509,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_typeahead
-      sha256: "7b3f84e0bff51c544f4d1382c00413c36c1714328a6a89600865e497437d29d2"
+      sha256: b01d9bf14039b20e1cf2a6100e71e444e43e7e7da6f003c22e49a2e3b11d3768
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.1.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -522,10 +522,10 @@ packages:
     dependency: "direct main"
     description:
       name: fluttertoast
-      sha256: a5c39007e19fff5eeb7810d5be651c02bb5a1c06104bdd203b037bbfe49bd827
+      sha256: af237c0801b908200f5069835009fb4b95e548e1878b2202ab5627c9555a39af
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.2"
+    version: "10.0.3"
   fraction:
     dependency: transitive
     description:
@@ -610,18 +610,18 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: "2e91e6087291affd10b31b6c872f3e3ac7dc5d93b51b5ba485d930c8f08bde6c"
+      sha256: "19764f78f6b9e0d40f6395b04649d1046eb57f5ccf05afce50cc63e5a82777b0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.1"
   jni_flutter:
     dependency: transitive
     description:
       name: jni_flutter
-      sha256: "0dd33d67797560f66e961a6053882d4df54bd345bf063b8fe7ea133f7ad8b191"
+      sha256: "586594ad345b403bda8a794b0b8a9e34298238b86c2a7d7f15160b092fe9ef3d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4+1"
+    version: "1.1.0"
   jni_util:
     dependency: transitive
     description:
@@ -1161,10 +1161,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: "8765980411f9b6733534efe9d014fad0750fa649590598772c04692deb34886b"
+      sha256: "1ae2e821614e7b69628ecb64273e8bc5401b14ab166ee7ea0035c35bb136cbd7"
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.1"
+    version: "3.9.2"
   stack_trace:
     dependency: transitive
     description:
