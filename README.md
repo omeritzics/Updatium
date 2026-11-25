@@ -108,7 +108,7 @@ If you need any help or advice for translating Updatium to your language, or if 
 - Currently supported locales:
 [![Supported locales](https://hosted.weblate.org/widget/updatium/updatium/matrix-auto.svg)](https://hosted.weblate.org/engage/updatium/)
 
-`Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
+`Taiwanese Hokkien (臺灣話) and Northern Kurdish (Kurdî) are not supported yet due to technical limitations.`
 
 ## Screenshots
 
