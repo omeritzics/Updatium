@@ -27,19 +27,63 @@ If you want to distribute legitimate APK files of Updatium in your app store, pl
 
 ### Currently supported App sources
 
-| Open Source (General) | Other (General) | Other (App-specific) |
-| :------------------- | :-------------- | :------------------ |
-| ![GitHub favicon](https://www.google.com/s2/favicons?sz=16&domain=github.com) [GitHub](https://github.com/) | ![APKPure favicon](https://www.google.com/s2/favicons?sz=16&domain=apkpure.com) [APKPure](https://apkpure.net/) | ![Neutron Code favicon](https://www.google.com/s2/favicons?sz=16&domain=neutroncode.com) [Neutron Code](https://neutroncode.com/) |
-| ![GitLab favicon](https://www.google.com/s2/favicons?sz=16&domain=gitlab.com) [GitLab](https://gitlab.com/) | ![Aptoide favicon](https://www.google.com/s2/favicons?sz=16&domain=aptoide.com) [Aptoide](https://aptoide.com/) | 🏗️ Jenkins Jobs |
-| ![Forgejo favicon](https://www.google.com/s2/favicons?sz=16&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=16&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
-| ![F-Droid favicon](https://www.google.com/s2/favicons?sz=16&domain=f-droid.org) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=16&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
-| 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
-| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal](https://signal.org/) |
-| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC](https://www.videolan.org/) |
-| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK](https://www.openapk.net/) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror (track-only)](https://apkmirror.com/) | |
-| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket](https://www.bitbucket.org) | | |
-| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=about.gitea.com) [Gitea](https://about.gitea.com) | | |
-| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket](https://bitbucket.org) | | |
+<table>
+  <tr>
+    <th>Open Source (General)</th>
+    <th>Other (General)</th>
+    <th>Other (App-specific)</th>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=github.com"> <a href="https://github.com/">GitHub</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=apkpure.com"> <a href="https://apkpure.com/">APKPure</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=neutroncode.com"> <a href="https://neutroncode.com/">Neutron Code</a></td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=gitlab.com"> <a href="https://gitlab.com/">GitLab</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=aptoide.com"> <a href="https://aptoide.com/">Aptoide</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com"> <a href="https://whatsapp.com/">WhatsApp</a></td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=forgejo.org"> <a href="https://forgejo.org/">Forgejo</a> <a href="https://codeberg.org/">(Codeberg)</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=uptodown.com"> <a href="https://uptodown.com/">Uptodown</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=signal.org"> <a href="https://signal.org/">Signal</a></td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=f-droid.org"> <a href="https://f-droid.org/">F-Droid</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=huawei.com"> <a href="https://appgallery.huawei.com/">Huawei AppGallery</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=videolan.org"> <a href="https://videolan.org/">VLC</a></td>
+  </tr>
+  <tr>
+    <td>🧩 Third Party F-Droid Repos</td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com"> <a href="https://sj.qq.com/">Tencent App Store</a></td>
+    <td>🏗️ Jenkins Jobs</td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de"> <a href="https://android.izzysoft.de/">IzzyOnDroid</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=vivo.com"> <a href="https://h5.appstore.vivo.com.cn">vivo App Store (CN)</a></td>
+    <td>📦 Direct APK Links</td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=git.sr.ht"> <a href="https://git.sr.ht/">SourceHut</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=rustore.ru"> <a href="https://rustore.ru/">RuStore</a></td>
+    <td>🌐 HTML page fallback</td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=openapk.net"> <a href="https://openapk.net/">OpenAPK</a></td>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com"> <a href="https://apkmirror.com/">APKMirror (track-only)</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org"> <a href="https://bitbucket.org/">BitBucket</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="https://www.google.com/s2/favicons?sz=16&domain=about.gitea.com"> <a href="https://about.gitea.com/">Gitea</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 ### Improved Design
 
@@ -48,14 +92,14 @@ Based on Material Design 3 Expressive guidelines.
 ### Other Additional Features
 
 - Grid View.
-- Ability to use DNS-over-HTTPS providers.
-- Searching APKPure apps directly from the app.
+- Inside-app DNS providers.
+- Searching APKPure directly from Add App page.
+- Ability to add two instances of the same app.
 - Better accessibility for screen readers.
 - Safe Mode (allows you to block unwanted changes to the app catalogue).
-- Editing basic app information after adding it (Nightly builds only).
-- Ability to add two instances of the same app.
+- Editing basic app information after adding it.
 
-### Localization
+## Localization
 
 Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language, you can help improving Updatium's translations [here (using Weblate)](https://hosted.weblate.org/engage/updatium). Every language is welcome to Updatium, but your help is needed to make it happen.
 
