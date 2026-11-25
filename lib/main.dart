@@ -28,7 +28,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
   MapEntry(Locale('el'), 'Ελληνικά'),
   MapEntry(Locale('zh'), '简体中文'),
-  // MapEntry(Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'), '臺灣話'),
+  // MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
   MapEntry(Locale('it'), 'Italiano'),
   MapEntry(Locale('ja'), '日本語'),
   MapEntry(Locale('he'), 'עברית'),
@@ -72,7 +72,12 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ta'), 'தமிழ்'),
   MapEntry(Locale('fil'), 'Filipino'),
 ];
-var fdroid = false;
+const fallbackLocale = Locale('en');
+final Set<Locale> supportedLocaleSet = supportedLocales
+    .map((e) => e.key)
+    .toSet();
+const localeDir = 'assets/translations';
+bool isFdroidBuild = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -247,7 +252,7 @@ class _UpdatiumState extends State<Updatium> {
       if (isFirstRun) {
         logs.add('This is the first ever run of Updatium.');
         // Auto-add Updatium to tracked apps list on first run
-        if (!fdroid) {
+        if (!isFdroidBuild) {
           getInstalledInfo(updatiumId)
               .then((value) {
                 if (value?.versionName != null) {
@@ -295,7 +300,7 @@ class _UpdatiumState extends State<Updatium> {
     });
 
     return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         ColorScheme lightColorScheme;
         ColorScheme darkColorScheme;
 
@@ -303,11 +308,11 @@ class _UpdatiumState extends State<Updatium> {
         if (lightDynamic != null &&
             darkDynamic != null &&
             settingsProvider.useMaterialYou) {
-          lightColorScheme = lightDynamic;
-          darkColorScheme = darkDynamic;
-          lightColorScheme = lightColorScheme;
-          darkColorScheme = darkColorScheme;
-        } else {
+              lightColorScheme = lightDynamic;
+               darkColorScheme = darkDynamic;
+               lightColorScheme = lightColorScheme;
+                darkColorScheme = darkColorScheme;
+            } else {
           lightColorScheme = ColorScheme.fromSeed(
             seedColor: settingsProvider.themeColor,
           );
@@ -315,9 +320,9 @@ class _UpdatiumState extends State<Updatium> {
             seedColor: settingsProvider.themeColor,
             brightness: Brightness.dark,
           );
-        }
+            }
 
-        // Apply pure black surface for AMOLED black theme
+          // Apply pure black surface for AMOLED black theme
         // Apply semi-transparent surface colors for AMOLED black theme
         if (settingsProvider.useBlackTheme) {
           darkColorScheme = darkColorScheme.copyWith(

@@ -13,7 +13,7 @@ void main() {
     });
 
     test('fdroid flag is false by default', () {
-      expect(fdroid, isFalse);
+      expect(isFdroidBuild, isFalse);
     });
 
     test('globalNavigatorKey is defined', () {
