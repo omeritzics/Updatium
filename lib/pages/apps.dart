@@ -600,7 +600,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       appsProvider
           .downloadAndInstallLatestApps([
             app.id,
-          ], globalNavigatorKey.currentContext)
+          ], appNavigatorKey.currentContext)
           .catchError((e) {
             if (mounted) {
               showError(e, context);
@@ -1116,7 +1116,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   appsProvider
                       .downloadAndInstallLatestApps(
                         toInstall,
-                        globalNavigatorKey.currentContext,
+                        appNavigatorKey.currentContext,
                       )
                       .catchError((e) {
                         if (mounted) {

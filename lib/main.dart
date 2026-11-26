@@ -19,6 +19,8 @@ import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:quick_localization/quick_localization.dart';
+import 'package:quick_localization/src/localization.dart';
+import 'package:quick_localization/src/quick_localization_controller.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 
@@ -77,7 +79,38 @@ final Set<Locale> supportedLocaleSet = supportedLocales
 const localeDir = 'assets/translations';
 bool isFdroidBuild = false;
 
-final globalNavigatorKey = GlobalKey<NavigatorState>();
+final appNavigatorKey = GlobalKey<NavigatorState>();
+
+Future<void> loadTranslations() async {
+  // See easy_localization/issues/210
+  await QuickLocalizationController.initQuickLocation();
+  try {
+    await SettingsProvider().initializeSettings();
+    var forceLocale = SettingsProvider().forcedLocale;
+    final controller = QuickLocalizationController(
+      saveLocale: true,
+      forceLocale: forceLocale,
+      fallbackLocale: Locale('en'),
+      supportedLocales: supportedLocales.map((e) => e.key).toList(),
+      assetLoader: RootBundleAssetLoader.fromRootBundle(),
+      useOnlyLangCode: false,
+      useFallbackTranslations: true,
+      path: 'assets/translations',
+      onLoadError: (FlutterError e) {
+        throw e;
+      },
+    );
+    await controller.loadTranslations();
+    Localization.load(
+      controller.locale,
+      translations: controller.translations,
+      fallbackTranslations: controller.fallbackTranslations,
+    );
+  } finally {
+    // Clean up the temporary SettingsProvider instance
+    SettingsProvider().dispose();
+  }
+}
 
 @pragma('vm:entry-point')
 void main() async {
@@ -513,7 +546,7 @@ class _UpdatiumState extends State<Updatium> {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          navigatorKey: globalNavigatorKey,
+          navigatorKey: appNavigatorKey,
           debugShowCheckedModeBanner: false,
           theme: createTheme(
             settingsProvider.theme == ThemeSettings.dark

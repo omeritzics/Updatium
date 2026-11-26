@@ -252,8 +252,8 @@ class NotificationsProvider {
   }
 
   void _showDownloadedSnackbar(String filePath) {
-    if (globalNavigatorKey.currentState?.context != null) {
-      final context = globalNavigatorKey.currentState!.context;
+    if (appNavigatorKey.currentState?.context != null) {
+      final context = appNavigatorKey.currentState!.context;
       final fileName = filePath.split('/').last;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -281,9 +281,9 @@ class NotificationsProvider {
       intent.launch();
     } catch (e) {
       // If launching fails, show an error message
-      if (globalNavigatorKey.currentState?.context != null) {
+      if (appNavigatorKey.currentState?.context != null) {
         ScaffoldMessenger.of(
-          globalNavigatorKey.currentState!.context,
+          appNavigatorKey.currentState!.context,
         ).showSnackBar(
           SnackBar(
             content: Text('Failed to open file manager'),
@@ -298,7 +298,7 @@ class NotificationsProvider {
     if (payload?.isNotEmpty == true) {
       var title = (payload ?? '\n\n').split('\n').first;
       var content = (payload ?? '\n\n').split('\n').sublist(1).join('\n');
-      globalNavigatorKey.currentState?.push(
+      appNavigatorKey.currentState?.push(
         PageRouteBuilder(
           pageBuilder: (context, _, _) => AlertDialog(
             title: Text(title),

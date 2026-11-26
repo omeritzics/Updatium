@@ -17,7 +17,7 @@ void main() {
     });
 
     test('globalNavigatorKey is defined', () {
-      expect(globalNavigatorKey, isNotNull);
+      expect(appNavigatorKey, isNotNull);
     });
   });
 

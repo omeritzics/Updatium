@@ -758,7 +758,7 @@ class _AppPageState extends State<AppPage> {
             settingsProvider.heavyImpact();
             var res = await appsProvider.downloadAndInstallLatestApps([
               app.app.id,
-            ], globalNavigatorKey.currentContext);
+            ], appNavigatorKey.currentContext);
             if (!mounted) return;
             if (res.isNotEmpty && !trackOnly) {
               showMessage(successMessage, context);

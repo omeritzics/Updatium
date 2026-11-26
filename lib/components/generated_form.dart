@@ -756,7 +756,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: t('colour'),
+                            tooltip: t('color'),
                           ),
                         )
                       : const SizedBox.shrink(),

@@ -894,7 +894,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             if (!mounted) return;
             var downloadedArtifact = await appsProvider.downloadApp(
               app,
-              globalNavigatorKey.currentContext,
+              appNavigatorKey.currentContext,
               notificationsProvider: notificationsProvider,
             );
             if (downloadedArtifact == null) return;
@@ -933,7 +933,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             Navigator.pop(context);
 
             Navigator.push(
-              globalNavigatorKey.currentContext ?? context,
+              appNavigatorKey.currentContext ?? context,
               MaterialPageRoute(
                 builder: (context) => AppPage(
                   appId: app!.id,
